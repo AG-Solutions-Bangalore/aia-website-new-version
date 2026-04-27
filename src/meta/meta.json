@@ -1,0 +1,66 @@
+{
+  "/": {
+    "title": "AIA | Best Training Institute for Certification Courses",
+    "description": "Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses."
+  },
+  "/about-aia": {
+    "title": "About - Academy of Internal Audit",
+    "description": "Academy of Internal Audit is a well-known Training Institute for Professional Courses Training, skilled faculty, and comprehensive guidance services."
+  },
+  "/about-us": {
+    "title": "About - Academy of Internal Audit",
+    "description": "Academy of Internal Audit is a well-known Training Institute for Professional Courses Training, skilled faculty, and comprehensive guidance services."
+  },
+  "/cfe-curriculum": {
+    "title": "Certified Fraud Examiner Course | CFE Certification Course",
+    "description": "Get Certification in Certified Fraud Examiner Course with AIA Institute to become a skilled Certified Fraud Investigator and unlock fraud prevention mystery."
+  },
+  "/cia-curriculum": {
+    "title": "Certified Internal Auditor Course | CIA Certification Course",
+    "description": "Elevate your auditing career with AIA Institute which help you to ace your Certified Internal Auditor Course (CIA) and get your Internal Audit Certification."
+  },
+  "/cia-challenge-curriculum": {
+    "title": "CIA Challenge Exam Prep | Clear in One Attempt with AIA Guidance",
+    "description": "Short on time? AIA’s CIA Challenge Prep helps busy auditors fast-track their certification with flexible notes, expert-recorded lectures, and 1:1 live support. Enroll today!"
+  },
+  "/cams": {
+    "title": "Certified Anti Money Laundering Specialist | CAMS Course",
+    "description": "Prepare to excel in CAMS Certification Exam with AIA's CAMS Study Guide and CAMS Practice Questions provided for Certified Anti Money Laundering Specialist."
+  },
+  "/cfe-free-resources": {
+    "title": "Certified Fraud Examiner Free Resources - AIA",
+    "description": "Access CFE Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation."
+  },
+  "/blogs": {
+    "title": "Guide For Professional Courses like CIA, CFE, CIAC - AIA",
+    "description": "Read Latest Blogs on professional courses like CIA, CFE, and CIA Challenge | Information that you need to know to grow your skills and career as well."
+  },
+  "/our-passouts": {
+    "title": "Our Passout Students - Academy of Internal Audit",
+    "description": "Academy of Internal Audit celebrates 99%+ pass rate—featuring recent CFE, CIA, CAMS alumni from around the globe sharing their success stories."
+  },
+  "/contact": {
+    "title": "Contact Us | Academy of Internal Audit",
+    "description": "Reach out to Academy of Internal Audit for dedicated support in your journey to obtain professional course certifications. We will be happy to help you."
+  },
+  "/passout-stories/:slug": {
+    "title": " Student Success Story | CIA, CFE & CAMS Results | AIA",
+    "description": "Read real success stories of AIA students who cleared CIA, CFE & CAMS exams. Get inspired by their journey, preparation strategy, and results."
+  },
+  "/enroll-now": {
+    "title": "Enroll Now at Academy of Internal Audit for CIA, CFE, CAMS",
+    "description": "Kickstart your career with AIA—enroll now for CIA, CFE & CAMS courses with expert training, flexible online access, and proven success strategies."
+  },
+  "/corpo": {
+    "title": "Corporate Training Programs of Academy of Internal Audit",
+    "description": "Upskill your team with AIA’s corporate training in Internal Audit, Fraud Detection & Risk Management. Customized programs for organizations."
+  },
+  "/policies": {
+    "title": "Policies | Academy of Internal Audit (AIA)",
+    "description": "Read AIA policies including privacy policy, refund policy, and terms related to courses, payments, and student services."
+  },
+  "/terms-and-conditions": {
+    "title": "Terms and Conditions | AIA Courses & Services",
+    "description": "Review the terms and conditions for enrolling in AIA courses, including usage policies, payments, access rights, and guidelines."
+  }
+}

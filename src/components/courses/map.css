@@ -1,0 +1,235 @@
+:root {
+  --blue: #50648e;
+  --orange: #f57709;
+  --ink: #1e2330;
+  --muted: #6b7280;
+  --card: rgba(255, 255, 255, 0.86);
+  --border: rgba(0, 0, 0, 0.08);
+  --shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+  --glass: blur(10px);
+  --grad: linear-gradient(140deg, var(--blue), var(--orange));
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    Segoe UI,
+    Roboto,
+    Arial,
+    sans-serif;
+  color: var(--ink);
+}
+
+/* Map section */
+#map {
+  height: 80vh;
+  width: 100%;
+  position: relative;
+}
+.brand-card {
+  position: absolute;
+  z-index: 10;
+  left: 20px;
+  top: 20px;
+  backdrop-filter: var(--glass);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+
+.brand-title {
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  font-size: 16px;
+}
+
+.legend {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.dot.blue {
+  background: var(--blue);
+}
+
+.dot.orange {
+  background: var(--orange);
+}
+
+.pin {
+  width: 40px;
+  height: 54px;
+  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.22));
+  transition: transform 0.2s ease;
+}
+
+.leaflet-marker-icon.pin:hover {
+  transform: translateY(-3px);
+}
+
+.popup h4 {
+  margin: 0 0 10px;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ink);
+  position: relative;
+  display: inline-block;
+}
+
+.popup h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 3px;
+  background: var(--grad);
+  border-radius: 3px;
+}
+
+/* .gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  } */
+
+.card {
+  max-width: 140px;
+  margin: auto;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.thumb {
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  display: block;
+}
+
+.course-name {
+  font-size: 10px;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  padding: 5px 6px 4px;
+  background: var(--grad);
+}
+.course-name.not-provided {
+  color: #fff;
+  font-style: italic;
+}
+
+.caption {
+  font-size: 11px;
+  padding: 6px 6px 7px;
+  text-align: center;
+  color: #2b2f39;
+  font-weight: 600;
+}
+
+/* Clusters */
+.marker-cluster div {
+  background:
+    radial-gradient(
+      120px 120px at 30% 30%,
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0)
+    ),
+    var(--grad) !important;
+  color: #fff;
+  border: none;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
+  border-radius: 14px;
+}
+
+.marker-cluster span {
+  font-weight: 800;
+  letter-spacing: 0.2px;
+}
+
+.gallery {
+  display: grid;
+  gap: 10px;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+}
+.leaflet-popup-close-button {
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  font-weight: bold;
+  margin-top: 10px;
+  margin-right: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 480px) {
+  .leaflet-popup-content-wrapper {
+    max-width: 340px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .gallery.cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+    max-width: 260px;
+  }
+  .gallery.cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 270px;
+  }
+  .gallery.cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 300px;
+  }
+}
+
+@media (min-width: 481px) {
+  .gallery.cols-1 {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .gallery.cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery.cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.leaflet-control-attribution {
+  display: none !important;
+}
