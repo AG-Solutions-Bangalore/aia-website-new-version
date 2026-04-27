@@ -200,12 +200,12 @@ const PassoutBanner = () => {
 
     const studentBaseUrl =
       passOutCarouselData.image_url?.find(
-        (item) => item.image_for === "Student"
+        (item) => item.image_for === "Student",
       )?.image_url || "";
 
     const noImage =
       passOutCarouselData.image_url?.find(
-        (item) => item.image_for === "No Image"
+        (item) => item.image_for === "No Image",
       )?.image_url || "";
 
     return passOutCarouselData.data.map((item) => ({
@@ -259,12 +259,12 @@ const PassoutBanner = () => {
       <div className="mx-auto flex flex-col lg:flex-row items-center gap-12  max-h-[600px] md:max-h-[700px] lg:max-h-[500px]">
         {/* TEXT SIDE */}
         <div className="flex-1 max-w-xl">
-          <h1 className="text-3xl md:text-5xl font-bold text-[#0F3652] mb-2">
+          <p className="text-3xl md:text-5xl font-bold text-[#0F3652] mb-2">
             Guidance That Goes
-          </h1>
-          <h1 className="text-3xl md:text-5xl font-bold text-[#F3831C] mb-4">
+          </p>
+          <p className="text-3xl md:text-5xl font-bold text-[#F3831C] mb-4">
             Beyond Training
-          </h1>
+          </p>
           <p className="text-[#0F3652] text-lg leading-relaxed text-justify">
             Genuine moments shared by professionals who completed their global
             certification preparation with AIA and experienced guidance that
@@ -290,7 +290,7 @@ const PassoutBanner = () => {
                     onError={(e) => {
                       e.currentTarget.src =
                         passOutCarouselData.image_url?.find(
-                          (i) => i.image_for === "No Image"
+                          (i) => i.image_for === "No Image",
                         )?.image_url || "";
                     }}
                   />
@@ -318,7 +318,7 @@ const PassoutBanner = () => {
                     onError={(e) => {
                       e.currentTarget.src =
                         passOutCarouselData.image_url?.find(
-                          (i) => i.image_for === "No Image"
+                          (i) => i.image_for === "No Image",
                         )?.image_url || "";
                     }}
                   />

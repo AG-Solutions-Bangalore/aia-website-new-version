@@ -1,9 +1,10 @@
 import CourseAbout from "../courses/common/course-about";
+import CourseAboutH1 from "../courses/common/course-aboutH1";
 
 const HomeAbout = () => {
   return (
     <>
-      <CourseAbout
+      <CourseAboutH1
         badgeText="Empowering Professionals Through Global Certifications & Structured Approach"
         heading="Excellence in Professional Education"
         description={`

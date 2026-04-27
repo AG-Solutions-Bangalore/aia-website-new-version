@@ -109,7 +109,7 @@ const HomeCourses = ({ certificationCourses }) => {
     <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 mt-4 lg:-mb-46">
       {" "}
       <div className="lg:hidden">
-        <SectionHeadingH1
+        <SectionHeading
           title="Global Certification Programs Offered by AIA"
           align="center"
         />
@@ -219,7 +219,7 @@ const HomeCourses = ({ certificationCourses }) => {
           } bg-white z-40 pb-2 pt-6`}
         >
           {" "}
-          <SectionHeadingH1
+          <SectionHeading
             title="Global Certification Programs Offered by AIA"
             align="center"
           />
@@ -230,14 +230,14 @@ const HomeCourses = ({ certificationCourses }) => {
             <div className="h-full flex flex-col justify-between">
               <div>
                 <div className="transition-opacity duration-300 mb-20">
-                  <h1
+                  <h2
                     className="text-xl lg:text-3xl font-bold mb-3 leading-tight "
                     style={{
                       color: ALL_SERVICES[activeCard]?.lefttextColor || "",
                     }}
                   >
                     {ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}
-                  </h1>
+                  </h2>
 
                   <p className="text-[#0F3652] text-lg mb-2 max-w-lg leading-relaxed text-justify">
                     {ALL_SERVICES[activeCard]?.description ||

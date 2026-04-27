@@ -191,9 +191,9 @@ const CorporateDeliver = () => {
             <div className="h-px w-6 bg-gradient-to-l from-transparent to-[#F3831C]"></div>
           </div>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-[#0F3652] mb-3">
+          <h2 className="text-2xl md:text-3xl font-bold text-[#0F3652] mb-3">
             Corporate Training That Speaks Your Business Language
-          </h1>
+          </h2>
 
           <div className="w-16 h-0.5 bg-gradient-to-r from-[#0F3652] via-[#F3831C] to-[#0F3652] mx-auto mb-4"></div>
 

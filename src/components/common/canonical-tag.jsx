@@ -34,6 +34,10 @@ const CanonicalTag = () => {
 
       <meta property="og:type" content="website" />
       <meta property="og:url" content={canonicalUrl} />
+      <meta
+        property="og:image"
+        content={metaData.image || "/favicon-32x32.png"}
+      />
       <meta property="og:title" content={metaData.title} />
       <meta property="og:description" content={metaData.description} />
 
