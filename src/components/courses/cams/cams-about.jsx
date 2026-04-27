@@ -1,9 +1,9 @@
-import CourseAbout from "../common/course-about";
+import CourseAboutH1 from "../common/course-aboutH1";
 
 const CamsAbout = () => {
   return (
     <>
-      <CourseAbout
+      <CourseAboutH1
         badgeText="BEST PREP COURSE FOR CAMS CERTIFICATION "
         heading="Join AIA's CAMS Prep Course and Crack Your Exam on Your 1st Attempt"
         description={`The Certified Anti-Money Laundering Specialist (CAMS) certification by ACAMS is widely recognized as the leading global credential in anti-money laundering and financial crime compliance. With 50,000+ CAMS-certified professionals worldwide, it is the preferred qualification for AML, compliance, risk, and audit professionals across banks, fintechs, consulting firms, and regulators.

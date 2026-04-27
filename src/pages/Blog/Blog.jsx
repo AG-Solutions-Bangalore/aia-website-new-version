@@ -4,7 +4,7 @@ import BlogCard from "@/components/blog/blog-card";
 import BlogSubscribeSection from "@/components/blog/blog-subscription";
 import PopUp from "@/components/common/pop-up";
 import CourseTopStudent from "@/components/home/home-pr-carousel";
-import SectionHeading from "@/components/SectionHeading/SectionHeading";
+import SectionHeadingH1 from "@/components/SectionHeading/SectionHeadingH1";
 import { getCourseColor } from "@/utils/courseColor";
 import axios from "axios";
 import {
@@ -184,7 +184,7 @@ const Blog = () => {
       <section className="py-16 bg-white">
         <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 rounded-2xl p-4">
-            <SectionHeading
+            <SectionHeadingH1
               // title="Subscribe to the AIA Blog"
               title="Actionable Insights to Advance Your Prep and Career"
               description="Join the AIA community and get timely updates and expert insights directly in your inbox"
@@ -367,40 +367,40 @@ const Blog = () => {
           </div>
 
           {uniqueCategories.map((category) => {
-                const categoryBlogs = filteredBlogs
-                  .filter((blog) => blog.blog_course === category)
-                  .slice(0, 4);
-                if (categoryBlogs.length === 0) return null;
+            const categoryBlogs = filteredBlogs
+              .filter((blog) => blog.blog_course === category)
+              .slice(0, 4);
+            if (categoryBlogs.length === 0) return null;
 
-                return (
-                  <div
-                    key={category}
-                    className="mb-16 p-4 border-2 rounded-lg "
-                    style={{
-                      backgroundColor: getCourseColor(category),
-                    }}
-                  >
-                    <div className="flex items-center justify-between mb-8">
-                      <div className="flex items-center gap-3">
-                        <h3 className="text-xl md:text-2xl font-medium text-[#0F3652]">
-                          {COURSE_NAME_MAP[category] || category}
-                        </h3>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                      {categoryBlogs.map((blog) => (
-                        <BlogCard
-                          key={blog.id}
-                          blog={blog}
-                          handleBlogClick={handleBlogClick}
-                          imageBaseUrl={imageBaseUrl}
-                        />
-                      ))}
-                    </div>
+            return (
+              <div
+                key={category}
+                className="mb-16 p-4 border-2 rounded-lg "
+                style={{
+                  backgroundColor: getCourseColor(category),
+                }}
+              >
+                <div className="flex items-center justify-between mb-8">
+                  <div className="flex items-center gap-3">
+                    <h3 className="text-xl md:text-2xl font-medium text-[#0F3652]">
+                      {COURSE_NAME_MAP[category] || category}
+                    </h3>
                   </div>
-                );
-              })}
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  {categoryBlogs.map((blog) => (
+                    <BlogCard
+                      key={blog.id}
+                      blog={blog}
+                      handleBlogClick={handleBlogClick}
+                      imageBaseUrl={imageBaseUrl}
+                    />
+                  ))}
+                </div>
+              </div>
+            );
+          })}
           {filteredBlogs.length === 0 && (
             <div className="text-center py-12 border border-[#0F3652]/20 rounded-md bg-[#0F3652]/5">
               <BookOpen className="w-12 h-12 text-[#0F3652] mx-auto mb-4" />

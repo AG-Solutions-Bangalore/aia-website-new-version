@@ -5,8 +5,8 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import SectionHeading from "../SectionHeading/SectionHeading";
 import { Avatar, AvatarImage } from "../ui/avatar";
+import SectionHeadingH1 from "../SectionHeading/SectionHeadingH1";
 export function TestimonialCardCourse({
   author,
   href,
@@ -137,7 +137,7 @@ const PassoutResult = () => {
       <section className="py-12 px-0">
         <div className="mx-auto flex max-w-340 flex-col items-center gap-4 text-center sm:gap-16">
           <div className="px-4 ">
-            <SectionHeading
+            <SectionHeadingH1
               title="Meet the AIA-Certified Professionals Worldwide"
               description="Tap on any certificate to learn about their certification journey, explore their LinkedIn profiles, and connect with professionals who advanced their careers through AIA’s global programs."
               align="center"

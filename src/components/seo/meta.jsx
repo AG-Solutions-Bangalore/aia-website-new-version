@@ -42,19 +42,19 @@ export default function Meta() {
     const routeKey = matchRoute(pathname);
     const metaData = meta[routeKey] || DEFAULT_META;
 
-    // ✅ Title
     document.title = metaData.title;
 
-    // ✅ Description
+    setMetaTag("meta[name='title']", "title", metaData.title);
     setMetaTag("meta[name='description']", "description", metaData.description);
 
-    // ✅ Open Graph (VERY IMPORTANT)
     setMetaTag("meta[property='og:title']", "og:title", metaData.title);
-    setMetaTag("meta[property='og:description']", "og:description", metaData.description);
+    setMetaTag(
+      "meta[property='og:description']",
+      "og:description",
+      metaData.description,
+    );
 
-    // ✅ Optional (not important but okay)
     setMetaTag("meta[name='title']", "title", metaData.title);
-
   }, [pathname]);
 
   return null;

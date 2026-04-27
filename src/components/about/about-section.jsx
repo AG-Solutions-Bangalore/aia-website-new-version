@@ -1,5 +1,5 @@
 import React from "react";
-import SectionHeading from "../SectionHeading/SectionHeading";
+import SectionHeadingH1 from "../SectionHeading/SectionHeadingH1";
 
 const AboutSection = () => {
   return (
@@ -13,7 +13,7 @@ const AboutSection = () => {
               </span>
             </div> */}
 
-            <SectionHeading
+            <SectionHeadingH1
               title="About AIA - Where Certifications Meet Real-World Capability"
               description=""
               align="center"

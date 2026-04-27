@@ -1,10 +1,9 @@
-import CourseAbout from "../common/course-about";
-import CfeJoinDialog from "./join-prep";
+import CourseAboutH1 from "../common/course-aboutH1";
 
 const CfeAbout = ({}) => {
   return (
     <>
-      <CourseAbout
+      <CourseAboutH1
         badgeText="Prepare for the CFE Exam with Confidence - Guided by AIA"
         preheading="2026"
         heading="CFE Preparation That Builds Real Fraud Examiner Expertise in You"

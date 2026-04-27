@@ -1,9 +1,9 @@
-import CourseAbout from "../common/course-about";
+import CourseAboutH1 from "../common/course-aboutH1";
 
 const CiaAbout = () => {
   return (
     <>
-      <CourseAbout
+      <CourseAboutH1
         badgeText="Best Prep Course For CIA Challenge Exam"
         heading="Prepare Confidently for the CIA Challenge Exam with AIA’s Expert-Led Training "
         description={`

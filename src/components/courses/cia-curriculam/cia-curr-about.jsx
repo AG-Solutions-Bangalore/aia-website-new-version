@@ -1,9 +1,9 @@
-import CourseAbout from "../common/course-about";
+import CourseAboutH1 from "../common/course-aboutH1";
 
 const CiaCurrAbout = () => {
   return (
     <>
-      <CourseAbout
+      <CourseAboutH1
         badgeText="Best Prep Course for CIA Certification"
         heading="Join the AIA Prep Course and Get 100% Success in the CIA Exam "
         description={`The Certified Internal Auditor (CIA) is a globally recognized professional certification awarded by the Institute of Internal Auditors (IIA). It validates expertise in internal audit,risk management, governance, and assurance across industries. 
@@ -19,7 +19,7 @@ const CiaCurrAbout = () => {
             display: "Live-Doubt \n Sessions",
             title: "(With expert faculty)",
             show: "true",
-            lineBreak:"sm",
+            lineBreak: "sm",
           },
           {
             display: "Updated Gliem Resources",

@@ -34,26 +34,58 @@ const BlogDetails = () => {
   useEffect(() => {
     if (!blog) return;
 
-    document.title = blog.blog_meta_title || blog.blog_heading;
-
-    let metaDescription = document.querySelector('meta[name="description"]');
-    if (!metaDescription) {
-      metaDescription = document.createElement("meta");
-      metaDescription.name = "description";
-      document.head.appendChild(metaDescription);
-    }
-    metaDescription.content =
+    const title = blog.blog_meta_title || blog.blog_heading;
+    const description =
       blog.blog_meta_description || blog.blog_short_description;
+    const keywords = blog.blog_meta_keywords || "";
+    const url = `https://aia.in.net/blogs/${blog.blog_slug}`;
 
-    if (blog.blog_meta_keywords) {
-      let metaKeywords = document.querySelector('meta[name="keywords"]');
-      if (!metaKeywords) {
-        metaKeywords = document.createElement("meta");
-        metaKeywords.name = "keywords";
-        document.head.appendChild(metaKeywords);
+    document.title = title;
+
+    const setMetaTag = (selector, attrs, content) => {
+      let tag = document.querySelector(selector);
+      if (!tag) {
+        tag = document.createElement("meta");
+        Object.keys(attrs).forEach((key) => tag.setAttribute(key, attrs[key]));
+        document.head.appendChild(tag);
       }
-      metaKeywords.content = blog.blog_meta_keywords;
-    }
+      tag.setAttribute("content", content);
+      return tag;
+    };
+
+    const metaTitle = setMetaTag(
+      'meta[name="title"]',
+      { name: "title" },
+      title,
+    );
+
+    const metaDescription = setMetaTag(
+      'meta[name="description"]',
+      { name: "description" },
+      description,
+    );
+
+    const metaKeywords =
+      keywords &&
+      setMetaTag('meta[name="keywords"]', { name: "keywords" }, keywords);
+
+    const ogTitle = setMetaTag(
+      'meta[property="og:title"]',
+      { property: "og:title" },
+      title,
+    );
+
+    const ogDescription = setMetaTag(
+      'meta[property="og:description"]',
+      { property: "og:description" },
+      description,
+    );
+
+    const ogUrl = setMetaTag(
+      'meta[property="og:url"]',
+      { property: "og:url" },
+      url,
+    );
 
     let canonicalLink = document.querySelector('link[rel="canonical"]');
     if (!canonicalLink) {
@@ -61,14 +93,14 @@ const BlogDetails = () => {
       canonicalLink.rel = "canonical";
       document.head.appendChild(canonicalLink);
     }
-    canonicalLink.href = `https://aia.in.net/blogs/${blog.blog_slug}`;
+    canonicalLink.href = url;
 
     const structuredData = {
       "@context": "https://schema.org",
       "@type": "BlogPosting",
       mainEntityOfPage: {
         "@type": "WebPage",
-        "@id": `https://aia.in.net/blogs/${blog.blog_slug}`,
+        "@id": url,
       },
       headline: blog.blog_heading,
       description: blog.blog_short_description,
@@ -91,35 +123,125 @@ const BlogDetails = () => {
       dateModified: blog.updated_at,
     };
 
-    const existingScript = document.querySelector(
-      'script[type="application/ld+json"]'
-    );
-    if (existingScript) {
-      existingScript.remove();
-    }
+    let script = document.querySelector('script[type="application/ld+json"]');
+    if (script) script.remove();
 
-    const script = document.createElement("script");
+    script = document.createElement("script");
     script.type = "application/ld+json";
     script.text = JSON.stringify(structuredData);
     document.head.appendChild(script);
 
     return () => {
-      if (metaDescription && document.head.contains(metaDescription)) {
-        document.head.removeChild(metaDescription);
-      }
-      const keywordsMeta = document.querySelector('meta[name="keywords"]');
-      if (keywordsMeta && document.head.contains(keywordsMeta)) {
-        document.head.removeChild(keywordsMeta);
-      }
+      [metaTitle, metaDescription, metaKeywords, ogTitle, ogDescription, ogUrl]
+        .filter(Boolean)
+        .forEach((tag) => {
+          if (tag && document.head.contains(tag)) {
+            document.head.removeChild(tag);
+          }
+        });
+
       if (canonicalLink && document.head.contains(canonicalLink)) {
         document.head.removeChild(canonicalLink);
       }
+
       if (script && document.head.contains(script)) {
         document.head.removeChild(script);
       }
+
       document.title = "AIA | Academy of Internal Audit";
     };
-  }, [blog, imageBaseUrl, id]);
+  }, [blog, imageBaseUrl]);
+
+  // useEffect(() => {
+  //   if (!blog) return;
+
+  //   document.title = blog.blog_meta_title || blog.blog_heading;
+
+  //   let metaDescription = document.querySelector('meta[name="description"]');
+  //   if (!metaDescription) {
+  //     metaDescription = document.createElement("meta");
+  //     metaDescription.name = "description";
+  //     document.head.appendChild(metaDescription);
+  //   }
+  //   metaDescription.content =
+  //     blog.blog_meta_description || blog.blog_short_description;
+
+  //   if (blog.blog_meta_keywords) {
+  //     let metaKeywords = document.querySelector('meta[name="keywords"]');
+  //     if (!metaKeywords) {
+  //       metaKeywords = document.createElement("meta");
+  //       metaKeywords.name = "keywords";
+  //       document.head.appendChild(metaKeywords);
+  //     }
+  //     metaKeywords.content = blog.blog_meta_keywords;
+  //   }
+
+  //   let canonicalLink = document.querySelector('link[rel="canonical"]');
+  //   if (!canonicalLink) {
+  //     canonicalLink = document.createElement("link");
+  //     canonicalLink.rel = "canonical";
+  //     document.head.appendChild(canonicalLink);
+  //   }
+  //   canonicalLink.href = `https://aia.in.net/blogs/${blog.blog_slug}`;
+
+  //   const structuredData = {
+  //     "@context": "https://schema.org",
+  //     "@type": "BlogPosting",
+  //     mainEntityOfPage: {
+  //       "@type": "WebPage",
+  //       "@id": `https://aia.in.net/blogs/${blog.blog_slug}`,
+  //     },
+  //     headline: blog.blog_heading,
+  //     description: blog.blog_short_description,
+  //     image: blog.blog_images
+  //       ? `${imageBaseUrl}${blog.blog_images}`
+  //       : `${IMAGE_PATH}/no_image.jpg`,
+  //     author: {
+  //       "@type": "Organization",
+  //       name: "AIA",
+  //     },
+  //     publisher: {
+  //       "@type": "Organization",
+  //       name: "Academy of Internal Audit",
+  //       logo: {
+  //         "@type": "ImageObject",
+  //         url: `${IMAGE_PATH}/new_logo.webp`,
+  //       },
+  //     },
+  //     datePublished: blog.created_at,
+  //     dateModified: blog.updated_at,
+  //   };
+
+  //   const existingScript = document.querySelector(
+  //     'script[type="application/ld+json"]'
+  //   );
+  //   if (existingScript) {
+  //     existingScript.remove();
+  //   }
+
+  //   const script = document.createElement("script");
+  //   script.type = "application/ld+json";
+  //   script.text = JSON.stringify(structuredData);
+  //   document.head.appendChild(script);
+
+  //   return () => {
+  //     if (metaDescription && document.head.contains(metaDescription)) {
+  //       document.head.removeChild(metaDescription);
+  //     }
+  //     const keywordsMeta = document.querySelector('meta[name="keywords"]');
+  //     if (keywordsMeta && document.head.contains(keywordsMeta)) {
+  //       document.head.removeChild(keywordsMeta);
+  //     }
+  //     if (canonicalLink && document.head.contains(canonicalLink)) {
+  //       document.head.removeChild(canonicalLink);
+  //     }
+  //     if (script && document.head.contains(script)) {
+  //       document.head.removeChild(script);
+  //     }
+  //     document.title = "AIA | Academy of Internal Audit";
+  //   };
+  // }, [blog, imageBaseUrl, id]);
+
   useEffect(() => {
     const handleScroll = () => {
       if (isScrollingProgrammatically.current) return;
@@ -162,13 +284,13 @@ const BlogDetails = () => {
       setStudents(response.data.student || []);
       setFaq(response.data.faq || []);
       const blogImageConfig = response.data.image_url?.find(
-        (item) => item.image_for === "Blog"
+        (item) => item.image_for === "Blog",
       );
       if (blogImageConfig) {
         setImageBaseUrl(blogImageConfig.image_url);
       }
       const studentImageConfig = response.data.image_url?.find(
-        (item) => item.image_for === "Student"
+        (item) => item.image_for === "Student",
       );
       if (studentImageConfig) {
         setStudentImageBaseUrl(studentImageConfig.image_url);
@@ -188,13 +310,13 @@ const BlogDetails = () => {
         question: item.faq_que,
         answer: item.faq_ans,
       })) || [],
-    [faq]
+    [faq],
   );
 
   useEffect(() => {
     if (faqItems.length > 0) {
       const existingScript = document.querySelector(
-        'script[type="application/ld+json"][data-faq-schema]'
+        'script[type="application/ld+json"][data-faq-schema]',
       );
       if (existingScript) {
         existingScript.remove();
@@ -250,17 +372,17 @@ const BlogDetails = () => {
             "Content-Type": "application/json",
             Accept: "application/json",
           },
-        }
+        },
       );
 
       if (response.data.code === 200) {
         setSubscriptionStatus(
-          response.data.msg || "Successfully subscribed! Thank you."
+          response.data.msg || "Successfully subscribed! Thank you.",
         );
         setEmail("");
       } else {
         setSubscriptionStatus(
-          response.data.message || "Subscription failed. Please try again."
+          response.data.message || "Subscription failed. Please try again.",
         );
       }
     } catch (error) {
@@ -269,7 +391,7 @@ const BlogDetails = () => {
         setSubscriptionStatus(
           error.response.data.message ||
             error.response.data.error ||
-            "Subscription failed. Please try again."
+            "Subscription failed. Please try again.",
         );
       } else if (error.request) {
         setSubscriptionStatus("Network error. Please check your connection.");
@@ -310,7 +432,7 @@ const BlogDetails = () => {
     if (students.length > 1) {
       const interval = setInterval(() => {
         setCurrentStudentIndex((prevIndex) =>
-          prevIndex === students.length - 1 ? 0 : prevIndex + 1
+          prevIndex === students.length - 1 ? 0 : prevIndex + 1,
         );
       }, 3000);
 
@@ -320,13 +442,13 @@ const BlogDetails = () => {
 
   const nextStudent = () => {
     setCurrentStudentIndex((prevIndex) =>
-      prevIndex === students.length - 1 ? 0 : prevIndex + 1
+      prevIndex === students.length - 1 ? 0 : prevIndex + 1,
     );
   };
 
   const prevStudent = () => {
     setCurrentStudentIndex((prevIndex) =>
-      prevIndex === 0 ? students.length - 1 : prevIndex - 1
+      prevIndex === 0 ? students.length - 1 : prevIndex - 1,
     );
   };
 
@@ -413,16 +535,16 @@ const BlogDetails = () => {
               {blog.blog_course && (
                 <span
                   className={`inline-block ${getCourseColor(
-                    blog.blog_course
+                    blog.blog_course,
                   )} text-sm font-medium px-3 py-1.5 rounded border mb-4 w-fit`}
                 >
                   {blog.blog_course}
                 </span>
               )}
 
-              <p className="text-3xl md:text-4xl font-bold text-[#0F3652] mb-4">
+              <h1 className="text-3xl md:text-4xl font-bold text-[#0F3652] mb-4">
                 {blog.blog_heading}
-              </p>
+              </h1>
 
               {blog.blog_short_description && (
                 <p className="text-lg text-[#0F3652] mb-6">
@@ -868,7 +990,7 @@ const BlogDetails = () => {
                                   {student.student_course && (
                                     <span
                                       className={`absolute top-0 right-0 ${getCourseColor(
-                                        student.student_course
+                                        student.student_course,
                                       )} text-xs sm:text-sm font-medium px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-bl-md border-0 max-w-[65%] truncate`}
                                     >
                                       {student.student_course}

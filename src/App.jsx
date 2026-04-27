@@ -6,14 +6,15 @@ const CAMS = lazy(() => import("./pages/Courses/CAMS"));
 const CFECurriculam = lazy(() => import("./pages/Courses/CFECurriculam"));
 const CIAChallenge = lazy(() => import("./pages/Courses/CIAChallenge"));
 const CIACurriculam = lazy(() => import("./pages/Courses/CIACurriculam"));
-const FreeResources = lazy(() =>
-  import("./pages/free-resources/cfe-free-resources")
+const FreeResources = lazy(
+  () => import("./pages/free-resources/cfe-free-resources"),
 );
-const CAMSFreeResources = lazy(() =>
-  import("./pages/free-resources/cams-free-resources/cams-free-resources")
+const CAMSFreeResources = lazy(
+  () =>
+    import("./pages/free-resources/cams-free-resources/cams-free-resources"),
 );
-const CIAFreeResources = lazy(() =>
-  import("./pages/free-resources/cia-free-resources/cia-free-resources")
+const CIAFreeResources = lazy(
+  () => import("./pages/free-resources/cia-free-resources/cia-free-resources"),
 );
 const Home = lazy(() => import("./pages/Home/Home"));
 const Blog = lazy(() => import("./pages/Blog/Blog"));
@@ -22,26 +23,25 @@ const Enrool = lazy(() => import("./pages/Enroll/Enroll"));
 const Contact = lazy(() => import("./pages/contact/contact"));
 const BlogDetails = lazy(() => import("./pages/Blog/blog-details"));
 const AboutPage = lazy(() => import("./pages/About/About"));
-const CorporateTraining = lazy(() =>
-  import("./pages/corporate-training/corporate-training")
+const CorporateTraining = lazy(
+  () => import("./pages/corporate-training/corporate-training"),
 );
 const Policies = lazy(() => import("./pages/policies/policies"));
-const TermsAndConditions = lazy(() =>
-  import("./pages/terms-and-conditions/terms-and-conditions")
+const TermsAndConditions = lazy(
+  () => import("./pages/terms-and-conditions/terms-and-conditions"),
 );
 const BlogCourse = lazy(() => import("./pages/Blog/blog-course"));
-const CfePracticeQuestion = lazy(() =>
-  import("./pages/free-resources/cfe-practice-question")
+const CfePracticeQuestion = lazy(
+  () => import("./pages/free-resources/cfe-practice-question"),
 );
-const PassoutStoriesSlug = lazy(() =>
-  import("./components/passout/passout-stories-slug")
+const PassoutStoriesSlug = lazy(
+  () => import("./components/passout/passout-stories-slug"),
 );
 const NotFound = lazy(() => import("./components/common/not-found"));
 
 import NotificationPopup from "./components/notification/notification-popup";
 import GoogleAnalytics from "./components/google-analytics/google-analytics";
 import ScrollToTop from "./components/common/scroll-to-top";
-import Meta from "./components/seo/meta";
 import FloatingContact from "./components/common/floating-contact";
 import { Toaster } from "sonner";
 import CanonicalTag from "./components/common/canonical-tag";
@@ -61,8 +61,6 @@ export default function App() {
       <Toaster position="top-right" richColors />
 
       <Layout>
-        <Meta />
-
         <Suspense fallback={<SuspenseLoader />}>
           {" "}
           <main className="grow">

@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeading from "../SectionHeading/SectionHeading";
+import SectionHeadingH1 from "../SectionHeading/SectionHeadingH1";
 
 const ServiceCard = ({ service, i, progress, total }) => {
   const start = i / total;
@@ -108,7 +109,7 @@ const HomeCourses = ({ certificationCourses }) => {
     <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 mt-4 lg:-mb-46">
       {" "}
       <div className="lg:hidden">
-        <SectionHeading
+        <SectionHeadingH1
           title="Global Certification Programs Offered by AIA"
           align="center"
         />
@@ -218,7 +219,7 @@ const HomeCourses = ({ certificationCourses }) => {
           } bg-white z-40 pb-2 pt-6`}
         >
           {" "}
-          <SectionHeading
+          <SectionHeadingH1
             title="Global Certification Programs Offered by AIA"
             align="center"
           />

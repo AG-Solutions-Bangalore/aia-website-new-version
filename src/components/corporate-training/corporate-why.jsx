@@ -1,6 +1,6 @@
 import React from "react";
 import CountUp from "@/components/common/count-up";
-import SectionHeading from "../SectionHeading/SectionHeading";
+import SectionHeadingH1 from "../SectionHeading/SectionHeadingH1";
 
 const CorporateWhy = () => {
   const statsCards = [
@@ -194,7 +194,7 @@ const CorporateWhy = () => {
             <div className="h-px w-8 bg-gradient-to-l from-transparent to-[#F3831C]"></div>
           </div>
 
-          <SectionHeading
+          <SectionHeadingH1
             title="Why Leading Organizations are Investing in Employee Development"
             description="Because every smart business knows - when your people grow it leads
             to strong results. Here's the proof"
