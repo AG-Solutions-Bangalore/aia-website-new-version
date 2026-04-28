@@ -34,11 +34,20 @@ const HomeContact = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
+    if (params.get("utm_source")) {
+      localStorage.setItem("utm_source", params.get("utm_source"));
+    }
+    if (params.get("utm_medium")) {
+      localStorage.setItem("utm_medium", params.get("utm_medium"));
+    }
+    if (params.get("utm_campaign")) {
+      localStorage.setItem("utm_campaign", params.get("utm_campaign"));
+    }
     setFormData({
       ...formData,
-      utm_source: params.get("utm_source") || "",
-      utm_medium: params.get("utm_medium") || "",
-      utm_campaign: params.get("utm_campaign") || "",
+      utm_source: localStorage.getItem("utm_source") || "",
+      utm_medium: localStorage.getItem("utm_medium") || "",
+      utm_campaign: localStorage.getItem("utm_campaign") || "",
     });
   }, []);
 
@@ -54,14 +63,15 @@ const HomeContact = () => {
         return;
       }
 
-      referralFetchPromise = axios.get(`${BASE_URL}/api/fetch-webreffer`)
-        .then(res => {
+      referralFetchPromise = axios
+        .get(`${BASE_URL}/api/fetch-webreffer`)
+        .then((res) => {
           const data = res.data.data || [];
           referralCache = data;
           setReferral(data);
           return data;
         })
-        .catch(error => {
+        .catch((error) => {
           referralFetchPromise = null;
           console.error("Error fetching referral:", error);
           return [];
@@ -143,8 +153,8 @@ const HomeContact = () => {
     } catch (error) {
       setSubmitError(
         error.response?.data?.message ||
-        error.message ||
-        "Failed to submit form. Please try again.",
+          error.message ||
+          "Failed to submit form. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -282,7 +292,6 @@ const HomeContact = () => {
                       </option>
                     ))}
                   </select>
-
                 </div>
 
                 {/*

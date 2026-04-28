@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from "react";
 import FooterReviews from "../Footer/footer-review";
 import { toast } from "sonner";
 
-
 let referralCache = null;
 let referralFetchPromise = null;
 
@@ -20,7 +19,6 @@ const ContactHero = () => {
     utm_source: "",
     utm_medium: "",
     utm_campaign: "",
-
   });
 
   const [errors, setErrors] = useState({});
@@ -30,11 +28,20 @@ const ContactHero = () => {
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
+    if (params.get("utm_source")) {
+      localStorage.setItem("utm_source", params.get("utm_source"));
+    }
+    if (params.get("utm_medium")) {
+      localStorage.setItem("utm_medium", params.get("utm_medium"));
+    }
+    if (params.get("utm_campaign")) {
+      localStorage.setItem("utm_campaign", params.get("utm_campaign"));
+    }
     setFormData({
       ...formData,
-      utm_source: params.get("utm_source") || "",
-      utm_medium: params.get("utm_medium") || "",
-      utm_campaign: params.get("utm_campaign") || "",
+      utm_source: localStorage.getItem("utm_source") || "",
+      utm_medium: localStorage.getItem("utm_medium") || "",
+      utm_campaign: localStorage.getItem("utm_campaign") || "",
     });
   }, []);
 
@@ -50,14 +57,15 @@ const ContactHero = () => {
         return;
       }
 
-      referralFetchPromise = axios.get(`${BASE_URL}/api/fetch-webreffer`)
-        .then(res => {
+      referralFetchPromise = axios
+        .get(`${BASE_URL}/api/fetch-webreffer`)
+        .then((res) => {
           const data = res.data.data || [];
           referralCache = data;
           setReferral(data);
           return data;
         })
-        .catch(error => {
+        .catch((error) => {
           referralFetchPromise = null;
           console.error("Error fetching referral:", error);
           return [];
@@ -134,7 +142,7 @@ const ContactHero = () => {
       console.error("API error:", error.response?.data || error.message);
       toast.error(
         error.response?.data?.message ||
-        "Something went wrong. Please try again.",
+          "Something went wrong. Please try again.",
       );
     } finally {
       setLoader(false);
@@ -209,8 +217,9 @@ const ContactHero = () => {
                       name="userName"
                       value={formData.userName}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2.5 rounded border ${errors.userName ? "border-red-500" : "border-gray-300"
-                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                      className={`w-full px-4 py-2.5 rounded border ${
+                        errors.userName ? "border-red-500" : "border-gray-300"
+                      } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                       placeholder="Full Name"
                     />
                     {errors.userName && (
@@ -227,8 +236,9 @@ const ContactHero = () => {
                       name="userEmail"
                       value={formData.userEmail}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2.5 rounded border ${errors.userEmail ? "border-red-500" : "border-gray-300"
-                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                      className={`w-full px-4 py-2.5 rounded border ${
+                        errors.userEmail ? "border-red-500" : "border-gray-300"
+                      } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                       placeholder="Email"
                     />
                     {errors.userEmail && (
@@ -247,8 +257,9 @@ const ContactHero = () => {
                       name="userMobile"
                       value={formData.userMobile}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2.5 rounded border ${errors.userMobile ? "border-red-500" : "border-gray-300"
-                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                      className={`w-full px-4 py-2.5 rounded border ${
+                        errors.userMobile ? "border-red-500" : "border-gray-300"
+                      } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                       placeholder="Phone Number"
                     />
                     {errors.userMobile && (
@@ -283,8 +294,9 @@ const ContactHero = () => {
                       name="userCourse"
                       value={formData.userCourse}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2.5 rounded border ${errors.userCourse ? "border-red-500" : "border-gray-300"
-                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                      className={`w-full px-4 py-2.5 rounded border ${
+                        errors.userCourse ? "border-red-500" : "border-gray-300"
+                      } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                     >
                       <option value="">Service Interested In</option>
                       <option value="Certified Fraud Examiner">
@@ -301,7 +313,9 @@ const ContactHero = () => {
                       </option>
                     </select>
                     {errors.userCourse && (
-                      <p className="text-red-500 text-xs">{errors.userCourse}</p>
+                      <p className="text-red-500 text-xs">
+                        {errors.userCourse}
+                      </p>
                     )}
                   </div>
                   <div className="space-y-2">
@@ -313,8 +327,11 @@ const ContactHero = () => {
                         name="referred_from"
                         value={formData.referred_from}
                         onChange={handleChange}
-                        className={`w-full px-4 py-2.5 rounded border ${errors.referred_from ? "border-red-500" : "border-gray-300"
-                          } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                        className={`w-full px-4 py-2.5 rounded border ${
+                          errors.referred_from
+                            ? "border-red-500"
+                            : "border-gray-300"
+                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                       >
                         <option value="">Select an option</option>
 
@@ -326,7 +343,9 @@ const ContactHero = () => {
                       </select>
 
                       {errors.referred_from && (
-                        <p className="text-red-500 text-xs">{errors.referred_from}</p>
+                        <p className="text-red-500 text-xs">
+                          {errors.referred_from}
+                        </p>
                       )}
                     </div>
                   </div>

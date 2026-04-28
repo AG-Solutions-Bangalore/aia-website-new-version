@@ -35,7 +35,6 @@ export default function CfeJoinDialog({
   course,
   buttonlabel,
 }) {
-
   const [formData, setFormData] = useState({
     userName: "",
     userMobile: "",
@@ -57,11 +56,20 @@ export default function CfeJoinDialog({
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
 
+    if (params.get("utm_source")) {
+      localStorage.setItem("utm_source", params.get("utm_source"));
+    }
+    if (params.get("utm_medium")) {
+      localStorage.setItem("utm_medium", params.get("utm_medium"));
+    }
+    if (params.get("utm_campaign")) {
+      localStorage.setItem("utm_campaign", params.get("utm_campaign"));
+    }
     setFormData({
       ...formData,
-      utm_source: params.get("utm_source") || "",
-      utm_medium: params.get("utm_medium") || "",
-      utm_campaign: params.get("utm_campaign") || "",
+      utm_source: localStorage.getItem("utm_source") || "",
+      utm_medium: localStorage.getItem("utm_medium") || "",
+      utm_campaign: localStorage.getItem("utm_campaign") || "",
     });
   }, []);
 
@@ -77,14 +85,15 @@ export default function CfeJoinDialog({
         return;
       }
 
-      referralFetchPromise = axios.get(`${BASE_URL}/api/fetch-webreffer`)
-        .then(res => {
+      referralFetchPromise = axios
+        .get(`${BASE_URL}/api/fetch-webreffer`)
+        .then((res) => {
           const data = res.data.data || [];
           referralCache = data;
           setReferral(data);
           return data;
         })
-        .catch(error => {
+        .catch((error) => {
           referralFetchPromise = null;
           console.error("Error fetching referral:", error);
           return [];
@@ -154,8 +163,8 @@ export default function CfeJoinDialog({
     } catch (error) {
       toast.error(
         error.response?.data ||
-        error.message ||
-        "Something went wrong. Please try again.",
+          error.message ||
+          "Something went wrong. Please try again.",
       );
     } finally {
       setLoader(false);
@@ -273,15 +282,19 @@ export default function CfeJoinDialog({
               </div>
 
               <div>
-                <Label className="text-[#0F3652]">How You Know About AIA?</Label>
+                <Label className="text-[#0F3652]">
+                  How You Know About AIA?
+                </Label>
                 <Select
-                  onValueChange={(value) => handleChange({ target: { name: "referred_from", value } })}
+                  onValueChange={(value) =>
+                    handleChange({ target: { name: "referred_from", value } })
+                  }
                   value={formData.referred_from}
                 >
                   <SelectTrigger className={inputStyle}>
                     <SelectValue placeholder="Select an option" />
                   </SelectTrigger>
-                  <SelectContent className="z-[10000]">
+                  <SelectContent className="z-10000">
                     {referral.map((item, index) => (
                       <SelectItem key={index} value={item.referred_from}>
                         {item.referred_from}

@@ -22,19 +22,20 @@ export default function Meta() {
   const routeKey = matchRoute(pathname);
   const metaData = meta[routeKey] || DEFAULT_META;
 
+  const { pathBase } = useLocation();
+  const baseUrl = "https://aia.in.net";
+
+  const canonicalUrl = `${baseUrl}${pathBase}`;
+
   return (
     <Helmet>
       <title>{metaData.title}</title>
       <meta name="title" content={metaData.title} />
       <meta name="description" content={metaData.description} />
 
-      {/* Open Graph / Facebook */}
       <meta property="og:title" content={metaData.title} />
       <meta property="og:description" content={metaData.description} />
-      
-      {/* Twitter */}
-      <meta name="twitter:title" content={metaData.title} />
-      <meta name="twitter:description" content={metaData.description} />
+      <meta property="og:url" content={canonicalUrl} />
     </Helmet>
   );
 }
