@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 import meta from "../../meta/meta.json";
 
 const DEFAULT_META = {
@@ -17,45 +17,24 @@ function matchRoute(pathname) {
   });
 }
 
-const setMetaTag = (selector, attr, value) => {
-  let tag = document.querySelector(selector);
-
-  if (!tag) {
-    tag = document.createElement("meta");
-
-    if (selector.includes("property")) {
-      tag.setAttribute("property", attr);
-    } else {
-      tag.setAttribute("name", attr);
-    }
-
-    document.head.appendChild(tag);
-  }
-
-  tag.setAttribute("content", value);
-};
-
 export default function Meta() {
   const { pathname } = useLocation();
+  const routeKey = matchRoute(pathname);
+  const metaData = meta[routeKey] || DEFAULT_META;
 
-  useEffect(() => {
-    const routeKey = matchRoute(pathname);
-    const metaData = meta[routeKey] || DEFAULT_META;
+  return (
+    <Helmet>
+      <title>{metaData.title}</title>
+      <meta name="title" content={metaData.title} />
+      <meta name="description" content={metaData.description} />
 
-    document.title = metaData.title;
-
-    setMetaTag("meta[name='title']", "title", metaData.title);
-    setMetaTag("meta[name='description']", "description", metaData.description);
-
-    setMetaTag("meta[property='og:title']", "og:title", metaData.title);
-    setMetaTag(
-      "meta[property='og:description']",
-      "og:description",
-      metaData.description,
-    );
-
-    setMetaTag("meta[name='title']", "title", metaData.title);
-  }, [pathname]);
-
-  return null;
+      {/* Open Graph / Facebook */}
+      <meta property="og:title" content={metaData.title} />
+      <meta property="og:description" content={metaData.description} />
+      
+      {/* Twitter */}
+      <meta name="twitter:title" content={metaData.title} />
+      <meta name="twitter:description" content={metaData.description} />
+    </Helmet>
+  );
 }
