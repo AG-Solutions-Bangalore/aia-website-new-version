@@ -16,5 +16,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </HelmetProvider>
       </QueryClientProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
