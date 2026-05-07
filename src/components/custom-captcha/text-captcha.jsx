@@ -106,10 +106,13 @@ const TextCaptcha = ({ onVerify, onRefresh, showVerifyButton = false, autoVerify
             width="155" 
             height="40"
             className="border border-amber-300 rounded-md bg-white shrink-0"
+            role="img"
+            aria-label="Text verification code"
           ></canvas>
           
           <div className="flex-grow flex flex-col gap-2 w-full">
             <input
+              aria-label="Enter captcha verification code"
               type="text"
               value={userInput}
               onChange={(e) => setUserInput(e.target.value.toUpperCase())}

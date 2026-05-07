@@ -12,12 +12,16 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   root: process.cwd(),
+   server: {
+    allowedHosts: ['.ngrok-free.app']
+  },
   base: "/",
   plugins: [
     tailwindcss(),
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: false,
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'android-chrome-192x192.png'],
       manifest: {
         name: 'AIA Website',
@@ -127,11 +131,6 @@ export default defineConfig({
               return "data-vendor";
             }
             
-            // Group heavy UI/Animation libs
-            if (id.includes("framer-motion") || id.includes("lucide-react") || id.includes("react-icons") || id.includes("vaul")) {
-              return "ui-vendor";
-            }
-
             // Maps are heavy and specific to certain routes
             if (id.includes("leaflet") || id.includes("react-leaflet")) {
               return "map-vendor";
@@ -141,9 +140,6 @@ export default defineConfig({
             if (id.includes("swiper") || id.includes("embla-carousel")) {
               return "carousel-vendor";
             }
-
-            // Everything else into a generic vendor chunk
-            return "vendor";
           }
         },
       },

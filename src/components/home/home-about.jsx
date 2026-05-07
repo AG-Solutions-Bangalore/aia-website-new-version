@@ -1,7 +1,11 @@
-import CourseAbout from "../courses/common/course-about";
+import { lazy, Suspense } from "react";
 import CourseAboutH1 from "../courses/common/course-aboutH1";
 
+const PdfJoinDialog = lazy(() => import("../common/PdfForm"));
+
+
 const HomeAbout = () => {
+
   return (
     <>
       <CourseAboutH1
@@ -14,8 +18,16 @@ Guided by industry experts with hands-on experience, our practical training ensu
 
 
 `}
-        buttonText="Know more about AIA"
-        buttonLink="/about-aia"
+        customButton={
+          <Suspense fallback={null}>
+            <PdfJoinDialog
+              course="AIA Profile"
+              buttonlabel="Download AIA Profile"
+              triggerClassName="w-auto"
+              buttonClassName="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300"
+            />
+          </Suspense>
+        }
         aboutStats={[
           {
             display: "10,000+ Hours",

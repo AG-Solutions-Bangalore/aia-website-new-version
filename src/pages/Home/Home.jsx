@@ -1,4 +1,3 @@
-import PopUp from "@/components/common/pop-up";
 import HomeHero from "@/components/home/home-hero";
 import certificationCourses from "@/data/certificationCourses";
 import {
@@ -10,12 +9,10 @@ import {
   useTransition,
 } from "react";
 
-const homeAboutPromise = import("@/components/home/home-about");
-const homeContactPromise = import("@/components/home/home-contact");
-
-const HomeAbout = lazy(() => homeAboutPromise);
-const HomeContact = lazy(() => homeContactPromise);
-
+const PopUp = lazy(() => import("@/components/common/pop-up"));
+const AppQueryProvider = lazy(() => import("@/lib/query-provider"));
+const HomeAbout = lazy(() => import("@/components/home/home-about"));
+const HomeContact = lazy(() => import("@/components/home/home-contact"));
 const HomeCourses = lazy(() => import("@/components/home/home-courses"));
 const HomePassout = lazy(() => import("@/components/home/home-passout"));
 const HomeResults = lazy(() => import("@/components/home/home-results"));
@@ -50,6 +47,7 @@ const LazySection = ({
   rootMargin = "200px",
   minHeight = "200px",
   priority = false,
+  withQuery = false,
 }) => {
   const [isVisible, setIsVisible] = useState(priority);
   const [isPending, startTransition] = useTransition();
@@ -96,7 +94,13 @@ const LazySection = ({
     >
       {isVisible ? (
         <Suspense fallback={<SectionSkeleton height={reservedHeight} />}>
-          <div ref={contentRef}>{children}</div>
+          <div ref={contentRef}>
+            {withQuery ? (
+              <AppQueryProvider>{children}</AppQueryProvider>
+            ) : (
+              children
+            )}
+          </div>
         </Suspense>
       ) : (
         <SectionSkeleton height={reservedHeight} />
@@ -105,19 +109,42 @@ const LazySection = ({
   );
 };
 
+const DelayedPopUp = () => {
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    const show = () => setShouldRender(true);
+    const timer = window.setTimeout(() => {
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(show, { timeout: 2000 });
+      } else {
+        show();
+      }
+    }, 16000);
+
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  if (!shouldRender) return null;
+
+  return (
+    <Suspense fallback={null}>
+      <PopUp slug="home" />
+    </Suspense>
+  );
+};
+
 export default function Home() {
   return (
     <div className="font-sans text-gray-800">
-      <Suspense fallback={null}>
-        <PopUp slug="home" />
-      </Suspense>
+      <DelayedPopUp />
 
       <HomeHero slug="home" bottombar="true" />
-      <LazySection minHeight="400px" priority>
+      <LazySection minHeight="400px" rootMargin="500px">
         <HomeAbout />
       </LazySection>
 
-      <LazySection minHeight="600px" priority>
+      <LazySection minHeight="600px" rootMargin="0px">
         <HomeContact />
       </LazySection>
 
@@ -125,11 +152,11 @@ export default function Home() {
         <HomeCourses certificationCourses={certificationCourses} />
       </LazySection>
 
-      <LazySection minHeight="400px">
+      <LazySection minHeight="400px" withQuery>
         <HomePassout />
       </LazySection>
 
-      <LazySection minHeight="500px">
+      <LazySection minHeight="500px" withQuery>
         <HomeResults
           title="We Stand by Results - Actual Certificates Earned by AIA Learners"
           description="Actual certificates earned by professionals across CFE, CIA, and CAMS after structured preparation with AIA."
@@ -140,7 +167,7 @@ export default function Home() {
         <HomeAccredited />
       </LazySection>
 
-      <LazySection minHeight="400px">
+      <LazySection minHeight="400px" withQuery>
         <WhatsappCarosal
           course="all"
           title="Unfiltered Reflections from AIA-Trained Professionals"
@@ -148,27 +175,27 @@ export default function Home() {
         />
       </LazySection>
 
-      <LazySection minHeight="400px">
+      <LazySection minHeight="400px" withQuery>
         <HomeReview />
       </LazySection>
 
-      <LazySection minHeight="350px">
+      <LazySection minHeight="350px" withQuery>
         <AllYoutube />
       </LazySection>
 
-      <LazySection minHeight="300px">
+      <LazySection minHeight="300px" withQuery>
         <HomeCorporatePartner />
       </LazySection>
 
-      <LazySection minHeight="300px">
+      <LazySection minHeight="300px" withQuery>
         <HomePrCarousel />
       </LazySection>
 
-      <LazySection minHeight="300px">
+      <LazySection minHeight="300px" withQuery>
         <HomeAlumniWork />
       </LazySection>
 
-      <LazySection minHeight="400px">
+      <LazySection minHeight="400px" withQuery>
         <CourseYoutubeLecture
           courseSlug="home"
           title="Watch & Learn! Everything You Need to"
@@ -176,11 +203,11 @@ export default function Home() {
         />
       </LazySection>
 
-      <LazySection minHeight="400px">
+      <LazySection minHeight="400px" withQuery>
         <HomeBlogs />
       </LazySection>
 
-      <LazySection minHeight="300px">
+      <LazySection minHeight="300px" withQuery>
         <HomeFaq />
       </LazySection>
     </div>

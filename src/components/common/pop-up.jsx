@@ -190,7 +190,7 @@ const PopUp = ({ slug = "home" }) => {
                 height={400}
                 className={`${popupData.popup_heading ? "rounded-b-lg" : "rounded-lg"} w-full h-auto`}
                 loading="eager"
-                fetchPriority="high"
+                fetchpriority="high"
               />
             )}
           </div>

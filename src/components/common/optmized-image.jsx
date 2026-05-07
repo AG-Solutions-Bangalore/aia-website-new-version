@@ -3,11 +3,12 @@ const OptimizedImage = ({
   alt = "",
   className = "",
   style = {},
-  priority = false, 
+  priority = false,
   width,
   height,
-  sizes = "100vw", 
+  sizes = "100vw",
   onError,
+  fetchPriority,
   ...rest
 }) => {
   if (!src) return null;
@@ -31,7 +32,7 @@ const OptimizedImage = ({
 
   return (
     <img
-      src={src} 
+      src={src}
       srcSet={srcSet}
       sizes={sizes}
       alt={alt}
@@ -40,7 +41,7 @@ const OptimizedImage = ({
       width={width}
       height={height}
       loading={priority ? "eager" : "lazy"}
-      fetchPriority={priority ? "high" : "low"}
+      fetchpriority={fetchPriority || (priority ? "high" : "low")}
       decoding={priority ? "sync" : "async"}
       onError={onError}
       {...rest}

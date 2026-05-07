@@ -1,6 +1,5 @@
 import React from "react";
 import SectionHeadingH1 from "../SectionHeading/SectionHeadingH1";
-
 const AboutSection = () => {
   return (
     <div className="py-16 bg-linear-to-b from-white to-gray-50">
@@ -59,10 +58,16 @@ const AboutSection = () => {
                 continuous guidance, AIA enables professionals to thrive
                 throughout their careers.
               </p>
+
             </div>
+
+
           </div>
+
         </div>
+
       </div>
+
     </div>
   );
 };

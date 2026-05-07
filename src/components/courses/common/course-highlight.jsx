@@ -1,7 +1,7 @@
 import CountUp from "@/components/common/count-up";
+import { Partners } from "@/components/home/home-accredited";
 import SectionHeading from "@/components/SectionHeading/SectionHeading";
 import { partnerLogos } from "@/utils/partnerLogos";
-import React from "react";
 
 const CourseHighLight = ({
   badgeText,
@@ -289,35 +289,7 @@ const CourseHighLight = ({
           ))}
         </div>
 
-        {logos.length > 0 && (
-          <div className="max-w-340 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6 px-2 mx-auto">
-            {logos.map((logo, index) => {
-              const Wrapper = logo.link ? "a" : "div";
-              const isLast = index == logos.length - 1;
-
-              return (
-                <Wrapper
-                  key={index}
-                  {...(logo.link && {
-                    href: logo.link,
-                    target: "_blank",
-                    rel: "noopener noreferrer",
-                  })}
-                  className={`rounded-xl p-8 text-center transition-all duration-300 
-          flex items-center justify-center hover:scale-125 cursor-pointer
-          ${isLast ? "col-span-2 lg:col-span-1" : "lg:col-span-1"}`}
-                >
-                  <img
-                    src={logo.img}
-                    alt="Brand logo"
-                    className="max-w-full max-h-32 object-contain"
-                    loading="lazy"
-                  />
-                </Wrapper>
-              );
-            })}
-          </div>
-        )}
+        <Partners />
       </div>
     </div>
   );

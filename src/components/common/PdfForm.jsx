@@ -1,33 +1,22 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { BASE_URL } from "@/api/base-url";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import { BASE_URL } from "@/api/base-url";
+import axios from "axios";
 import { X } from "lucide-react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
-import { useNavigate } from "react-router-dom";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 let referralCache = null;
 let referralFetchPromise = null;
 
-export default function PdfJoinDialog({ course, buttonlabel }) {
+export default function PdfJoinDialog({ course, buttonlabel, triggerClassName, buttonClassName }) {
   const [formData, setFormData] = useState({
     userName: "",
     userMobile: "",
@@ -126,6 +115,7 @@ export default function PdfJoinDialog({ course, buttonlabel }) {
       return;
     }
     setLoader(true);
+    console.log(formData);
     try {
       const res = await axios.post(
         `${BASE_URL}/api/create-webenquiry`,
@@ -155,8 +145,8 @@ export default function PdfJoinDialog({ course, buttonlabel }) {
     } catch (error) {
       toast.error(
         error.response?.data ||
-          error.message ||
-          "Something went wrong. Please try again.",
+        error.message ||
+        "Something went wrong. Please try again.",
       );
     } finally {
       setLoader(false);
@@ -168,8 +158,8 @@ export default function PdfJoinDialog({ course, buttonlabel }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className="flex w-1/2 items-center justify-center">
-          <Button className="bg-[#F3831C] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#F3831C]/90 transition-all cursor-pointer">
+        <div className={triggerClassName || "flex w-1/2 items-center justify-center"}>
+          <Button className={buttonClassName || "bg-[#F3831C] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#F3831C]/90 transition-all cursor-pointer"}>
             {buttonlabel || "More Info"}
           </Button>
         </div>

@@ -1,56 +1,97 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/api/base-url";
 import OptimizedImage from "@/components/common/optmized-image";
+
+const HOME_BANNER_BASE =
+  "https://aia.in.net/webapi/public/assets/images/banner_images/";
+
+const HOME_FALLBACK_SLIDES = [
+  {
+    id: 1,
+    imageUrl: `${HOME_BANNER_BASE}2.webp`,
+    link: "contact",
+    alt: "cia-cfe-cams-certification",
+  },
+];
+
+const HOME_FALLBACK_ANNOUNCEMENTS = [
+  {
+    id: 1,
+    title: "Have Questions?",
+    subtext: "Connect with experts and plan your preparation the smarter way.",
+    link: "contact",
+  },
+];
 
 export default function HomeHero({ slug, bottombar = false }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [carouselSlides, setCarouselSlides] = useState([]);
-  const [announcements, setAnnouncements] = useState([]);
-
-  const { data, isLoading, isError, error } = useQuery({
-    queryKey: [slug],
-    queryFn: async () => {
-      const res = await axios.get(`${BASE_URL}/api/getBanner/${slug}`, {
-        timeout: 10000,
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-      return res.data;
-    },
-  });
+  const [carouselSlides, setCarouselSlides] = useState(
+    slug === "home" ? HOME_FALLBACK_SLIDES : [],
+  );
+  const [announcements, setAnnouncements] = useState(
+    slug === "home" ? HOME_FALLBACK_ANNOUNCEMENTS : [],
+  );
+  const [isLoading, setIsLoading] = useState(slug !== "home");
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!data?.data || !data?.image_url) return;
+    const controller = new AbortController();
 
-    const bannerImageUrlObj = data.image_url.find(
-      (item) => item.image_for === "Banner",
-    );
-    const baseImageUrl = bannerImageUrlObj?.image_url || "";
+    const loadBanner = async () => {
+      try {
+        setIsLoading(true);
+        setError(null);
+        const response = await fetch(`${BASE_URL}/api/getBanner/${slug}`, {
+          headers: { Accept: "application/json" },
+          signal: controller.signal,
+        });
 
-    const slides = data.data.map((banner, index) => ({
-      id: index + 1,
-      imageUrl: `${baseImageUrl}${banner.banner_image}`,
-      link: banner.banner_link,
-      alt: banner.banner_image_alt,
-    }));
+        if (!response.ok) {
+          throw new Error(`Banner request failed: ${response.status}`);
+        }
 
-    const announcementsData = data.data.map((banner, index) => ({
-      id: index + 1,
-      title: banner.banner_text,
-      subtext: banner.banner_sub_text,
-      link: banner.banner_link,
-    }));
+        const data = await response.json();
+        if (!data?.data || !data?.image_url) return;
 
-    setCarouselSlides(slides);
-    setAnnouncements(announcementsData);
-  }, [data]);
+        const bannerImageUrlObj = data.image_url.find(
+          (item) => item.image_for === "Banner",
+        );
+        const baseImageUrl = bannerImageUrlObj?.image_url || "";
+
+        const slides = data.data.map((banner, index) => ({
+          id: index + 1,
+          imageUrl: `${baseImageUrl}${banner.banner_image}`,
+          link: banner.banner_link,
+          alt: banner.banner_image_alt,
+        }));
+
+        const announcementsData = data.data.map((banner, index) => ({
+          id: index + 1,
+          title: banner.banner_text,
+          subtext: banner.banner_sub_text,
+          link: banner.banner_link,
+        }));
+
+        setCarouselSlides(slides);
+        setAnnouncements(announcementsData);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          setError(err);
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    loadBanner();
+
+    return () => controller.abort();
+  }, [slug]);
 
   const nextSlide = useCallback(() => {
     if (carouselSlides.length > 0)
@@ -78,7 +119,7 @@ export default function HomeHero({ slug, bottombar = false }) {
       <section className="relative">
         <div
           className="relative w-full overflow-hidden"
-          style={{ aspectRatio: "16/5" }}
+          style={{ aspectRatio: "11/5" }}
         >
           <div className="absolute inset-0 bg-gray-200 shimmer" />
         </div>
@@ -131,7 +172,7 @@ export default function HomeHero({ slug, bottombar = false }) {
     );
   }
 
-  if (isError) {
+  if (error) {
     return (
       <section className="relative h-[420px] bg-red-50 flex items-center justify-center">
         <span className="text-xs text-red-400 font-medium">
@@ -151,6 +192,7 @@ export default function HomeHero({ slug, bottombar = false }) {
     );
   }
 
+  const activeSlide = carouselSlides[currentSlide];
   const current = announcements[currentSlide];
 
   return (
@@ -161,19 +203,21 @@ export default function HomeHero({ slug, bottombar = false }) {
         onMouseLeave={() => setIsAutoPlaying(true)}
       >
         <div className="relative w-full" style={{ aspectRatio: "11/5" }}>
-          {carouselSlides.map((slide, index) => (
+          {activeSlide && (
             <a
-              key={slide.id}
-              href={slide.link}
+              key={activeSlide.id}
+              href={activeSlide.link}
               target="_blank"
               rel="noopener noreferrer"
-              className={`absolute inset-0 transition-opacity duration-700 ease-in-out ${index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
-                }`}
+              className="absolute inset-0 z-10"
             >
               <OptimizedImage
-                src={slide.imageUrl}
-                alt={slide.alt}
-                priority={index === 0}
+                src={activeSlide.imageUrl}
+                alt={activeSlide.alt}
+                priority={currentSlide === 0}
+                width={1600}
+                height={727}
+                sizes="100vw"
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   e.target.src =
@@ -181,7 +225,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                 }}
               />
             </a>
-          ))}
+          )}
 
           {carouselSlides.length > 1 &&
             [
@@ -203,7 +247,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                 onClick={onClick}
                 aria-label={`${dir === "prev" ? "Previous" : "Next"} slide`}
                 className={`absolute ${side} top-1/2 -translate-y-1/2 z-20
-                w-8 h-8 md:w-10 md:h-10 flex items-center justify-center
+                w-11 h-11 flex items-center justify-center
                 rounded-full bg-black/25 hover:bg-black/55
                 text-white backdrop-blur-sm border border-white/10
                 transition-all duration-200 hover:scale-105 active:scale-95`}
@@ -228,7 +272,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                   {current.title}
                 </p>
                 {current.subtext && (
-                  <p className="text-[11.5px] text-white/50 mt-1 leading-snug font-normal">
+                  <p className="text-[11.5px] text-white/80 mt-1 leading-snug font-normal">
                     {current.subtext}
                   </p>
                 )}
@@ -240,7 +284,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                 rel="noopener noreferrer"
                 className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
-                  text-white bg-[#F3831C] hover:bg-[#e07318] active:bg-[#c96510]
+                  min-h-11 text-white bg-[#F3831C] hover:bg-[#e07318] active:bg-[#c96510]
                   transition-colors duration-150 whitespace-nowrap self-start"
               >
                 Know More.

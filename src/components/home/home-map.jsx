@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import React from "react";
@@ -14,6 +14,7 @@ const SIZES = [38, 44, 36, 42, 34, 40];
 const HomeMap = ({ courseCode }) => {
   const [mapData, setMapData] = useState(null);
   const [imageUrl, setImageUrl] = useState("");
+  const mapRef = useRef(null);
 
   const { data: apiData, isLoading, isError } = useQuery({
     queryKey: ["student-map-data", courseCode],
@@ -46,12 +47,12 @@ const HomeMap = ({ courseCode }) => {
   };
 
   useEffect(() => {
-    if (!mapData || !imageUrl) return;
+    if (!mapData || !imageUrl || !mapRef.current) return;
 
-    const container = L.DomUtil.get("map");
+    const container = mapRef.current;
     if (container && container._leaflet_id) container._leaflet_id = null;
 
-    const map = L.map("map", {
+    const map = L.map(container, {
       center: [20, 0],
       zoom: 2,
       zoomSnap: 0.25,
@@ -233,7 +234,7 @@ const HomeMap = ({ courseCode }) => {
 
   return (
     <div
-      id="map"
+      ref={mapRef}
       style={{ height: "60vh", width: "95.5%" }}
       className="mx-auto"
     />

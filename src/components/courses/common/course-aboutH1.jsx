@@ -1,6 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import CfeJoinDialog from "../cfe-curriculam/join-prep";
+import { lazy, Suspense } from "react";
 import SectionHeadingH1 from "@/components/SectionHeading/SectionHeadingH1";
+
+const CfeJoinDialog = lazy(() => import("../cfe-curriculam/join-prep"));
 
 const CourseAboutH1 = ({
   badgeText,
@@ -15,6 +17,7 @@ const CourseAboutH1 = ({
   formbuttonlabel,
   lineBreak = "lg",
   preheading,
+  customButton,
 }) => {
   const location = useLocation();
 
@@ -48,15 +51,21 @@ const CourseAboutH1 = ({
               </div>
             )}
 
-            {buttonText && (
-              <Link
-                to={buttonLink}
-                className="inline-block md:flex md:justify-center xl:justify-start"
-              >
-                <span className="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300">
-                  {buttonText}
-                </span>
-              </Link>
+            {customButton ? (
+              <div className="flex justify-center md:justify-start">
+                {customButton}
+              </div>
+            ) : (
+              buttonText && (
+                <Link
+                  to={buttonLink}
+                  className="flex justify-center md:justify-start"
+                >
+                  <span className="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300">
+                    {buttonText}
+                  </span>
+                </Link>
+              )
             )}
           </div>
 
@@ -97,11 +106,10 @@ const CourseAboutH1 = ({
 
                 <div
                   className={`text-base sm:text-lg md:text-xl font-bold mb-1 text-[#0F3652]
-      ${
-        stat.lineBreak === "sm"
-          ? "whitespace-pre-line md:whitespace-normal"
-          : "whitespace-normal lg:whitespace-pre-line"
-      }`}
+      ${stat.lineBreak === "sm"
+                      ? "whitespace-pre-line md:whitespace-normal"
+                      : "whitespace-normal lg:whitespace-pre-line"
+                    }`}
                 >
                   {stat.display}
                 </div>
@@ -121,12 +129,14 @@ const CourseAboutH1 = ({
 
       {location.pathname != "/" && (
         <div className="mt-8 md:mt-10 lg:mt-12 px-4">
-          <CfeJoinDialog
-            title={formtitle}
-            subtitle={formsubtitle}
-            course={formcourse}
-            buttonlabel={formbuttonlabel}
-          />
+          <Suspense fallback={null}>
+            <CfeJoinDialog
+              title={formtitle}
+              subtitle={formsubtitle}
+              course={formcourse}
+              buttonlabel={formbuttonlabel}
+            />
+          </Suspense>
         </div>
       )}
     </section>

@@ -30,7 +30,6 @@ const contactMethods = [
       { text: "+91 93113 20114", href: "tel:+919311320114" },
       { text: "+91 97175 97197", href: "tel:+919717597197" },
       { text: "0129 417 4177", href: "tel:01294174177" },
-      { text: "1800-1200-2555", href: "tel:+180012002555", badge: "Toll Free" },
     ],
   },
   {

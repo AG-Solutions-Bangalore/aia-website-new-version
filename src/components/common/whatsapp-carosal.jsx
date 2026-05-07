@@ -582,7 +582,7 @@ export const TestimonialSlider = ({
           rel="preload"
           as="image"
           href={src}
-          fetchPriority="low"
+          fetchpriority="low"
         />
       ))}
 

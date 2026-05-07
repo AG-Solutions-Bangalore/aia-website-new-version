@@ -1,10 +1,9 @@
 import { IMAGE_PATH } from "@/api/base-url";
-import { href } from "react-router-dom";
 
 const AccreditationBadges = () => {
   const badges = [
     {
-      img: `${IMAGE_PATH}/iao-seal.webp`,
+      img: `${IMAGE_PATH}/IAO.webp`,
       alt: "IAO",
       href: "https://www.iao.org/India-Haryana/Academy-of-Internal-Audit",
     },
@@ -13,8 +12,22 @@ const AccreditationBadges = () => {
       alt: "IIA",
       href: "https://iiaindia.co/GlobalCertification/LearningPartner",
     },
-    { img: `${IMAGE_PATH}/ISO.webp`, alt: "ISO" },
-    { img: `${IMAGE_PATH}/Gleim.webp`, alt: "Gleim" },
+    {
+      img: `${IMAGE_PATH}/BECKER.webp`,
+      alt: "Becker",
+    },
+    {
+      img: `${IMAGE_PATH}/ISO.webp`,
+      alt: "ISO",
+    },
+    {
+      img: `${IMAGE_PATH}/ISACA.webp`,
+      alt: "ISACA",
+    },
+    {
+      img: `${IMAGE_PATH}/Gleim.webp`,
+      alt: "Gleim",
+    },
     {
       img: `${IMAGE_PATH}/GSAAA.webp`,
       alt: "GSAAA",
@@ -23,47 +36,34 @@ const AccreditationBadges = () => {
   ];
 
   return (
-    <div className="grid grid-cols-2 md:grid-cols-5 gap-2 items-center">
-      {badges.map(({ img, alt, href }, index) => {
-        const isLast = index === badges.length - 1;
+    <div className="flex flex-nowrap gap-4 items-center justify-start overflow-x-auto overflow-y-auto h-28 no-scrollbar pb-3 -mx-1 px-1">
+      {badges.map(({ img, alt, href }) => {
         const inner = (
-          <div className="bg-white border border-gray-700 rounded-lg p-2 w-full h-20 flex items-center justify-center transition-all duration-200 group-hover:border-[#fa8017] group-hover:scale-105">
+          <div className="bg-white border border-gray-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)] rounded-xl p-2 w-[5.5rem] h-14 sm:w-24 sm:h-16 flex items-center justify-center transition-all duration-500 group-hover:border-[#fa8017] group-hover:shadow-lg group-hover:shadow-orange-500/10 group-hover:-translate-y-1.5">
             <img
               src={img}
               alt={alt}
-              className="w-full h-full object-contain"
+              className="max-w-[85%] max-h-[85%] object-contain transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
             />
           </div>
         );
 
-        const wrapper = href ? (
+        return href ? (
           <a
             key={alt}
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group"
+            className="group flex-shrink-0"
             title={alt}
+            aria-label={alt}
           >
             {inner}
           </a>
         ) : (
-          <div key={alt} className="group" title={alt}>
+          <div key={alt} className="group flex-shrink-0" title={alt}>
             {inner}
-          </div>
-        );
-
-        return (
-          <div
-            key={alt}
-            className={
-              isLast ? "col-span-2 md:col-span-1 flex justify-center" : ""
-            }
-          >
-            <div className={isLast ? "w-1/2 md:w-full" : "w-full"}>
-              {wrapper}
-            </div>
           </div>
         );
       })}
@@ -92,18 +92,6 @@ export const PaymentAccreditation = () => (
             loading="lazy"
           />
         </div>
-
-        <a
-          href="tel:+18001200255"
-          className="grouprounded-xl p-3 flex items-center justify-center hover:border-[#fa8017]/40 transition-all duration-200"
-        >
-          <img
-            src={`${IMAGE_PATH}/toll free.webp`}
-            alt="Toll Free"
-            className="w-full h-20 object-contain group-hover:scale-105 transition-transform duration-200"
-            loading="lazy"
-          />
-        </a>
       </div>
     </div>
 

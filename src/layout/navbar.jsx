@@ -1,19 +1,24 @@
 import { ENROLL_URL, IMAGE_PATH } from "@/api/base-url";
 import { ChevronDown, Mail, Menu, Phone, X } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import OptimizedImage from "@/components/common/optmized-image";
 import {
   FaFacebookF,
   FaInstagram,
   FaLinkedinIn,
   FaPinterestP,
-  FaTwitter,
-  FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import OptimizedImage from "@/components/common/optmized-image";
+import { FaXTwitter } from "react-icons/fa6";
+
+const SocialMark = ({ children }) => (
+  <span className="inline-flex h-10 min-w-10 items-center justify-center text-[11px] font-bold leading-none">
+    {children}
+  </span>
+);
+
 const routePrefetch = {
-  "/": () => import("../pages/Home/Home"),
   "/about-aia": () => import("../pages/About/About"),
   "/cfe-curriculum": () => import("../pages/Courses/CFECurriculam"),
   "/cia-curriculum": () => import("../pages/Courses/CIACurriculam"),
@@ -39,7 +44,7 @@ const Navbar = () => {
       underline: true,
     },
     {
-      icon: <FaWhatsapp />,
+      icon: <SocialMark>WA</SocialMark>,
       text: "",
       href: "https://wa.me/+919311320114",
       color: "text-[#F3831C]",
@@ -50,13 +55,6 @@ const Navbar = () => {
       text: "+91 93113 20114",
       href: "tel:+919311320114",
       color: "text-[#F3831C]",
-      underline: true,
-    },
-    {
-      icon: <Phone size={16} />,
-      text: "1800-1200-2555",
-      href: "tel:+180012002555",
-      color: "text-white",
       underline: true,
     },
   ];
@@ -87,7 +85,7 @@ const Navbar = () => {
       submenu: [
         { name: "CFE", link: "/cfe-free-resources" },
         { name: "CIA", link: "/cia-free-resources" },
-        { name: "CAMS", link: "/cams-free-resources" }
+        { name: "CAMS", link: "/cams-free-resources" },
       ],
     },
     {
@@ -108,32 +106,32 @@ const Navbar = () => {
 
   const socialLinks = [
     {
-      icon: FaFacebookF,
+      icon: <FaFacebookF size={16} />,
       url: "https://www.facebook.com/@academyofinternalaudit",
       label: "Facebook",
     },
     {
-      icon: FaTwitter,
+      icon: <FaXTwitter size={16} />,
       url: "https://twitter.com/AcademyAudit",
       label: "Twitter",
     },
     {
-      icon: FaInstagram,
+      icon: <FaInstagram size={16} />,
       url: "https://www.instagram.com/academyofia/",
       label: "Instagram",
     },
     {
-      icon: FaLinkedinIn,
+      icon: <FaLinkedinIn size={16} />,
       url: "https://www.linkedin.com/company/academy-of-internal-audit",
       label: "LinkedIn",
     },
     {
-      icon: FaPinterestP,
+      icon: <FaPinterestP size={16} />,
       url: "https://in.pinterest.com/academyofia/",
       label: "Pinterest",
     },
     {
-      icon: FaYoutube,
+      icon: <FaYoutube size={16} />,
       url: "https://www.youtube.com/@academyofia",
       label: "YouTube",
     },
@@ -166,10 +164,9 @@ const Navbar = () => {
                   key={index}
                   href={link.href}
                   className={`
-            flex items-center gap-2 relative ${link.color}
-            ${
-              link.underline
-                ? `
+            flex min-h-10 items-center gap-2 relative ${link.color}
+            ${link.underline
+                      ? `
               transition-colors duration-300
               after:content-['']
               after:absolute
@@ -186,8 +183,8 @@ const Navbar = () => {
               hover:after:scale-x-100
               hover:after:origin-left
             `
-                : ""
-            }
+                      : ""
+                    }
           `}
                 >
                   {link.icon}
@@ -198,23 +195,20 @@ const Navbar = () => {
           </div>
         </div>
 
-        <div className="text-white py-2.5">
-          <div className="px-4 flex justify-center items-center gap-4">
-            {socialLinks.map((social, index) => {
-              const Icon = social.icon;
-              return (
-                <a
-                  key={index}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={social.label}
-                  className="text-white hover:text-[#F3831C] transition-colors"
-                >
-                  <Icon size={18} />
-                </a>
-              );
-            })}
+        <div className="text-white py-2.5 overflow-hidden">
+          <div className="px-4 flex justify-center items-center md:gap-4">
+            {socialLinks.map((social, index) => (
+              <a
+                key={index}
+                href={social.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.label}
+                className="inline-flex min-h-10 min-w-10 items-center justify-center text-white hover:text-[#F3831C] transition-colors"
+              >
+                <SocialMark>{social.icon}</SocialMark>
+              </a>
+            ))}
           </div>
         </div>
       </div>
@@ -257,11 +251,10 @@ const Navbar = () => {
 
                   {item.submenu && (
                     <ul
-                      className={`absolute top-full left-0 mt-2 px-6 bg-white rounded-lg shadow-xl min-w-[220px] py-2 transition-all duration-300 ${
-                        activeDropdown === index
+                      className={`absolute top-full left-0 mt-2 px-6 bg-white rounded-lg shadow-xl min-w-[220px] py-2 transition-all duration-300 ${activeDropdown === index
                           ? "opacity-100 visible translate-y-0"
                           : "opacity-0 invisible translate-y-2"
-                      }`}
+                        }`}
                     >
                       {item.submenu.map((subItem, subIndex) => (
                         <li key={subIndex}>
@@ -322,7 +315,13 @@ const Navbar = () => {
             <div className="lg:hidden">
               <button
                 onClick={toggleMobileMenu}
-                className="text-[#0F3652] focus:outline-none"
+                className="min-h-11 min-w-11 text-[#0F3652] focus:outline-none"
+                aria-label={
+                  isMobileMenuOpen
+                    ? "Close navigation menu"
+                    : "Open navigation menu"
+                }
+                aria-expanded={isMobileMenuOpen}
               >
                 {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
               </button>
@@ -330,14 +329,14 @@ const Navbar = () => {
           </div>
 
           <div
-            className={`lg:hidden fixed top-0 left-0 w-80 h-screen bg-white shadow-2xl transition-transform duration-300 overflow-y-auto z-50 ${
-              isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-            }`}
+            className={`lg:hidden fixed top-0 left-0 w-80 h-screen bg-white shadow-2xl transition-transform duration-300 overflow-y-auto z-50 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+              }`}
           >
             <div className="p-6">
               <button
                 onClick={toggleMobileMenu}
-                className="absolute top-7 right-6 text-[#0F3652]"
+                className="absolute top-7 right-6 min-h-11 min-w-11 text-[#0F3652]"
+                aria-label="Close navigation menu"
               >
                 <X size={28} />
               </button>
@@ -347,7 +346,7 @@ const Navbar = () => {
                   src={`${IMAGE_PATH}/new_logo.webp`}
                   alt="Academy of Internal Audit"
                   className="h-8 md:h-10 w-auto"
-                  fetchPriority="high"
+                  fetchpriority="high"
                   decoding="async"
                 />
               </div>
@@ -364,9 +363,8 @@ const Navbar = () => {
                           {item.title}
                           <ChevronDown
                             size={16}
-                            className={`transition-transform ${
-                              activeDropdown === index ? "rotate-180" : ""
-                            }`}
+                            className={`transition-transform ${activeDropdown === index ? "rotate-180" : ""
+                              }`}
                           />
                         </button>
 
@@ -441,13 +439,6 @@ const Navbar = () => {
                   >
                     <Phone size={16} />
                     +91 93113 20114
-                  </a>
-                  <a
-                    href="tel:+180012002555"
-                    className="flex items-center gap-2 text-sm text-[#0F3652] hover:text-[#F3831C]"
-                  >
-                    <Phone size={16} />
-                    1800-1200-2555
                   </a>
                 </div>
               </div>

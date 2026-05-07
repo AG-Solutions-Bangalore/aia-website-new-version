@@ -259,39 +259,51 @@ const HomeContact = () => {
                     className="w-full px-4 py-3 border border-[#0F3652] rounded focus:outline-none focus:ring-2 focus:ring-[#F3831C] text-sm resize-none"
                     disabled={isSubmitting}
                   />
-                  <select
-                    name="userCourse"
-                    value={formData.userCourse}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-[#0F3652] rounded focus:outline-none focus:ring-2 focus:ring-[#F3831C] text-sm"
-                  >
-                    <option value="">Service Interested In *</option>
-                    <option value="Certified Fraud Examiner">
-                      Certified Fraud Examiner
-                    </option>
-                    <option value="Certified Internal Auditor">
-                      Certified Internal Auditor
-                    </option>
-                    <option value="Certified Anti Money Laundering Specialist">
-                      Certified Anti Money Laundering Specialist
-                    </option>
-                    <option value="CIA Challenge Exam">
-                      CIA Challenge Exam
-                    </option>
-                  </select>
-                  <select
-                    name="referred_from"
-                    value={formData.referred_from}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border border-[#0F3652] rounded focus:outline-none focus:ring-2 focus:ring-[#F3831C] text-sm"
-                  >
-                    <option value="">How You Know About AIA?</option>
-                    {referral.map((item, index) => (
-                      <option key={index} value={item.referred_from}>
-                        {item.referred_from}
+                  <div>
+                    <label htmlFor="home-user-course" className="sr-only">
+                      Service interested in
+                    </label>
+                    <select
+                      id="home-user-course"
+                      name="userCourse"
+                      value={formData.userCourse}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-[#0F3652] rounded focus:outline-none focus:ring-2 focus:ring-[#F3831C] text-sm"
+                    >
+                      <option value="">Service Interested In *</option>
+                      <option value="Certified Fraud Examiner">
+                        Certified Fraud Examiner
                       </option>
-                    ))}
-                  </select>
+                      <option value="Certified Internal Auditor">
+                        Certified Internal Auditor
+                      </option>
+                      <option value="Certified Anti Money Laundering Specialist">
+                        Certified Anti Money Laundering Specialist
+                      </option>
+                      <option value="CIA Challenge Exam">
+                        CIA Challenge Exam
+                      </option>
+                    </select>
+                  </div>
+                  <div>
+                    <label htmlFor="home-referred-from" className="sr-only">
+                      How you know about AIA
+                    </label>
+                    <select
+                      id="home-referred-from"
+                      name="referred_from"
+                      value={formData.referred_from}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-[#0F3652] rounded focus:outline-none focus:ring-2 focus:ring-[#F3831C] text-sm"
+                    >
+                      <option value="">How You Know About AIA?</option>
+                      {referral.map((item, index) => (
+                        <option key={index} value={item.referred_from}>
+                          {item.referred_from}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
 
                 {/*

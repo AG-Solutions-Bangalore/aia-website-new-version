@@ -434,7 +434,7 @@ export const TestimonialSlider = ({ reviews, className }) => {
           rel="preload"
           as="image"
           href={src}
-          fetchPriority="low"
+          fetchpriority="low"
         />
       ))} */}
       {/* Mobile Layout */}
@@ -560,7 +560,7 @@ export const TestimonialSlider = ({ reviews, className }) => {
               animate="center"
               exit="exit"
               loading={currentIndex === 0 ? "eager" : "lazy"}
-              fetchPriority={currentIndex === 0 ? "high" : "auto"}
+              fetchpriority={currentIndex === 0 ? "high" : "auto"}
               width="400"
               height="500"
               transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}

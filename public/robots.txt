@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://aia.in.net/sitemap.xml

@@ -47,6 +47,10 @@
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
   <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <link rel="preload" as="image"
+    href="https://aia.in.net/webapi/public/assets/images/banner_images/2.webp"
+    imagesrcset="https://aia.in.net/webapi/public/assets/images/banner_images/2.webp 1600w"
+    imagesizes="100vw" fetchpriority="high" />
 
   <!-- Delayed Third-Party Script Loading (Advanced) -->
   <script>
@@ -66,7 +70,7 @@
           j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
           f.parentNode.insertBefore(j, f);
         })(window, document, "script", "dataLayer", "GTM-KJ7WJLKJ");
-      }, 2000); // 2 second delay after load to clear main thread for React
+      }, 12000);
     });
   </script>
 
@@ -119,12 +123,18 @@
           "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX";
         script.crossOrigin = "anonymous";
         document.head.appendChild(script);
-      }, 3000); // 3 second delay
+      }, 14000);
     });
   </script>
   <!-- End Google Ad Code -->
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"
+    media="print" onload="this.media='all'" />
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </noscript>
   <!-- 
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
