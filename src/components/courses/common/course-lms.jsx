@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CourseLms = ({ courseFeatures, cardTitle, image}) => {
+const CourseLms = ({ courseFeatures, cardTitle, image, description }) => {
   const labels = [
     "Dedicated Support Person",
     "Updated Study Curriculum",
@@ -77,7 +77,11 @@ const CourseLms = ({ courseFeatures, cardTitle, image}) => {
       </section>
       <section className="py-12 px-4 bg-white">
         <div className="max-w-340 mx-auto">
-          <SectionHeading title={cardTitle} align="center" />
+          <SectionHeading
+            title={cardTitle}
+            description={description}
+            align="center"
+          />
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:mt-10">
             {courseFeatures.map((feature, index) => (
               <div

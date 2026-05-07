@@ -27,7 +27,7 @@ const CiaUnique = () => {
           ),
           title: "Exam-Oriented Training Methodology",
           description:
-            "AIA is an officially authorised learning partner of IIA India, supporting a credible and structured CIA learning journey.",
+            "AIA is an officially authorised learning partner of IIA India and Becker’s India’s one and only authorised distributor, providing a credible, structured, and globally trusted CIA learning experience.",
           position: "left",
         },
         {
@@ -47,7 +47,7 @@ const CiaUnique = () => {
           ),
           title: "Customised Study Material",
           description:
-            "Comprehensive and well-structured notes, crafted by expert faculty, delivered to your doorstep for easy offline study.",
+            "Get access to official Becker study material along with comprehensive, expert-crafted notes delivered to your doorstep for effective offline study.",
           position: "left",
         },
         {

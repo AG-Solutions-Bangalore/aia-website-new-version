@@ -3,19 +3,19 @@ import CourseLms from "../common/course-lms";
 import CfeJoinDialog from "../cfe-curriculam/join-prep";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ENROLL_URL } from "@/api/base-url";
+import { ENROLL_URL, IMAGE_PATH } from "@/api/base-url";
 
 const CiaCurrCourseLms = ({ image }) => {
   const courseFeatures = [
     {
       title: "Customized Study Material",
       description:
-        "AIA provides updated Gleim CIA study material (2026), aligned with the latest IIA syllabus to support structured and exam-focused preparation across all three CIA parts.",
+        "AIA provides updated Becker CIA study material (2026), aligned with the latest IIA syllabus to support structured and exam-focused preparation across all three CIA parts.",
     },
     {
       title: "Practice Questions",
       description:
-        "Candidates receive access to Gleim’s CIA practice software, featuring exam-style questions that strengthen conceptual understanding and application-based thinking.",
+        "Candidates receive access to Becker’s CIA practice software, featuring exam-style questions that strengthen conceptual understanding and application-based thinking.",
     },
     {
       title: "Training Sessions",
@@ -38,9 +38,9 @@ const CiaCurrCourseLms = ({ image }) => {
         "Comprehensive CIA mock tests are conducted after syllabus completion to assess readiness and improve exam confidence.",
     },
     {
-      title: "Course Fee",
+      title: "Exam Registration Support",
       description:
-        "All components including study material, practice software, video lectures, live sessions, and mock tests are offered under a single consolidated course fee.",
+        "We offer complete support throughout the exam registration process, guiding you step by step from application review to final exam scheduling, ensuring a smooth and stress-free experience.",
     },
     {
       title: "Regular Updates",
@@ -53,6 +53,24 @@ const CiaCurrCourseLms = ({ image }) => {
     <>
       <CourseLms
         cardTitle="AIA CIA Prep Course - What you will get"
+        description={
+          <span>
+            We provide globally trusted Official{" "}
+            <img
+              src={`${IMAGE_PATH}/BECKER.webp`}
+              alt="Becker"
+              className="inline-block h-5 mx-1"
+            />{" "}
+            /{" "}
+            <img
+              src={`${IMAGE_PATH}/Gleim.webp`}
+              alt="Gleim"
+              className="inline-block h-5 mx-1"
+            />{" "}
+            study materials for CIA prep to ensure exam-focused learning
+            experience for professionals.
+          </span>
+        }
         courseFeatures={courseFeatures}
         image={image}
       />

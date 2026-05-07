@@ -13,7 +13,7 @@ const CiaWhyAia = () => {
         items={[
           {
             img: `${IMAGE_PATH}/teacher-svgrepo-com.webp`,
-            title: "Gliem Software Access",
+            title: "Becker Software Access",
           },
           {
             img: `${IMAGE_PATH}/flash_card.webp`,
@@ -29,7 +29,7 @@ const CiaWhyAia = () => {
           },
           {
             img: `${IMAGE_PATH}/books-svgrepo-com.webp`,
-            title: "IIA India Authorized Learning Partner",
+            title: "Experts Study Material",
           },
         ]}
       />

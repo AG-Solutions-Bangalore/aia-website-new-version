@@ -18,6 +18,7 @@ const CourseAboutH1 = ({
   lineBreak = "lg",
   preheading,
   customButton,
+  children,
 }) => {
   const location = useLocation();
 
@@ -67,6 +68,7 @@ const CourseAboutH1 = ({
                 </Link>
               )
             )}
+            {children}
           </div>
 
           {/* Right Content - Stats Grid */}

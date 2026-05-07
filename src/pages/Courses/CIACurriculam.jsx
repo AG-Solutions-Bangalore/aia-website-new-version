@@ -3,6 +3,7 @@ import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 import PopUp from "@/components/common/pop-up";
 import HomeHero from "@/components/home/home-hero";
 import CiaCurrAbout from "@/components/courses/cia-curriculam/cia-curr-about";
+import BannerLogos from "@/components/courses/common/banner-logos";
 
 const CourseTopStudent = lazy(
   () => import("@/components/courses/common/course-top-student"),
@@ -122,6 +123,7 @@ const CIACurriculam = () => {
       {/* Initial Render */}
       <PopUp slug="CIA-Curriculum" />
       <HomeHero slug="cia-curriculum" />
+      <BannerLogos />
       <CiaCurrAbout />
 
       <div ref={refs.topStudent}>

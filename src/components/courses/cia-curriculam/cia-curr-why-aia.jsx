@@ -29,7 +29,7 @@ const CiaCurrWhyAia = () => {
           },
           {
             img: `${IMAGE_PATH}/books-svgrepo-com.webp`,
-            title: "2025 Gleim Study Material",
+            title: "2026 Becker Study Material",
           },
         ]}
       />

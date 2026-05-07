@@ -236,11 +236,19 @@ export const TestimonialSlider = ({ reviews, className }) => {
                 </span>
               </p>
 
-              <div className="border-2 shadow-lg   backdrop-blur-2xl shadow-[#F3831C]/80 border-white rounded-lg p-2  mb-5">
+              <div className="border-2 shadow-lg backdrop-blur-2xl shadow-[#F3831C]/80 border-white rounded-lg p-2 mb-5">
                 <p className="font-bold italic">
                   He has also served as an authorized trainer with the NSE
                   Academy, contributing to the professional development of
                   finance and audit professionals across India.
+                </p>
+              </div>
+
+              <div className="border-2 shadow-lg backdrop-blur-2xl shadow-[#F3831C]/80 border-white rounded-lg p-2 mb-5">
+                <p className="font-bold italic">
+                  He is now an authorized trainer with ISACA, further
+                  strengthening his contribution to the professional development
+                  of audit, risk, and information security professionals.
                 </p>
               </div>
               <div className="border-2  shadow-lg shadow-[#F3831C]/80 border-white rounded-lg p-2 ">

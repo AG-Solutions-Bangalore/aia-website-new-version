@@ -1,3 +1,4 @@
+import { IMAGE_PATH } from "@/api/base-url";
 import CourseAboutH1 from "../common/course-aboutH1";
 
 const CiaCurrAbout = () => {
@@ -22,8 +23,8 @@ const CiaCurrAbout = () => {
             lineBreak: "sm",
           },
           {
-            display: "Updated Gliem Resources",
-            title: "(Get access to Gleim software)",
+            display: "Updated Becker Resources",
+            title: "(Get access to Becker software)",
             show: "true",
           },
           {
@@ -36,7 +37,20 @@ const CiaCurrAbout = () => {
         formsubtitle="Online Training and Certification Course"
         formcourse="CIA"
         formbuttonlabel="More Info"
-      />
+      >
+        <p className="text-[15px] text-gray-700 leading-relaxed text-justify mt-4">
+          We provide{" "}
+          <img
+            src={`${IMAGE_PATH}/BECKER.webp`}
+            alt="Becker Logo"
+            className="inline-block h-5 mx-1 align-middle"
+          />{" "}
+          globally trusted study material as part of our program, and we are the
+          only authorized Becker distributor across India—ensuring access to
+          high-quality, exam-focused content to support your preparation
+          journey.
+        </p>
+      </CourseAboutH1>
     </>
   );
 };

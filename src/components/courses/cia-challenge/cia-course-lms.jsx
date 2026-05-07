@@ -38,14 +38,14 @@ const CiaCourseLms = ({ image }) => {
         "500+ exam distractors train you to identify traps, understand why options look correct, and improve decision-making accuracy when similar choices appear in an exam.",
     },
     {
-      title: "Course Fee",
+      title: "Exam Registration Support",
       description:
-        "All components including e-books, practice questions, recorded lectures, live sessions, and mock tests are covered under one consolidated course fee.",
+        "We offer complete support throughout the exam registration process, guiding you step by step from application review to final exam scheduling, ensuring a smooth and stress-free experience.",
     },
     {
-      title: "Full Access to Gleim Software",
+      title: "Full Access to Becker Software",
       description:
-        "Get full Gleim CIA Challenge software access, including practice questions, mock exams, and updated Gleim books to ensure preparation aligned with exam standards.",
+        "Get full Becker CIA Challenge software access, including practice questions, mock exams, and updated Becker books to ensure preparation aligned with exam standards.",
     },
   ];
 
@@ -53,6 +53,7 @@ const CiaCourseLms = ({ image }) => {
     <>
       <CourseLms
         cardTitle="AIA CIA Challenge Prep Course - What you will get"
+        description="We provide globally trusted Official Becker/Gleim study materials for CIA Challenge prep to ensure examfocused learning experience for professionals."
         courseFeatures={courseFeatures}
         image={image}
       />
