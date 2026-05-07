@@ -3,10 +3,10 @@ const OptimizedImage = ({
   alt = "",
   className = "",
   style = {},
-  priority = false, 
+  priority = false,
   width,
   height,
-  sizes = "100vw", 
+  sizes = "100vw",
   onError,
   fetchPriority,
   ...rest
@@ -32,7 +32,7 @@ const OptimizedImage = ({
 
   return (
     <img
-      src={src} 
+      src={src}
       srcSet={srcSet}
       sizes={sizes}
       alt={alt}

@@ -1,10 +1,9 @@
 import { IMAGE_PATH } from "@/api/base-url";
-import { href } from "react-router-dom";
 
 const AccreditationBadges = () => {
   const badges = [
     {
-      img: `${IMAGE_PATH}/iao-seal.webp`,
+      img: `${IMAGE_PATH}/IAO.webp`,
       alt: "IAO",
       href: "https://www.iao.org/India-Haryana/Academy-of-Internal-Audit",
     },
@@ -13,26 +12,38 @@ const AccreditationBadges = () => {
       alt: "IIA",
       href: "https://iiaindia.co/GlobalCertification/LearningPartner",
     },
-      { img: `${IMAGE_PATH}/BECKER.webp`, alt: "Becker" },
-    { img: `${IMAGE_PATH}/ISO.webp`, alt: "ISO" },
-        { img: `${IMAGE_PATH}/ISACA.webp`, alt: "ISACA" },
-    { img: `${IMAGE_PATH}/Gleim.webp`, alt: "Gleim" },
+    {
+      img: `${IMAGE_PATH}/BECKER.webp`,
+      alt: "Becker",
+    },
+    {
+      img: `${IMAGE_PATH}/ISO.webp`,
+      alt: "ISO",
+    },
+    {
+      img: `${IMAGE_PATH}/ISACA.webp`,
+      alt: "ISACA",
+    },
+    {
+      img: `${IMAGE_PATH}/Gleim.webp`,
+      alt: "Gleim",
+    },
     {
       img: `${IMAGE_PATH}/GSAAA.webp`,
       alt: "GSAAA",
       href: "https://www.gsaaa.org/india/academy-of-internal-audit",
-    },  
+    },
   ];
 
   return (
-    <div className="flex flex-wrap gap-3 items-center justify-start lg:justify-start">
+    <div className="flex flex-nowrap gap-4 items-center justify-start overflow-x-auto overflow-y-auto h-28 no-scrollbar pb-3 -mx-1 px-1">
       {badges.map(({ img, alt, href }) => {
         const inner = (
-          <div className="bg-white border border-gray-200 shadow-sm rounded-lg p-2 w-[5.5rem] h-14 sm:w-24 sm:h-16 flex items-center justify-center transition-all duration-300 group-hover:border-[#fa8017] group-hover:shadow-md group-hover:-translate-y-1">
+          <div className="bg-white border border-gray-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)] rounded-xl p-2 w-[5.5rem] h-14 sm:w-24 sm:h-16 flex items-center justify-center transition-all duration-500 group-hover:border-[#fa8017] group-hover:shadow-lg group-hover:shadow-orange-500/10 group-hover:-translate-y-1.5">
             <img
               src={img}
               alt={alt}
-              className="max-w-full max-h-full object-contain"
+              className="max-w-[85%] max-h-[85%] object-contain transition-transform duration-500 group-hover:scale-110"
               loading="lazy"
             />
           </div>
@@ -44,14 +55,14 @@ const AccreditationBadges = () => {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group"
+            className="group flex-shrink-0"
             title={alt}
             aria-label={alt}
           >
             {inner}
           </a>
         ) : (
-          <div key={alt} className="group" title={alt}>
+          <div key={alt} className="group flex-shrink-0" title={alt}>
             {inner}
           </div>
         );

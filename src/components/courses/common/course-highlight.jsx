@@ -1,7 +1,7 @@
 import CountUp from "@/components/common/count-up";
+import { Partners } from "@/components/home/home-accredited";
 import SectionHeading from "@/components/SectionHeading/SectionHeading";
 import { partnerLogos } from "@/utils/partnerLogos";
-import React from "react";
 
 const CourseHighLight = ({
   badgeText,
@@ -289,36 +289,7 @@ const CourseHighLight = ({
           ))}
         </div>
 
-        {logos.length > 0 && (
-          <div className="max-w-[1400px] mx-auto px-4 mt-8 pb-8">
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-8 md:gap-12 lg:gap-10">
-              {logos.map((logo, index) => {
-                const Wrapper = logo.link ? "a" : "div";
-
-                return (
-                  <Wrapper
-                    key={index}
-                    {...(logo.link && {
-                      href: logo.link,
-                      target: "_blank",
-                      rel: "noopener noreferrer",
-                      "aria-label": logo.alt || "Partner logo",
-                    })}
-                    className="p-2 transition-all duration-300 flex items-center justify-center hover:scale-110 hover:-translate-y-1 cursor-pointer w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40"
-                    title={logo.alt}
-                  >
-                    <img
-                      src={logo.img}
-                      alt={logo.alt || "Brand logo"}
-                      className="max-w-full max-h-full object-contain transition-all duration-300"
-                      loading="lazy"
-                    />
-                  </Wrapper>
-                );
-              })}
-            </div>
-          </div>
-        )}
+        <Partners />
       </div>
     </div>
   );

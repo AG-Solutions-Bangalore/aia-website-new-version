@@ -292,7 +292,7 @@ export default function HomeHero({ slug, bottombar = false }) {
               </a>
             </div>
 
-          <div className="px-4 pb-3 flex items-center justify-between border-t border-white/5 pt-2">
+            <div className="px-4 pb-3 flex items-center justify-between border-t border-white/5 pt-2">
               <span className="text-[10px] font-mono text-white/25 tracking-widest uppercase">
                 {String(currentSlide + 1).padStart(2, "0")} /{" "}
                 {String(announcements.length).padStart(2, "0")}

@@ -1,7 +1,4 @@
-import React from "react";
 import CourseHighLight from "../courses/common/course-highlight";
-import { IMAGE_PATH } from "@/api/base-url";
-import { partnerLogos } from "@/utils/partnerLogos";
 
 const AboutHighlight = () => {
   return (

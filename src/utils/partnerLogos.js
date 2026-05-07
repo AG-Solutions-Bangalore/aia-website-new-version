@@ -11,7 +11,7 @@ export const partnerLogos = [
     link: "https://iiaindia.co/GlobalCertification/LearningPartner",
     alt: "IIA",
   },
-    {
+  {
     img: `${IMAGE_PATH}/BECKER.webp`,
     alt: "Becker",
   },
@@ -19,7 +19,7 @@ export const partnerLogos = [
     img: `${IMAGE_PATH}/ISO.webp`,
     alt: "ISO",
   },
-    {
+  {
     img: `${IMAGE_PATH}/ISACA.webp`,
     alt: "ISACA",
   },
@@ -32,6 +32,4 @@ export const partnerLogos = [
     link: "https://www.gsaaa.org/india/academy-of-internal-audit",
     alt: "GSAAA",
   },
-
-
 ];
