@@ -1,15 +1,13 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
+import React, { lazy } from "react";
 
-import PopUp from "@/components/common/pop-up";
+import DeferredPopUp from "@/components/common/deferred-popup";
+import LazySection from "@/components/common/lazy-section";
 import HomeHero from "@/components/home/home-hero";
 import certificationCourses from "@/data/certificationCourses";
-import Pdf from "@/components/common/pdf";
-import PdfJoinDialog from "@/components/common/PdfForm";
 
 const AboutSection = lazy(() => import("@/components/about/about-section"));
-const AboutTrainerSection = lazy(
-  () => import("@/components/about/about-trainer-section"),
-);
+const Pdf = lazy(() => import("@/components/common/pdf"));
+const PdfJoinDialog = lazy(() => import("@/components/common/PdfForm"));
 const AboutTestimonial = lazy(
   () => import("@/components/about/about-testimonial"),
 );
@@ -20,196 +18,84 @@ const AboutHighlight = lazy(() => import("@/components/about/about-highlight"));
 const AboutJourney = lazy(() => import("@/components/about/about-journey"));
 const AboutPartner = lazy(() => import("@/components/about/about-partner"));
 const AboutReview = lazy(() => import("@/components/about/about-review"));
-
 const OfficeCeleberation = lazy(
   () => import("@/components/common/celeberation"),
 );
-
 const HomeCourses = lazy(() => import("@/components/home/home-courses"));
 const HomePrCarousel = lazy(() => import("@/components/home/home-pr-carousel"));
-
 const CourseYoutubeLecture = lazy(
   () => import("@/components/courses/common/course-youtube-lecture"),
 );
 
+
 const AboutPage = () => {
-  const sectionRefs = useRef({
-    about: { current: null },
-    trainer: { current: null },
-    pdf: { current: null },
-    testimonial: { current: null },
-    mission: { current: null },
-    highlight: { current: null },
-    pr: { current: null },
-    journey: { current: null },
-    courses: { current: null },
-    partner: { current: null },
-    youtube: { current: null },
-    review: { current: null },
-    celebration: { current: null },
-  }).current;
-
-  const [visibleSections, setVisibleSections] = useState({});
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const section = entry.target.dataset.section;
-
-            setVisibleSections((prev) => ({
-              ...prev,
-              [section]: true,
-            }));
-
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        rootMargin: "150px",
-        threshold: 0.1,
-      },
-    );
-
-    Object.keys(sectionRefs).forEach((key) => {
-      const ref = sectionRefs[key];
-
-      if (ref.current) {
-        ref.current.dataset.section = key;
-        observer.observe(ref.current);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, [sectionRefs]);
-
   return (
     <div className="min-h-screen bg-white">
       {/* Above the fold */}
-      <PopUp slug="about-aia" />
+      <DeferredPopUp slug="about-aia" />
       <HomeHero slug="about-aia" />
 
-    
+      <LazySection minHeight={420}>
+        <AboutSection />
+      </LazySection>
 
-      <div ref={sectionRefs.about}>
-        {visibleSections.about && (
-          <Suspense fallback={null}>
-            <AboutSection />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={120}>
+        <div className="flex justify-center items-center py-12">
+          <PdfJoinDialog
+            course="AIA Profile"
+            buttonlabel="Download AIA Profile"
+            triggerClassName="w-auto"
+            buttonClassName="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300"
+          />
+        </div>
+      </LazySection>
 
-      {/* <div ref={sectionRefs.trainer}>
-        {visibleSections.trainer && (
-          <Suspense fallback={null}>
-            <AboutTrainerSection />
-          </Suspense>
-        )}
-      </div> */}
+      <LazySection minHeight={500}>
+        <Pdf />
+      </LazySection>
 
-      <div className="flex justify-center items-center py-12">
-        <PdfJoinDialog
-          course="AIA Profile"
-          buttonlabel="Download AIA Profile"
-          triggerClassName="w-auto"
-          buttonClassName="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300"
+      <LazySection minHeight={500}>
+        <AboutTestimonial />
+      </LazySection>
+
+      <LazySection minHeight={420}>
+        <AboutMissionSection />
+      </LazySection>
+
+      <LazySection minHeight={360}>
+        <AboutHighlight />
+      </LazySection>
+
+      <LazySection minHeight={320}>
+        <HomePrCarousel />
+      </LazySection>
+
+      <LazySection minHeight={450}>
+        <AboutJourney />
+      </LazySection>
+
+      <LazySection minHeight={520}>
+        <HomeCourses certificationCourses={certificationCourses} />
+      </LazySection>
+
+      <LazySection minHeight={320}>
+        <AboutPartner />
+      </LazySection>
+
+      <LazySection minHeight={420}>
+        <CourseYoutubeLecture courseSlug="about-aia" />
+      </LazySection>
+
+      <LazySection minHeight={420}>
+        <AboutReview />
+      </LazySection>
+
+      <LazySection minHeight={320}>
+        <OfficeCeleberation
+          title="Inside Life at AIA"
+          description="Snapshots from AIA’s workplace where teamwork, milestones, and shared wins come together - reflecting the culture behind everything we build."
         />
-      </div>
-
-
-      
-      <div ref={sectionRefs.pdf}>
-        {visibleSections.pdf && (
-          <Suspense fallback={null}>
-            <Pdf />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.testimonial}>
-        {visibleSections.testimonial && (
-          <Suspense fallback={null}>
-            <AboutTestimonial />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.mission}>
-        {visibleSections.mission && (
-          <Suspense fallback={null}>
-            <AboutMissionSection />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.highlight}>
-        {visibleSections.highlight && (
-          <Suspense fallback={null}>
-            <AboutHighlight />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.pr}>
-        {visibleSections.pr && (
-          <Suspense fallback={null}>
-            <HomePrCarousel />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.journey}>
-        {visibleSections.journey && (
-          <Suspense fallback={null}>
-            <AboutJourney />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.courses}>
-        {visibleSections.courses && (
-          <Suspense fallback={null}>
-            <HomeCourses certificationCourses={certificationCourses} />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.partner}>
-        {visibleSections.partner && (
-          <Suspense fallback={null}>
-            <AboutPartner />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.youtube}>
-        {visibleSections.youtube && (
-          <Suspense fallback={null}>
-            <CourseYoutubeLecture courseSlug="about-aia" />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.review}>
-        {visibleSections.review && (
-          <Suspense fallback={null}>
-            <AboutReview />
-          </Suspense>
-        )}
-      </div>
-
-      <div ref={sectionRefs.celebration}>
-        {visibleSections.celebration && (
-          <Suspense fallback={null}>
-            <OfficeCeleberation
-              title="Inside Life at AIA"
-              description="Snapshots from AIA’s workplace where teamwork, milestones, and shared wins come together - reflecting the culture behind everything we build."
-            />
-          </Suspense>
-        )}
-      </div>
+      </LazySection>
     </div>
   );
 };

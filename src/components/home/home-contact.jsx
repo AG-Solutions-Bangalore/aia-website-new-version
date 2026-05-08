@@ -224,6 +224,7 @@ const HomeContact = () => {
                     type="text"
                     name="name"
                     placeholder="Name*"
+                    aria-label="Your Full Name"
                     value={formData.name}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-[#0F3652] rounded focus:outline-none focus:ring-2 focus:ring-[#F3831C] text-sm"
@@ -234,6 +235,7 @@ const HomeContact = () => {
                     type="tel"
                     name="phone"
                     placeholder="Phone No*"
+                    aria-label="Phone Number"
                     value={formData.phone}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-[#0F3652] rounded focus:outline-none focus:ring-2 focus:ring-[#F3831C] text-sm"
@@ -244,6 +246,7 @@ const HomeContact = () => {
                     type="email"
                     name="email"
                     placeholder="Email*"
+                    aria-label="Email Address"
                     value={formData.email}
                     onChange={handleChange}
                     className="w-full px-4 py-3 border border-[#0F3652] rounded focus:outline-none focus:ring-2 focus:ring-[#F3831C] text-sm"
@@ -253,6 +256,7 @@ const HomeContact = () => {
                   <textarea
                     name="message"
                     placeholder="Type Your Message"
+                    aria-label="Your Message"
                     value={formData.message}
                     onChange={handleChange}
                     rows="2"

@@ -1,6 +1,7 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
+import React, { lazy } from "react";
 
-import PopUp from "@/components/common/pop-up";
+import DeferredPopUp from "@/components/common/deferred-popup";
+import LazySection from "@/components/common/lazy-section";
 import HomeHero from "@/components/home/home-hero";
 import CiaCurrAbout from "@/components/courses/cia-curriculam/cia-curr-about";
 import BannerLogos from "@/components/courses/common/banner-logos";
@@ -32,8 +33,8 @@ const CourseReview = lazy(() => import("@/components/common/course-review"));
 const CourseYoutube = lazy(
   () => import("@/components/courses/common/course-youtube"),
 );
-const AboutTrainerSection = lazy(
-  () => import("@/components/about/about-trainer-section"),
+const Pdf = lazy(
+  () => import("@/components/common/pdf"),
 );
 const CourseYoutubeLecture = lazy(
   () => import("@/components/courses/common/course-youtube-lecture"),
@@ -61,262 +62,126 @@ const CiaCurrFaq = lazy(
 );
 
 const CIACurriculam = () => {
-  const refs = useRef({
-    topStudent: { current: null },
-    curriculum: { current: null },
-    result: { current: null },
-    journey: { current: null },
-    why: { current: null },
-    whatsapp: { current: null },
-    highlight: { current: null },
-    map: { current: null },
-    review: { current: null },
-    youtube: { current: null },
-    trainer: { current: null },
-    lecture: { current: null },
-    lms: { current: null },
-    unique: { current: null },
-    achievers: { current: null },
-    blog: { current: null },
-    connection: { current: null },
-    alumni: { current: null },
-    faq: { current: null },
-  }).current;
-
-  const [visible, setVisible] = useState({});
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const key = entry.target.dataset.section;
-
-            setVisible((prev) => ({
-              ...prev,
-              [key]: true,
-            }));
-
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        rootMargin: "150px",
-        threshold: 0.1,
-      },
-    );
-
-    Object.keys(refs).forEach((key) => {
-      const ref = refs[key];
-      if (ref.current) {
-        ref.current.dataset.section = key;
-        observer.observe(ref.current);
-      }
-    });
-
-    return () => observer.disconnect();
-  }, [refs]);
-
   return (
     <div>
       {/* Initial Render */}
-      <PopUp slug="CIA-Curriculum" />
+      <DeferredPopUp slug="CIA-Curriculum" />
       <HomeHero slug="cia-curriculum" />
       <BannerLogos />
       <CiaCurrAbout />
 
-      <div ref={refs.topStudent}>
-        {visible.topStudent && (
-          <Suspense fallback={null}>
-            <CourseTopStudent
-              courseSlug="cia"
-              needPrefix="false"
-              title="We Stand by Results "
-              subtitle="Meet the latest AIA-trained professionals who successfully earned their CIA credential through structured preparation and expert guidance."
-            />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={420}>
+        <CourseTopStudent
+          courseSlug="cia"
+          needPrefix="false"
+          title="We Stand by Results "
+          subtitle="Meet the latest AIA-trained professionals who successfully earned their CIA credential through structured preparation and expert guidance."
+        />
+      </LazySection>
 
-      <div ref={refs.curriculum}>
-        {visible.curriculum && (
-          <Suspense fallback={null}>
-            <CiaCurrCourseCurriculum />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={650}>
+        <CiaCurrCourseCurriculum />
+      </LazySection>
 
-      <div ref={refs.result}>
-        {visible.result && (
-          <Suspense fallback={null}>
-            <CourseResult
-              course="cia"
-              queryKey="cia-certificates"
-              title="Proof of Excellence: Real CIA Results of AIA Students!"
-            />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={500}>
+        <CourseResult
+          course="cia"
+          queryKey="cia-certificates"
+          title="Proof of Excellence: Real CIA Results of AIA Students!"
+        />
+      </LazySection>
 
-      <div ref={refs.journey}>
-        {visible.journey && (
-          <Suspense fallback={null}>
-            <CiaCurrJourney />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={500}>
+        <CiaCurrJourney />
+      </LazySection>
 
-      <div ref={refs.why}>
-        {visible.why && (
-          <Suspense fallback={null}>
-            <CiaCurrWhyAia />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={450}>
+        <CiaCurrWhyAia />
+      </LazySection>
 
-      <div ref={refs.whatsapp}>
-        {visible.whatsapp && (
-          <Suspense fallback={null}>
-            <WhatsappCarosal
-              title="Unfiltered Reflections from AIA-Trained Professionals"
-              description="Heartfelt messages shared by professionals after completing their journey with AIA. Each message reflects a different experience. These reflections provide a genuine view of what preparation looks like in real situations, beyond structured testimonials"
-              course="CIA"
-            />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={500}>
+        <WhatsappCarosal
+          title="Unfiltered Reflections from AIA-Trained Professionals"
+          description="Heartfelt messages shared by professionals after completing their journey with AIA. Each message reflects a different experience. These reflections provide a genuine view of what preparation looks like in real situations, beyond structured testimonials"
+          course="CIA"
+        />
+      </LazySection>
 
-      <div ref={refs.highlight}>
-        {visible.highlight && (
-          <Suspense fallback={null}>
-            <CiaCurrHighlight />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={450}>
+        <CiaCurrHighlight />
+      </LazySection>
 
-      <div ref={refs.map}>
-        {visible.map && (
-          <Suspense fallback={null}>
-            <CourseMap courseCode="CIA" />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={500}>
+        <CourseMap courseCode="CIA" />
+      </LazySection>
 
-      <div ref={refs.review}>
-        {visible.review && (
-          <Suspense fallback={null}>
-            <CourseReview slug="CIA" />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={450}>
+        <CourseReview slug="CIA" />
+      </LazySection>
 
-      <div ref={refs.youtube}>
-        {visible.youtube && (
-          <Suspense fallback={null}>
-            <CourseYoutube
-              courseSlug="CIA"
-              title="Hear from Our Recently Qualified Professionals on YouTube"
-              description="Watch AIA-trained professionals share their CFE journey, exam strategies, and career insights in exclusive interviews with Puneet Sir on YouTube."
-            />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={480}>
+        <CourseYoutube
+          courseSlug="CIA"
+          title="Hear from Our Recently Qualified Professionals on YouTube"
+          description="Watch AIA-trained professionals share their CFE journey, exam strategies, and career insights in exclusive interviews with Puneet Sir on YouTube."
+        />
+      </LazySection>
 
-      <div ref={refs.trainer}>
-        {visible.trainer && (
-          <Suspense fallback={null}>
-            <AboutTrainerSection
-              path="faculty_cia.webp"
-              messageimage="message_cia.webp"
-            />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={500}>
+        <Pdf />
+      </LazySection>
 
-      <div ref={refs.lecture}>
-        {visible.lecture && (
-          <Suspense fallback={null}>
-            <CourseYoutubeLecture
-              courseSlug="cia-curriculum"
-              title="Master CIA Concepts with AIA’s Video Learning Series"
-              description="Explore concise video sessions by Puneet Sir covering key CIA topics, simplified for practical clarity and exam-focused understanding."
-            />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={420}>
+        <CourseYoutubeLecture
+          courseSlug="cia-curriculum"
+          title="Master CIA Concepts with AIA’s Video Learning Series"
+          description="Explore concise video sessions by Puneet Sir covering key CIA topics, simplified for practical clarity and exam-focused understanding."
+        />
+      </LazySection>
 
-      <div ref={refs.lms}>
-        {visible.lms && (
-          <Suspense fallback={null}>
-            <CiaCurrCourseLms image="lms_CIA.webp" />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={420}>
+        <CiaCurrCourseLms image="lms_CIA.webp" />
+      </LazySection>
 
-      <div ref={refs.unique}>
-        {visible.unique && (
-          <Suspense fallback={null}>
-            <CfeCurrUnique />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={450}>
+        <CfeCurrUnique />
+      </LazySection>
 
-      <div ref={refs.achievers}>
-        {visible.achievers && (
-          <Suspense fallback={null}>
-            <CourseAchivers
-              slug="CIA"
-              title="From Aspirants to Certified Internal Auditors - Our Recent CIA Achievers"
-              description="Meet AIA proud achievers who advance their careers by achieving the global CIA credential with structured prep and real-world expertise."
-            />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={500}>
+        <CourseAchivers
+          slug="CIA"
+          title="From Aspirants to Certified Internal Auditors - Our Recent CIA Achievers"
+          description="Meet AIA proud achievers who advance their careers by achieving the global CIA credential with structured prep and real-world expertise."
+        />
+      </LazySection>
 
-      <div ref={refs.blog}>
-        {visible.blog && (
-          <Suspense fallback={null}>
-            <CourseBlog
-              course="CIA"
-              title="Expert articles, exam tips, and real-world insights for CIA aspirants."
-            />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={420}>
+        <CourseBlog
+          course="CIA"
+          title="Expert articles, exam tips, and real-world insights for CIA aspirants."
+        />
+      </LazySection>
 
-      <div ref={refs.connection}>
-        {visible.connection && (
-          <Suspense fallback={null}>
-            <CamsConnection
-              title="The Right Certification Starts With The Right Choice"
-              description="Find the certification that aligns with your background and career stage"
-              buttonColors={["#a8e6f3", "#e2ffdc", "#ffe38f"]}
-              images={[
-                { image: "hiw_cfe.webp", link: "/cfe-curriculum" },
-                { image: "hiw_ciac.webp", link: "/cia-challenge-curriculum" },
-                { image: "hiw_cams.webp", link: "/cams" },
-              ]}
-            />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={420}>
+        <CamsConnection
+          title="The Right Certification Starts With The Right Choice"
+          description="Find the certification that aligns with your background and career stage"
+          buttonColors={["#a8e6f3", "#e2ffdc", "#ffe38f"]}
+          images={[
+            { image: "hiw_cfe.webp", link: "/cfe-curriculum" },
+            { image: "hiw_ciac.webp", link: "/cia-challenge-curriculum" },
+            { image: "hiw_cams.webp", link: "/cams" },
+          ]}
+        />
+      </LazySection>
 
-      <div ref={refs.alumni}>
-        {visible.alumni && (
-          <Suspense fallback={null}>
-            <HomeAlumniWork />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={300}>
+        <HomeAlumniWork />
+      </LazySection>
 
-      <div ref={refs.faq}>
-        {visible.faq && (
-          <Suspense fallback={null}>
-            <CiaCurrFaq />
-          </Suspense>
-        )}
-      </div>
+      <LazySection minHeight={350}>
+        <CiaCurrFaq />
+      </LazySection>
     </div>
   );
 };

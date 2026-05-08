@@ -144,7 +144,6 @@ const CourseReview = ({ slug, title }) => {
   if (isError || testimonials.length === 0) {
     return null;
   }
-  console.log(testimonials, "testimonials");
   return (
     <div className="max-w-340 mx-auto px-4">
       <Helmet>

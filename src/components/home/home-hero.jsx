@@ -16,6 +16,54 @@ const HOME_FALLBACK_SLIDES = [
   },
 ];
 
+const BANNER_FALLBACKS = {
+  home: {
+    image: "2.webp",
+    alt: "cia-cfe-cams-certification",
+    link: "contact",
+  },
+  "about-aia": {
+    image: "12.webp",
+    alt: "about-us",
+    link: null,
+  },
+  "cfe-curriculum": {
+    image: "13.webp",
+    alt: "cfe-curriculum",
+    link: null,
+  },
+  "cia-curriculum": {
+    image: "15.webp",
+    alt: "cia-curriculum",
+    link: null,
+  },
+  "cia-challenge-curriculum": {
+    image: "17.webp",
+    alt: "cia-challenge-curriculum",
+    link: null,
+  },
+  cams: {
+    image: "19.webp",
+    alt: "cia-challenge-curriculum",
+    link: null,
+  },
+  "cia-free-resources": {
+    image: "24.webp",
+    alt: "CIA Free Resources",
+    link: "contact",
+  },
+  "cams-free-resources": {
+    image: "25.webp",
+    alt: "CAMS Free Resources",
+    link: "contact",
+  },
+  "cfe-free-resources": {
+    image: "21.webp",
+    alt: "cfe-free-resources",
+    link: "contact",
+  },
+};
+
 const HOME_FALLBACK_ANNOUNCEMENTS = [
   {
     id: 1,
@@ -25,16 +73,31 @@ const HOME_FALLBACK_ANNOUNCEMENTS = [
   },
 ];
 
+const getFallbackSlides = (slug) => {
+  const fallback = BANNER_FALLBACKS[slug];
+  if (!fallback) return [];
+
+  return [
+    {
+      id: 1,
+      imageUrl: `${HOME_BANNER_BASE}${fallback.image}`,
+      link: fallback.link,
+      alt: fallback.alt,
+    },
+  ];
+};
+
 export default function HomeHero({ slug, bottombar = false }) {
+  const hasFallback = Boolean(BANNER_FALLBACKS[slug]);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [carouselSlides, setCarouselSlides] = useState(
-    slug === "home" ? HOME_FALLBACK_SLIDES : [],
+  const [carouselSlides, setCarouselSlides] = useState(() =>
+    slug === "home" ? HOME_FALLBACK_SLIDES : getFallbackSlides(slug),
   );
   const [announcements, setAnnouncements] = useState(
     slug === "home" ? HOME_FALLBACK_ANNOUNCEMENTS : [],
   );
-  const [isLoading, setIsLoading] = useState(slug !== "home");
+  const [isLoading, setIsLoading] = useState(!hasFallback);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -42,7 +105,7 @@ export default function HomeHero({ slug, bottombar = false }) {
 
     const loadBanner = async () => {
       try {
-        setIsLoading(true);
+        if (!hasFallback) setIsLoading(true);
         setError(null);
         const response = await fetch(`${BASE_URL}/api/getBanner/${slug}`, {
           headers: { Accept: "application/json" },
@@ -91,21 +154,21 @@ export default function HomeHero({ slug, bottombar = false }) {
     loadBanner();
 
     return () => controller.abort();
-  }, [slug]);
+  }, [hasFallback, slug]);
 
   const nextSlide = useCallback(() => {
     if (carouselSlides.length > 0)
       setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
   }, [carouselSlides.length]);
 
-  const prevSlide = () => {
+  const prevSlide = useCallback(() => {
     if (carouselSlides.length > 0)
       setCurrentSlide(
         (prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length,
       );
-  };
+  }, [carouselSlides.length]);
 
-  const goToSlide = (index) => setCurrentSlide(index);
+  const goToSlide = useCallback((index) => setCurrentSlide(index), []);
 
   useEffect(() => {
     if (!isAutoPlaying || carouselSlides.length === 0) return;
@@ -206,7 +269,7 @@ export default function HomeHero({ slug, bottombar = false }) {
           {activeSlide && (
             <a
               key={activeSlide.id}
-              href={activeSlide.link}
+              href={activeSlide.link || undefined}
               target="_blank"
               rel="noopener noreferrer"
               className="absolute inset-0 z-10"
@@ -282,6 +345,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                 href={current.link}
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label={`Learn more about: ${current.title}`}
                 className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
                   min-h-11 text-white bg-[#F3831C] hover:bg-[#e07318] active:bg-[#c96510]

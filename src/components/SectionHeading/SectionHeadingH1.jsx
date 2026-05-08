@@ -51,13 +51,13 @@ const SectionHeadingH1 = ({
         </h1>
 
         {highlight && (
-          <h1
+          <div
             className={`font-bold text-[#F3831C] mt-2 ${
               highlightclassName ? highlightclassName : "text-xl md:text-4xl"
             } ${highlightClass}`}
           >
             {highlight}
-          </h1>
+          </div>
         )}
       </div>
 

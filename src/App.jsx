@@ -1,8 +1,8 @@
 import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
 import Layout from "./layout/Layout";
-import Home from "./pages/Home/Home";
 
+const Home = lazy(() => import("./pages/Home/Home"));
 const CAMS = lazy(() => import("./pages/Courses/CAMS"));
 const CFECurriculam = lazy(() => import("./pages/Courses/CFECurriculam"));
 const CIAChallenge = lazy(() => import("./pages/Courses/CIAChallenge"));

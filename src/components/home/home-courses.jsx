@@ -185,6 +185,7 @@ const HomeCourses = ({ certificationCourses }) => {
                   transition-colors duration-200
                   w-full justify-center
                 "
+                aria-label={`Learn more about ${service.title}`}
                 style={{
                   backgroundColor: service.buttonColor,
                 }}
@@ -250,6 +251,7 @@ const HomeCourses = ({ certificationCourses }) => {
                       ALL_SERVICES[activeCard]?.link || ALL_SERVICES[0].link
                     }
                     className="group inline-flex items-center gap-2 h-10 px-4  text-sm font-medium text-white "
+                    aria-label={`Learn more about ${ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}`}
                     style={{
                       background: ALL_SERVICES[activeCard]?.buttonColor || "",
                     }}

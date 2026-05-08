@@ -1,15 +1,9 @@
 import HomeHero from "@/components/home/home-hero";
 import certificationCourses from "@/data/certificationCourses";
-import {
-  lazy,
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-  useTransition,
-} from "react";
+import DeferredPopUp from "@/components/common/deferred-popup";
+import LazySection from "@/components/common/lazy-section";
+import { lazy } from "react";
 
-const PopUp = lazy(() => import("@/components/common/pop-up"));
 const AppQueryProvider = lazy(() => import("@/lib/query-provider"));
 const HomeAbout = lazy(() => import("@/components/home/home-about"));
 const HomeContact = lazy(() => import("@/components/home/home-contact"));
@@ -35,109 +29,10 @@ const CourseYoutubeLecture = lazy(() =>
 const HomeBlogs = lazy(() => import("@/components/home/home-blogs"));
 const HomeFaq = lazy(() => import("@/components/home/home-faq"));
 
-const SectionSkeleton = ({ height }) => (
-  <div
-    style={{ minHeight: height, background: "transparent" }}
-    aria-hidden="true"
-  />
-);
-
-const LazySection = ({
-  children,
-  rootMargin = "200px",
-  minHeight = "200px",
-  priority = false,
-  withQuery = false,
-}) => {
-  const [isVisible, setIsVisible] = useState(priority);
-  const [isPending, startTransition] = useTransition();
-  const [reservedHeight, setReservedHeight] = useState(minHeight);
-  const ref = useRef(null);
-  const contentRef = useRef(null);
-  const hasRendered = useRef(false);
-
-  useEffect(() => {
-    if (priority) return;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !hasRendered.current) {
-          hasRendered.current = true;
-          startTransition(() => setIsVisible(true));
-          observer.unobserve(entry.target);
-        }
-      },
-      { threshold: 0, rootMargin }
-    );
-
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, [priority, rootMargin]);
-
-  useEffect(() => {
-    if (!isVisible || !contentRef.current) return;
-
-    const ro = new ResizeObserver(([entry]) => {
-      const h = entry.contentRect.height;
-      if (h > 0) setReservedHeight(`${h}px`);
-    });
-    ro.observe(contentRef.current);
-    return () => ro.disconnect();
-  }, [isVisible]);
-
-  return (
-    <div
-      ref={ref}
-      style={{
-        minHeight: isVisible && !isPending ? undefined : reservedHeight,
-      }}
-    >
-      {isVisible ? (
-        <Suspense fallback={<SectionSkeleton height={reservedHeight} />}>
-          <div ref={contentRef}>
-            {withQuery ? (
-              <AppQueryProvider>{children}</AppQueryProvider>
-            ) : (
-              children
-            )}
-          </div>
-        </Suspense>
-      ) : (
-        <SectionSkeleton height={reservedHeight} />
-      )}
-    </div>
-  );
-};
-
-const DelayedPopUp = () => {
-  const [shouldRender, setShouldRender] = useState(false);
-
-  useEffect(() => {
-    const show = () => setShouldRender(true);
-    const timer = window.setTimeout(() => {
-      if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(show, { timeout: 2000 });
-      } else {
-        show();
-      }
-    }, 16000);
-
-    return () => window.clearTimeout(timer);
-  }, []);
-
-  if (!shouldRender) return null;
-
-  return (
-    <Suspense fallback={null}>
-      <PopUp slug="home" />
-    </Suspense>
-  );
-};
-
 export default function Home() {
   return (
     <div className="font-sans text-gray-800">
-      <DelayedPopUp />
+      <DeferredPopUp slug="home" />
 
       <HomeHero slug="home" bottombar="true" />
       <LazySection minHeight="400px" rootMargin="500px">
@@ -152,11 +47,11 @@ export default function Home() {
         <HomeCourses certificationCourses={certificationCourses} />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery>
+      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <HomePassout />
       </LazySection>
 
-      <LazySection minHeight="500px" withQuery>
+      <LazySection minHeight="500px" withQuery QueryProvider={AppQueryProvider}>
         <HomeResults
           title="We Stand by Results - Actual Certificates Earned by AIA Learners"
           description="Actual certificates earned by professionals across CFE, CIA, and CAMS after structured preparation with AIA."
@@ -167,7 +62,7 @@ export default function Home() {
         <HomeAccredited />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery>
+      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <WhatsappCarosal
           course="all"
           title="Unfiltered Reflections from AIA-Trained Professionals"
@@ -175,27 +70,27 @@ export default function Home() {
         />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery>
+      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <HomeReview />
       </LazySection>
 
-      <LazySection minHeight="350px" withQuery>
+      <LazySection minHeight="350px" withQuery QueryProvider={AppQueryProvider}>
         <AllYoutube />
       </LazySection>
 
-      <LazySection minHeight="300px" withQuery>
+      <LazySection minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
         <HomeCorporatePartner />
       </LazySection>
 
-      <LazySection minHeight="300px" withQuery>
+      <LazySection minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
         <HomePrCarousel />
       </LazySection>
 
-      <LazySection minHeight="300px" withQuery>
+      <LazySection minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
         <HomeAlumniWork />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery>
+      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <CourseYoutubeLecture
           courseSlug="home"
           title="Watch & Learn! Everything You Need to"
@@ -203,11 +98,11 @@ export default function Home() {
         />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery>
+      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <HomeBlogs />
       </LazySection>
 
-      <LazySection minHeight="300px" withQuery>
+      <LazySection minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
         <HomeFaq />
       </LazySection>
     </div>

@@ -8,6 +8,7 @@ import {
   FaInstagram,
   FaLinkedinIn,
   FaPinterestP,
+  FaWhatsapp,
   FaYoutube,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -42,11 +43,13 @@ const Navbar = () => {
       href: "mailto:support@aia.in.net",
       color: "text-[#F3831C]",
       underline: true,
+      ariaLabel: "Email support@aia.in.net",
     },
     {
-      icon: <SocialMark>WA</SocialMark>,
+      icon: <FaWhatsapp size={18} />,
       text: "",
       href: "https://wa.me/+919311320114",
+      ariaLabel: "WhatsApp",
       color: "text-[#F3831C]",
       underline: false,
     },
@@ -55,6 +58,7 @@ const Navbar = () => {
       text: "+91 93113 20114",
       href: "tel:+919311320114",
       color: "text-[#F3831C]",
+      ariaLabel: "Call +91 93113 20114",
       underline: true,
     },
   ];
@@ -186,6 +190,7 @@ const Navbar = () => {
                       : ""
                     }
           `}
+                  aria-label={link.ariaLabel || (link.text ? `Contact via ${link.text}` : undefined)}
                 >
                   {link.icon}
                   {link.text && <span>{link.text}</span>}
@@ -252,8 +257,8 @@ const Navbar = () => {
                   {item.submenu && (
                     <ul
                       className={`absolute top-full left-0 mt-2 px-6 bg-white rounded-lg shadow-xl min-w-[220px] py-2 transition-all duration-300 ${activeDropdown === index
-                          ? "opacity-100 visible translate-y-0"
-                          : "opacity-0 invisible translate-y-2"
+                        ? "opacity-100 visible translate-y-0"
+                        : "opacity-0 invisible translate-y-2"
                         }`}
                     >
                       {item.submenu.map((subItem, subIndex) => (
@@ -299,15 +304,23 @@ const Navbar = () => {
                 <Link
                   to={ENROLL_URL}
                   className="
-    bg-[#F3831C] text-white
+    group relative overflow-hidden
+    bg-[#F3831C] text-[#f7f7f7]
     px-6 py-2.5 rounded-none
     font-semibold
     hover:bg-[#F3831C]/90
     transition-all
-
+    block
   "
                 >
-                  Enroll Now
+                  <span className="relative block overflow-hidden">
+                    <span className="block transition-transform duration-300 group-hover:-translate-y-full">
+                      Enroll Now
+                    </span>
+                    <span className="absolute inset-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0">
+                      Enroll Now
+                    </span>
+                  </span>
                 </Link>
               </li>
             </ul>
@@ -419,9 +432,16 @@ const Navbar = () => {
                 <div className="mt-6">
                   <Link
                     to={ENROLL_URL}
-                    className="block w-full bg-[#F3831C] text-white text-center px-6 py-3 rounded-md font-semibold hover:opacity-90 transition-all"
+                    className="group relative overflow-hidden block w-full bg-[#F3831C] text-[#fefefe] text-center px-6 py-3 rounded-md font-semibold hover:opacity-90 transition-all"
                   >
-                    Enroll Now
+                    <span className="relative block overflow-hidden">
+                      <span className="block transition-transform duration-300 group-hover:-translate-y-full">
+                        Enroll Now
+                      </span>
+                      <span className="absolute inset-0 translate-y-full transition-transform duration-300 group-hover:translate-y-0">
+                        Enroll Now
+                      </span>
+                    </span>
                   </Link>
                 </div>
 

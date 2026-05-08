@@ -2,8 +2,6 @@ import SectionHeading from "@/components/SectionHeading/SectionHeading";
 import React from "react";
 
 const CourseJourney = ({ heading, highlight, steps, connectorImage }) => {
-  console.log(heading, "heading");
-
   return (
     <section className="py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 bg-white">
       <div className="max-w-6xl mx-auto">

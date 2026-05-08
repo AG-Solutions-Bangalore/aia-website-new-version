@@ -73,6 +73,8 @@ const FaqSection = ({ faqs = [] }) => {
                     onClick={() => setActiveHeading(heading)}
                   >
                     <h3
+                      role="button"
+                      tabIndex={0}
                       className={`text-md font-medium cursor-pointer transition-all duration-200 ${
                         activeHeading === heading
                           ? "text-[#F3831C] border-l-4 border-[#F3831C] pl-4"
@@ -80,6 +82,12 @@ const FaqSection = ({ faqs = [] }) => {
                             ? "text-[#F3831C] border-l-4 border-[#F3831C]/50 pl-4"
                             : "text-[#0F3652] hover:text-[#F3831C] pl-5"
                       }`}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" || e.key === " ") {
+                          e.preventDefault();
+                          setActiveHeading(heading);
+                        }
+                      }}
                     >
                       {heading}
                     </h3>

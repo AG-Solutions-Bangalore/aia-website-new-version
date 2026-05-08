@@ -163,8 +163,8 @@ export default function CfeJoinDialog({
     } catch (error) {
       toast.error(
         error.response?.data ||
-          error.message ||
-          "Something went wrong. Please try again.",
+        error.message ||
+        "Something went wrong. Please try again.",
       );
     } finally {
       setLoader(false);

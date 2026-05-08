@@ -1,4 +1,6 @@
-const OptimizedImage = ({
+import { memo, useMemo } from "react";
+
+const OptimizedImage = memo(function OptimizedImage({
   src,
   alt = "",
   className = "",
@@ -10,25 +12,28 @@ const OptimizedImage = ({
   onError,
   fetchPriority,
   ...rest
-}) => {
+}) {
+  const srcSet = useMemo(() => {
+    if (!src) return "";
+
+    const widths = [320, 640, 960, 1280, 1600];
+    const quality = 75;
+
+    const buildUrl = (originalSrc, w, q) => {
+      try {
+        const url = new URL(originalSrc);
+        url.searchParams.set("w", w);
+        url.searchParams.set("q", q);
+        return url.toString();
+      } catch {
+        return originalSrc;
+      }
+    };
+
+    return widths.map((w) => `${buildUrl(src, w, quality)} ${w}w`).join(", ");
+  }, [src]);
+
   if (!src) return null;
-  const WIDTHS = [320, 640, 960, 1280, 1600];
-  const QUALITY = 75;
-
-  const buildUrl = (originalSrc, w, q) => {
-    try {
-      const url = new URL(originalSrc);
-      url.searchParams.set("w", w);
-      url.searchParams.set("q", q);
-      return url.toString();
-    } catch {
-      return originalSrc;
-    }
-  };
-
-  const srcSet = WIDTHS.map((w) => `${buildUrl(src, w, QUALITY)} ${w}w`).join(
-    ", "
-  );
 
   return (
     <img
@@ -47,6 +52,6 @@ const OptimizedImage = ({
       {...rest}
     />
   );
-};
+});
 
 export default OptimizedImage;

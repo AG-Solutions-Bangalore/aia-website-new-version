@@ -72,7 +72,7 @@ const HomeBlog = () => {
               className="rounded-xl mt-6 px-5 text-base relative cursor-pointer overflow-hidden group"
               onClick={() => window.open(`/blogs`, "_blank")}
               variant="ghost"
-              aria-label="Explore Siga"
+              aria-label="Read All Blogs"
             >
               <span className="relative z-10 text-white">
                 <span>Read All Blogs</span>
@@ -158,7 +158,8 @@ const HomeBlog = () => {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="mt-3 w-full cursor-pointer bg-[#F3831C] text-white hover:bg-[#F3831C]/90"
+                            className="mt-3 w-full cursor-pointer bg-[#F3831C] text-[#0F3652] hover:bg-[#F3831C]/90"
+                            aria-label={`Read full blog post: ${blog.blog_heading}`}
                             onClick={() =>
                               window.open(`/blogs/${blog.blog_slug}`, "_blank")
                             }

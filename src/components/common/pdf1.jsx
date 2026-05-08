@@ -121,7 +121,7 @@ export const TestimonialSlider = ({
 
                 <div className="relative w-full aspect-[3/4] md:aspect-[4/5] lg:aspect-[4/5] xl:h-full overflow-hidden">
                     <AnimatePresence initial={false} custom={direction}>
-                        <motion.img
+                        {/* <motion.img
                             key={currentIndex}
                             src={`${IMAGE_PATH}${activeReview.image}`}
                             alt={activeReview.alt}
@@ -132,7 +132,7 @@ export const TestimonialSlider = ({
                             exit="exit"
                             transition={{ duration: 0.6, ease }}
                             className="absolute w-full h-full object-contain shadow-[4px_0_15px_rgba(0,0,0,0.15)]"
-                        />
+                        /> */}
                     </AnimatePresence>
 
                 </div>

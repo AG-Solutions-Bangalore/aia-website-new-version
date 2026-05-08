@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Target, Eye } from "lucide-react";
 import SectionHeading from "../SectionHeading/SectionHeading";
 
 const AboutMissionSection = () => {
+  useEffect(() => {
+    if (import.meta.env.DEV) {
+      console.info("[AboutMissionSection] mounted", {
+        path: window.location.pathname,
+      });
+    }
+  }, []);
+
   return (
-    <div className="py-16 bg-linear-to-b from-gray-50 to-white">
-      <div className="max-w-340 mx-auto ">
+    <div className="py-16 bg-linear-to-b  from-gray-50 to-white about-mission-section">
+      <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <SectionHeading
             title="Building Capable Professionals."
