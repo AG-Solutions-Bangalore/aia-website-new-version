@@ -1,5 +1,4 @@
 import { IMAGE_PATH } from "@/api/base-url";
-import { getCourseColor } from "@/utils/courseColor";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 
 const BannerBlogCard = ({ blog, handleBlogClick, imageBaseUrl }) => {
@@ -12,9 +11,14 @@ const BannerBlogCard = ({ blog, handleBlogClick, imageBaseUrl }) => {
     });
   };
   return (
-    <div
-      onClick={() => handleBlogClick(blog.blog_slug)}
-      className="rounded-lg hover:border-[#0F3652] transition-all duration-300 cursor-pointer group overflow-hidden"
+    <a
+      href={`/blogs/${blog.blog_slug}`}
+      onClick={(event) => {
+        event.preventDefault();
+        handleBlogClick(blog.blog_slug);
+      }}
+      className="block rounded-lg hover:border-[#0F3652] transition-all duration-300 cursor-pointer group overflow-hidden focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F3652] focus-visible:ring-offset-2"
+      aria-label={`Read full blog post: ${blog.blog_heading}`}
     >
       <div className="flex flex-col md:flex-row gap-6">
         <div className="md:w-2/5 relative overflow-hidden rounded-lg">
@@ -59,13 +63,13 @@ const BannerBlogCard = ({ blog, handleBlogClick, imageBaseUrl }) => {
             {blog.blog_short_description}
           </p>
 
-          <div className="flex items-center gap-3 text-[#F3831C] group/readmore">
+          <div className="flex items-center gap-3 text-[#B45309] group/readmore">
             <span className="text-base font-semibold">Read Full Article</span>
             <ArrowRight className="w-5 h-5 group-hover/readmore:translate-x-2 transition-transform" />
           </div>
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 export default BannerBlogCard;

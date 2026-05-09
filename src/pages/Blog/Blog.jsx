@@ -194,6 +194,7 @@ const Blog = () => {
             <div className="max-w-2xl mx-auto mt-8 relative">
               <div className="relative">
                 <input
+                  id="blog-search"
                   type="text"
                   value={searchTerm}
                   onChange={(e) => {
@@ -206,24 +207,30 @@ const Blog = () => {
       bg-white border border-[#0F3652]/20 shadow-md 
       text-[#0F3652] placeholder:text-[#0F3652]/50
       focus:outline-none focus:ring-2 focus:ring-[#F3831C]"
+                  aria-label="Search blogs"
                 />
 
-                <button className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <Search className="w-5 h-5 text-[#0F3652]" />
+                <button
+                  type="button"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 min-h-11 min-w-11 inline-flex items-center justify-center"
+                  aria-label="Search blogs"
+                >
+                  <Search className="w-5 h-5 text-[#0F3652]" aria-hidden="true" />
                 </button>
               </div>
 
               {showDropdown && searchSuggestions.length > 0 && (
                 <div className="absolute mt-2 w-full bg-white border border-gray-200 rounded-xl shadow-lg z-50 overflow-hidden">
                   {searchSuggestions.map((blog) => (
-                    <div
+                    <button
+                      type="button"
                       key={blog.id}
                       onClick={() => {
                         window.open(`/blogs/${blog.blog_slug}`, "_blank");
                         setSearchTerm("");
                         setShowDropdown(false);
                       }}
-                      className="flex items-center gap-2 p-4 hover:bg-[#0F3652]/5 cursor-pointer transition-colors"
+                      className="flex w-full items-center gap-2 p-4 hover:bg-[#0F3652]/5 cursor-pointer transition-colors text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F3652]"
                     >
                       <img
                         src={
@@ -247,7 +254,7 @@ const Blog = () => {
                           {blog.blog_short_description}
                         </span>
                       </div>
-                    </div>
+                    </button>
                   ))}
                 </div>
               )}
@@ -297,6 +304,7 @@ const Blog = () => {
                           <button
                             key={index}
                             onClick={() => setCurrentSlide(index)}
+                            aria-label={`Show trending blog ${index + 1}`}
                             className={`h-2 rounded-full transition-all duration-300 ${
                               currentSlide === index
                                 ? "w-8 bg-[#0F3652]"

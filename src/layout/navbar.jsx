@@ -239,20 +239,39 @@ const Navbar = () => {
                   onMouseEnter={() => item.submenu && setActiveDropdown(index)}
                   onMouseLeave={() => item.submenu && setActiveDropdown(null)}
                 >
-                  <Link
-                    onMouseEnter={() => prefetchRoute(item.link)}
-                    to={item.link}
-                    className="
+                  {item.submenu ? (
+                    <button
+                      type="button"
+                      aria-haspopup="true"
+                      aria-expanded={activeDropdown === index}
+                      onFocus={() => setActiveDropdown(index)}
+                      onClick={() => toggleDropdown(index)}
+                      className="
     flex items-center gap-1
     text-[#0F3652] font-medium
     hover:text-[#F3831C]
     transition-colors
     py-2 text-[15px]
   "
-                  >
-                    {item.title}
-                    {item.submenu && <ChevronDown size={14} />}
-                  </Link>
+                    >
+                      {item.title}
+                      <ChevronDown size={14} aria-hidden="true" />
+                    </button>
+                  ) : (
+                    <Link
+                      onMouseEnter={() => prefetchRoute(item.link)}
+                      to={item.link}
+                      className="
+    flex items-center gap-1
+    text-[#0F3652] font-medium
+    hover:text-[#F3831C]
+    transition-colors
+    py-2 text-[15px]
+  "
+                    >
+                      {item.title}
+                    </Link>
+                  )}
 
                   {item.submenu && (
                     <ul
@@ -359,7 +378,7 @@ const Navbar = () => {
                   src={`${IMAGE_PATH}/new_logo.webp`}
                   alt="Academy of Internal Audit"
                   className="h-8 md:h-10 w-auto"
-                  fetchpriority="high"
+                  fetchPriority="high"
                   decoding="async"
                 />
               </div>
@@ -370,7 +389,9 @@ const Navbar = () => {
                     {item.submenu ? (
                       <>
                         <button
+                          type="button"
                           onClick={() => toggleDropdown(index)}
+                          aria-expanded={activeDropdown === index}
                           className="flex items-center justify-between w-full py-4 text-[#0F3652] font-medium"
                         >
                           {item.title}
@@ -419,12 +440,13 @@ const Navbar = () => {
                         )}
                       </>
                     ) : (
-                      <a
-                        href={item.link}
+                      <Link
+                        to={item.link}
+                        onClick={handleMobileLinkClick}
                         className="block py-4 text-[#0F3652] font-medium hover:text-[#F3831C] transition-colors"
                       >
                         {item.title}
-                      </a>
+                      </Link>
                     )}
                   </div>
                 ))}

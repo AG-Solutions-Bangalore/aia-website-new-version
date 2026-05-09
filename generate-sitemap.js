@@ -1,131 +1,199 @@
-// import axios from "axios";
-// import fs from "fs";
-// import path from "path";
+import axios from "axios";
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
 
-// const BASE_URL = "https://aia.in.net";
-// const API_URL = "https://aia.in.net/webapi/public/api/getSitemap";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// // ─── Shared XML Generator (fetches fresh data from API) ───────────────────────
-// async function generateSitemapXML() {
-//   const response = await axios.get(API_URL, {
-//     headers: { "Cache-Control": "no-cache" },
-//   });
+const BASE_URL = "https://aia.in.net";
+const API_URL = "https://aia.in.net/webapi/public/api/getSitemap";
 
-//   const pages = response.data.data || [];
-//   const blogs = response.data.blog || [];
-//   const students = response.data.student || [];
+const ROUTE_ALIASES = {
+  "about-us": "about-aia",
+  "passed-out": "our-passouts",
+  corpo: "corporate-training",
+  enroll: "enroll-now",
+};
 
-//   let urls = "";
+const STATIC_ROUTES = new Set([
+  "/",
+  "/about-aia",
+  "/cfe-curriculum",
+  "/cia-curriculum",
+  "/cia-challenge-curriculum",
+  "/cams",
+  "/cia-free-resources",
+  "/cams-free-resources",
+  "/cfe-free-resources",
+  "/blogs",
+  "/our-passouts",
+  "/enroll-now",
+  "/contact",
+  "/corporate-training",
+  "/policies",
+  "/terms-and-conditions",
+]);
 
-//   // ── Static Pages ──
-//   pages.forEach((page) => {
-//     if (!page.page_two_url) return;
+const CFE_RESOURCE_MODULES = ["CFE-1", "CFE-2", "CFE-3", "CFE-4"];
+const BLOG_COURSE_CATEGORIES = ["cfe", "cia", "cams"];
 
-//     let url = page.page_two_url;
-//     if (url === "about-us") url = "about-aia";
-//     if (url === "passed-out") url = "our-passouts";
+function slugify(value) {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "-");
+}
 
-//     const lastmod = page.updated_at
-//       ? new Date(page.updated_at).toISOString().split("T")[0]
-//       : new Date().toISOString().split("T")[0];
+function escapeXml(value) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&apos;");
+}
 
-//     urls += `
-//   <url>
-//     <loc>${BASE_URL}/${url}</loc>
-//     <lastmod>${lastmod}</lastmod>
-//     <changefreq>monthly</changefreq>
-//     <priority>${page.page_two_priority || "0.8"}</priority>
-//   </url>`;
-//   });
+function toDateString(value) {
+  const date = value ? new Date(value) : new Date();
+  return Number.isNaN(date.getTime())
+    ? new Date().toISOString().split("T")[0]
+    : date.toISOString().split("T")[0];
+}
 
-//   // ── Blog Pages ──
-//   blogs.forEach((blog) => {
-//     if (!blog.page_two_url) return;
+function normalizePath(loc) {
+  const url = String(loc || "").trim().split(/[?#]/)[0];
+  if (!url) return "";
 
-//     const lastmod = blog.updated_at
-//       ? new Date(blog.updated_at).toISOString().split("T")[0]
-//       : new Date().toISOString().split("T")[0];
+  let pathname = url;
+  if (/^https?:\/\//i.test(url)) {
+    try {
+      const parsed = new URL(url);
+      if (parsed.origin !== BASE_URL) return "";
+      pathname = parsed.pathname;
+    } catch {
+      return "";
+    }
+  }
 
-//     urls += `
-//   <url>
-//     <loc>${BASE_URL}/blogs/${blog.page_two_url}</loc>
-//     <lastmod>${lastmod}</lastmod>
-//     <changefreq>weekly</changefreq>
-//     <priority>${blog.page_two_priority || "0.8"}</priority>
-//   </url>`;
-//   });
+  pathname = pathname.startsWith("/") ? pathname : `/${pathname}`;
+  pathname = pathname.replace(/\/+$/, "") || "/";
 
-//   // ── Student Stories ──
-//   students.forEach((student) => {
-//     if (!student.student_slug) return;
+  const aliasKey = pathname.replace(/^\//, "");
+  if (ROUTE_ALIASES[aliasKey]) {
+    return `/${ROUTE_ALIASES[aliasKey]}`;
+  }
 
-//     const lastmod = student.updated_at
-//       ? new Date(student.updated_at).toISOString().split("T")[0]
-//       : new Date().toISOString().split("T")[0];
+  return pathname;
+}
 
-//     urls += `
-//   <url>
-//     <loc>${BASE_URL}/passout-stories/${student.student_slug}</loc>
-//     <lastmod>${lastmod}</lastmod>
-//     <changefreq>monthly</changefreq>
-//     <priority>0.7</priority>
-//   </url>`;
-//   });
+function isRoutablePath(pathname) {
+  return (
+    STATIC_ROUTES.has(pathname) ||
+    pathname.startsWith("/blogs/") ||
+    pathname.startsWith("/passout-stories/") ||
+    pathname.startsWith("/cfe-free-resource/")
+  );
+}
 
-//   return `<?xml version="1.0" encoding="UTF-8"?>
-// <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+async function generateSitemapXML() {
+  try {
+    console.log("🌐 Fetching dynamic routes from API...");
+    const response = await axios.get(API_URL, {
+        headers: { "Cache-Control": "no-cache" },
+    });
 
-//   <url>
-//     <loc>${BASE_URL}</loc>
-//     <lastmod>${new Date().toISOString().split("T")[0]}</lastmod>
-//     <changefreq>daily</changefreq>
-//     <priority>1.0</priority>
-//   </url>
-// ${urls}
+    const pages = response.data.data || [];
+    const blogs = response.data.blog || [];
+    const students = response.data.student || [];
 
-// </urlset>`;
-// }
+    // Base set of URLs to ensure no duplicates
+    const urlSet = new Set();
+    let urlTags = "";
+    let skippedUrls = 0;
 
-// // ─── DEV Middleware (serves fresh /sitemap.xml on localhost) ───────────────────
-// export function sitemapMiddleware() {
-//   return async (req, res, next) => {
-//     if (req.url === "/sitemap.xml") {
-//       try {
-//         const xml = await generateSitemapXML();
-//         res.setHeader("Content-Type", "application/xml");
-//         res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate");
-//         res.end(xml);
-//         console.log("✅ Sitemap served in dev");
-//       } catch (err) {
-//         console.error("❌ Sitemap dev error:", err);
-//         res.statusCode = 500;
-//         res.end("Error generating sitemap");
-//       }
-//     } else {
-//       next();
-//     }
-//   };
-// }
+    const addUrl = (loc, priority = "0.5", changefreq = "monthly", lastmod = null) => {
+        const pathname = normalizePath(loc);
 
-// // ─── BUILD Plugin (writes dist/sitemap.xml during `vite build`) ───────────────
-// // Every time you deploy (run `npm run build`), this fetches fresh data
-// // from the API and writes an up-to-date sitemap.xml into dist/.
-// export function sitemapBuildPlugin() {
-//   return {
-//     name: "vite-plugin-sitemap",
-//     apply: "build",
-//     async closeBundle() {
-//       try {
-//         console.log("🗺️  Generating sitemap.xml for production...");
-//         const xml = await generateSitemapXML();
+        if (!pathname || !isRoutablePath(pathname)) {
+          skippedUrls += 1;
+          return;
+        }
 
-//         const outDir = path.resolve(process.cwd(), "dist");
-//         fs.writeFileSync(path.join(outDir, "sitemap.xml"), xml, "utf-8");
+        const encodedPath = pathname
+          .split("/")
+          .map((part) => encodeURIComponent(part))
+          .join("/");
+        const finalUrl = pathname === "/" ? `${BASE_URL}/` : `${BASE_URL}${encodedPath}`;
 
-//         console.log("✅ sitemap.xml written to dist/sitemap.xml");
-//       } catch (err) {
-//         console.error("❌ Sitemap build error:", err);
-//       }
-//     },
-//   };
-// }
+        if (urlSet.has(finalUrl)) return;
+        urlSet.add(finalUrl);
+
+        const date = toDateString(lastmod);
+
+        urlTags += `
+  <url>
+    <loc>${escapeXml(finalUrl)}</loc>
+    <lastmod>${date}</lastmod>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+    };
+
+    // 1. Static/Home
+    addUrl("/", "1.0", "daily");
+
+    // 2. Dynamic Pages from API
+    pages.forEach((page) => {
+        if (!page.page_two_url) return;
+        let url = page.page_two_url;
+        
+        addUrl(url, page.page_two_priority || "0.8", "weekly", page.updated_at);
+    });
+
+    // 3. Blogs from API
+    blogs.forEach((blog) => {
+        if (!blog.page_two_url) return;
+        addUrl(`/blogs/${blog.page_two_url}`, "0.7", "weekly", blog.updated_at);
+    });
+
+    const blogCourses = new Set(
+      blogs
+        .map((blog) => slugify(blog.blog_course))
+        .filter(Boolean),
+    );
+    BLOG_COURSE_CATEGORIES.forEach((course) => blogCourses.add(course));
+    blogCourses.forEach((course) => addUrl(`/blogs/course/${course}`, "0.6", "weekly"));
+
+    // 4. Student Stories from API
+    students.forEach((student) => {
+        if (!student.student_slug) return;
+        addUrl(`/passout-stories/${student.student_slug}`, "0.6", "monthly", student.updated_at);
+    });
+
+    // 5. Ensure critical routes not in API are included
+    STATIC_ROUTES.forEach(route => addUrl(route, route === "/" ? "1.0" : "0.8", route === "/" ? "daily" : "weekly"));
+    CFE_RESOURCE_MODULES.forEach(module => addUrl(`/cfe-free-resource/${module}`, "0.6", "monthly"));
+
+    const sitemapXML = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urlTags}
+</urlset>`;
+
+    // Save to public and dist
+    const publicPath = path.join(__dirname, "public", "sitemap.xml");
+    fs.writeFileSync(publicPath, sitemapXML);
+    console.log(`✅ Sitemap successfully generated at ${publicPath} (${urlSet.size} URLs, ${skippedUrls} skipped)`);
+
+    const distPath = path.join(__dirname, "dist", "sitemap.xml");
+    if (fs.existsSync(path.join(__dirname, "dist"))) {
+        fs.writeFileSync(distPath, sitemapXML);
+        console.log(`✅ Sitemap successfully copied to ${distPath}`);
+    }
+
+  } catch (error) {
+    console.error("❌ Error generating sitemap:", error.message);
+  }
+}
+
+generateSitemapXML();

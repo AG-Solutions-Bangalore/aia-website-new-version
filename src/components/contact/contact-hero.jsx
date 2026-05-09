@@ -37,12 +37,12 @@ const ContactHero = () => {
     if (params.get("utm_campaign")) {
       localStorage.setItem("utm_campaign", params.get("utm_campaign"));
     }
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       utm_source: localStorage.getItem("utm_source") || "",
       utm_medium: localStorage.getItem("utm_medium") || "",
       utm_campaign: localStorage.getItem("utm_campaign") || "",
-    });
+    }));
   }, []);
 
   useEffect(() => {
@@ -171,8 +171,8 @@ const ContactHero = () => {
                 Confused about which certification is the best fit for you?
                 <br /> Get clear guidance on eligibility, preparation, and
                 long-term career impact.
-                <br /> We're here to guide you - just one message away{" "}
-                <span className="text-[#fa8017] font-semibold">Let's talk</span>
+                <br /> We&apos;re here to guide you - just one message away{" "}
+                <span className="text-[#B45309] font-semibold">Let&apos;s talk</span>
               </p>
 
               <div className="absolute top-[20%] left-[68%] hidden lg:block">
@@ -209,10 +209,11 @@ const ContactHero = () => {
               <div className="space-y-1">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="contact-user-name" className="block text-sm font-medium text-gray-700">
                       Full Name <span className="text-red-600">*</span>
                     </label>
                     <input
+                      id="contact-user-name"
                       type="text"
                       name="userName"
                       value={formData.userName}
@@ -228,10 +229,11 @@ const ContactHero = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="contact-user-email" className="block text-sm font-medium text-gray-700">
                       Email <span className="text-red-600">*</span>
                     </label>
                     <input
+                      id="contact-user-email"
                       type="email"
                       name="userEmail"
                       value={formData.userEmail}
@@ -249,10 +251,11 @@ const ContactHero = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="contact-user-mobile" className="block text-sm font-medium text-gray-700">
                       Phone Number <span className="text-red-600">*</span>
                     </label>
                     <input
+                      id="contact-user-mobile"
                       type="text"
                       name="userMobile"
                       value={formData.userMobile}
@@ -270,10 +273,11 @@ const ContactHero = () => {
                   </div>
 
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="contact-user-location" className="block text-sm font-medium text-gray-700">
                       Location
                     </label>
                     <input
+                      id="contact-user-location"
                       type="text"
                       name="userLocation"
                       value={formData.userLocation}
@@ -286,11 +290,12 @@ const ContactHero = () => {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="contact-user-course" className="block text-sm font-medium text-gray-700">
                       Service Interested In{" "}
                       <span className="text-red-600">*</span>
                     </label>
                     <select
+                      id="contact-user-course"
                       name="userCourse"
                       value={formData.userCourse}
                       onChange={handleChange}
@@ -319,11 +324,12 @@ const ContactHero = () => {
                     )}
                   </div>
                   <div className="space-y-2">
-                    <label className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="contact-referred-from" className="block text-sm font-medium text-gray-700">
                       How You Know About AIA?{" "}
                     </label>
                     <div>
                       <select
+                        id="contact-referred-from"
                         name="referred_from"
                         value={formData.referred_from}
                         onChange={handleChange}
@@ -352,10 +358,11 @@ const ContactHero = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="contact-user-message" className="block text-sm font-medium text-gray-700">
                     Message
                   </label>
                   <textarea
+                    id="contact-user-message"
                     name="userMessage"
                     value={formData.userMessage}
                     onChange={handleChange}

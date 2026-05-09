@@ -4,7 +4,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogTrigger
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,7 +16,12 @@ import { toast } from "sonner";
 let referralCache = null;
 let referralFetchPromise = null;
 
-export default function PdfJoinDialog({ course, buttonlabel, triggerClassName, buttonClassName }) {
+export default function PdfJoinDialog({
+  course,
+  buttonlabel,
+  triggerClassName,
+  buttonClassName,
+}) {
   const [formData, setFormData] = useState({
     userName: "",
     userMobile: "",
@@ -32,7 +37,6 @@ export default function PdfJoinDialog({ course, buttonlabel, triggerClassName, b
   });
   const [errors, setErrors] = useState({});
   const [loader, setLoader] = useState(false);
-  const [referral, setReferral] = useState([]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -46,23 +50,21 @@ export default function PdfJoinDialog({ course, buttonlabel, triggerClassName, b
     if (params.get("utm_campaign")) {
       localStorage.setItem("utm_campaign", params.get("utm_campaign"));
     }
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       utm_source: localStorage.getItem("utm_source") || "",
       utm_medium: localStorage.getItem("utm_medium") || "",
       utm_campaign: localStorage.getItem("utm_campaign") || "",
-    });
+    }));
   }, []);
 
   useEffect(() => {
     const loadReferral = async () => {
       if (referralCache) {
-        setReferral(referralCache);
         return;
       }
       if (referralFetchPromise) {
-        const data = await referralFetchPromise;
-        setReferral(data);
+        await referralFetchPromise;
         return;
       }
 
@@ -71,7 +73,6 @@ export default function PdfJoinDialog({ course, buttonlabel, triggerClassName, b
         .then((res) => {
           const data = res.data.data || [];
           referralCache = data;
-          setReferral(data);
           return data;
         })
         .catch((error) => {
@@ -153,16 +154,20 @@ export default function PdfJoinDialog({ course, buttonlabel, triggerClassName, b
     }
   };
 
-  const inputStyle = "focus:border-[#F3831C]";
+  const inputStyle = "focus:border-[#B45309]";
+  const triggerButtonClassName =
+    buttonClassName ||
+    "bg-[#B45309] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#92400E] transition-all cursor-pointer";
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <div className={triggerClassName || "flex w-1/2 items-center justify-center"}>
-          <Button className={buttonClassName || "bg-[#F3831C] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#F3831C]/90 transition-all cursor-pointer"}>
-            {buttonlabel || "More Info"}
-          </Button>
-        </div>
+        <Button
+          type="button"
+          className={`${triggerClassName || ""} ${triggerButtonClassName}`.trim()}
+        >
+          {buttonlabel || "More Info"}
+        </Button>
       </DialogTrigger>
 
       <DialogContent
@@ -180,7 +185,11 @@ export default function PdfJoinDialog({ course, buttonlabel, triggerClassName, b
         {/* ── Fixed header (never scrolls away) ── */}
         <div className="relative shrink-0 px-4 pt-5 pb-3 sm:px-6 sm:pt-6">
           <DialogClose asChild>
-            <button className="absolute right-3 top-3 rounded-full p-1 text-slate-500 hover:bg-slate-100 hover:text-[#F3831C] cursor-pointer transition-colors">
+            <button
+              type="button"
+              aria-label="Close dialog"
+              className="absolute right-3 top-3 min-h-10 min-w-10 rounded-full p-1 text-slate-600 hover:bg-slate-100 hover:text-[#92400E] cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F3652]"
+            >
               <X size={20} />
             </button>
           </DialogClose>

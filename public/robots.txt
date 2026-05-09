@@ -1,4 +1,12 @@
 User-agent: *
 Allow: /
 
+# Private Pages
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /login
+Disallow: /auth
+Disallow: /api
+
+# Sitemap
 Sitemap: https://aia.in.net/sitemap.xml

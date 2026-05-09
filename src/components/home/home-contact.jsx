@@ -43,12 +43,12 @@ const HomeContact = () => {
     if (params.get("utm_campaign")) {
       localStorage.setItem("utm_campaign", params.get("utm_campaign"));
     }
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       utm_source: localStorage.getItem("utm_source") || "",
       utm_medium: localStorage.getItem("utm_medium") || "",
       utm_campaign: localStorage.getItem("utm_campaign") || "",
-    });
+    }));
   }, []);
 
   useEffect(() => {
@@ -175,11 +175,11 @@ const HomeContact = () => {
             {/* ── Left column ── */}
             <div className="space-y-4">
               <div>
-                <span className="text-xs md:text-sm font-medium text-[#F3831C] uppercase tracking-wider block">
+                <span className="text-xs md:text-sm font-semibold text-[#B45309] uppercase tracking-wider block">
                   Add Global Certifications for a brighter Career Path
                 </span>
                 <h2 className="text-[#0F3652] text-xl md:text-3xl mt-2 font-medium">
-                  <span className="text-2xl md:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-[#0F3652] via-[#F3831C] to-[#F3831C] italic block mt-2">
+                  <span className="text-2xl md:text-5xl font-bold text-[#0F3652] italic block mt-2">
                     Prepare. Certify. Succeed
                   </span>
                 </h2>
@@ -220,7 +220,11 @@ const HomeContact = () => {
             <div>
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <label htmlFor="home-contact-name" className="sr-only">
+                    Name
+                  </label>
                   <input
+                    id="home-contact-name"
                     type="text"
                     name="name"
                     placeholder="Name*"
@@ -231,7 +235,11 @@ const HomeContact = () => {
                     required
                     disabled={isSubmitting}
                   />
+                  <label htmlFor="home-contact-phone" className="sr-only">
+                    Phone number
+                  </label>
                   <input
+                    id="home-contact-phone"
                     type="tel"
                     name="phone"
                     placeholder="Phone No*"
@@ -242,7 +250,11 @@ const HomeContact = () => {
                     required
                     disabled={isSubmitting}
                   />
+                  <label htmlFor="home-contact-email" className="sr-only">
+                    Email address
+                  </label>
                   <input
+                    id="home-contact-email"
                     type="email"
                     name="email"
                     placeholder="Email*"
@@ -253,7 +265,11 @@ const HomeContact = () => {
                     required
                     disabled={isSubmitting}
                   />
+                  <label htmlFor="home-contact-message" className="sr-only">
+                    Message
+                  </label>
                   <textarea
+                    id="home-contact-message"
                     name="message"
                     placeholder="Type Your Message"
                     aria-label="Your Message"
@@ -376,7 +392,7 @@ const HomeContact = () => {
 
                   <div>
                     <Button
-                      className="px-4 py-2 text-xs bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300 cursor-pointer w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-2 text-xs bg-[#B45309] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300 cursor-pointer w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                       type="submit"
                       variant="ghost"
                       disabled={!captchaVerified || isSubmitting}

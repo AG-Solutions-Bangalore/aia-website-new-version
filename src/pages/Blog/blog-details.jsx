@@ -1,4 +1,6 @@
 import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
+import { Helmet } from "react-helmet-async";
+import { buildCanonicalUrl } from "@/lib/seo";
 import BlogFaq from "@/components/blog/blog-faq";
 import axios from "axios";
 import { ArrowLeft, Calendar, Clock, Image as ImageIcon } from "lucide-react";
@@ -33,214 +35,65 @@ const BlogDetails = () => {
 
   useEffect(() => {
     if (!blog) return;
+    // We only set the title here as a fallback, but Helmet handles the rest cleanly.
+    document.title = blog.blog_meta_title || blog.blog_heading;
+  }, [blog]);
 
-    const title = blog.blog_meta_title || blog.blog_heading;
-    const description =
-      blog.blog_meta_description || blog.blog_short_description;
-    const keywords = blog.blog_meta_keywords || "";
-    const url = `https://aia.in.net/blogs/${blog.blog_slug}`;
+  const faqItems = useMemo(
+    () =>
+      faq?.map((item, index) => ({
+        id: `item-${index + 1}`,
+        question: item.faq_que,
+        answer: item.faq_ans,
+      })) || [],
+    [faq],
+  );
 
-    document.title = title;
+  const blogSlug = blog?.blog_slug || id;
+  const blogCanonical = blogSlug ? buildCanonicalUrl(`/blogs/${blogSlug}`) : buildCanonicalUrl("/blogs");
+  const blogTitle = blog ? (blog.blog_meta_title || blog.blog_heading) : "AIA Blog";
+  const blogDescription = blog ? (blog.blog_meta_description || blog.blog_short_description) : "";
+  const blogKeywords = blog ? (blog.blog_meta_keywords || "") : "";
+  const blogImageUrl = blog && blog.blog_images ? `${imageBaseUrl}${blog.blog_images}` : `${IMAGE_PATH}/no_image.jpg`;
 
-    const setMetaTag = (selector, attrs, content) => {
-      let tag = document.querySelector(selector);
-      if (!tag) {
-        tag = document.createElement("meta");
-        Object.keys(attrs).forEach((key) => tag.setAttribute(key, attrs[key]));
-        document.head.appendChild(tag);
-      }
-      tag.setAttribute("content", content);
-      return tag;
-    };
-
-    const metaTitle = setMetaTag(
-      'meta[name="title"]',
-      { name: "title" },
-      title,
-    );
-
-    const metaDescription = setMetaTag(
-      'meta[name="description"]',
-      { name: "description" },
-      description,
-    );
-
-    const metaKeywords =
-      keywords &&
-      setMetaTag('meta[name="keywords"]', { name: "keywords" }, keywords);
-
-    const ogTitle = setMetaTag(
-      'meta[property="og:title"]',
-      { property: "og:title" },
-      title,
-    );
-
-    const ogDescription = setMetaTag(
-      'meta[property="og:description"]',
-      { property: "og:description" },
-      description,
-    );
-
-    const ogUrl = setMetaTag(
-      'meta[property="og:url"]',
-      { property: "og:url" },
-      url,
-    );
-
-    let canonicalLink = document.querySelector('link[rel="canonical"]');
-    if (!canonicalLink) {
-      canonicalLink = document.createElement("link");
-      canonicalLink.rel = "canonical";
-      document.head.appendChild(canonicalLink);
-    }
-    canonicalLink.href = url;
-
-    const structuredData = {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": url,
+  const blogSchema = blog ? {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": blogCanonical,
+    },
+    headline: blog.blog_heading,
+    description: blog.blog_short_description,
+    image: blogImageUrl,
+    author: {
+      "@type": "Organization",
+      name: "AIA",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Academy of Internal Audit",
+      logo: {
+        "@type": "ImageObject",
+        url: `https://aia.in.net/webapi/public/assets/images/web_images/new_logo.webp`,
       },
-      headline: blog.blog_heading,
-      description: blog.blog_short_description,
-      image: blog.blog_images
-        ? `${imageBaseUrl}${blog.blog_images}`
-        : `${IMAGE_PATH}/no_image.jpg`,
-      author: {
-        "@type": "Organization",
-        name: "AIA",
+    },
+    datePublished: blog.created_at,
+    dateModified: blog.updated_at,
+  } : null;
+
+  const faqSchema = faqItems.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqItems.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
       },
-      publisher: {
-        "@type": "Organization",
-        name: "Academy of Internal Audit",
-        logo: {
-          "@type": "ImageObject",
-          url: `${IMAGE_PATH}/new_logo.webp`,
-        },
-      },
-      datePublished: blog.created_at,
-      dateModified: blog.updated_at,
-    };
-
-    let script = document.querySelector('script[type="application/ld+json"]');
-    if (script) script.remove();
-
-    script = document.createElement("script");
-    script.type = "application/ld+json";
-    script.text = JSON.stringify(structuredData);
-    document.head.appendChild(script);
-
-    return () => {
-      [metaTitle, metaDescription, metaKeywords, ogTitle, ogDescription, ogUrl]
-        .filter(Boolean)
-        .forEach((tag) => {
-          if (tag && document.head.contains(tag)) {
-            document.head.removeChild(tag);
-          }
-        });
-
-      if (canonicalLink && document.head.contains(canonicalLink)) {
-        document.head.removeChild(canonicalLink);
-      }
-
-      if (script && document.head.contains(script)) {
-        document.head.removeChild(script);
-      }
-
-      document.title = "AIA | Academy of Internal Audit";
-    };
-  }, [blog, imageBaseUrl]);
-
-  // useEffect(() => {
-  //   if (!blog) return;
-
-  //   document.title = blog.blog_meta_title || blog.blog_heading;
-
-  //   let metaDescription = document.querySelector('meta[name="description"]');
-  //   if (!metaDescription) {
-  //     metaDescription = document.createElement("meta");
-  //     metaDescription.name = "description";
-  //     document.head.appendChild(metaDescription);
-  //   }
-  //   metaDescription.content =
-  //     blog.blog_meta_description || blog.blog_short_description;
-
-  //   if (blog.blog_meta_keywords) {
-  //     let metaKeywords = document.querySelector('meta[name="keywords"]');
-  //     if (!metaKeywords) {
-  //       metaKeywords = document.createElement("meta");
-  //       metaKeywords.name = "keywords";
-  //       document.head.appendChild(metaKeywords);
-  //     }
-  //     metaKeywords.content = blog.blog_meta_keywords;
-  //   }
-
-  //   let canonicalLink = document.querySelector('link[rel="canonical"]');
-  //   if (!canonicalLink) {
-  //     canonicalLink = document.createElement("link");
-  //     canonicalLink.rel = "canonical";
-  //     document.head.appendChild(canonicalLink);
-  //   }
-  //   canonicalLink.href = `https://aia.in.net/blogs/${blog.blog_slug}`;
-
-  //   const structuredData = {
-  //     "@context": "https://schema.org",
-  //     "@type": "BlogPosting",
-  //     mainEntityOfPage: {
-  //       "@type": "WebPage",
-  //       "@id": `https://aia.in.net/blogs/${blog.blog_slug}`,
-  //     },
-  //     headline: blog.blog_heading,
-  //     description: blog.blog_short_description,
-  //     image: blog.blog_images
-  //       ? `${imageBaseUrl}${blog.blog_images}`
-  //       : `${IMAGE_PATH}/no_image.jpg`,
-  //     author: {
-  //       "@type": "Organization",
-  //       name: "AIA",
-  //     },
-  //     publisher: {
-  //       "@type": "Organization",
-  //       name: "Academy of Internal Audit",
-  //       logo: {
-  //         "@type": "ImageObject",
-  //         url: `${IMAGE_PATH}/new_logo.webp`,
-  //       },
-  //     },
-  //     datePublished: blog.created_at,
-  //     dateModified: blog.updated_at,
-  //   };
-
-  //   const existingScript = document.querySelector(
-  //     'script[type="application/ld+json"]'
-  //   );
-  //   if (existingScript) {
-  //     existingScript.remove();
-  //   }
-
-  //   const script = document.createElement("script");
-  //   script.type = "application/ld+json";
-  //   script.text = JSON.stringify(structuredData);
-  //   document.head.appendChild(script);
-
-  //   return () => {
-  //     if (metaDescription && document.head.contains(metaDescription)) {
-  //       document.head.removeChild(metaDescription);
-  //     }
-  //     const keywordsMeta = document.querySelector('meta[name="keywords"]');
-  //     if (keywordsMeta && document.head.contains(keywordsMeta)) {
-  //       document.head.removeChild(keywordsMeta);
-  //     }
-  //     if (canonicalLink && document.head.contains(canonicalLink)) {
-  //       document.head.removeChild(canonicalLink);
-  //     }
-  //     if (script && document.head.contains(script)) {
-  //       document.head.removeChild(script);
-  //     }
-  //     document.title = "AIA | Academy of Internal Audit";
-  //   };
-  // }, [blog, imageBaseUrl, id]);
+    })),
+  } : null;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -303,51 +156,7 @@ const BlogDetails = () => {
   }, [id]);
 
   const faqHeading = faq?.[0]?.faq_heading || "FAQs";
-  const faqItems = useMemo(
-    () =>
-      faq?.map((item, index) => ({
-        id: `item-${index + 1}`,
-        question: item.faq_que,
-        answer: item.faq_ans,
-      })) || [],
-    [faq],
-  );
 
-  useEffect(() => {
-    if (faqItems.length > 0) {
-      const existingScript = document.querySelector(
-        'script[type="application/ld+json"][data-faq-schema]',
-      );
-      if (existingScript) {
-        existingScript.remove();
-      }
-
-      const faqSchema = {
-        "@context": "https://schema.org",
-        "@type": "FAQPage",
-        mainEntity: faqItems.map((item) => ({
-          "@type": "Question",
-          name: item.question,
-          acceptedAnswer: {
-            "@type": "Answer",
-            text: item.answer,
-          },
-        })),
-      };
-
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.setAttribute("data-faq-schema", "true");
-      script.textContent = JSON.stringify(faqSchema);
-      document.head.appendChild(script);
-
-      return () => {
-        if (script && document.head.contains(script)) {
-          document.head.removeChild(script);
-        }
-      };
-    }
-  }, [faqItems]);
 
   const handleSubscribe = async (e) => {
     e.preventDefault();
@@ -520,6 +329,36 @@ const BlogDetails = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      <Helmet>
+        <title>{blogTitle}</title>
+        <meta name="title" content={blogTitle} />
+        <meta name="description" content={blogDescription} />
+        <meta name="keywords" content={blogKeywords} />
+        <link rel="canonical" href={blogCanonical} />
+        
+        {/* Open Graph */}
+        <meta property="og:title" content={blogTitle} />
+        <meta property="og:description" content={blogDescription} />
+        <meta property="og:url" content={blogCanonical} />
+        <meta property="og:image" content={blogImageUrl} />
+        
+        {/* Twitter */}
+        <meta name="twitter:title" content={blogTitle} />
+        <meta name="twitter:description" content={blogDescription} />
+        <meta name="twitter:image" content={blogImageUrl} />
+
+        {/* Structured Data */}
+        {blogSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(blogSchema)}
+          </script>
+        )}
+        {faqSchema && (
+          <script type="application/ld+json">
+            {JSON.stringify(faqSchema)}
+          </script>
+        )}
+      </Helmet>
       <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <button
           onClick={goBack}

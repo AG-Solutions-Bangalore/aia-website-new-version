@@ -1,4 +1,28 @@
 {
+  "trailingSlash": false,
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/about-us",
+      "destination": "/about-aia",
+      "permanent": true
+    },
+    {
+      "source": "/passed-out",
+      "destination": "/our-passouts",
+      "permanent": true
+    },
+    {
+      "source": "/corpo",
+      "destination": "/corporate-training",
+      "permanent": true
+    },
+    {
+      "source": "/enroll",
+      "destination": "/enroll-now",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/sitemap.xml",
@@ -10,6 +34,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600, stale-while-revalidate=86400"
+        }
+      ]
+    },
+    {
+      "source": "/robots.txt",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/plain"
         }
       ]
     },

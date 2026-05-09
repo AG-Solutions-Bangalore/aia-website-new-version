@@ -118,7 +118,11 @@ export const CorporateQuoteForm = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Company Name */}
         <div>
+          <label htmlFor="corporate-company-name" className="sr-only">
+            Company Name
+          </label>
           <input
+            id="corporate-company-name"
             type="text"
             name="userName"
             value={formData.userName}
@@ -135,7 +139,11 @@ export const CorporateQuoteForm = ({
 
         {/* Email */}
         <div>
+          <label htmlFor="corporate-email" className="sr-only">
+            Email
+          </label>
           <input
+            id="corporate-email"
             type="email"
             name="userEmail"
             value={formData.userEmail}
@@ -152,7 +160,11 @@ export const CorporateQuoteForm = ({
 
         {/* Phone */}
         <div>
+          <label htmlFor="corporate-phone" className="sr-only">
+            Phone Number
+          </label>
           <input
+            id="corporate-phone"
             type="tel"
             name="userMobile"
             value={formData.userMobile}
@@ -169,7 +181,11 @@ export const CorporateQuoteForm = ({
 
         {/* Location */}
         <div>
+          <label htmlFor="corporate-location" className="sr-only">
+            Location
+          </label>
           <input
+            id="corporate-location"
             type="text"
             name="userLocation"
             value={formData.userLocation}
@@ -194,6 +210,7 @@ export const CorporateQuoteForm = ({
             }}
           >
             <SelectTrigger
+              aria-label="Service Interested In"
               className={`w-full h-[38px] px-3 text-sm shadow-none focus:ring-1 focus:ring-[#F3831C] ${
                 errors.userCourse ? "border-red-500" : "border-gray-300"
               }`}
@@ -230,6 +247,7 @@ export const CorporateQuoteForm = ({
             }}
           >
             <SelectTrigger
+              aria-label="Type of Training"
               className={`w-full h-[38px] px-3 text-sm shadow-none focus:ring-1 focus:ring-[#F3831C] ${
                 errors.userCourseMode ? "border-red-500" : "border-gray-300"
               }`}
@@ -251,7 +269,11 @@ export const CorporateQuoteForm = ({
 
       {/* Message */}
       <div>
+        <label htmlFor="corporate-message" className="sr-only">
+          Training needs
+        </label>
         <textarea
+          id="corporate-message"
           name="userMessage"
           value={formData.userMessage}
           onChange={handleChange}
@@ -374,13 +396,13 @@ const CorporateQuoteDialog = ({
                 <h2 className="text-2xl md:text-[28px] font-bold leading-relaxed mb-4">
                   {!topcontent && (
                     <span className="text-4xl font-serif select-none leading-none align-top mr-1">
-                      "
+                      &ldquo;
                     </span>
                   )}
                   <span>{quote}</span>
                   {!topcontent && (
                     <span className="text-4xl font-serif select-none leading-none align-bottom ml-1">
-                      "
+                      &rdquo;
                     </span>
                   )}
                 </h2>

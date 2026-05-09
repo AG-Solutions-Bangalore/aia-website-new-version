@@ -4,18 +4,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-rh="true">AIA | Best Training Institute for Certification Courses</title>
-  <meta data-rh="true" name="title" content="AIA | Best Training Institute for Certification Courses" />
-  <meta data-rh="true" name="description"
-    content="Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses." />
-  <meta data-rh="true" property="og:title" content="AIA | Best Training Institute for Certification Courses" />
-  <meta data-rh="true" property="og:description"
-    content="Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses." />
-  <meta data-rh="true" property="og:url" content="https://aia.in.net/" />
-  <meta property="og:type" content="website" />
-  <meta property="og:image" content="/favicon-32x32.png" />
+  <script>
+    (function () {
+      var siteUrl = "https://aia.in.net";
+      var path = window.location.pathname.replace(/\/+$/, "") || "/";
+      var canonicalUrl = path === "/" ? siteUrl + "/" : siteUrl + path;
+      var canonical = document.querySelector('link[rel="canonical"]');
 
-  <link data-rh="true" rel="canonical" href="https://aia.in.net/" />
+      if (!canonical) {
+        canonical = document.createElement("link");
+        canonical.rel = "canonical";
+        document.head.appendChild(canonical);
+      }
+
+      canonical.href = canonicalUrl;
+    })();
+  </script>
   <meta name="application-name" content="AIA" />
   <meta name="author" content="ACADEMY OF INTERNAL AUDIT" />
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
@@ -45,6 +49,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://aia.in.net" />
+  <link
+    rel="preload"
+    as="image"
+    href="https://aia.in.net/webapi/public/assets/images/banner_images/2.webp"
+    fetchpriority="high"
+  />
 
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
   <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />

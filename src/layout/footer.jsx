@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { PaymentAccreditation } from "@/components/Footer/footer-accredationbadges";
 import FooterReviews from "@/components/Footer/footer-review";
 import { ContactGrid } from "@/components/Footer/global-contact";
@@ -23,20 +24,21 @@ export default function Footer() {
                 { name: "Our Passout", href: "/our-passouts" },
                 { name: "CFE Free Resources", href: "/cfe-free-resources" },
                 { name: "Corporate Training", href: "/corporate-training" },
+                { name: "Enroll Now", href: "/enroll-now" },
                 { name: "Contact Us", href: "/contact" },
                 { name: "Policies", href: "/policies" },
                 { name: "Terms and Conditions", href: "/terms-and-conditions" },
               ].map((link, idx) => (
                 <li key={idx} className="group">
-                  <a
-                    href={link.href}
+                  <Link
+                    to={link.href}
                     className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
                   >
                     <span className="text-[#fa8017] group-hover:translate-x-1 transition-transform duration-300">
                       ›
                     </span>
                     <span>{link.name}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -50,35 +52,23 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { name: "CFE Curriculum", href: "/cfe-curriculum" },
-                // {
-                //   name: "Become CFE in Just 30 Days",
-                //   href: "/become-cfe-in-just-30-days",
-                // },
                 { name: "CIA Curriculum", href: "/cia-curriculum" },
-                // {
-                //   name: "Become CIA in Just 90 Days",
-                //   href: "/become-cia-in-just-90-days",
-                // },
                 {
                   name: "CIA Challenge Curriculum",
                   href: "/cia-challenge-curriculum",
                 },
-                // {
-                //   name: "CIA Challenge Prep Course",
-                //   href: "/cia-challenge-prep-course",
-                // },
                 { name: "CAMS", href: "/cams" },
               ].map((course, idx) => (
                 <li key={idx} className="group">
-                  <a
-                    href={course.href}
+                  <Link
+                    to={course.href}
                     className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
                   >
                     <span className="text-[#fa8017] group-hover:translate-x-1 transition-transform duration-300">
                       ›
                     </span>
                     <span>{course.name}</span>
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>

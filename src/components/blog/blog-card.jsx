@@ -1,5 +1,4 @@
 import { IMAGE_PATH } from "@/api/base-url";
-import { getCourseColor } from "@/utils/courseColor";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 
 const BlogCard = ({ imageBaseUrl = "", blog, handleBlogClick }) => {
@@ -16,9 +15,14 @@ const BlogCard = ({ imageBaseUrl = "", blog, handleBlogClick }) => {
       ? `${imageBaseUrl}${blog.blog_images}`
       : `${IMAGE_PATH}/no_image.jpg`;
   return (
-    <div
-      onClick={() => handleBlogClick(blog.blog_slug)}
-      className="h-full flex flex-col cursor-pointer group border transition-colors duration-200 bg-white"
+    <a
+      href={`/blogs/${blog.blog_slug}`}
+      onClick={(event) => {
+        event.preventDefault();
+        handleBlogClick(blog.blog_slug);
+      }}
+      className="h-full flex flex-col cursor-pointer group border transition-colors duration-200 bg-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F3652] focus-visible:ring-offset-2"
+      aria-label={`Read full blog post: ${blog.blog_heading}`}
     >
       {/* Image */}
       <div className="relative overflow-hidden rounded-md">
@@ -66,12 +70,12 @@ const BlogCard = ({ imageBaseUrl = "", blog, handleBlogClick }) => {
         </p>
 
         {/* Push to bottom */}
-        <div className="mt-auto pt-4 flex items-center gap-2 text-[#F3831C]">
+        <div className="mt-auto pt-4 flex items-center gap-2 text-[#B45309]">
           <span className="text-sm font-medium">Read Article</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </div>
       </div>
-    </div>
+    </a>
   );
 };
 export default BlogCard;

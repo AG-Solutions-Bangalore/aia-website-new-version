@@ -1,66 +1,102 @@
 {
   "/": {
     "title": "AIA | Best Training Institute for Certification Courses",
-    "description": "Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses."
+    "description": "Academy of Internal Audit (AIA) is the best Online Training Institute for Global Certification Courses like CIA, CFE, and CAMS. Join AIA for expert-led training.",
+    "keywords": "CIA training, CFE certification, CAMS course, Internal Audit institute, Academy of Internal Audit"
   },
   "/about-aia": {
-    "title": "About - Academy of Internal Audit",
-    "description": "Academy of Internal Audit is a well-known Training Institute for Professional Courses Training, skilled faculty, and comprehensive guidance services."
-  },
-  "/about-us": {
-    "title": "About - Academy of Internal Audit",
-    "description": "Academy of Internal Audit is a well-known Training Institute for Professional Courses Training, skilled faculty, and comprehensive guidance services."
+    "title": "About AIA | Academy of Internal Audit - Excellence in Education",
+    "description": "Learn about the Academy of Internal Audit (AIA), a premier institute for professional certifications with a 99% success rate and global reach in 36+ countries.",
+    "keywords": "About AIA, Academy of Internal Audit history, AIA success rate, professional training institute"
   },
   "/cfe-curriculum": {
-    "title": "Certified Fraud Examiner Course | CFE Certification Course",
-    "description": "Get Certification in Certified Fraud Examiner Course with AIA Institute to become a skilled Certified Fraud Investigator and unlock fraud prevention mystery."
+    "title": "Certified Fraud Examiner (CFE) Course | AIA Institute",
+    "description": "Master fraud prevention and detection with our CFE Certification Course. Comprehensive study materials, practice questions, and expert guidance to ace the CFE exam.",
+    "keywords": "CFE course, Certified Fraud Examiner, fraud detection training, CFE exam prep"
   },
   "/cia-curriculum": {
-    "title": "Certified Internal Auditor Course | CIA Certification Course",
-    "description": "Elevate your auditing career with AIA Institute which help you to ace your Certified Internal Auditor Course (CIA) and get your Internal Audit Certification."
+    "title": "Certified Internal Auditor (CIA) Course | Internal Audit Certification",
+    "description": "Advance your career with the CIA Certification Course at AIA. Expert-led training for all 3 parts of the Certified Internal Auditor exam with high success rates.",
+    "keywords": "CIA course, Certified Internal Auditor, internal audit training, CIA exam preparation"
   },
   "/cia-challenge-curriculum": {
-    "title": "CIA Challenge Exam Prep | Clear in One Attempt with AIA Guidance",
-    "description": "Short on time? AIA’s CIA Challenge Prep helps busy auditors fast-track their certification with flexible notes, expert-recorded lectures, and 1:1 live support. Enroll today!"
+    "title": "CIA Challenge Exam Prep | Fast-Track Your CIA Certification",
+    "description": "Short on time? AIA’s CIA Challenge Prep helps busy auditors clear the exam in one attempt with flexible notes, recorded lectures, and 1:1 support.",
+    "keywords": "CIA Challenge exam, CIA fast track, CIA challenge prep, internal auditor certification"
   },
   "/cams": {
-    "title": "Certified Anti Money Laundering Specialist | CAMS Course",
-    "description": "Prepare to excel in CAMS Certification Exam with AIA's CAMS Study Guide and CAMS Practice Questions provided for Certified Anti Money Laundering Specialist."
-  },
-  "/cfe-free-resources": {
-    "title": "Certified Fraud Examiner Free Resources - AIA",
-    "description": "Access CFE Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation."
+    "title": "Certified Anti-Money Laundering Specialist (CAMS) Course | AIA",
+    "description": "Get CAMS certified with AIA's comprehensive study guide and practice questions. Expert training for the Certified Anti-Money Laundering Specialist exam.",
+    "keywords": "CAMS course, Anti-money laundering certification, CAMS exam prep, CAMS specialist"
   },
   "/blogs": {
-    "title": "Guide For Professional Courses like CIA, CFE, CIAC - AIA",
-    "description": "Read Latest Blogs on professional courses like CIA, CFE, and CIA Challenge | Information that you need to know to grow your skills and career as well."
+    "title": "Professional Certification Blog | CIA, CFE, CAMS Tips & Guides",
+    "description": "Stay updated with the latest insights, exam tips, and career guidance for CIA, CFE, and CAMS certifications from experts at Academy of Internal Audit.",
+    "keywords": "AIA blog, CIA tips, CFE guides, CAMS certification news, internal audit articles"
+  },
+  "/blogs/:id": {
+    "title": "AIA Blog | Expert Insights into Professional Certifications",
+    "description": "Read detailed articles on CIA, CFE, and CAMS exam preparation, industry trends, and career advice for internal auditors and fraud examiners.",
+    "keywords": "professional certification insights, exam prep blogs, internal audit careers"
+  },
+  "/blogs/course/:courseName": {
+    "title": "Certification Course Blogs | Academy of Internal Audit",
+    "description": "Browse AIA blog articles by certification course, including CIA, CFE, CAMS, and audit career guidance.",
+    "keywords": "CIA blogs, CFE blogs, CAMS blogs, audit certification articles"
   },
   "/our-passouts": {
-    "title": "Our Passout Students - Academy of Internal Audit",
-    "description": "Academy of Internal Audit celebrates 99%+ pass rate—featuring recent CFE, CIA, CAMS alumni from around the globe sharing their success stories."
+    "title": "AIA Success Stories | 99%+ Pass Rate for CIA, CFE, CAMS",
+    "description": "Meet our successful students who cleared CIA, CFE, and CAMS exams. Join the global community of AIA-trained certified professionals.",
+    "keywords": "AIA alumni, student success stories, CIA pass outs, CFE results, CAMS success"
   },
-  "/contact": {
-    "title": "Contact Us | Academy of Internal Audit",
-    "description": "Reach out to Academy of Internal Audit for dedicated support in your journey to obtain professional course certifications. We will be happy to help you."
+  "/cfe-free-resources": {
+    "title": "Free CFE Study Resources | Practice Questions & Flashcards",
+    "description": "Access free CFE resources including practice questions, flashcards, and video lectures to boost your Certified Fraud Examiner exam preparation.",
+    "keywords": "free CFE resources, CFE practice questions, CFE flashcards, CFE study material"
   },
-  "/passout-stories/:slug": {
-    "title": " Student Success Story | CIA, CFE & CAMS Results | AIA",
-    "description": "Read real success stories of AIA students who cleared CIA, CFE & CAMS exams. Get inspired by their journey, preparation strategy, and results."
+  "/cia-free-resources": {
+    "title": "Free CIA Study Resources | Exam Prep Material | AIA",
+    "description": "Get free access to CIA exam prep materials, practice questions, and study guides at the Academy of Internal Audit.",
+    "keywords": "free CIA resources, CIA practice questions, CIA study guide, internal audit free prep"
+  },
+  "/cams-free-resources": {
+    "title": "Free CAMS Study Resources | CAMS Practice Questions",
+    "description": "Prepare for the CAMS exam with our free resources, including practice questions and study guides for aspiring Anti-Money Laundering Specialists.",
+    "keywords": "free CAMS resources, CAMS practice questions, CAMS study material"
+  },
+  "/corporate-training": {
+    "title": "Corporate Training Programs | Upskill Your Audit & Risk Teams",
+    "description": "AIA offers customized corporate training in Internal Audit, Fraud Detection, and Risk Management for organizations globally. Enhance your team's capability.",
+    "keywords": "corporate audit training, risk management training, fraud detection for organizations"
   },
   "/enroll-now": {
-    "title": "Enroll Now at Academy of Internal Audit for CIA, CFE, CAMS",
-    "description": "Kickstart your career with AIA—enroll now for CIA, CFE & CAMS courses with expert training, flexible online access, and proven success strategies."
+    "title": "Enroll Now | Academy of Internal Audit",
+    "description": "Enroll with Academy of Internal Audit for CIA, CFE, CAMS, and other global certification training programs led by expert faculty.",
+    "keywords": "enroll AIA, CIA enrollment, CFE enrollment, CAMS enrollment, audit certification admission"
   },
-  "/corpo": {
-    "title": "Corporate Training Programs of Academy of Internal Audit",
-    "description": "Upskill your team with AIA’s corporate training in Internal Audit, Fraud Detection & Risk Management. Customized programs for organizations."
+  "/cfe-free-resource/:questions_module": {
+    "title": "Free CFE Practice Questions | Academy of Internal Audit",
+    "description": "Practice free CFE module questions with answers and explanations from Academy of Internal Audit.",
+    "keywords": "CFE practice questions, free CFE questions, CFE module questions, CFE exam preparation"
+  },
+  "/contact": {
+    "title": "Contact AIA | Get Expert Guidance for Your Certification",
+    "description": "Have questions about CIA, CFE, or CAMS? Contact the Academy of Internal Audit today for personalized guidance and support for your professional journey.",
+    "keywords": "contact AIA, Academy of Internal Audit phone, AIA email, audit training support"
+  },
+  "/passout-stories/:slug": {
+    "title": "Student Achievement Story | How I Cleared My Certification | AIA",
+    "description": "Read real success stories of AIA students who cleared CIA, CFE & CAMS exams. Get inspired by their preparation strategy and results.",
+    "keywords": "certification success story, student journey, exam clearing strategy"
   },
   "/policies": {
     "title": "Policies | Academy of Internal Audit (AIA)",
-    "description": "Read AIA policies including privacy policy, refund policy, and terms related to courses, payments, and student services."
+    "description": "Review AIA's privacy policy, refund policy, and student service terms for CIA, CFE, and CAMS certification courses.",
+    "keywords": "AIA policies, privacy policy, refund policy"
   },
   "/terms-and-conditions": {
-    "title": "Terms and Conditions | AIA Courses & Services",
-    "description": "Review the terms and conditions for enrolling in AIA courses, including usage policies, payments, access rights, and guidelines."
+    "title": "Terms and Conditions | Academy of Internal Audit",
+    "description": "Read the terms and conditions for AIA courses, services, and website usage. Essential information for all enrolled students.",
+    "keywords": "AIA terms and conditions, course usage policy"
   }
 }

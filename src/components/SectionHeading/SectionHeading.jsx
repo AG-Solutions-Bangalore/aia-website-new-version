@@ -42,17 +42,17 @@ const SectionHeading = ({
         >
           <span
             className={` ${
-              preheadingclassName ? preheadingclassName : "text-[#F3831C]"
+              preheadingclassName ? preheadingclassName : "text-[#92400E]"
             } ${preheadingclassName}`}
           >
             {preheading}
           </span>{" "}
-          {title} <span className="text-[#F3831C]">{highlight1}</span>
+          {title} <span className="text-[#92400E]">{highlight1}</span>
         </h2>
 
         {highlight && (
           <h2
-            className={`font-bold text-[#F3831C] mt-2 ${
+            className={`font-bold text-[#92400E] mt-2 ${
               highlightclassName ? highlightclassName : "text-xl md:text-4xl"
             } ${highlightClass}`}
           >
@@ -131,7 +131,7 @@ const SectionHeading = ({
             style={{
               width: "25%",
               height: "6px",
-              background: "#F3831C",
+              background: "#B45309",
               top: "50%",
               transform: "translateY(-50%)",
               animation: "slideBackForth 3.2s ease-in-out infinite",

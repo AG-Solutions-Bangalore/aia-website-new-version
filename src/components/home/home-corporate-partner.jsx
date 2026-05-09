@@ -337,7 +337,7 @@ const HomeCorporatePartner = () => {
               <h3 className="text-3xl font-semibold">
                 {currentTitle?.split("X").map((part, index, arr) => (
                   <span key={index}>
-                    <span className="text-[#F3831C]">{part}</span>
+                    <span className="text-[#FDBA74]">{part}</span>
                     {index < arr.length - 1 && (
                       <span className="text-white">X</span>
                     )}
@@ -349,7 +349,7 @@ const HomeCorporatePartner = () => {
               </p>
               {location.pathname !== "/corporate-training" && (
                 <Button
-                  className="mb-4 relative cursor-pointer overflow-hidden group px-4 py-2 text-xs bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300"
+                  className="mb-4 relative cursor-pointer overflow-hidden group px-4 py-2 text-xs bg-[#B45309] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300"
                   variant="ghost"
                   aria-label="Explore Siga"
                 >

@@ -94,6 +94,7 @@ export default function App() {
         <Route path="/blogs/course/:courseName" element={<BlogCourse />} />
         <Route path="/our-passouts" element={<OurPassout />} />
         <Route path="/passed-out" element={<OurPassout />} />
+        <Route path="/enroll-now" element={<Enrool />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/passout-stories/:slug" element={<PassoutStoriesSlug />} />
         <Route path="/corporate-training" element={<CorporateTraining />} />

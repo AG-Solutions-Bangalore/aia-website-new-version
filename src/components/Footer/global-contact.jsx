@@ -26,7 +26,7 @@ const ContactCard = ({ country, contacts }) => {
       setTimeout(() => {
         setCopied(null);
       }, 2000);
-    } catch (error) {
+    } catch {
       console.error("Copy failed");
     }
   };
@@ -49,9 +49,11 @@ const ContactCard = ({ country, contacts }) => {
               </a>
 
               <button
+                type="button"
                 onClick={() => handleCopy(number)}
-                className="opacity-0 cursor-pointer group-hover/number:opacity-100 transition-all duration-200 text-gray-400 hover:text-[#fa8017]"
+                className="min-h-10 min-w-10 inline-flex items-center justify-center opacity-0 cursor-pointer group-hover/number:opacity-100 focus:opacity-100 transition-all duration-200 text-gray-300 hover:text-[#FDBA74] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FDBA74]"
                 title="Copy number"
+                aria-label={`Copy ${number}`}
               >
                 {copied == number ? (
                   <Check className="w-3.5 h-3.5 text-green-500" />
@@ -76,7 +78,8 @@ const ContactCard = ({ country, contacts }) => {
               {tel && (
                 <a
                   href={`tel:${tel}`}
-                  className="w-6 h-6 bg-[#fa8017]/15 border border-[#fa8017]/20 rounded-md flex items-center justify-center text-[#fa8017] hover:bg-[#fa8017] hover:text-white transition-all duration-150"
+                  className="min-h-10 min-w-10 bg-[#FDBA74]/15 border border-[#FDBA74]/30 rounded-md flex items-center justify-center text-[#FDBA74] hover:bg-[#B45309] hover:text-white transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FDBA74]"
+                  aria-label={`Call ${number}`}
                 >
                   <PhoneIcon />
                 </a>
@@ -87,7 +90,8 @@ const ContactCard = ({ country, contacts }) => {
                   href={`https://wa.me/${wa}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-6 h-6 bg-[#25D366]/15 border border-[#25D366]/20 rounded-md flex items-center justify-center text-[#25D366] hover:bg-[#25D366] hover:text-white transition-all duration-150"
+                  className="min-h-10 min-w-10 bg-[#25D366]/15 border border-[#25D366]/20 rounded-md flex items-center justify-center text-[#25D366] hover:bg-[#128C7E] hover:text-white transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
+                  aria-label={`WhatsApp ${number}`}
                 >
                   <WhatsAppIcon />
                 </a>

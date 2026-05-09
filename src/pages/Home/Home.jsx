@@ -35,7 +35,7 @@ export default function Home() {
       <DeferredPopUp slug="home" />
 
       <HomeHero slug="home" bottombar="true" />
-      <LazySection minHeight="400px" rootMargin="500px">
+      <LazySection minHeight="400px" rootMargin="160px">
         <HomeAbout />
       </LazySection>
 

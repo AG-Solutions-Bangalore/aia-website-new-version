@@ -102,7 +102,7 @@ export function TestimonialsSectionColor({
       {sucessstory && (
         <div className="flex justify-center mt-4">
           <Button
-            className=" mb-4  relative cursor-pointer overflow-hidden group  px-4 py-2  text-xs bg-[#F3831C] text-white rounded-none hover:bg-[#F3831C] transition-colors duration-300 "
+            className=" mb-4  relative cursor-pointer overflow-hidden group  px-4 py-2  text-xs bg-[#B45309] text-white rounded-none hover:bg-[#92400E] transition-colors duration-300 "
             variant="ghost"
             aria-label="View All Success Stories"
           >

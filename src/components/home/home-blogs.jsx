@@ -117,7 +117,7 @@ const HomeBlog = () => {
                               e.target.src = noImageUrl;
                             }}
                           />
-                          <div className="absolute bottom-2 right-2 rounded-md bg-[#F3831C] px-2 py-1 text-xs font-semibold text-white">
+                          <div className="absolute bottom-2 right-2 rounded-md bg-[#B45309] px-2 py-1 text-xs font-semibold text-white">
                             {blog.blog_course}
                           </div>
                         </div>
@@ -149,7 +149,7 @@ const HomeBlog = () => {
                                 )}
                               </p>
                             </div>
-                            <div className="flex items-center gap-1 rounded-full bg-[#F3831C]/10 px-2 py-0.5 text-xs font-semibold text-[#F3831C]">
+                            <div className="flex items-center gap-1 rounded-full bg-[#B45309]/10 px-2 py-0.5 text-xs font-semibold text-[#B45309]">
                               <Star className="h-3 w-3" />
                               {blog.blog_course}
                             </div>
@@ -158,7 +158,7 @@ const HomeBlog = () => {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="mt-3 w-full cursor-pointer bg-[#F3831C] text-[#0F3652] hover:bg-[#F3831C]/90"
+                            className="mt-3 w-full cursor-pointer bg-[#B45309] text-white hover:bg-[#92400E]"
                             aria-label={`Read full blog post: ${blog.blog_heading}`}
                             onClick={() =>
                               window.open(`/blogs/${blog.blog_slug}`, "_blank")

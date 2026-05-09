@@ -1,15 +1,13 @@
 import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import axios from "axios";
 import { X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const PopUp = ({ slug = "home" }) => {
   const [open, setOpen] = useState(false);
@@ -20,7 +18,6 @@ const PopUp = ({ slug = "home" }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
   const [showPopupAfterLoad, setShowPopupAfterLoad] = useState(false);
-  const imageRef = useRef(null);
   const storageKey = `popup_hidden_${slug}`;
 
   useEffect(() => {
@@ -30,7 +27,7 @@ const PopUp = ({ slug = "home" }) => {
     }
   }, []);
 
-  const fetchPopupData = async () => {
+  const fetchPopupData = useCallback(async () => {
     try {
       setLoading(true);
       const response = await axios.get(
@@ -52,11 +49,11 @@ const PopUp = ({ slug = "home" }) => {
       console.error("Error fetching popup data:", error);
       setLoading(false);
     }
-  };
+  }, [slug]);
 
   useEffect(() => {
     fetchPopupData();
-  }, [slug]);
+  }, [fetchPopupData]);
   useEffect(() => {
     if (!popupData || popupData.popup_required !== "Yes") {
       return;
@@ -99,7 +96,7 @@ const PopUp = ({ slug = "home" }) => {
         };
       };
     }
-  }, [imageUrl, loading, popupData]);
+  }, [imageLoaded, imageUrl, loading, popupData, storageKey]);
 
   useEffect(() => {
     if (showPopupAfterLoad) {
@@ -121,14 +118,6 @@ const PopUp = ({ slug = "home" }) => {
       }
     }
     setOpen(isOpen);
-  };
-
-  const handleCheckboxChange = (checked) => {
-    setDontShowAgain(checked);
-
-    if (!checked) {
-      sessionStorage.removeItem(storageKey);
-    }
   };
 
   if (loading || !popupData || popupData.popup_required !== "Yes") {
@@ -190,7 +179,7 @@ const PopUp = ({ slug = "home" }) => {
                 height={400}
                 className={`${popupData.popup_heading ? "rounded-b-lg" : "rounded-lg"} w-full h-auto`}
                 loading="eager"
-                fetchpriority="high"
+                fetchPriority="high"
               />
             )}
           </div>

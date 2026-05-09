@@ -46,7 +46,7 @@ const OptimizedImage = memo(function OptimizedImage({
       width={width}
       height={height}
       loading={priority ? "eager" : "lazy"}
-      fetchpriority={fetchPriority || (priority ? "high" : "low")}
+      fetchPriority={fetchPriority || (priority ? "high" : "low")}
       decoding={priority ? "sync" : "async"}
       onError={onError}
       {...rest}

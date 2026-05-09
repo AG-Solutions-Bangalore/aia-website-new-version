@@ -15,7 +15,6 @@ const CourseAboutH1 = ({
   formsubtitle,
   formcourse,
   formbuttonlabel,
-  lineBreak = "lg",
   preheading,
   customButton,
   children,
@@ -36,7 +35,7 @@ const CourseAboutH1 = ({
           <div>
             {badgeText && (
               <div className="flex items-center gap-3 mb-2 md:mb-3">
-                <span className="text-xs sm:text-sm font-medium text-[#F3831C] tracking-wider">
+                <span className="text-xs sm:text-sm font-medium text-[#92400E] tracking-wider">
                   {badgeText}
                 </span>
               </div>
@@ -62,7 +61,7 @@ const CourseAboutH1 = ({
                   to={buttonLink}
                   className="flex justify-center md:justify-start"
                 >
-                  <span className="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300">
+                    <span className="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#B45309] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300">
                     {buttonText}
                   </span>
                 </Link>
@@ -117,9 +116,9 @@ const CourseAboutH1 = ({
                 </div>
 
                 {stat.show == "true" && (
-                  <h4 className="text-xs sm:text-sm md:text-base font-normal text-[#0F3652] leading-tight">
+                  <p className="text-xs sm:text-sm md:text-base font-normal text-[#0F3652] leading-tight">
                     {stat.title}
-                  </h4>
+                  </p>
                 )}
 
                 <div className="absolute bottom-0 left-0 right-0 h-1 sm:h-1.5 bg-linear-to-r from-[#F3831C] via-[#F3831C]/80 to-[#F3831C]/60 rounded-b-lg" />

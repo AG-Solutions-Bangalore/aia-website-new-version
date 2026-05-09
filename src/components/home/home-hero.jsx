@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
 import OptimizedImage from "@/components/common/optmized-image";
@@ -13,6 +13,60 @@ const HOME_FALLBACK_SLIDES = [
     imageUrl: `${HOME_BANNER_BASE}2.webp`,
     link: "contact",
     alt: "cia-cfe-cams-certification",
+  },
+  {
+    id: 2,
+    imageUrl: `${HOME_BANNER_BASE}11.webp`,
+    link: "cams",
+    alt: "cams-passout",
+  },
+  {
+    id: 3,
+    imageUrl: `${HOME_BANNER_BASE}10.webp`,
+    link: "cams",
+    alt: "CAMS Certification",
+  },
+  {
+    id: 4,
+    imageUrl: `${HOME_BANNER_BASE}6.webp`,
+    link: "cfe-curriculum",
+    alt: "CFE-Passouts",
+  },
+  {
+    id: 5,
+    imageUrl: `${HOME_BANNER_BASE}3.webp`,
+    link: "cfe-curriculum",
+    alt: "CFE Banner",
+  },
+  {
+    id: 6,
+    imageUrl: `${HOME_BANNER_BASE}5.webp`,
+    link: "cia-challenge-curriculum",
+    alt: "CIA-Passouts",
+  },
+  {
+    id: 7,
+    imageUrl: `${HOME_BANNER_BASE}9.webp`,
+    link: "cia-challenge-curriculum",
+    alt: "CIA Challenge Curriculum",
+  },
+  {
+    id: 8,
+    imageUrl: `${HOME_BANNER_BASE}4.webp`,
+    link: "our-passouts",
+    alt: "CIA-Passouts",
+  },
+  {
+    id: 9,
+    imageUrl: `${HOME_BANNER_BASE}8.webp`,
+    link: "cia-curriculum",
+    alt: "CIA Curriculum",
+  },
+  {
+    id: 10,
+    imageUrl: `${HOME_BANNER_BASE}7.webp`,
+    link: "cfe-curriculum",
+    alt: "CFE-Passout",
   },
 ];
 
@@ -71,6 +125,60 @@ const HOME_FALLBACK_ANNOUNCEMENTS = [
     subtext: "Connect with experts and plan your preparation the smarter way.",
     link: "contact",
   },
+  {
+    id: 2,
+    title: "Begin your CAMS Success journey here",
+    subtext: "Start your CAMS journey with expert support and proven preparation.",
+    link: "cams",
+  },
+  {
+    id: 3,
+    title: "Looking for a smarter way to prepare for CAMS?",
+    subtext: "Switch to focused CAMS prep designed for real professional needs.",
+    link: "cams",
+  },
+  {
+    id: 4,
+    title: "Want to build a career in fraud investigation?",
+    subtext: "Explore our CFE Program & join a growing community of professionals.",
+    link: "cfe-curriculum",
+  },
+  {
+    id: 5,
+    title: "Want to escape a bulky 2,000 pages manual?",
+    subtext: "We've got you covered. Crack CFE with AIA's 250 pages quick notes.",
+    link: "cfe-curriculum",
+  },
+  {
+    id: 6,
+    title: "Add the CIA credential to your professional profile",
+    subtext: "Clear CIA Challenge with AIA's exclusive study material & approach.",
+    link: "cia-challenge-curriculum",
+  },
+  {
+    id: 7,
+    title: "Struggling with heavy books? Not anymore.",
+    subtext: "Switch to AIA's premium study resources & make your prep smarter.",
+    link: "cia-challenge-curriculum",
+  },
+  {
+    id: 8,
+    title: "CIA Passouts",
+    subtext: "CIA Passouts",
+    link: "our-passouts",
+  },
+  {
+    id: 9,
+    title: "Want to crack the CIA on your first attempt?",
+    subtext: "Choose the smart way, not the hard way - clear CIA with expert guidance.",
+    link: "cia-curriculum",
+  },
+  {
+    id: 10,
+    title: "Trusted by professionals across 36+ countries worldwide.",
+    subtext: "Join the global CFE network and build a career in fraud examination.",
+    link: "cfe-curriculum",
+  },
 ];
 
 const getFallbackSlides = (slug) => {
@@ -90,7 +198,7 @@ const getFallbackSlides = (slug) => {
 export default function HomeHero({ slug, bottombar = false }) {
   const hasFallback = Boolean(BANNER_FALLBACKS[slug]);
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [carouselSlides, setCarouselSlides] = useState(() =>
     slug === "home" ? HOME_FALLBACK_SLIDES : getFallbackSlides(slug),
   );
@@ -99,9 +207,13 @@ export default function HomeHero({ slug, bottombar = false }) {
   );
   const [isLoading, setIsLoading] = useState(!hasFallback);
   const [error, setError] = useState(null);
+  const touchStartX = useRef(null);
+  const suppressClick = useRef(false);
 
   useEffect(() => {
     const controller = new AbortController();
+    let loadTimer;
+    let idleCallbackId;
 
     const loadBanner = async () => {
       try {
@@ -151,10 +263,38 @@ export default function HomeHero({ slug, bottombar = false }) {
       }
     };
 
-    loadBanner();
+    const scheduleBannerLoad = () => {
+      if (hasFallback) {
+        loadTimer = window.setTimeout(() => {
+          if ("requestIdleCallback" in window) {
+            idleCallbackId = window.requestIdleCallback(loadBanner, {
+              timeout: 3000,
+            });
+          } else {
+            loadBanner();
+          }
+        }, 6000);
+        return;
+      }
 
-    return () => controller.abort();
+      loadBanner();
+    };
+
+    scheduleBannerLoad();
+
+    return () => {
+      controller.abort();
+      window.clearTimeout(loadTimer);
+      if (idleCallbackId && "cancelIdleCallback" in window) {
+        window.cancelIdleCallback(idleCallbackId);
+      }
+    };
   }, [hasFallback, slug]);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setIsAutoPlaying(true), 8000);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const nextSlide = useCallback(() => {
     if (carouselSlides.length > 0)
@@ -169,6 +309,35 @@ export default function HomeHero({ slug, bottombar = false }) {
   }, [carouselSlides.length]);
 
   const goToSlide = useCallback((index) => setCurrentSlide(index), []);
+
+  const handleTouchStart = useCallback((event) => {
+    touchStartX.current = event.touches[0]?.clientX ?? null;
+    suppressClick.current = false;
+  }, []);
+
+  const handleTouchEnd = useCallback(
+    (event) => {
+      if (touchStartX.current == null) return;
+
+      const endX = event.changedTouches[0]?.clientX;
+      if (endX == null) return;
+
+      const deltaX = endX - touchStartX.current;
+      touchStartX.current = null;
+
+      if (Math.abs(deltaX) < 40) return;
+
+      suppressClick.current = true;
+      setIsAutoPlaying(false);
+
+      if (deltaX < 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    },
+    [nextSlide, prevSlide],
+  );
 
   useEffect(() => {
     if (!isAutoPlaying || carouselSlides.length === 0) return;
@@ -257,6 +426,18 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   const activeSlide = carouselSlides[currentSlide];
   const current = announcements[currentSlide];
+  const slideHref = activeSlide?.link
+    ? activeSlide.link.startsWith("http")
+      ? activeSlide.link
+      : `/${activeSlide.link.replace(/^\/+/, "")}`
+    : undefined;
+  const isExternalSlide = Boolean(slideHref?.startsWith("http"));
+  const currentHref = current?.link
+    ? current.link.startsWith("http")
+      ? current.link
+      : `/${current.link.replace(/^\/+/, "")}`
+    : undefined;
+  const isExternalCurrent = Boolean(currentHref?.startsWith("http"));
 
   return (
     <section className="relative">
@@ -264,15 +445,24 @@ export default function HomeHero({ slug, bottombar = false }) {
         className="relative overflow-hidden"
         onMouseEnter={() => setIsAutoPlaying(false)}
         onMouseLeave={() => setIsAutoPlaying(true)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <div className="relative w-full" style={{ aspectRatio: "11/5" }}>
           {activeSlide && (
             <a
               key={activeSlide.id}
-              href={activeSlide.link || undefined}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={slideHref}
+              target={isExternalSlide ? "_blank" : undefined}
+              rel={isExternalSlide ? "noopener noreferrer" : undefined}
               className="absolute inset-0 z-10"
+              aria-label={activeSlide.alt || "Open banner link"}
+              onClick={(event) => {
+                if (suppressClick.current) {
+                  event.preventDefault();
+                  suppressClick.current = false;
+                }
+              }}
             >
               <OptimizedImage
                 src={activeSlide.imageUrl}
@@ -342,13 +532,13 @@ export default function HomeHero({ slug, bottombar = false }) {
               </div>
 
               <a
-                href={current.link}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={currentHref}
+                target={isExternalCurrent ? "_blank" : undefined}
+                rel={isExternalCurrent ? "noopener noreferrer" : undefined}
                 aria-label={`Learn more about: ${current.title}`}
                 className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
-                  min-h-11 text-white bg-[#F3831C] hover:bg-[#e07318] active:bg-[#c96510]
+                  min-h-11 text-white bg-[#B45309] hover:bg-[#92400E] active:bg-[#78350F]
                   transition-colors duration-150 whitespace-nowrap self-start"
               >
                 Know More.
@@ -357,7 +547,7 @@ export default function HomeHero({ slug, bottombar = false }) {
             </div>
 
             <div className="px-4 pb-3 flex items-center justify-between border-t border-white/5 pt-2">
-              <span className="text-[10px] font-mono text-white/25 tracking-widest uppercase">
+              <span className="text-[10px] font-mono text-white/70 tracking-widest uppercase">
                 {String(currentSlide + 1).padStart(2, "0")} /{" "}
                 {String(announcements.length).padStart(2, "0")}
               </span>
@@ -365,36 +555,44 @@ export default function HomeHero({ slug, bottombar = false }) {
               <div className="flex items-center gap-2">
                 {announcements.map((_, index) => (
                   <button
+                    type="button"
                     key={index}
                     onClick={() => goToSlide(index)}
                     aria-label={`Go to slide ${index + 1}`}
-                    className="w-3 h-[2px] flex items-center justify-start overflow-hidden"
-                    style={{ background: "rgba(255,255,255,0.2)" }}
+                    className="min-h-6 min-w-6 flex items-center justify-center overflow-hidden"
+                    aria-current={index === currentSlide ? "true" : undefined}
                   >
                     <span
-                      className="h-full transition-all duration-300"
-                      style={{
-                        width: index === currentSlide ? "100%" : "0%",
-                        background: "#F3831C",
-                      }}
-                    />
+                      className="h-[3px] w-4 overflow-hidden rounded-full"
+                      style={{ background: "rgba(255,255,255,0.45)" }}
+                    >
+                      <span
+                        className="block h-full transition-all duration-300"
+                        style={{
+                          width: index === currentSlide ? "100%" : "0%",
+                          background: "#F3831C",
+                        }}
+                      />
+                    </span>
                   </button>
                 ))}
               </div>
               <div className="flex items-center gap-0.5">
                 <button
+                  type="button"
                   onClick={prevSlide}
                   aria-label="Previous slide"
-                  className="w-6 h-6 flex items-center justify-center
-                    text-white/30 hover:text-white/70 transition-colors duration-150 cursor-pointer"
+                  className="min-h-11 min-w-11 flex items-center justify-center
+                    text-white/80 hover:text-white transition-colors duration-150 cursor-pointer"
                 >
                   <ChevronLeft className="w-3.5 h-3.5" />
                 </button>
                 <button
+                  type="button"
                   onClick={nextSlide}
                   aria-label="Next slide"
-                  className="w-6 h-6 flex items-center justify-center
-                    text-white/30 hover:text-white/70 transition-colors duration-150 cursor-pointer"
+                  className="min-h-11 min-w-11 flex items-center justify-center
+                    text-white/80 hover:text-white transition-colors duration-150 cursor-pointer"
                 >
                   <ChevronRight className="w-3.5 h-3.5" />
                 </button>

@@ -81,7 +81,11 @@ export default function BlogSubscribeSection() {
             onSubmit={handleSubscribe}
             className="mt-8 flex flex-col items-center gap-4"
           >
+            <label htmlFor="blog-subscribe-email" className="sr-only">
+              Email address
+            </label>
             <Input
+              id="blog-subscribe-email"
               type="email"
               placeholder="Email address*"
               value={email}
@@ -93,7 +97,7 @@ export default function BlogSubscribeSection() {
             <Button
               type="submit"
               disabled={isSubscribing}
-              className="h-12 px-10 text-base font-semibold bg-[#F3831C] hover:bg-[#0F3652] text-white rounded-none transition-all"
+              className="h-12 px-10 text-base font-semibold bg-[#B45309] hover:bg-[#0F3652] text-white rounded-none transition-all"
             >
               {isSubscribing ? "Subscribing..." : "Subscribe for Free"}
             </Button>
