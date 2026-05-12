@@ -5,6 +5,7 @@ import BlogSubscribeSection from "@/components/blog/blog-subscription";
 import PopUp from "@/components/common/pop-up";
 import CourseTopStudent from "@/components/home/home-pr-carousel";
 import SectionHeadingH1 from "@/components/SectionHeading/SectionHeadingH1";
+import { isReactSnapPrerender } from "@/lib/prerender";
 import { getCourseColor } from "@/utils/courseColor";
 import axios from "axios";
 import {
@@ -18,6 +19,7 @@ import {
 import { useEffect, useState } from "react";
 
 const Blog = () => {
+  const isPrerendering = isReactSnapPrerender();
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [imageBaseUrl, setImageBaseUrl] = useState("");
@@ -179,7 +181,7 @@ const Blog = () => {
 
   return (
     <>
-      <PopUp slug="Blogs" />
+      {!isPrerendering && <PopUp slug="Blogs" />}
 
       <section className="py-16 bg-white">
         <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8">
@@ -286,7 +288,9 @@ const Blog = () => {
                           transform: `translateX(-${currentSlide * 100}%)`,
                         }}
                       >
-                        {trendingBlogs.slice(0, 4).map((blog) => (
+                        {trendingBlogs
+                          .slice(0, isPrerendering ? 1 : 4)
+                          .map((blog) => (
                           <div key={blog.id} className="w-full shrink-0 px-2">
                             <BannerBlogCard
                               blog={blog}
@@ -377,7 +381,7 @@ const Blog = () => {
           {uniqueCategories.map((category) => {
             const categoryBlogs = filteredBlogs
               .filter((blog) => blog.blog_course === category)
-              .slice(0, 4);
+              .slice(0, isPrerendering ? 1 : 4);
             if (categoryBlogs.length === 0) return null;
 
             return (
@@ -433,8 +437,12 @@ const Blog = () => {
             </div>
           </div> */}
         </div>
-        <CourseTopStudent />
-        <BlogSubscribeSection />
+        {!isPrerendering && (
+          <>
+            <CourseTopStudent />
+            <BlogSubscribeSection />
+          </>
+        )}
       </section>
     </>
   );

@@ -28,9 +28,8 @@ const SectionHeading = ({
     >
       {beforeheading && (
         <div
-          className={`mt-4 text-gray-600 leading-relaxed mx-auto ${
-            isCenter ? "text-center" : "text-left"
-          } ${beforeHeadingClass}`}
+          className={`mt-4 text-gray-600 leading-relaxed mx-auto ${isCenter ? "text-center" : "text-left"
+            } ${beforeHeadingClass}`}
         >
           <p>{beforeheading}</p>
         </div>
@@ -41,20 +40,18 @@ const SectionHeading = ({
           className={`text-xl md:text-4xl font-bold text-[#0F3652] ${titleClass}`}
         >
           <span
-            className={` ${
-              preheadingclassName ? preheadingclassName : "text-[#92400E]"
-            } ${preheadingclassName}`}
+            className={` ${preheadingclassName ? preheadingclassName : "text-[#F3831C]"
+              } ${preheadingclassName}`}
           >
             {preheading}
           </span>{" "}
-          {title} <span className="text-[#92400E]">{highlight1}</span>
+          {title} <span className="text-[#F3831C]">{highlight1}</span>
         </h2>
 
         {highlight && (
           <h2
-            className={`font-bold text-[#92400E] mt-2 ${
-              highlightclassName ? highlightclassName : "text-xl md:text-4xl"
-            } ${highlightClass}`}
+            className={`font-bold text-[#F3831C] mt-2 ${highlightclassName ? highlightclassName : "text-xl md:text-4xl"
+              } ${highlightClass}`}
           >
             {highlight}
           </h2>
@@ -65,9 +62,8 @@ const SectionHeading = ({
       <div className="hidden lg:block">
         {description && (
           <div
-            className={`mt-4 text-[16px] text-gray-600 leading-relaxed mx-auto ${
-              isCenter ? "text-center" : "text-left"
-            } ${descriptionClass}`}
+            className={`mt-4 text-[16px] text-gray-600 leading-relaxed mx-auto ${isCenter ? "text-center" : "text-left"
+              } ${descriptionClass}`}
           >
             <p>{description}</p>
           </div>
@@ -75,9 +71,8 @@ const SectionHeading = ({
 
         {description1 && (
           <div
-            className={`text-gray-600 text-[16px] leading-relaxed mx-auto ${
-              isCenter ? "text-center" : "text-left"
-            } ${descriptionClass}`}
+            className={`text-gray-600 text-[16px] leading-relaxed mx-auto ${isCenter ? "text-center" : "text-left"
+              } ${descriptionClass}`}
           >
             <p>{description1}</p>
           </div>
@@ -98,9 +93,8 @@ const SectionHeading = ({
       </div> */}
       <div className="lg:hidden">
         <div
-          className={`text-gray-600 text-[16px] leading-relaxed mx-auto ${
-            isCenter ? "text-center" : "text-left"
-          } ${descriptionClass}`}
+          className={`text-gray-600 text-[16px] leading-relaxed mx-auto ${isCenter ? "text-center" : "text-left"
+            } ${descriptionClass}`}
         >
           <p className={isCenter ? "text-center" : "text-justify"}>
             {description}

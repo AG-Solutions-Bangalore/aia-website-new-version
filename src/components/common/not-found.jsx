@@ -1,5 +1,6 @@
 import { ArrowLeft } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { useNavigate } from "react-router-dom";
 
 const ORANGE = "#F3831C";
@@ -36,6 +37,14 @@ export default function NotFound() {
   const navigate = useNavigate();
   return (
     <>
+      <Helmet>
+        <title>404 - Page Not Found | Academy of Internal Audit</title>
+        <meta
+          name="description"
+          content="The requested page could not be found on Academy of Internal Audit."
+        />
+        <meta name="robots" content="noindex, follow" />
+      </Helmet>
       <div
         style={{
           minHeight: "100vh",

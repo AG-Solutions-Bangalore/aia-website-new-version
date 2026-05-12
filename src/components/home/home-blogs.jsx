@@ -1,5 +1,4 @@
 import * as React from "react";
-import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -84,7 +83,7 @@ const HomeBlog = () => {
 
         <div className="relative lg:col-span-9">
           <div ref={carouselRef} className="overflow-x-auto">
-            <motion.div className="flex gap-4 px-1 py-2">
+            <div className="flex gap-4 px-1 py-2">
               {isError || blogs.length === 0 ? (
                 <div className="flex w-full items-center justify-center p-8">
                   <p className="text-white">
@@ -98,14 +97,12 @@ const HomeBlog = () => {
                     : noImageUrl;
 
                   return (
-                    <motion.div
+                    <div
                       key={blog.id}
                       onClick={() =>
                         window.open(`/blogs/${blog.blog_slug}`, "_blank")
                       }
-                      className="group w-64 shrink-0 cursor-pointer"
-                      whileHover={{ y: -5 }}
-                      transition={{ type: "spring", stiffness: 300 }}
+                      className="group w-64 shrink-0 cursor-pointer transition-transform duration-200 lg:hover:-translate-y-1"
                     >
                       <div className="overflow-hidden rounded-lg border border-[#F3831C]/20 bg-white shadow-sm">
                         <div className="relative ">
@@ -158,7 +155,7 @@ const HomeBlog = () => {
                           <Button
                             variant="ghost"
                             size="sm"
-                            className="mt-3 w-full cursor-pointer bg-[#B45309] text-white hover:bg-[#92400E]"
+                            className="mt-3 w-full cursor-pointer bg-[#B45309] text-white hover:bg-[#F3831C]"
                             aria-label={`Read full blog post: ${blog.blog_heading}`}
                             onClick={() =>
                               window.open(`/blogs/${blog.blog_slug}`, "_blank")
@@ -168,11 +165,11 @@ const HomeBlog = () => {
                           </Button>
                         </div>
                       </div>
-                    </motion.div>
+                    </div>
                   );
                 })
               )}
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

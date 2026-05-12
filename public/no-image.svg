@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675" role="img" aria-labelledby="title desc">
+  <title id="title">Image unavailable</title>
+  <desc id="desc">A neutral fallback image used when a remote image is unavailable.</desc>
+  <rect width="1200" height="675" fill="#f3f6f8"/>
+  <rect x="48" y="48" width="1104" height="579" rx="24" fill="#ffffff" stroke="#d8e1e8" stroke-width="4"/>
+  <circle cx="420" cy="285" r="58" fill="#d8e1e8"/>
+  <path d="M260 510l210-190 145 130 95-85 230 145H260z" fill="#c9d6df"/>
+  <text x="600" y="575" text-anchor="middle" font-family="Arial, sans-serif" font-size="38" font-weight="700" fill="#0F3652">Academy of Internal Audit</text>
+</svg>

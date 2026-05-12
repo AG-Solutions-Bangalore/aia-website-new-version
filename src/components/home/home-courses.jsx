@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeading from "../SectionHeading/SectionHeading";
-import SectionHeadingH1 from "../SectionHeading/SectionHeadingH1";
+import defaultCertificationCourses from "@/data/certificationCourses";
 
 const ServiceCard = ({ service, i, progress, total }) => {
   const start = i / total;
@@ -68,8 +68,8 @@ const ServiceCard = ({ service, i, progress, total }) => {
   );
 };
 
-const HomeCourses = ({ certificationCourses }) => {
-  const ALL_SERVICES = [...certificationCourses];
+const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => {
+  const ALL_SERVICES = certificationCourses;
 
   const container = useRef(null);
   const [activeCard, setActiveCard] = useState(0);

@@ -41,6 +41,7 @@ const NotFound = lazy(() => import("./components/common/not-found"));
 
 import ScrollToTop from "./components/common/scroll-to-top";
 import blogRedirects from "./routes/blog-redirects";
+import { isReactSnapPrerender, scheduleIdle } from "./lib/prerender";
 
 const NotificationPopup = lazy(
   () => import("./components/notification/notification-popup"),
@@ -58,19 +59,14 @@ const AppQueryProvider = lazy(() => import("./lib/query-provider"));
 export default function App() {
   const location = useLocation();
   const [loadDeferredWidgets, setLoadDeferredWidgets] = useState(false);
+  const isPrerendering = isReactSnapPrerender();
 
   useEffect(() => {
-    const load = () => setLoadDeferredWidgets(true);
-    const timer = window.setTimeout(() => {
-      if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(load, { timeout: 2000 });
-      } else {
-        load();
-      }
-    }, 12000);
+    if (isPrerendering) return;
 
-    return () => window.clearTimeout(timer);
-  }, []);
+    const load = () => setLoadDeferredWidgets(true);
+    return scheduleIdle(load, { delay: 12000, timeout: 2000 });
+  }, [isPrerendering]);
 
   const routes = (
     <main className="grow">
@@ -121,7 +117,7 @@ export default function App() {
           <Meta />
         </Suspense>
       )}
-      {loadDeferredWidgets && (
+      {!isPrerendering && loadDeferredWidgets && (
         <Suspense fallback={null}>
           <GoogleAnalytics />
           {!location.pathname.startsWith("/blogs/") && <NotificationPopup />}

@@ -1,5 +1,4 @@
 import HomeHero from "@/components/home/home-hero";
-import certificationCourses from "@/data/certificationCourses";
 import DeferredPopUp from "@/components/common/deferred-popup";
 import LazySection from "@/components/common/lazy-section";
 import { lazy } from "react";
@@ -29,40 +28,48 @@ const CourseYoutubeLecture = lazy(() =>
 const HomeBlogs = lazy(() => import("@/components/home/home-blogs"));
 const HomeFaq = lazy(() => import("@/components/home/home-faq"));
 
+const homeSectionProps = {
+  prerender: false,
+  deferUntilIdle: true,
+  idleDelay: 2400,
+  idleTimeout: 1200,
+  rootMargin: "120px",
+};
+
 export default function Home() {
   return (
     <div className="font-sans text-gray-800">
       <DeferredPopUp slug="home" />
 
       <HomeHero slug="home" bottombar="true" />
-      <LazySection minHeight="400px" rootMargin="160px">
+      <LazySection {...homeSectionProps} minHeight="400px">
         <HomeAbout />
       </LazySection>
 
-      <LazySection minHeight="600px" rootMargin="0px">
+      <LazySection {...homeSectionProps} minHeight="600px" rootMargin="0px">
         <HomeContact />
       </LazySection>
 
-      <LazySection minHeight="500px">
-        <HomeCourses certificationCourses={certificationCourses} />
+      <LazySection {...homeSectionProps} minHeight="500px">
+        <HomeCourses />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <HomePassout />
       </LazySection>
 
-      <LazySection minHeight="500px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="500px" withQuery QueryProvider={AppQueryProvider}>
         <HomeResults
           title="We Stand by Results - Actual Certificates Earned by AIA Learners"
           description="Actual certificates earned by professionals across CFE, CIA, and CAMS after structured preparation with AIA."
         />
       </LazySection>
 
-      <LazySection minHeight="300px">
+      <LazySection {...homeSectionProps} minHeight="300px">
         <HomeAccredited />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <WhatsappCarosal
           course="all"
           title="Unfiltered Reflections from AIA-Trained Professionals"
@@ -70,27 +77,27 @@ export default function Home() {
         />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <HomeReview />
       </LazySection>
 
-      <LazySection minHeight="350px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="350px" withQuery QueryProvider={AppQueryProvider}>
         <AllYoutube />
       </LazySection>
 
-      <LazySection minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
         <HomeCorporatePartner />
       </LazySection>
 
-      <LazySection minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
         <HomePrCarousel />
       </LazySection>
 
-      <LazySection minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
         <HomeAlumniWork />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <CourseYoutubeLecture
           courseSlug="home"
           title="Watch & Learn! Everything You Need to"
@@ -98,11 +105,11 @@ export default function Home() {
         />
       </LazySection>
 
-      <LazySection minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <HomeBlogs />
       </LazySection>
 
-      <LazySection minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
         <HomeFaq />
       </LazySection>
     </div>

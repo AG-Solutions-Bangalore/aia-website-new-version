@@ -6,6 +6,7 @@ import {
   useState,
   useTransition,
 } from "react";
+import { isBrowser, isReactSnapPrerender, scheduleIdle } from "@/lib/prerender";
 
 const SectionSkeleton = memo(function SectionSkeleton({ height }) {
   return (
@@ -23,8 +24,18 @@ const LazySection = memo(function LazySection({
   priority = false,
   withQuery = false,
   QueryProvider,
+  prerender = true,
+  deferUntilIdle = false,
+  idleDelay = 1600,
+  idleTimeout = 1500,
+  mountOnInteraction = true,
 }) {
-  const [isVisible, setIsVisible] = useState(priority);
+  const isPrerendering = isReactSnapPrerender();
+  const shouldPrerender = isPrerendering && prerender !== false;
+  const [canObserve, setCanObserve] = useState(
+    priority || shouldPrerender || !deferUntilIdle,
+  );
+  const [isVisible, setIsVisible] = useState(priority || shouldPrerender);
   const [isPending, startTransition] = useTransition();
   const [reservedHeight, setReservedHeight] = useState(minHeight);
   const ref = useRef(null);
@@ -32,9 +43,54 @@ const LazySection = memo(function LazySection({
   const hasRendered = useRef(false);
 
   useEffect(() => {
-    if (priority) return;
+    if (priority || shouldPrerender || !deferUntilIdle) {
+      setCanObserve(true);
+      return;
+    }
 
-    if (!("IntersectionObserver" in window)) {
+    let started = false;
+    const startObserving = () => {
+      if (started) return;
+      started = true;
+      setCanObserve(true);
+    };
+
+    const cancelIdle = scheduleIdle(startObserving, {
+      delay: idleDelay,
+      timeout: idleTimeout,
+    });
+
+    if (!mountOnInteraction || !isBrowser) {
+      return cancelIdle;
+    }
+
+    const interactionEvents = ["scroll", "wheel", "touchstart", "pointerdown", "keydown"];
+    interactionEvents.forEach((eventName) => {
+      window.addEventListener(eventName, startObserving, {
+        passive: true,
+        once: true,
+      });
+    });
+
+    return () => {
+      cancelIdle();
+      interactionEvents.forEach((eventName) => {
+        window.removeEventListener(eventName, startObserving);
+      });
+    };
+  }, [
+    deferUntilIdle,
+    idleDelay,
+    idleTimeout,
+    mountOnInteraction,
+    priority,
+    shouldPrerender,
+  ]);
+
+  useEffect(() => {
+    if (priority || shouldPrerender || !canObserve) return;
+
+    if (!isBrowser || !("IntersectionObserver" in window)) {
       hasRendered.current = true;
       startTransition(() => setIsVisible(true));
       return;
@@ -56,10 +112,11 @@ const LazySection = memo(function LazySection({
     }
 
     return () => observer.disconnect();
-  }, [minHeight, priority, rootMargin]);
+  }, [canObserve, priority, rootMargin, shouldPrerender]);
 
   useEffect(() => {
     if (!isVisible || !contentRef.current) return;
+    if (!isBrowser || !("ResizeObserver" in window)) return;
 
     const resizeObserver = new ResizeObserver(([entry]) => {
       const height = entry.contentRect.height;

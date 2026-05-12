@@ -3,14 +3,23 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
 import OptimizedImage from "@/components/common/optmized-image";
+import { Helmet } from "react-helmet-async";
 
 const HOME_BANNER_BASE =
   "https://aia.in.net/webapi/public/assets/images/banner_images/";
+const HOME_HERO_FIRST_SLIDE = {
+  imageUrl: "/images/hero/home-hero-768.webp",
+  srcSet:
+    "/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w",
+  sizes: "100vw",
+  width: 1920,
+  height: 858,
+};
 
 const HOME_FALLBACK_SLIDES = [
   {
     id: 1,
-    imageUrl: `${HOME_BANNER_BASE}2.webp`,
+    ...HOME_HERO_FIRST_SLIDE,
     link: "contact",
     alt: "cia-cfe-cams-certification",
   },
@@ -440,7 +449,21 @@ export default function HomeHero({ slug, bottombar = false }) {
   const isExternalCurrent = Boolean(currentHref?.startsWith("http"));
 
   return (
-    <section className="relative">
+    <>
+      {currentSlide === 0 && activeSlide?.imageUrl && (
+        <Helmet>
+          <link
+            rel="preload"
+            as="image"
+            href={activeSlide.imageUrl}
+            imageSrcSet={activeSlide.srcSet}
+            imageSizes={activeSlide.sizes || "100vw"}
+            fetchPriority="high"
+          />
+        </Helmet>
+      )}
+
+      <section className="relative">
       <div
         className="relative overflow-hidden"
         onMouseEnter={() => setIsAutoPlaying(false)}
@@ -466,15 +489,15 @@ export default function HomeHero({ slug, bottombar = false }) {
             >
               <OptimizedImage
                 src={activeSlide.imageUrl}
+                srcSet={activeSlide.srcSet}
                 alt={activeSlide.alt}
                 priority={currentSlide === 0}
-                width={1600}
-                height={727}
-                sizes="100vw"
+                width={activeSlide.width || 1600}
+                height={activeSlide.height || 727}
+                sizes={activeSlide.sizes || "100vw"}
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  e.target.src =
-                    "https://via.placeholder.com/1200x400?text=Banner";
+                  e.target.src = "/no-image.svg";
                 }}
               />
             </a>
@@ -538,7 +561,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                 aria-label={`Learn more about: ${current.title}`}
                 className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
-                  min-h-11 text-white bg-[#B45309] hover:bg-[#92400E] active:bg-[#78350F]
+                  min-h-11 text-white bg-[#F3831C] hover:bg-[#D16E27] active:bg-[#AE5B1D]
                   transition-colors duration-150 whitespace-nowrap self-start"
               >
                 Know More.
@@ -601,6 +624,7 @@ export default function HomeHero({ slug, bottombar = false }) {
           </div>
         </div>
       )}
-    </section>
+      </section>
+    </>
   );
 }

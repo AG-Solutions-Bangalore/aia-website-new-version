@@ -1,4 +1,4 @@
-import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
+import { BASE_URL } from "@/api/base-url";
 import { Helmet } from "react-helmet-async";
 import { buildCanonicalUrl } from "@/lib/seo";
 import BlogFaq from "@/components/blog/blog-faq";
@@ -8,6 +8,19 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShareButtons } from "./share-button";
 import OptimizedImage from "@/components/common/optmized-image";
+
+const FALLBACK_IMAGE_PATH = "/no-image.svg";
+const FALLBACK_IMAGE_URL = "https://aia.in.net/no-image.svg";
+
+const getRemoteImageUrl = (baseUrl, imageName, fallback = FALLBACK_IMAGE_PATH) =>
+  baseUrl && imageName ? `${baseUrl}${imageName}` : fallback;
+
+const handleImageFallback = (event) => {
+  const image = event.currentTarget;
+  if (image.dataset.fallbackApplied === "true") return;
+  image.dataset.fallbackApplied = "true";
+  image.src = FALLBACK_IMAGE_PATH;
+};
 
 const BlogDetails = () => {
   const { id } = useParams();
@@ -54,7 +67,11 @@ const BlogDetails = () => {
   const blogTitle = blog ? (blog.blog_meta_title || blog.blog_heading) : "AIA Blog";
   const blogDescription = blog ? (blog.blog_meta_description || blog.blog_short_description) : "";
   const blogKeywords = blog ? (blog.blog_meta_keywords || "") : "";
-  const blogImageUrl = blog && blog.blog_images ? `${imageBaseUrl}${blog.blog_images}` : `${IMAGE_PATH}/no_image.jpg`;
+  const blogImageUrl = getRemoteImageUrl(
+    imageBaseUrl,
+    blog?.blog_images,
+    FALLBACK_IMAGE_URL,
+  );
 
   const blogSchema = blog ? {
     "@context": "https://schema.org",
@@ -420,13 +437,14 @@ const BlogDetails = () => {
               <div className="relative h-full rounded-md overflow-hidden">
                 {blog.blog_images ? (
                   <img
-                    src={`${imageBaseUrl}${blog.blog_images}`}
+                    src={getRemoteImageUrl(imageBaseUrl, blog.blog_images)}
                     alt={blog.blog_images_alt || blog.blog_heading}
                     className="w-full h-full object-contain"
-                    onError={(e) => {
-                      e.target.src = `${IMAGE_PATH}/no_image.jpg`;
-                    }}
-                    loading="lazy"
+                    onError={handleImageFallback}
+                    loading="eager"
+                    fetchPriority="high"
+                    width={1200}
+                    height={675}
                   />
                 ) : (
                   <div className="w-full h-full flex flex-col items-center justify-center">
@@ -606,18 +624,21 @@ const BlogDetails = () => {
                           className="flex gap-2 p-1 border border-[#0F3652]/20 rounded-md hover:border-[#F3831C] cursor-pointer transition-all group"
                         >
                           <div className="w-16 h-16 shrink-0 overflow-hidden rounded-md bg-[#0F3652]/10">
-                            <img
-                              src={`${imageBaseUrl}${relatedBlog.blog_images}`}
-                              alt={
-                                relatedBlog.blog_images_alt ||
-                                relatedBlog.blog_heading
-                              }
-                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                              onError={(e) => {
-                                e.target.src = `${IMAGE_PATH}/no_image.jpg`;
-                              }}
-                              loading="lazy"
-                            />
+                                <img
+                                  src={getRemoteImageUrl(
+                                    imageBaseUrl,
+                                    relatedBlog.blog_images,
+                                  )}
+                                  alt={
+                                    relatedBlog.blog_images_alt ||
+                                    relatedBlog.blog_heading
+                                  }
+                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                  onError={handleImageFallback}
+                                  loading="lazy"
+                                  width={64}
+                                  height={64}
+                                />
                           </div>
 
                           <div className="flex flex-col justify-between flex-1">
@@ -753,16 +774,19 @@ const BlogDetails = () => {
                           >
                             <div className="w-14 h-14 sm:w-16 sm:h-16 shrink-0 overflow-hidden rounded-md bg-[#0F3652]/10">
                               <img
-                                src={`${imageBaseUrl}${relatedBlog.blog_images}`}
+                                src={getRemoteImageUrl(
+                                  imageBaseUrl,
+                                  relatedBlog.blog_images,
+                                )}
                                 alt={
                                   relatedBlog.blog_images_alt ||
                                   relatedBlog.blog_heading
                                 }
                                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                                onError={(e) => {
-                                  e.target.src = `${IMAGE_PATH}/no_image.jpg`;
-                                }}
+                                onError={handleImageFallback}
                                 loading="lazy"
+                                width={64}
+                                height={64}
                               />
                             </div>
 
@@ -804,16 +828,19 @@ const BlogDetails = () => {
                               <div key={index} className="min-w-full">
                                 <div className="relative w-full aspect-[3/4] sm:aspect-square overflow-hidden rounded-xl">
                                   <OptimizedImage
-                                    src={`${studentImageBaseUrl}${student.student_image}`}
+                                    src={getRemoteImageUrl(
+                                      studentImageBaseUrl,
+                                      student.student_image,
+                                    )}
                                     alt={
                                       student.student_image_alt ||
                                       student.student_name
                                     }
                                     className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-1000 ease-out group-hover:scale-105"
                                     priority={index === 0}
-                                    onError={(e) => {
-                                      e.target.src = `${IMAGE_PATH}/no_image.jpg`;
-                                    }}
+                                    onError={handleImageFallback}
+                                    width={600}
+                                    height={800}
                                   />
 
                                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-transparent" />

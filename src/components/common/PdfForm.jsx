@@ -157,7 +157,7 @@ export default function PdfJoinDialog({
   const inputStyle = "focus:border-[#B45309]";
   const triggerButtonClassName =
     buttonClassName ||
-    "bg-[#B45309] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#92400E] transition-all cursor-pointer";
+    "bg-[#B45309] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#F3831C] transition-all cursor-pointer";
 
   return (
     <Dialog>
@@ -188,7 +188,7 @@ export default function PdfJoinDialog({
             <button
               type="button"
               aria-label="Close dialog"
-              className="absolute right-3 top-3 min-h-10 min-w-10 rounded-full p-1 text-slate-600 hover:bg-slate-100 hover:text-[#92400E] cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F3652]"
+              className="absolute right-3 top-3 min-h-10 min-w-10 rounded-full p-1 text-slate-600 hover:bg-slate-100 hover:text-[#F3831C] cursor-pointer transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0F3652]"
             >
               <X size={20} />
             </button>

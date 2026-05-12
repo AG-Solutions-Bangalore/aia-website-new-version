@@ -14,7 +14,7 @@ import SectionHeading from "../SectionHeading/SectionHeading";
 import HomeMap from "./home-map";
 
 const HomeReview = () => {
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading, isError, refetch } = useQuery({
     queryKey: ["aia-testimonials"],
     queryFn: async () => {
       const res = await axios.get(`${BASE_URL}/api/getAllTestimonials`);

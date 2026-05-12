@@ -1,4 +1,5 @@
 import { lazy, memo, Suspense, useEffect, useState } from "react";
+import { isReactSnapPrerender, scheduleIdle } from "@/lib/prerender";
 
 const PopUp = lazy(() => import("@/components/common/pop-up"));
 
@@ -8,19 +9,14 @@ const DeferredPopUp = memo(function DeferredPopUp({
   ...props
 }) {
   const [shouldRender, setShouldRender] = useState(false);
+  const isPrerendering = isReactSnapPrerender();
 
   useEffect(() => {
-    const show = () => setShouldRender(true);
-    const timer = window.setTimeout(() => {
-      if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(show, { timeout: 2000 });
-      } else {
-        show();
-      }
-    }, delay);
+    if (isPrerendering) return;
 
-    return () => window.clearTimeout(timer);
-  }, [delay]);
+    const show = () => setShouldRender(true);
+    return scheduleIdle(show, { delay, timeout: 2000 });
+  }, [delay, isPrerendering]);
 
   if (!shouldRender) return null;
 

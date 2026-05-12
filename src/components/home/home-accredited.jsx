@@ -11,7 +11,7 @@ const ACCREDITATIONS = [
     link: "https://www.iao.org/India-Haryana/Academy-of-Internal-Audit",
     containerClass: "hover:scale-110",
     desktopImgClass: "w-24 h-24 object-contain",
-    mobileImgClass: "w-24 h-24 object-contain",
+    mobileImgClass: "w-12 h-12 object-contain",
   },
   {
     id: "iia",
@@ -19,16 +19,16 @@ const ACCREDITATIONS = [
     alt: "IIA logo",
     link: "https://iiaindia.co/GlobalCertification/LearningPartner",
     containerClass: "scale-150 hover:scale-175",
-    desktopImgClass: "w-48 h-48 object-contain",
-    mobileImgClass: "w-24 h-24 object-contain",
+    desktopImgClass: "w-32 h-32 object-contain",
+    mobileImgClass: "w-12 h-12 object-contain",
   },
   {
     id: "becker",
     src: `${IMAGE_PATH}/BECKER.webp`,
     alt: "Becker logo",
     containerClass: "hover:scale-110",
-    desktopImgClass: "w-48 h-48 object-contain",
-    mobileImgClass: "w-24 h-24 object-contain",
+    desktopImgClass: "w-32 h-32 object-contain",
+    mobileImgClass: "w-12 h-12 object-contain",
     mobileWrapperClass: "col-span-2 md:col-span-1", // Centers on odd mobile grid
   },
   {
@@ -37,23 +37,23 @@ const ACCREDITATIONS = [
     alt: "ISO logo",
     containerClass: "hover:scale-110",
     desktopImgClass: "w-24 h-24 object-contain",
-    mobileImgClass: "w-24 h-24 object-contain",
+    mobileImgClass: "w-12 h-12 object-contain",
   },
   {
     id: "isaca",
     src: `${IMAGE_PATH}/ISACA.webp`,
     alt: "ISACA logo",
     containerClass: "hover:scale-110",
-    desktopImgClass: "w-52 h-52 object-contain",
-    mobileImgClass: "w-24 h-24 object-contain",
+    desktopImgClass: "w-48 h-48 object-contain",
+    mobileImgClass: "w-12 h-12 object-contain",
   },
   {
     id: "gleim",
     src: `${IMAGE_PATH}/Gleim.webp`,
     alt: "Gleim logo",
     containerClass: "hover:scale-110",
-    desktopImgClass: "w-24 h-24 object-contain",
-    mobileImgClass: "w-24 h-24 object-contain",
+    desktopImgClass: "w-32 h-32 object-contain",
+    mobileImgClass: "w-12 h-12 object-contain",
   },
   {
     id: "gsaaa",
@@ -62,7 +62,7 @@ const ACCREDITATIONS = [
     link: "https://www.gsaaa.org/india/academy-of-internal-audit",
     containerClass: "hover:scale-110",
     desktopImgClass: "w-24 h-24 object-contain",
-    mobileImgClass: "w-24 h-24 object-contain",
+    mobileImgClass: "w-12 h-12 object-contain",
   },
 
 
@@ -89,9 +89,9 @@ export default HomeAccredited;
 
 
 export const Partners = ({ grayscale = false, className = "" }) => {
-  return <div className={`w-full py-10 bg-cover bg-center ${className}`}>
+  return <div className={`w-full md:py-10 py-5 bg-cover bg-center ${className}`}>
     {/* Desktop view  */}
-    <div className="hidden lg:flex flex-nowrap pl-36 overflow-y-hidden justify-center gap-10 xl:gap-20 px-6 overflow-x-auto no-scrollbar">
+    <div className="hidden lg:flex flex-nowrap overflow-y-hidden justify-center gap-10 xl:gap-20 px-6 overflow-x-auto no-scrollbar">
       {ACCREDITATIONS.map((item) => (
         <div
           key={item.id}
@@ -123,11 +123,11 @@ export const Partners = ({ grayscale = false, className = "" }) => {
     </div>
 
     {/* Mobile view  */}
-    <div className="lg:hidden flex flex-nowrap items-center gap-8 px-6  overflow-x-auto no-scrollbar pb-4">
+    <div className="lg:hidden grid grid-cols-4 md:grid-cols-7 items-center justify-center gap-y-4 gap-x-4 px-6 pb-4">
       {ACCREDITATIONS.map((item) => (
         <div
           key={`${item.id}-mobile`}
-          className={`flex-shrink-0 flex items-center justify-center ${item.mobileWrapperClass || ""}`}
+          className={`flex-shrink-0 flex items-center justify-center ${grayscale ? "grayscale" : ""} ${item.mobileWrapperClass || ""}`}
         >
           {item.link ? (
             <a href={item.link} target="_blank" rel="noreferrer" aria-label={item.alt}>

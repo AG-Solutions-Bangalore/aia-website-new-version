@@ -9,6 +9,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const compressionFilter = /\.(js|mjs|json|css|svg|webmanifest)$/i;
 
 export default defineConfig({
   root: process.cwd(),
@@ -93,11 +94,13 @@ export default defineConfig({
     viteCompression({
       algorithm: "gzip",
       ext: ".gz",
+      filter: compressionFilter,
     }),
 
     viteCompression({
       algorithm: "brotliCompress",
       ext: ".br",
+      filter: compressionFilter,
     }),
   ],
 
@@ -110,6 +113,7 @@ export default defineConfig({
   build: {
     outDir: "dist",
     emptyOutDir: true,
+    target: "chrome61",
     chunkSizeWarningLimit: 1000,
 
     rollupOptions: {
