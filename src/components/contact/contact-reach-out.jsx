@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Mail, MapPin, Phone } from "lucide-react";
 
@@ -28,7 +27,7 @@ const contactMethods = [
     title: "India",
     links: [
       { text: "+91 93113 20114", href: "tel:+919311320114" },
-      { text: "+91 97175 97197", href: "tel:+919717597197" },
+      { text: "+91 87963 21764", href: "tel:+918796321764" },
       { text: "0129 417 4177", href: "tel:01294174177" },
     ],
   },
