@@ -39,12 +39,7 @@ const CiaCurrAbout = () => {
         formbuttonlabel="More Info"
       >
         <p className="text-[15px] text-gray-700 leading-relaxed text-justify mt-4">
-          We provide{" "}
-          <img
-            src={`${IMAGE_PATH}/BECKER.webp`}
-            alt="Becker Logo"
-            className="inline-block h-5 mx-1 align-middle"
-          />{" "}
+          We provide <b> Becker </b>
           globally trusted study material as part of our program, and we are the
           only authorized Becker distributor across India—ensuring access to
           high-quality, exam-focused content to support your preparation

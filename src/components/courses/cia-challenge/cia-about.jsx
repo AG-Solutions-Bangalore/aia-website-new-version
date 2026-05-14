@@ -40,12 +40,7 @@ The CIA Challenge Exam is a fast-track pathway, offered by the Institute of Inte
         formbuttonlabel="More Info"
       >
         <p className="text-sm sm:text-base text-[#0F3652] leading-relaxed mt-4">
-          We provide{" "}
-          <img
-            src={`${IMAGE_PATH}/BECKER.webp`}
-            alt="Becker"
-            className="inline-block h-5 mx-1 align-middle"
-          />{" "}
+          We provide <b> Becker </b>
           globally trusted study material as part of our program, and we are the
           only authorized Becker distributor across India—ensuring access to
           high-quality, exam-focused content to support your preparation

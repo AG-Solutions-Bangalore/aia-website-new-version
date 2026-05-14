@@ -55,18 +55,8 @@ const CiaCurrCourseLms = ({ image }) => {
         cardTitle="AIA CIA Prep Course - What you will get"
         description={
           <span>
-            We provide globally trusted Official{" "}
-            <img
-              src={`${IMAGE_PATH}/BECKER.webp`}
-              alt="Becker"
-              className="inline-block h-5 mx-1"
-            />{" "}
-            /{" "}
-            <img
-              src={`${IMAGE_PATH}/Gleim.webp`}
-              alt="Gleim"
-              className="inline-block h-5 mx-1"
-            />{" "}
+            We provide globally trusted Official <b> Becker </b>
+            <b> Gleim </b>
             study materials for CIA prep to ensure exam-focused learning
             experience for professionals.
           </span>

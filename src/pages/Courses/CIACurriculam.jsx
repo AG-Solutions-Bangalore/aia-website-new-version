@@ -123,7 +123,7 @@ const CIACurriculam = () => {
         <CourseYoutube
           courseSlug="CIA"
           title="Hear from Our Recently Qualified Professionals on YouTube"
-          description="Watch AIA-trained professionals share their CFE journey, exam strategies, and career insights in exclusive interviews with Puneet Sir on YouTube."
+          description="Watch AIA-trained professionals share their CIA journey, exam strategies, and career insights in exclusive interviews with Puneet Sir on YouTube."
         />
       </LazySection>
 
