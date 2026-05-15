@@ -81,7 +81,7 @@ const CorporateFaq = () => {
   }
 
   return (
-    <section className="py-4">
+    <section className="py-0">
       <FaqSection title={faqHeading} faqs={faqItems} />
     </section>
   );

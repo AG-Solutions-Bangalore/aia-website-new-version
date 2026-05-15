@@ -39,9 +39,6 @@ const BannerLogos = () => {
                   priority={true}
                 />
               </div>
-              <span className="text-[10px] sm:text-xs font-semibold text-[#0F3652]/60 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {logo.title}
-              </span>
             </div>
           ))}
         </div>

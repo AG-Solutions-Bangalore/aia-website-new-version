@@ -16,7 +16,7 @@ const CourseHighLight = ({
   logos = partnerLogos,
 }) => {
   return (
-    <div className=" mt-10 py-2">
+    <div className=" mt-10">
       <div className="relative">
         <div className=" text-center mb-16 max-w-full ">
           <div className="max-w-5xl mx-auto">

@@ -53,7 +53,13 @@ const CiaCourseLms = ({ image }) => {
     <>
       <CourseLms
         cardTitle="AIA CIA Challenge Prep Course - What you will get"
-        description="We provide globally trusted Official Becker/Gleim study materials for CIA Challenge prep to ensure examfocused learning experience for professionals."
+        description={
+          <>
+            We provide globally trusted Official <strong>Becker</strong> and{" "}
+            <strong>Gleim</strong> study materials for CIA Challenge prep to
+            ensure examfocused learning experience for professionals.
+          </>
+        }
         courseFeatures={courseFeatures}
         image={image}
       />

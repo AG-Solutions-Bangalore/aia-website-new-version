@@ -22,7 +22,7 @@ const CourseAboutH1 = ({
   const location = useLocation();
 
   return (
-    <section className="py-12 md:py-16 lg:py-18 ">
+    <section className="py-12 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <SectionHeadingH1
           title={heading}
