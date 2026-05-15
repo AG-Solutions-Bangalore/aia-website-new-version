@@ -11,7 +11,7 @@ const ACCREDITATIONS = [
     link: "https://www.iao.org/India-Haryana/Academy-of-Internal-Audit",
     containerClass: "hover:scale-110",
     desktopImgClass: "w-24 h-24 object-contain",
-    mobileImgClass: "w-12 h-12 object-contain",
+    mobileImgClass: "w-full h-14 sm:h-16 object-contain",
   },
   {
     id: "iia",
@@ -20,7 +20,7 @@ const ACCREDITATIONS = [
     link: "https://iiaindia.co/GlobalCertification/LearningPartner",
     containerClass: "scale-150 hover:scale-175",
     desktopImgClass: "w-32 h-32 object-contain",
-    mobileImgClass: "w-12 h-12 object-contain",
+    mobileImgClass: "w-full h-16 sm:h-20 object-contain scale-[1.6] ml-3",
   },
   {
     id: "becker",
@@ -28,7 +28,7 @@ const ACCREDITATIONS = [
     alt: "Becker logo",
     containerClass: "hover:scale-110",
     desktopImgClass: "w-32 h-32 object-contain",
-    mobileImgClass: "w-12 h-12 object-contain",
+    mobileImgClass: "w-full h-8 sm:h-20 object-contain",
     mobileWrapperClass: "col-span-2 md:col-span-1", // Centers on odd mobile grid
   },
   {
@@ -37,7 +37,7 @@ const ACCREDITATIONS = [
     alt: "ISO logo",
     containerClass: "hover:scale-110",
     desktopImgClass: "w-24 h-24 object-contain",
-    mobileImgClass: "w-12 h-12 object-contain",
+    mobileImgClass: "w-full h-14 sm:h-16 object-contain",
   },
   {
     id: "isaca",
@@ -45,7 +45,7 @@ const ACCREDITATIONS = [
     alt: "ISACA logo",
     containerClass: "hover:scale-110",
     desktopImgClass: "w-48 h-48 object-contain",
-    mobileImgClass: "w-12 h-12 object-contain",
+    mobileImgClass: "w-full h-20 sm:h-24 object-contain",
   },
   {
     id: "gleim",
@@ -53,7 +53,7 @@ const ACCREDITATIONS = [
     alt: "Gleim logo",
     containerClass: "hover:scale-110",
     desktopImgClass: "w-32 h-32 object-contain",
-    mobileImgClass: "w-12 h-12 object-contain",
+    mobileImgClass: "w-full h-16 sm:h-20 object-contain",
   },
   {
     id: "gsaaa",
@@ -62,7 +62,7 @@ const ACCREDITATIONS = [
     link: "https://www.gsaaa.org/india/academy-of-internal-audit",
     containerClass: "hover:scale-110",
     desktopImgClass: "w-24 h-24 object-contain",
-    mobileImgClass: "w-12 h-12 object-contain",
+    mobileImgClass: "w-full h-14 sm:h-16 object-contain",
   },
 
 

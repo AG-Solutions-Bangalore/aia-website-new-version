@@ -30,7 +30,7 @@ const CourseYoutubeLecture = lazy(
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen ">
       {/* Above the fold */}
       <DeferredPopUp slug="about-aia" />
       <HomeHero slug="about-aia" />
@@ -40,7 +40,7 @@ const AboutPage = () => {
       </LazySection>
 
       <LazySection minHeight={120}>
-        <div className="flex justify-center items-center py-12">
+        <div className="flex justify-center bg-[#FCFCFD] items-center py-12">
           <PdfJoinDialog
             course="AIA Profile"
             buttonlabel="Download AIA Profile"

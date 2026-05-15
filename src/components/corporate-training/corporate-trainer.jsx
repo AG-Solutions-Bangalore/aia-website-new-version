@@ -2,8 +2,7 @@ import { IMAGE_PATH } from "@/api/base-url";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import PdfJoinDialog from "../common/PdfForm";
 
 const PROFILE_MAGAZINE_SLIDES = [
@@ -92,8 +91,8 @@ const ProfileMagazineSlider = () => {
   };
 
   return (
-    <div className="w-full flex flex-col items-center gap-4">
-      <div className="relative w-full aspect-3/4 overflow-hidden rounded-xl shadow-none">
+    <div className="w-full max-w-[420px] sm:max-w-[480px] lg:max-w-full mx-auto flex flex-col items-center gap-4 sm:gap-5 overflow-hidden">
+      <div className="relative w-full aspect-3/4 overflow-hidden rounded-lg shadow-none">
         <AnimatePresence initial={false} custom={direction}>
           <motion.img
             key={currentIndex}
@@ -110,20 +109,20 @@ const ProfileMagazineSlider = () => {
         </AnimatePresence>
       </div>
 
-      <div className="relative w-full flex justify-center items-center">
+      <div className="relative w-full max-w-full flex justify-center items-center overflow-hidden">
         <button
           onClick={goPrev}
           disabled={isFirst}
-          className="absolute -left-2.5 z-20 text-white p-2 rounded-full cursor-pointer hover:bg-white/10 transition-colors"
+          className="absolute left-0 z-20 text-white p-1.5 sm:p-2 rounded-full cursor-pointer hover:bg-white/10 transition-colors"
         >
           <ChevronLeft
-            className={`size-5 md:size-8 ${isFirst ? "text-gray-500 cursor-not-allowed" : "text-white cursor-pointer"}`}
+            className={`size-5 sm:size-6 md:size-8 ${isFirst ? "text-gray-500 cursor-not-allowed" : "text-white cursor-pointer"}`}
           />
         </button>
 
         <div
           ref={thumbContainerRef}
-          className="flex flex-nowrap overflow-x-auto overflow-y-hidden gap-3 md:gap-5 scroll-smooth no-scrollbar px-10 w-[80%] md:w-[85%] py-2"
+          className="flex flex-nowrap overflow-x-auto overflow-y-hidden gap-2.5 sm:gap-3 md:gap-5 scroll-smooth no-scrollbar px-2 w-[calc(100%-64px)] sm:w-[calc(100%-80px)] max-w-full py-2"
         >
           {PROFILE_MAGAZINE_SLIDES.map((slide, idx) => (
             <button
@@ -131,7 +130,7 @@ const ProfileMagazineSlider = () => {
               key={slide.id}
               onClick={() => goTo(idx)}
               className={cn(
-                "relative w-12 cursor-pointer h-16 md:w-24 md:h-32 rounded-lg overflow-hidden transition-all duration-300 ring-2 ring-offset-2 focus:outline-none shrink-0",
+                "relative w-10 h-14 sm:w-14 sm:h-20 md:w-20 md:h-28 lg:w-24 lg:h-32 cursor-pointer rounded-lg overflow-hidden transition-all duration-300 ring-2 ring-offset-2 focus:outline-none shrink-0",
                 currentIndex === idx
                   ? "ring-primary scale-105 opacity-100 shadow-lg"
                   : "ring-transparent opacity-50 hover:opacity-80 scale-100",
@@ -150,10 +149,10 @@ const ProfileMagazineSlider = () => {
         <button
           onClick={goNext}
           disabled={isLast}
-          className="absolute -right-2.5 z-20 text-white p-2 rounded-full cursor-pointer hover:bg-white/10 transition-colors"
+          className="absolute right-0 z-20 text-white p-1.5 sm:p-2 rounded-full cursor-pointer hover:bg-white/10 transition-colors"
         >
           <ChevronRight
-            className={`size-5 md:size-8 ${isLast ? "text-gray-500 cursor-not-allowed" : "text-white cursor-pointer"}`}
+            className={`size-5 sm:size-6 md:size-8 ${isLast ? "text-gray-500 cursor-not-allowed" : "text-white cursor-pointer"}`}
           />
         </button>
       </div>
@@ -163,12 +162,12 @@ const ProfileMagazineSlider = () => {
 
 const CorporateTrainer = () => {
   return (
-    <div className="bg-linear-to-r min-h-[120Vh] from-slate-700 via-slate-600 to-blue-950 mb-14">
-      <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-x-12 items-center">
-          <div className="relative px-4 flex flex-col items-center">
+    <div className="bg-linear-to-r my-4 from-slate-700 via-slate-600 to-blue-950 mb-14 overflow-hidden">
+      <div className="max-w-340 w-full mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-10 lg:gap-y-0 gap-x-12 items-start lg:items-center min-w-0">
+          <div className="relative w-full min-w-0 px-0 sm:px-4 flex flex-col items-center overflow-hidden">
             <ProfileMagazineSlider />
-            <div className="mt-10 mb-4 w-full flex justify-center">
+            <div className="mt-6 sm:mt-8 mb-2 sm:mb-4 w-full flex justify-center">
               <PdfJoinDialog
                 course="Download Broucher"
                 buttonlabel="Download Complete Profile"
@@ -176,19 +175,19 @@ const CorporateTrainer = () => {
             </div>
           </div>
 
-          <div className="text-white">
+          <div className="text-white w-full min-w-0">
             <div className="text-center">
-              <h2 className="text-2xl md:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white via-[#F3831C] to-[#F3831C] italic block mt-2">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white via-[#F3831C] to-[#F3831C] italic block mt-2">
                 Know Your Trainer
               </h2>
-              <p className="text-xl md:text-2xl mb-4 font-medium">
+              <p className="text-lg sm:text-xl md:text-2xl mb-4 font-medium">
                 Not Just a Trainer, But Your Success Coach
               </p>
             </div>
 
-            <div className="space-y-2 text-base leading-relaxed">
+            <div className="space-y-2 text-sm sm:text-base leading-relaxed">
               <p>
-                <span className="font-bold text-3xl italic text-justify">
+                <span className="font-bold text-2xl sm:text-3xl italic text-justify">
                   Puneet Garg
                 </span>{" "}
                 is a distinguished professional with

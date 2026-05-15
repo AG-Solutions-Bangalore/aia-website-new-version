@@ -215,9 +215,8 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
       </div>
       <div className="hidden lg:block">
         <div
-          className={`${
-            scrollFinished ? "relative" : "sticky top-20"
-          } bg-white z-40 pb-2 pt-6`}
+          className={`${scrollFinished ? "relative" : "sticky top-20"
+            } bg-white z-40 pb-2 pt-6`}
         >
           {" "}
           <SectionHeading
