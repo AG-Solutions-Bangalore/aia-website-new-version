@@ -18,7 +18,7 @@ const BannerLogos = () => {
 
   return (
     <section 
-      className="bg-white py-6 md:py-8 border-b border-gray-100" 
+      className="bg-white py-6 md:py-8 border-gray-100" 
       aria-label="Accreditations and Partners"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

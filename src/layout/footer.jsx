@@ -5,13 +5,13 @@ import { ContactGrid } from "@/components/Footer/global-contact";
 
 export default function Footer() {
   return (
-    <footer className="bg-linear-to-b from-[#1a2332] to-[#0f172a] text-white">
-      <div>
+    <footer className="bg-linear-to-b from-[#1a2332] to-[#0f172a] text-white w-full max-w-full overflow-hidden">
+      <div className="w-full max-w-full overflow-hidden">
         <FooterReviews footer={false} />
       </div>
-      <div className="max-w-340 mx-auto px-4  py-16">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-4">
-          <div className="space-y-6">
+      <div className="max-w-340 w-full mx-auto px-4 py-16 overflow-hidden">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-4 min-w-0">
+          <div className="space-y-6 min-w-0">
             <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
               Quick Links
               <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
@@ -44,7 +44,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-6 min-w-0">
             <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
               Courses
               <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
@@ -74,11 +74,11 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="space-y-4 col-span-2 md:col-span-1">
+          <div className="space-y-4 sm:col-span-2 md:col-span-1 min-w-0">
             <ContactGrid />
           </div>
 
-          <div className="space-y-6 col-span-2 md:col-span-1">
+          <div className="space-y-6 sm:col-span-2 md:col-span-1 min-w-0">
             <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
               Registered Office
               <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
@@ -105,7 +105,7 @@ export default function Footer() {
                 </svg>
                 <span>Tel: 0129-417-4177</span>
               </a>
-              <div className="flex gap-4 items-start bg-gray-800/50 p-4 rounded-lg">
+              <div className="flex gap-4 items-start bg-gray-800/50 p-4 rounded-lg min-w-0">
                 <svg
                   className="w-6 h-6 text-[#fa8017] shrink-0 mt-1"
                   fill="currentColor"
@@ -114,16 +114,16 @@ export default function Footer() {
                   <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                   <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                 </svg>
-                <div className="text-sm space-y-2">
+                <div className="text-sm space-y-2 min-w-0">
                   <a
                     href="mailto:support@aia.in.net"
-                    className="block text-gray-300 hover:text-[#fa8017] transition-colors duration-300"
+                    className="block text-gray-300 hover:text-[#fa8017] transition-colors duration-300 break-words"
                   >
                     support@aia.in.net
                   </a>
                   <a
                     href="mailto:contact@aia.in.net"
-                    className="block text-gray-300 hover:text-[#fa8017] transition-colors duration-300"
+                    className="block text-gray-300 hover:text-[#fa8017] transition-colors duration-300 break-words"
                   >
                     contact@aia.in.net
                   </a>
@@ -150,8 +150,8 @@ export default function Footer() {
         <PaymentAccreditation />
       </div>
 
-      <div className="bg-black/30 border-t border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="bg-black/30 border-t border-gray-800 w-full max-w-full overflow-hidden">
+        <div className="max-w-7xl w-full mx-auto px-4 py-6">
           <p className="text-center text-gray-400 text-sm">
             © {new Date().getFullYear()} Academy of Internal Audit. All rights
             reserved.

@@ -36,14 +36,14 @@ const AccreditationBadges = () => {
   ];
 
   return (
-    <div className="flex flex-nowrap gap-4 items-center justify-start overflow-x-auto overflow-y-auto h-28 no-scrollbar pb-3 -mx-1 px-1">
+    <div className="grid grid-cols-4 sm:grid-cols-7 lg:grid-cols-7 gap-2 sm:gap-3 lg:gap-4 items-center w-full max-w-full pb-3 overflow-hidden">
       {badges.map(({ img, alt, href }) => {
         const inner = (
-          <div className="bg-white border border-gray-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)] rounded-xl p-2 w-[5.5rem] h-14 sm:w-24 sm:h-16 flex items-center justify-center transition-all duration-500 group-hover:border-[#fa8017] group-hover:shadow-lg group-hover:shadow-orange-500/10 group-hover:-translate-y-1.5">
+          <div className="bg-white border border-gray-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)] rounded-lg sm:rounded-xl p-1.5 sm:p-2 w-full aspect-square sm:aspect-[4/3] lg:aspect-[5/4] max-w-16 sm:max-w-20 lg:max-w-24 mx-auto flex items-center justify-center transition-all duration-500 group-hover:border-[#fa8017] group-hover:shadow-lg group-hover:shadow-orange-500/10">
             <img
               src={img}
               alt={alt}
-              className="max-w-[85%] max-h-[85%] object-contain transition-transform duration-500 group-hover:scale-110"
+              className="max-w-full max-h-[85%] object-contain transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
           </div>
@@ -55,14 +55,14 @@ const AccreditationBadges = () => {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex-shrink-0"
+            className="group min-w-0 transition-transform"
             title={alt}
             aria-label={alt}
           >
             {inner}
           </a>
         ) : (
-          <div key={alt} className="group flex-shrink-0" title={alt}>
+          <div key={alt} className="group min-w-0 transition-transform" title={alt}>
             {inner}
           </div>
         );
@@ -79,8 +79,8 @@ const SectionLabel = ({ children }) => (
 );
 
 export const PaymentAccreditation = () => (
-  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start">
-    <div>
+  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-start w-full max-w-full overflow-hidden">
+    <div className="min-w-0">
       <SectionLabel>Payment</SectionLabel>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
@@ -95,7 +95,7 @@ export const PaymentAccreditation = () => (
       </div>
     </div>
 
-    <div>
+    <div className="min-w-0">
       <SectionLabel>Accreditations</SectionLabel>
       <AccreditationBadges />
     </div>

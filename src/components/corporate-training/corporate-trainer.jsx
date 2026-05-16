@@ -2,8 +2,7 @@ import { IMAGE_PATH } from "@/api/base-url";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React from "react";
-import { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import PdfJoinDialog from "../common/PdfForm";
 
 const PROFILE_MAGAZINE_SLIDES = [
@@ -92,105 +91,103 @@ const ProfileMagazineSlider = () => {
   };
 
   return (
-    <div className="relative w-full aspect-3/4 md:aspect-4/5 lg:aspect-4/5 overflow-hidden">
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.img
-          key={currentIndex}
-          src={`${IMAGE_PATH}${activeSlide.image}`}
-          alt={activeSlide.alt}
-          custom={direction}
-          variants={imageVariants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0, ease: [0.4, 0, 0.2, 1] }}
-          className="absolute inset-0 w-full h-[75%] object-contain"
-        />
-      </AnimatePresence>
-
-      <div className="absolute bottom-0 w-full h-[25%] pt-1 flex flex-col gap-1 md:gap-5 items-center">
-        <div className="relative h-full w-full overflow-hidden flex justify-center">
-          <div
-            ref={thumbContainerRef}
-            className="flex flex-nowrap overflow-x-auto overflow-y-hidden gap-4 md:gap-6 scroll-smooth no-scrollbar px-10 w-[50%] md:w-[65%] p-2"
-          >
-            {PROFILE_MAGAZINE_SLIDES.map((slide, idx) => (
-              <button
-                ref={(el) => (thumbRefs.current[idx] = el)}
-                key={slide.id}
-                onClick={() => goTo(idx)}
-                className={cn(
-                  "relative w-10 cursor-pointer h-14 md:w-28 md:h-36 rounded-lg overflow-hidden transition-all duration-300 ring-2 ring-offset-2 focus:outline-none shrink-0",
-                  currentIndex === idx
-                    ? "ring-primary scale-105 opacity-100 shadow-lg"
-                    : "ring-transparent opacity-50 hover:opacity-80 scale-100",
-                )}
-              >
-                <img
-                  src={`${IMAGE_PATH}${slide.image}`}
-                  alt={slide.alt}
-                  className="w-full h-full"
-                  loading="lazy"
-                />
-              </button>
-            ))}
-          </div>
-
-          <button
-            onClick={goPrev}
-            disabled={isFirst}
-            className="absolute left-[10%] top-1/2 -translate-y-1/2 z-20 text-white p-2 rounded-full cursor-pointer"
-          >
-            <ChevronLeft
-              className={`size-4 md:size-7 ${isFirst ? "text-gray-500 cursor-not-allowed" : "text-white cursor-pointer"}`}
-            />
-          </button>
-
-          <button
-            onClick={goNext}
-            disabled={isLast}
-            className="absolute right-[10%] top-1/2 -translate-y-1/2 z-20 text-white p-2 rounded-full cursor-pointer"
-          >
-            <ChevronRight
-              className={`size-4 md:size-7 ${isLast ? "text-gray-500 cursor-not-allowed" : "text-white cursor-pointer"}`}
-            />
-          </button>
-        </div>
-        
+    <div className="w-full max-w-[420px] sm:max-w-[480px] lg:max-w-full mx-auto flex flex-col items-center gap-4 sm:gap-5 overflow-hidden">
+      <div className="relative w-full aspect-3/4 overflow-hidden rounded-lg shadow-none">
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.img
+            key={currentIndex}
+            src={`${IMAGE_PATH}${activeSlide.image}`}
+            alt={activeSlide.alt}
+            custom={direction}
+            variants={imageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            className="absolute inset-0 w-full h-full object-contain"
+          />
+        </AnimatePresence>
       </div>
-     
+
+      <div className="relative w-full max-w-full flex justify-center items-center overflow-hidden">
+        <button
+          onClick={goPrev}
+          disabled={isFirst}
+          className="absolute left-0 z-20 text-white p-1.5 sm:p-2 rounded-full cursor-pointer hover:bg-white/10 transition-colors"
+        >
+          <ChevronLeft
+            className={`size-5 sm:size-6 md:size-8 ${isFirst ? "text-gray-500 cursor-not-allowed" : "text-white cursor-pointer"}`}
+          />
+        </button>
+
+        <div
+          ref={thumbContainerRef}
+          className="flex flex-nowrap overflow-x-auto overflow-y-hidden gap-2.5 sm:gap-3 md:gap-5 scroll-smooth no-scrollbar px-2 w-[calc(100%-64px)] sm:w-[calc(100%-80px)] max-w-full py-2"
+        >
+          {PROFILE_MAGAZINE_SLIDES.map((slide, idx) => (
+            <button
+              ref={(el) => (thumbRefs.current[idx] = el)}
+              key={slide.id}
+              onClick={() => goTo(idx)}
+              className={cn(
+                "relative w-10 h-14 sm:w-14 sm:h-20 md:w-20 md:h-28 lg:w-24 lg:h-32 cursor-pointer rounded-lg overflow-hidden transition-all duration-300 ring-2 ring-offset-2 focus:outline-none shrink-0",
+                currentIndex === idx
+                  ? "ring-primary scale-105 opacity-100 shadow-lg"
+                  : "ring-transparent opacity-50 hover:opacity-80 scale-100",
+              )}
+            >
+              <img
+                src={`${IMAGE_PATH}${slide.image}`}
+                alt={slide.alt}
+                className="w-full h-full object-cover"
+                loading="lazy"
+              />
+            </button>
+          ))}
+        </div>
+
+        <button
+          onClick={goNext}
+          disabled={isLast}
+          className="absolute right-0 z-20 text-white p-1.5 sm:p-2 rounded-full cursor-pointer hover:bg-white/10 transition-colors"
+        >
+          <ChevronRight
+            className={`size-5 sm:size-6 md:size-8 ${isLast ? "text-gray-500 cursor-not-allowed" : "text-white cursor-pointer"}`}
+          />
+        </button>
+      </div>
     </div>
   );
 };
 
 const CorporateTrainer = () => {
   return (
-    <div className="bg-linear-to-r from-slate-700 via-slate-600 to-blue-950 mb-14">
-      <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-x-12 items-center">
-          <div className="relative px-4">
+    <div className="bg-linear-to-r my-4 from-slate-700 via-slate-600 to-blue-950 mb-14 overflow-hidden">
+      <div className="max-w-340 w-full mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-y-10 lg:gap-y-0 gap-x-12 items-start lg:items-center min-w-0">
+          <div className="relative w-full min-w-0 px-0 sm:px-4 flex flex-col items-center overflow-hidden">
             <ProfileMagazineSlider />
-             <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-full">
-          <PdfJoinDialog
-            course="Download Broucher"
-            buttonlabel="Download Complete Profile"
-          />
-        </div>
+            <div className="mt-6 sm:mt-8 mb-2 sm:mb-4 w-full flex justify-center">
+              <PdfJoinDialog
+                course="Download Broucher"
+                buttonlabel="Download Complete Profile"
+              />
+            </div>
           </div>
 
-          <div className="text-white">
+          <div className="text-white w-full min-w-0">
             <div className="text-center">
-              <h2 className="text-2xl md:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white via-[#F3831C] to-[#F3831C] italic block mt-2">
+              <h2 className="text-2xl sm:text-3xl md:text-5xl font-bold text-transparent bg-clip-text bg-linear-to-r from-white via-[#F3831C] to-[#F3831C] italic block mt-2">
                 Know Your Trainer
               </h2>
-              <p className="text-xl md:text-2xl mb-4 font-medium">
+              <p className="text-lg sm:text-xl md:text-2xl mb-4 font-medium">
                 Not Just a Trainer, But Your Success Coach
               </p>
             </div>
 
-            <div className="space-y-2 text-base leading-relaxed">
+            <div className="space-y-2 text-sm sm:text-base leading-relaxed">
               <p>
-                <span className="font-bold text-3xl italic text-justify">
+                <span className="font-bold text-2xl sm:text-3xl italic text-justify">
                   Puneet Garg
                 </span>{" "}
                 is a distinguished professional with
