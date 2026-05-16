@@ -78,7 +78,7 @@ const ContactCard = ({ country, contacts }) => {
               {tel && (
                 <a
                   href={`tel:${tel}`}
-                  className="min-h-10 min-w-10 bg-[#FDBA74]/15 border border-[#FDBA74]/30 rounded-md flex items-center justify-center text-[#FDBA74] hover:bg-[#B45309] hover:text-white transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FDBA74]"
+                  className="min-h-10 min-w-10 bg-[#FDBA74]/15 border border-[#FDBA74]/30 rounded-md flex items-center justify-center text-[#FDBA74] hover:bg-[#F3831C] hover:text-white transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FDBA74]"
                   aria-label={`Call ${number}`}
                 >
                   <PhoneIcon />

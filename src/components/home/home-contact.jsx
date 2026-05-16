@@ -153,8 +153,8 @@ const HomeContact = () => {
     } catch (error) {
       setSubmitError(
         error.response?.data?.message ||
-          error.message ||
-          "Failed to submit form. Please try again.",
+        error.message ||
+        "Failed to submit form. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -392,7 +392,7 @@ const HomeContact = () => {
 
                   <div>
                     <Button
-                      className="px-4 py-2 text-xs bg-[#B45309] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300 cursor-pointer w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-2 text-xs bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300 cursor-pointer w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                       type="submit"
                       variant="ghost"
                       disabled={!captchaVerified || isSubmitting}

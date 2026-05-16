@@ -53,8 +53,8 @@ export default function BlogSubscribeSection() {
       if (error.response) {
         setSubscriptionStatus(
           error.response.data.message ||
-            error.response.data.error ||
-            "Subscription failed. Please try again."
+          error.response.data.error ||
+          "Subscription failed. Please try again."
         );
       } else if (error.request) {
         setSubscriptionStatus("Network error. Please check your connection.");
@@ -97,17 +97,16 @@ export default function BlogSubscribeSection() {
             <Button
               type="submit"
               disabled={isSubscribing}
-              className="h-12 px-10 text-base font-semibold bg-[#B45309] hover:bg-[#0F3652] text-white rounded-none transition-all"
+              className="h-12 px-10 text-base font-semibold bg-[#F3831C] hover:bg-[#0F3652] text-white rounded-none transition-all"
             >
               {isSubscribing ? "Subscribing..." : "Subscribe for Free"}
             </Button>
             {subscriptionStatus && (
               <div
-                className={`mt-3 px-4 py-2 rounded-md text-sm font-medium max-w-xl w-full ${
-                  statusType === "success"
+                className={`mt-3 px-4 py-2 rounded-md text-sm font-medium max-w-xl w-full ${statusType === "success"
                     ? "bg-green-50 text-green-700 border border-green-200"
                     : "bg-red-50 text-red-700 border border-red-200"
-                }`}
+                  }`}
               >
                 {subscriptionStatus}
               </div>

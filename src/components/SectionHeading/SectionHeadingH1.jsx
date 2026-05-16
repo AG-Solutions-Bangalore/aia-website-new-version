@@ -125,7 +125,7 @@ const SectionHeadingH1 = ({
             style={{
               width: "25%",
               height: "6px",
-              background: "#B45309",
+              background: "#F3831C",
               top: "50%",
               transform: "translateY(-50%)",
               animation: "slideBackForth 3.2s ease-in-out infinite",
