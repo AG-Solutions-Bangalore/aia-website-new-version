@@ -94,6 +94,18 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/passout-stories/:slug" element={<PassoutStoriesSlug />} />
         <Route path="/corporate-training" element={<CorporateTraining />} />
+        <Route
+          path="/corporate-training/cia-curriculum"
+          element={<Navigate to="/cia-curriculum" replace />}
+        />
+        <Route
+          path="/corporate-training/cams"
+          element={<Navigate to="/cams" replace />}
+        />
+        <Route
+          path="/corporate-training/cfe-curriculum"
+          element={<Navigate to="/cfe-curriculum" replace />}
+        />
         <Route path="/policies" element={<Policies />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
         <Route path="*" element={<NotFound />} />

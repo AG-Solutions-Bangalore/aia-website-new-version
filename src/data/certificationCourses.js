@@ -30,7 +30,7 @@ const certificationCourses = [
     features: [
       "60+ hours of recorded, expert-led lectures",
       "Gleim-authorised study material and practice questions",
-      "Full-length Gleim mock tests aligned with CIA exam standards",
+      "Full-length Becker mock tests aligned with CIA exam standards",
       "Training delivered by experienced, CIA-qualified faculty",
       "Live doubt-clearing sessions for continuous support",
       "Complete registration guidance at every stage",

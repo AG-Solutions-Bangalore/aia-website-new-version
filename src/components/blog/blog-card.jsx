@@ -85,7 +85,7 @@ const BlogCard = ({ imageBaseUrl = "", blog, handleBlogClick }) => {
         </p>
 
         {/* Push to bottom */}
-        <div className="mt-auto pt-4 flex items-center gap-2 text-[#B45309]">
+        <div className="mt-auto pt-4 flex items-center gap-2 text-[#F48F32]">
           <span className="text-sm font-medium">Read Article</span>
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </div>

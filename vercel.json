@@ -21,6 +21,21 @@
       "source": "/enroll",
       "destination": "/enroll-now",
       "permanent": true
+    },
+    {
+      "source": "/corporate-training/cia-curriculum",
+      "destination": "/cia-curriculum",
+      "permanent": true
+    },
+    {
+      "source": "/corporate-training/cams",
+      "destination": "/cams",
+      "permanent": true
+    },
+    {
+      "source": "/corporate-training/cfe-curriculum",
+      "destination": "/cfe-curriculum",
+      "permanent": true
     }
   ],
   "headers": [

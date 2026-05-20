@@ -142,7 +142,7 @@ const ContactHero = () => {
       console.error("API error:", error.response?.data || error.message);
       toast.error(
         error.response?.data?.message ||
-          "Something went wrong. Please try again.",
+        "Something went wrong. Please try again.",
       );
     } finally {
       setLoader(false);
@@ -172,7 +172,7 @@ const ContactHero = () => {
                 <br /> Get clear guidance on eligibility, preparation, and
                 long-term career impact.
                 <br /> We&apos;re here to guide you - just one message away{" "}
-                <span className="text-[#B45309] font-semibold">Let&apos;s talk</span>
+                <span className="text-[#F48F32] font-semibold">Let&apos;s talk</span>
               </p>
 
               <div className="absolute top-[20%] left-[68%] hidden lg:block">
@@ -218,9 +218,8 @@ const ContactHero = () => {
                       name="userName"
                       value={formData.userName}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2.5 rounded border ${
-                        errors.userName ? "border-red-500" : "border-gray-300"
-                      } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                      className={`w-full px-4 py-2.5 rounded border ${errors.userName ? "border-red-500" : "border-gray-300"
+                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                       placeholder="Full Name"
                     />
                     {errors.userName && (
@@ -238,9 +237,8 @@ const ContactHero = () => {
                       name="userEmail"
                       value={formData.userEmail}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2.5 rounded border ${
-                        errors.userEmail ? "border-red-500" : "border-gray-300"
-                      } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                      className={`w-full px-4 py-2.5 rounded border ${errors.userEmail ? "border-red-500" : "border-gray-300"
+                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                       placeholder="Email"
                     />
                     {errors.userEmail && (
@@ -260,9 +258,8 @@ const ContactHero = () => {
                       name="userMobile"
                       value={formData.userMobile}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2.5 rounded border ${
-                        errors.userMobile ? "border-red-500" : "border-gray-300"
-                      } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                      className={`w-full px-4 py-2.5 rounded border ${errors.userMobile ? "border-red-500" : "border-gray-300"
+                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                       placeholder="Phone Number"
                     />
                     {errors.userMobile && (
@@ -299,9 +296,8 @@ const ContactHero = () => {
                       name="userCourse"
                       value={formData.userCourse}
                       onChange={handleChange}
-                      className={`w-full px-4 py-2.5 rounded border ${
-                        errors.userCourse ? "border-red-500" : "border-gray-300"
-                      } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                      className={`w-full px-4 py-2.5 rounded border ${errors.userCourse ? "border-red-500" : "border-gray-300"
+                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                     >
                       <option value="">Service Interested In</option>
                       <option value="Certified Fraud Examiner">
@@ -333,11 +329,10 @@ const ContactHero = () => {
                         name="referred_from"
                         value={formData.referred_from}
                         onChange={handleChange}
-                        className={`w-full px-4 py-2.5 rounded border ${
-                          errors.referred_from
+                        className={`w-full px-4 py-2.5 rounded border ${errors.referred_from
                             ? "border-red-500"
                             : "border-gray-300"
-                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
+                          } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                       >
                         <option value="">Select an option</option>
 

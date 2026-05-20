@@ -82,7 +82,7 @@ const BannerBlogCard = ({ blog, handleBlogClick, imageBaseUrl }) => {
             {blog.blog_short_description}
           </p>
 
-          <div className="flex items-center gap-3 text-[#B45309] group/readmore">
+          <div className="flex items-center gap-3 text-[#F48F32] group/readmore">
             <span className="text-base font-semibold">Read Full Article</span>
             <ArrowRight className="w-5 h-5 group-hover/readmore:translate-x-2 transition-transform" />
           </div>

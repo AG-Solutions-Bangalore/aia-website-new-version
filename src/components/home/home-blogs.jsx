@@ -146,7 +146,7 @@ const HomeBlog = () => {
                                 )}
                               </p>
                             </div>
-                            <div className="flex items-center gap-1 rounded-full bg-[#F3831C]/10 px-2 py-0.5 text-xs font-semibold text-[#B45309]">
+                            <div className="flex items-center gap-1 rounded-full bg-[#F3831C]/10 px-2 py-0.5 text-xs font-semibold text-[#F48F32]">
                               <Star className="h-3 w-3" />
                               {blog.blog_course}
                             </div>

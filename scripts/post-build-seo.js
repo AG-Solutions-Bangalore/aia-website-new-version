@@ -6,6 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const DIST_PATH = path.resolve(__dirname, '../dist/index.html');
+const DIST_DIR = path.resolve(__dirname, '../dist');
 const META_PATH = path.resolve(__dirname, '../src/meta/meta.json');
 
 function upsertHeadTag(html, selector, tag) {
@@ -51,4 +52,30 @@ async function prerenderHomepage() {
   }
 }
 
-prerenderHomepage();
+function materializeCleanUrlHtmlFiles() {
+  if (!fs.existsSync(DIST_DIR)) return;
+
+  const copyIndexHtml = (dir) => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const entryPath = path.join(dir, entry.name);
+
+      if (!entry.isDirectory()) continue;
+      if (entry.name === "assets" || entry.name === "images") continue;
+
+      const indexPath = path.join(entryPath, "index.html");
+      if (fs.existsSync(indexPath)) {
+        const relativeDir = path.relative(DIST_DIR, entryPath);
+        const cleanHtmlPath = path.join(DIST_DIR, `${relativeDir}.html`);
+        fs.mkdirSync(path.dirname(cleanHtmlPath), { recursive: true });
+        fs.copyFileSync(indexPath, cleanHtmlPath);
+      }
+
+      copyIndexHtml(entryPath);
+    }
+  };
+
+  copyIndexHtml(DIST_DIR);
+  console.log('✅ Materialized clean URL HTML files for prerendered routes');
+}
+
+prerenderHomepage().then(materializeCleanUrlHtmlFiles);

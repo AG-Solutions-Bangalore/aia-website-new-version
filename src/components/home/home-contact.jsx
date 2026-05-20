@@ -175,7 +175,7 @@ const HomeContact = () => {
             {/* ── Left column ── */}
             <div className="space-y-4">
               <div>
-                <span className="text-xs md:text-sm font-semibold text-[#B45309] uppercase tracking-wider block">
+                <span className="text-xs md:text-sm font-semibold text-[#F48F32] uppercase tracking-wider block">
                   Add Global Certifications for a brighter Career Path
                 </span>
                 <h2 className="text-[#0F3652] text-xl md:text-3xl mt-2 font-medium">

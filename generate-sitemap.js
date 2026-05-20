@@ -14,6 +14,9 @@ const ROUTE_ALIASES = {
   "passed-out": "our-passouts",
   corpo: "corporate-training",
   enroll: "enroll-now",
+  "corporate-training/cia-curriculum": "cia-curriculum",
+  "corporate-training/cams": "cams",
+  "corporate-training/cfe-curriculum": "cfe-curriculum",
 };
 
 const STATIC_ROUTES = new Set([

@@ -1,3 +1,4 @@
+/* global process */
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -44,8 +45,12 @@ const prerenderStaticRoutes = new Set([
   "/cams-free-resources",
   "/cfe-free-resources",
   "/blogs",
+  "/our-passouts",
+  "/enroll-now",
   "/contact",
   "/corporate-training",
+  "/policies",
+  "/terms-and-conditions",
 ]);
 
 const redirectOnlyRoutes = new Set([
@@ -53,6 +58,15 @@ const redirectOnlyRoutes = new Set([
   "/passed-out",
   "/corpo",
   "/enroll",
+  "/corporate-training/cia-curriculum",
+  "/corporate-training/cams",
+  "/corporate-training/cfe-curriculum",
+]);
+
+const requiredCanonicalCheckRoutes = new Set([
+  "/blogs/academy-of-internal-audit-national-recognition",
+  "/blogs/what-is-anti-money-laundering",
+  "/blogs/how-to-become-a-forensic-accountant",
 ]);
 
 const dynamicSeoRoutePatterns = [
@@ -167,6 +181,7 @@ const freeResourceDetailRoutes = includeFreeResourceDetails
 
 const requiredRoutes = uniqueRoutes([
   ...[...prerenderStaticRoutes].filter(isSeoSafeRoute),
+  ...[...requiredCanonicalCheckRoutes].filter(isSeoSafeRoute),
   "/404.html",
 ]);
 
