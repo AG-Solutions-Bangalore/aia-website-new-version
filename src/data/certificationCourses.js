@@ -53,7 +53,7 @@ const certificationCourses = [
       "Expert-curated 100 pages short notes for the CIA Challenge exam",
       "50+ hours of detailed & recorded video lectures",
       "300+ Flash cards for quick revision & recall key concepts",
-      "Access to Gleim software - Practice ques, mock test & study material",
+      "Access to Becker software - Practice ques, mock test & study material",
       "Live online doubt-clearing sessions with CIA-qualified faculty",
       "Exam-oriented study material covering all competency areas",
       "500+ Exam distractors designed to sharpen decision-making",
