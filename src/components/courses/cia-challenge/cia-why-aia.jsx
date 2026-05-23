@@ -17,19 +17,19 @@ const CiaWhyAia = () => {
           },
           {
             img: `${IMAGE_PATH}/flash_card.webp`,
-            title: "Expert Curated Flash Cards",
+            title: "300+ Flash Cards",
           },
           {
             img: `${IMAGE_PATH}/video-record-device-svgrepo-com.webp`,
-            title: "Exam Enrolment Support",
+            title: "Recorded Video Lectures",
           },
           {
             img: `${IMAGE_PATH}/exam_distractors.webp`,
-            title: "Exclusive Exam Distractors ",
+            title: "500+ Exam Distractors",
           },
           {
             img: `${IMAGE_PATH}/books-svgrepo-com.webp`,
-            title: "Experts Study Material",
+            title: "AIA Short Notes",
           },
         ]}
       />

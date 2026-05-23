@@ -40,11 +40,6 @@ const BlogDetails = () => {
   const [subscriptionStatus, setSubscriptionStatus] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
   const navigate = useNavigate();
-  useEffect(() => {
-    if (id) {
-      fetchBlogDetails();
-    }
-  }, [id]);
 
   useEffect(() => {
     if (!blog) return;
@@ -63,7 +58,9 @@ const BlogDetails = () => {
   );
 
   const blogSlug = blog?.blog_slug || id;
-  const blogCanonical = blogSlug ? buildCanonicalUrl(`/blogs/${blogSlug}`) : buildCanonicalUrl("/blogs");
+  const blogCanonical = blogSlug
+    ? buildCanonicalUrl(`/blogs/${blogSlug}`)
+    : buildCanonicalUrl("/blogs");
   const blogTitle = blog ? (blog.blog_meta_title || blog.blog_heading) : "AIA Blog";
   const blogDescription = blog ? (blog.blog_meta_description || blog.blog_short_description) : "";
   const blogKeywords = blog ? (blog.blog_meta_keywords || "") : "";
@@ -171,6 +168,12 @@ const BlogDetails = () => {
       setLoading(false);
     }
   }, [id]);
+
+  useEffect(() => {
+    if (id) {
+      fetchBlogDetails();
+    }
+  }, [fetchBlogDetails, id]);
 
   const faqHeading = faq?.[0]?.faq_heading || "FAQs";
 

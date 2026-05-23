@@ -1,4 +1,3 @@
-import { IMAGE_PATH } from "@/api/base-url";
 import CourseAboutH1 from "../common/course-aboutH1";
 
 const CiaCurrAbout = () => {
@@ -7,9 +6,9 @@ const CiaCurrAbout = () => {
       <CourseAboutH1
         badgeText="Best Prep Course for CIA Certification"
         heading="Join the AIA Prep Course and Get 100% Success in the CIA Exam "
-        description={`The Certified Internal Auditor (CIA) is a globally recognized professional certification awarded by the Institute of Internal Auditors (IIA). It validates expertise in internal audit,risk management, governance, and assurance across industries. 
-\nAIA’s CIA Prep Course is designed to help professionals confidently prepare for all three parts of the CIA exam through structured learning, concept clarity, and exam-oriented practice, aligned with the latest IIA syllabus for 2026. Whether you are starting your audit career or strengthening your role in risk, compliance, or governance, this program focuses on understanding concepts, applying standards, and clearing exams ethically and efficiently.
-`}
+        description={`<strong>AIA's CIA Prep Course</strong> is designed to help professionals prepare confidently for all three parts of the CIA exam through structured learning, expert guidance, and exam-focused resources aligned with the latest IIA syllabus. What makes <strong>AIA stand apart is our exclusive CIA Short Notes and authorization with Becker - a globally trusted study resource for CIA</strong>, designed to simplify complex concepts and support faster, smarter revision, <strong>available only with AIA.</strong>
+\nAs part of the AIA's program, learners receive access to <strong>Becker's globally trusted CIA software, including practice questions, mock exams, flashcards</strong>, performance tracking, and exam-oriented study tools to strengthen preparation. <strong>AIA is proudly the one and only authorized Becker distributor in India</strong>, ensuring students receive authentic and high-quality study resources.
+\nTo further enhance exam readiness, <strong>the AIA CIA program includes recorded lectures, distractor-based concept explanations, live doubt-solving sessions, exam registration support</strong>, and practical exam strategies - helping candidates build conceptual clarity and prepare ethically and efficiently for CIA success.`}
         aboutStats={[
           {
             display: "Recorded Video Sessions",
@@ -17,10 +16,9 @@ const CiaCurrAbout = () => {
             show: "true",
           },
           {
-            display: "Live-Doubt \n Sessions",
-            title: "(With expert faculty)",
+            display: "AIA Short Notes",
+            title: "(250 pages of concise notes)",
             show: "true",
-            lineBreak: "sm",
           },
           {
             display: "Updated Becker Resources",
@@ -37,15 +35,7 @@ const CiaCurrAbout = () => {
         formsubtitle="Online Training and Certification Course"
         formcourse="CIA"
         formbuttonlabel="More Info"
-      >
-        <p className="text-[15px] text-gray-700 leading-relaxed text-justify mt-4">
-          We provide <b> Becker </b>
-          globally trusted study material as part of our program, and we are the
-          only authorized Becker distributor across India—ensuring access to
-          high-quality, exam-focused content to support your preparation
-          journey.
-        </p>
-      </CourseAboutH1>
+      />
     </>
   );
 };

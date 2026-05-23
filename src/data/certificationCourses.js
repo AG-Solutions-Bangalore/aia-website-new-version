@@ -29,7 +29,7 @@ const certificationCourses = [
     description2: "How AIA Supports Your CIA Journey",
     features: [
       "60+ hours of recorded, expert-led lectures",
-      "Gleim-authorised study material and practice questions",
+      "Becker-authorised study material and practice questions",
       "Full-length Becker mock tests aligned with CIA exam standards",
       "Training delivered by experienced, CIA-qualified faculty",
       "Live doubt-clearing sessions for continuous support",

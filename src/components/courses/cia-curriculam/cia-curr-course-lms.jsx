@@ -3,49 +3,49 @@ import CourseLms from "../common/course-lms";
 import CfeJoinDialog from "../cfe-curriculam/join-prep";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { ENROLL_URL, IMAGE_PATH } from "@/api/base-url";
+import { ENROLL_URL } from "@/api/base-url";
 
 const CiaCurrCourseLms = ({ image }) => {
   const courseFeatures = [
     {
-      title: "Customized Study Material",
+      title: "Becker Software Access",
       description:
-        "AIA provides updated Becker CIA study material (2026), aligned with the latest IIA syllabus to support structured and exam-focused preparation across all three CIA parts.",
+        "Get access to Becker's official software for CIA prep, including practice questions, flashcards, mock tests, and performance tracking tools designed to strengthen exam preparation. As AIA is India's one and only authorized Becker distributor, we ensure students receive official, and reliable study resources for structured CIA learning.",
     },
     {
-      title: "Practice Questions",
+      title: "AIA CIA Short Notes",
       description:
-        "Candidates receive access to Becker’s CIA practice software, featuring exam-style questions that strengthen conceptual understanding and application-based thinking.",
+        "AIA provides exclusive access to CIA Short Notes, a unique learning resource available only with AIA worldwide. These comprehensive 250+ page notes are designed for faster revision and concept clarity and are also delivered as a hard copy directly to your doorstep.",
     },
     {
-      title: "Training Sessions",
+      title: "60+ Hours of Recorded Video Classes",
       description:
-        "Get 60+ hours of detailed recorded video lectures by Puneet Sir, enabling flexible, self-paced learning while simplifying complex concepts through clear, structured explanations.",
+        "AIA's CIA Prep Course includes detailed 60+ hours of recorded video lectures based on AIA Short Notes, where the faculty explains every topic in a clear and structured manner. Students can learn at their own pace while strengthening conceptual understanding for all CIA parts.",
     },
     {
-      title: "Live Query Session",
+      title: "Live Query Session with Faculty",
       description:
-        "Attend weekly live query sessions with experienced industry faculty to clarify doubts, interact with peers, and gain practical insights that strengthen conceptual clarity and real-world understanding.",
+        "Learners can attend weekly live query sessions with experienced faculty to clarify doubts, interact with peers, and gain practical insights. These sessions help strengthen conceptual understanding and improve confidence through guided discussion and expert support.",
     },
     {
-      title: "Time Frame",
+      title: "400+ Exam Distractors",
       description:
-        "Each CIA part typically requires 2–3 months of focused preparation depending on prior knowledge and time commitment. Faster progress is possible with consistent study.",
-    },
-    {
-      title: "Mock Test",
-      description:
-        "Comprehensive CIA mock tests are conducted after syllabus completion to assess readiness and improve exam confidence.",
+        "AIA provides 400+ exam-oriented distractors specially designed to strengthen analytical thinking and concept application for CIA exam. These practice-based questions help students understand exam patterns, improve decision-making, and prepare effectively for challenging CIA exam scenarios.",
     },
     {
       title: "Exam Registration Support",
       description:
-        "We offer complete support throughout the exam registration process, guiding you step by step from application review to final exam scheduling, ensuring a smooth and stress-free experience.",
+        "At AIA we provide complete support for CIA exam registration, guiding students step by step through the entire process. From application assistance to exam scheduling, AIA ensures a smooth, hassle-free, and well-supported registration experience.",
     },
     {
-      title: "Regular Updates",
+      title: "LMS (Learning Management System)",
       description:
-        "All study resources are regularly reviewed and updated in line with the latest IIA CIA syllabus and exam expectations to ensure relevant preparation.",
+        "Get access to AIA's dedicated Learning Management System (LMS), where students can conveniently access study resources, recorded lectures, practice material, and important updates in one place. The platform ensures a smooth and organized learning experience throughout your CIA preparation.",
+    },
+    {
+      title: "Prep Program Duration",
+      description:
+        "Each CIA part typically requires 2-3 months of focused preparation, depending on prior knowledge and study consistency. AIA provides a structured learning approach to help students effectively manage their preparation and progress confidently toward exam success.",
     },
   ];
 

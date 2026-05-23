@@ -44,9 +44,11 @@ const CourseAboutH1 = ({
             {description && (
               <div className="text-sm sm:text-base text-[#0F3652] leading-relaxed space-y-3 md:space-y-4 mb-6 md:mb-8 text-justify">
                 {description.split("\n").map((line, i) => (
-                  <p key={i} className="break-words">
-                    {line}
-                  </p>
+                  <p
+                    key={i}
+                    className="break-words"
+                    dangerouslySetInnerHTML={{ __html: line }}
+                  />
                 ))}
               </div>
             )}

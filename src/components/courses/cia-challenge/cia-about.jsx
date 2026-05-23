@@ -1,16 +1,14 @@
 import CourseAboutH1 from "../common/course-aboutH1";
-import { IMAGE_PATH } from "@/api/base-url";
 
 const CiaAbout = () => {
   return (
     <>
       <CourseAboutH1
         badgeText="Best Prep Course For CIA Challenge Exam"
-        heading="Prepare Confidently for the CIA Challenge Exam with AIA’s Expert-Led Training "
-        description={`
-The CIA Challenge Exam is a fast-track pathway, offered by the Institute of Internal Auditors (IIA), designed for qualified professionals to earn the Certified Internal Auditor (CIA) designation by passing a single comprehensive exam. 
-\n AIA is officially recognised by IIA India for a credible CIA Challenge Exam preparation program. With structured prep, we help eligible professionals to prepare confidently through focused learning and exam-oriented practice aligned with the latest Challenge Exam framework. The training approach emphasises concept integration, application of IIA standards, and strategic exam readiness - helping candidates prepare with clarity and confidence.
-`}
+        heading="Prepare Confidently for the CIA Challenge Exam with AIA's Expert-Led Training "
+        description={`<strong>AIA's CIA Challenge Exam Prep Course</strong> is designed to help professionals prepare confidently through structured learning, focused revision, and exam-oriented support aligned with the latest CIA Challenge Exam framework. This program includes <strong>AIA's exclusive Short Notes</strong> for quick revision and better concept clarity, helping candidates simplify key topics and prepare more effectively, along with detailed <strong>50+ hours of recorded video lectures</strong> for a better understanding of key concepts.
+\nTo strengthen exam readiness, AIA also provides <strong>500+ exam-oriented distractors</strong> and <strong>300+ flashcards</strong> designed to improve analytical thinking, retention, and concept application for the Challenge Exam. In addition, students benefit from <strong>live doubt-solving sessions, expert guidance, and complete exam registration support</strong>, ensuring a smooth and well-supported preparation journey from start to finish.
+\nStudents also receive access to <strong>Becker's official CIA software</strong>, including practice tools and exam-focused resources to strengthen preparation. As <strong>India's one and only authorized Becker distributor</strong>, AIA ensures students receive official, authentic, and globally trusted study material, providing a reliable and high-quality learning experience throughout their CIA Challenge Exam preparation.`}
         aboutStats={[
           {
             display: "Recorded Video Classes",
@@ -23,30 +21,21 @@ The CIA Challenge Exam is a fast-track pathway, offered by the Institute of Inte
             show: "true",
           },
           {
-            display: "Experts Study Material",
+            display: "AIA Short Notes",
             title: "(200 pages of concise notes)",
             show: "true",
           },
           {
-            display: "Flash \n Cards",
-            title: "(300+ Flash cards)",
+            display: "Becker Software Access",
+            title: "(Get access of Becker Software)",
             show: "true",
-            lineBreak: "sm",
           },
         ]}
         formtitle="Join AiA CIA LMS"
         formsubtitle="Online Training and Certification Course"
         formcourse="CIAC"
         formbuttonlabel="More Info"
-      >
-        <p className="text-sm sm:text-base text-[#0F3652] leading-relaxed mt-4">
-          We provide <b> Becker </b>
-          globally trusted study material as part of our program, and we are the
-          only authorized Becker distributor across India—ensuring access to
-          high-quality, exam-focused content to support your preparation
-          journey.
-        </p>
-      </CourseAboutH1>
+      />
     </>
   );
 };

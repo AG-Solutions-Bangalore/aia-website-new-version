@@ -25,9 +25,9 @@ const CfeCurrUnique = () => {
           secondaryIcon: (
             <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "Proven Exam-Oriented Training Methodology",
+          title: "Becker Software Access",
           description:
-            "AIA is an officially authorised learning partner of IIA India and Becker’s India’s one and only authorised distributor, providing a credible, structured, and globally trusted CIA learning experience.",
+            "Get access to Becker's official software for CIA Prep with practice questions, flashcards, and mock tests for effective exam preparation. AIA is India's one and only authorized Becker distributor.",
           position: "left",
         },
         {
@@ -35,9 +35,9 @@ const CfeCurrUnique = () => {
           secondaryIcon: (
             <CheckCircle className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "Dedicated Support Person",
+          title: "AIA Short Notes",
           description:
-            "Get one-on-one guidance throughout your learning journey; we're with you every step of the way.",
+            "Receive exclusive access to AIA CIA Short Notes, available only with AIA worldwide. These 250+ page notes are designed for faster revision and delivered as a hard copy to your doorstep.",
           position: "left",
         },
         {
@@ -45,9 +45,9 @@ const CfeCurrUnique = () => {
           secondaryIcon: (
             <Star className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "Customised Study Material",
+          title: "60+ hours Video Lectures",
           description:
-            "Get access to official Becker study material along with comprehensive, expert-crafted notes delivered to your doorstep for effective offline study.",
+            "Access 60+ hours of recorded video lectures covering all CIA topics in a clear and structured format for better conceptual understanding.",
           position: "left",
         },
         {
@@ -55,9 +55,9 @@ const CfeCurrUnique = () => {
           secondaryIcon: (
             <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "60+ Hours of Video Lectures",
+          title: "400+ Exam Distractors",
           description:
-            "Learn at your own pace with high-quality, detailed video lectures covering the complete syllabus.",
+            "Practice with 400+ exam-focused distractors designed to improve concept clarity, analytical thinking, and confidence for difficult CIA questions.",
           position: "right",
         },
         {
@@ -65,9 +65,9 @@ const CfeCurrUnique = () => {
           secondaryIcon: (
             <CheckCircle className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "Live Sessions with Faculty",
+          title: "Exam Registration Support",
           description:
-            "Interact directly with expert faculty members to clarify doubts and deepen your understanding.",
+            "Get complete assistance for CIA exam registration, from the application process to final scheduling for a smooth experience.",
           position: "right",
         },
         {
@@ -75,13 +75,13 @@ const CfeCurrUnique = () => {
           secondaryIcon: (
             <Star className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "100% Exam Registration Support",
+          title: "Live Doubt Session with Faculty",
           description:
-            "From registration to scheduling your exam, we assist you at every stage of your journey.",
+            "Join live doubt-solving sessions with expert faculty to clarify concepts, ask questions, and strengthen your preparation.",
           position: "right",
         },
       ]}
-      lastText="Join AIA and experience audit training that’s practical, personal, and proven."
+      lastText="Join AIA and experience audit training that's practical, personal, and proven."
     />
   );
 };

@@ -64,6 +64,8 @@ const redirectOnlyRoutes = new Set([
 ]);
 
 const requiredCanonicalCheckRoutes = new Set([
+  "/blogs/cfe-certification-in-uae",
+  "/blogs/cfe-exam-update-2026",
   "/blogs/academy-of-internal-audit-national-recognition",
   "/blogs/what-is-anti-money-laundering",
   "/blogs/how-to-become-a-forensic-accountant",

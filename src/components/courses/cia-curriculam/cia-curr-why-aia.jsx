@@ -13,23 +13,23 @@ const CiaCurrWhyAia = () => {
         items={[
           {
             img: `${IMAGE_PATH}/teacher-svgrepo-com.webp`,
-            title: "CIA Qualified Instructor",
-          },
-          {
-            img: `${IMAGE_PATH}/support-svgrepo-com.webp`,
-            title: "Training Support",
-          },
-          {
-            img: `${IMAGE_PATH}/video-record-device-svgrepo-com.webp`,
-            title: "Access to Recorded Sessions",
-          },
-          {
-            img: `${IMAGE_PATH}/Learning.webp`,
-            title: "IIA India Authorized Learning Partner",
+            title: "Becker Software Access",
           },
           {
             img: `${IMAGE_PATH}/books-svgrepo-com.webp`,
-            title: "2026 Becker Study Material",
+            title: "AIA Short Notes",
+          },
+          {
+            img: `${IMAGE_PATH}/video-record-device-svgrepo-com.webp`,
+            title: "Recorded Video Lectures",
+          },
+          {
+            img: `${IMAGE_PATH}/exam_distractors.webp`,
+            title: "400+ Exam Distractors",
+          },
+          {
+            img: `${IMAGE_PATH}/support-svgrepo-com.webp`,
+            title: "Exam Registration Support",
           },
         ]}
       />

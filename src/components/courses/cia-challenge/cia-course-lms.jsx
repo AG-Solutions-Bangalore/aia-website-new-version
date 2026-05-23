@@ -8,44 +8,44 @@ import { ENROLL_URL } from "@/api/base-url";
 const CiaCourseLms = ({ image }) => {
   const courseFeatures = [
     {
-      title: "Customised Study Material",
+      title: "Becker Software Access",
       description:
-        "AIA provides concise, customized study material designed specifically for the CIA Challenge Exam, focusing on key areas and integrated concepts aligned with IIA requirements.",
+        "Get access to Becker's official CIA Challenge software, including practice questions, mock tests, and exam-focused learning tools designed to strengthen preparation. As India's one and only authorized Becker distributor, AIA ensures students receive official, authentic, and globally trusted study resources.",
     },
     {
-      title: "AIA Flash Cards",
+      title: "AIA Short Notes",
       description:
-        "300+ exam-focused flash cards designed for quick recall, concept clarity, and verifying exam readiness with clear explanations for quick revision anytime, anywhere",
+        "Receive exclusive AIA CIA Challenge Short Notes, specially designed for quick revision and better concept clarity. These comprehensive notes simplify important topics and are delivered as a hard copy directly to your doorstep for convenient and effective preparation.",
     },
     {
-      title: "Recorded Training Sessions",
+      title: "500+ Distractors",
       description:
-        "Get access to 50+ hours of in-depth recorded video lectures by Puneet Sir, structured for flexible, self-paced learning and clear conceptual coverage of the CIA Challenge syllabus.",
+        "Practice with 500+ exam-oriented distractors designed to improve analytical thinking, strengthen concept application, and prepare students for tricky Challenge Exam scenarios. These distractors help build confidence and improve decision-making during the exam.",
     },
     {
-      title: "Live Query Sessions",
+      title: "300+ Flashcards",
       description:
-        "Participate in weekly live query sessions with experienced faculty to clarify doubts, discuss practical audit scenarios, and build strong conceptual confidence.",
+        "Access 300+ exam-focused flashcards created for quick revision, better concept retention, and faster recall of important topics. These flashcards help students revise efficiently and strengthen preparation anytime, anywhere.",
     },
     {
-      title: "Study Timeframe",
+      title: "Recorded Video Lectures",
       description:
-        "The CIA Challenge Exam typically requires 6–8 months of focused preparation depending on professional background and time commitment. Faster completion is possible with disciplined study.",
-    },
-    {
-      title: "Exclusive Exam Distractors",
-      description:
-        "500+ exam distractors train you to identify traps, understand why options look correct, and improve decision-making accuracy when similar choices appear in an exam.",
+        "Get access to 50+ hours of detailed recorded video lectures covering important CIA Challenge concepts in a clear and structured format. Students can learn at their own pace while building strong conceptual understanding.",
     },
     {
       title: "Exam Registration Support",
       description:
-        "We offer complete support throughout the exam registration process, guiding you step by step from application review to final exam scheduling, ensuring a smooth and stress-free experience.",
+        "Receive complete support throughout the CIA Challenge exam registration process, from application guidance to final scheduling. AIA ensures a smooth, hassle-free experience by supporting students at every important step.",
     },
     {
-      title: "Full Access to Becker Software",
+      title: "Live Doubt Sessions",
       description:
-        "Get full Becker CIA Challenge software access, including practice questions, mock exams, and updated Becker books to ensure preparation aligned with exam standards.",
+        "Attend live doubt-solving sessions with experienced faculty to clarify concepts, ask questions, and strengthen understanding. These interactive sessions help students stay confident and focused throughout their preparation journey.",
+    },
+    {
+      title: "LMS (Learning Management System)",
+      description:
+        "Get access to AIA's dedicated Learning Management System (LMS), where students can conveniently access study resources, recorded lectures, practice material, and important updates in one place. The platform ensures a smooth and organized learning experience throughout your CIA Challenge preparation.",
     },
   ];
 
@@ -57,7 +57,7 @@ const CiaCourseLms = ({ image }) => {
           <>
             We provide globally trusted Official <strong>Becker</strong> and{" "}
             <strong>Gleim</strong> study materials for CIA Challenge prep to
-            ensure examfocused learning experience for professionals.
+            ensure exam-focused learning experience for professionals.
           </>
         }
         courseFeatures={courseFeatures}

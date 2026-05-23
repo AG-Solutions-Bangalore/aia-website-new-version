@@ -11,13 +11,12 @@ import {
   Star,
 } from "lucide-react";
 import CourseUnique from "../common/course-unique";
-//demo
+
 const CiaUnique = () => {
   return (
     <CourseUnique
       badgeText="WHAT MAKES US UNIQUE"
       heading="Why AIA is the Preferred Choice for CIA Prep"
-      // highlight="Professionals "
       description="Because at AIA, we provide a complete support system to ensure your success."
       services={[
         {
@@ -25,9 +24,9 @@ const CiaUnique = () => {
           secondaryIcon: (
             <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "Exam-Oriented Training Methodology",
+          title: "Becker Software Access",
           description:
-            "AIA is an officially authorised learning partner of IIA India and Becker’s India’s one and only authorised distributor, providing a credible, structured, and globally trusted CIA learning experience.",
+            "Get access to Becker's official software, including practice questions, and exam-focused tools designed to strengthen preparation. As India's one and only authorized Becker distributor, AIA ensures authentic and globally trusted study resources.",
           position: "left",
         },
         {
@@ -35,9 +34,9 @@ const CiaUnique = () => {
           secondaryIcon: (
             <CheckCircle className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "Dedicated Support Person",
+          title: "AIA Short Notes",
           description:
-            "Get one-on-one guidance throughout your learning journey; we're with you every step of the way.",
+            "Receive AIA's exclusive CIA Challenge Short Notes, specially designed for quick revision and concept clarity. These comprehensive notes simplify key concepts and are delivered as a hard copy directly to your doorstep.",
           position: "left",
         },
         {
@@ -45,9 +44,9 @@ const CiaUnique = () => {
           secondaryIcon: (
             <Star className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "Customised Study Material",
+          title: "300+ Flash Cards",
           description:
-            "Get access to official Becker study material along with comprehensive, expert-crafted notes delivered to your doorstep for effective offline study.",
+            "Access 300+ exam-focused flash cards designed for quick recall, better retention, and faster revision of important CIA concepts to strengthen exam preparation.",
           position: "left",
         },
         {
@@ -55,9 +54,9 @@ const CiaUnique = () => {
           secondaryIcon: (
             <Sparkles className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "Detailed Video Sessions",
+          title: "500+ Exam Distractors",
           description:
-            "Learn at your own pace with high-quality, detailed video lectures covering the complete syllabus.",
+            "Practice with 500+ exam-oriented distractors designed to improve analytical thinking, concept application, and confidence for handling tricky CIA challenge exam questions.",
           position: "right",
         },
         {
@@ -65,9 +64,9 @@ const CiaUnique = () => {
           secondaryIcon: (
             <CheckCircle className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "Live Sessions with Faculty",
+          title: "Recorded Video Lectures",
           description:
-            "Interact directly with expert faculty members to clarify doubts and deepen your understanding.",
+            "Get access to detailed recorded video lectures covering all CIA challenge exam topics in a clear, structured, and easy-to-understand format for flexible learning anytime, anywhere.",
           position: "right",
         },
         {
@@ -75,13 +74,13 @@ const CiaUnique = () => {
           secondaryIcon: (
             <Star className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
           ),
-          title: "100% Exam Registration Support",
+          title: "Live Doubt Sessions",
           description:
-            "From registration to scheduling your exam, we assist you at every stage of your journey.",
+            "Join live doubt-solving sessions with expert faculty to clarify concepts, ask questions, and strengthen understanding through guided discussions and expert support.",
           position: "right",
         },
       ]}
-      lastText="Join AIA and experience audit training that’s practical, personal, and proven."
+      lastText="Join AIA and experience audit training that's practical, personal, and proven."
     />
   );
 };

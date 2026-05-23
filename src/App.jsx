@@ -56,10 +56,17 @@ const LazyToaster = lazy(() =>
 const Meta = lazy(() => import("./components/seo/meta"));
 const AppQueryProvider = lazy(() => import("./lib/query-provider"));
 
+function isBlogDetailPath(pathname) {
+  const parts = pathname.split("/").filter(Boolean);
+  return parts.length === 2 && parts[0] === "blogs" && parts[1] !== "course";
+}
+
 export default function App() {
   const location = useLocation();
   const [loadDeferredWidgets, setLoadDeferredWidgets] = useState(false);
   const isPrerendering = isReactSnapPrerender();
+  const shouldRenderGlobalMeta =
+    location.pathname !== "/" && !isBlogDetailPath(location.pathname);
 
   useEffect(() => {
     if (isPrerendering) return;
@@ -124,7 +131,7 @@ export default function App() {
   return (
     <div className="font-sans text-gray-800 min-h-screen flex flex-col relative">
       <ScrollToTop />
-      {location.pathname !== "/" && (
+      {shouldRenderGlobalMeta && (
         <Suspense fallback={null}>
           <Meta />
         </Suspense>
