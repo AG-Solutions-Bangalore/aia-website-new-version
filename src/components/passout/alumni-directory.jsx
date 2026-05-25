@@ -97,31 +97,22 @@ const AlumniDirectory = () => {
     },
   });
 
-  // 2. Fetch all passout students
-  const { data: newData, isLoading: isLoadingNew } = useQuery({
-    queryKey: ["home-passout-students"],
-    queryFn: async () => {
-      const res = await axios.get(`${BASE_URL}/api/getAllPassoutStudentsNew`);
-      return res.data;
-    },
-  });
-
   // --- Image URL Resolution ---
   const studentImageBase = useMemo(() => {
     return (
-      newData?.image_url?.find((img) => img.image_for === "Student")
+      yearData?.image_url?.find((img) => img.image_for === "Student")
         ?.image_url ||
       "https://aia.in.net/webapi/public/assets/images/student_images/"
     );
-  }, [newData]);
+  }, [yearData]);
 
   const companyImageBase = useMemo(() => {
     return (
-      newData?.image_url?.find((img) => img.image_for === "Student Company")
+      yearData?.image_url?.find((img) => img.image_for === "Student Company")
         ?.image_url ||
       "https://aia.in.net/webapi/public/assets/images/student_company_images/"
     );
-  }, [newData]);
+  }, [yearData]);
 
   // --- Dynamic Year Options based on getAllPassoutStudentsYear API ---
   const yearOptions = useMemo(() => {
@@ -135,39 +126,10 @@ const AlumniDirectory = () => {
 
   // --- Process and Enrich Alumni Data ---
   const alumniList = useMemo(() => {
-    if (!newData?.data) return [];
+    if (!yearData?.data) return [];
 
-    const map = new Map();
-
-    // 1. Load all records from getAllPassoutStudentsNew (24 items)
-    newData.data.forEach((student) => {
-      map.set(student.id, {
-        ...student,
-        student_passout_year: null,
-      });
-    });
-
-    // 2. Merge/update with records from getAllPassoutStudentsYear (2 items)
-    if (yearData?.data) {
-      yearData.data.forEach((student) => {
-        if (map.has(student.id)) {
-          map.set(student.id, {
-            ...map.get(student.id),
-            ...student,
-          });
-        } else {
-          map.set(student.id, student);
-        }
-      });
-    }
-
-    // Convert map to enriched list
-    return Array.from(map.values()).map((student, index) => {
-      // Assign year from API, otherwise distribute dynamically from yearOptions
-      let year = student.student_passout_year;
-      if (!year) {
-        year = yearOptions[index % yearOptions.length];
-      }
+    return yearData.data.map((student, index) => {
+      const year = student.student_passout_year || "2025";
 
       // Normalize course
       let course = student.student_course || "Other";
@@ -179,11 +141,8 @@ const AlumniDirectory = () => {
       }
 
       // Normalize company name
-      let companyName = student.student_company_name || "Organization";
-      if (companyName === "Organization") {
-        const companies = ["PwC", "EY", "Deloitte", "KPMG", "HSBC"];
-        companyName = companies[index % companies.length];
-      } else if (companyName.toLowerCase().includes("deloitte")) {
+      let companyName = student.student_company_name || "";
+      if (companyName.toLowerCase().includes("deloitte")) {
         companyName = "Deloitte";
       } else if (companyName.toLowerCase().includes("pwc")) {
         companyName = "PwC";
@@ -193,6 +152,11 @@ const AlumniDirectory = () => {
         companyName = "KPMG";
       } else if (companyName.toLowerCase().includes("hsbc")) {
         companyName = "HSBC";
+      } else if (
+        companyName.toLowerCase().includes("indusind") ||
+        companyName.toLowerCase().includes("induslnd")
+      ) {
+        companyName = "Induslnd bank";
       }
 
       // Map Industry
@@ -203,7 +167,7 @@ const AlumniDirectory = () => {
       ) {
         industry = "Big 4";
       } else if (
-        ["bank", "ubs", "coinbase", "tgb", "hsbc", "exchange", "induslnd"].some(
+        ["bank", "ubs", "coinbase", "tgb", "hsbc", "exchange", "induslnd", "indusind"].some(
           (c) => nameLower.includes(c),
         )
       ) {
@@ -222,7 +186,7 @@ const AlumniDirectory = () => {
 
       // Region hierarchy mapping
       let country = student.country_name || "India";
-      let city = student.country_city || "Hyderabad";
+      let city = student.country_city || "";
       let state = "";
 
       if (country.toLowerCase().trim() === "india") {
@@ -280,7 +244,7 @@ const AlumniDirectory = () => {
         studentImageUrl,
       };
     });
-  }, [newData, yearData, studentImageBase, companyImageBase]);
+  }, [yearData, studentImageBase, companyImageBase]);
 
   // --- Counts calculation ---
   const counts = useMemo(() => {
@@ -536,7 +500,7 @@ const AlumniDirectory = () => {
   };
 
   // Loader view (Pulse Skeleton UX)
-  const isLoading = isLoadingNew || isLoadingYear;
+  const isLoading = isLoadingYear;
   if (isLoading) {
     return (
       <section className="bg-slate-50/50 py-12 md:py-16">
@@ -1416,7 +1380,7 @@ const AlumniDirectory = () => {
 
       {/* MOBILE FILTERS SIDE PANEL OVERLAY */}
       {mobileFiltersOpen && (
-        <div className="fixed inset-0 z-50 flex md:hidden bg-black/55 backdrop-blur-xs">
+        <div className="fixed inset-0 z-[10000] flex md:hidden bg-black/55 backdrop-blur-xs">
           <div className="bg-white w-80 max-w-[90vw] h-full p-6 overflow-y-auto relative flex flex-col justify-between shadow-2xl animate-in slide-in-from-left duration-250">
             <div>
               <div className="flex items-center justify-between border-b border-gray-150 pb-3 mb-6">
