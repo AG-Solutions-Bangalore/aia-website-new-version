@@ -21,7 +21,7 @@ export default function Footer() {
                 { name: "Home", href: "/" },
                 { name: "About AIA", href: "/about-aia" },
                 { name: "Blog", href: "/blogs" },
-                { name: "Our Passout", href: "/our-passouts" },
+                { name: "Alumni Network", href: "/alumni-network" },
                 { name: "CFE Free Resources", href: "/cfe-free-resources" },
                 { name: "Corporate Training", href: "/corporate-training" },
                 { name: "Enroll Now", href: "/enroll-now" },

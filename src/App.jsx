@@ -49,7 +49,9 @@ const NotificationPopup = lazy(
 const GoogleAnalytics = lazy(
   () => import("./components/google-analytics/google-analytics"),
 );
-const FloatingContact = lazy(() => import("./components/common/floating-contact"));
+const FloatingContact = lazy(
+  () => import("./components/common/floating-contact"),
+);
 const LazyToaster = lazy(() =>
   import("sonner").then((module) => ({ default: module.Toaster })),
 );
@@ -80,7 +82,10 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about-aia" element={<AboutPage />} />
-        <Route path="/about-us" element={<Navigate to="/about-aia" replace />} />
+        <Route
+          path="/about-us"
+          element={<Navigate to="/about-aia" replace />}
+        />
         <Route path="/cfe-curriculum" element={<CFECurriculam />} />
         <Route path="/cia-curriculum" element={<CIACurriculam />} />
         <Route path="/cia-challenge-curriculum" element={<CIAChallenge />} />
@@ -95,8 +100,15 @@ export default function App() {
         <Route path="/blogs" element={<Blog />} />
         <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route path="/blogs/course/:courseName" element={<BlogCourse />} />
-        <Route path="/our-passouts" element={<OurPassout />} />
-        <Route path="/passed-out" element={<OurPassout />} />
+        <Route path="/alumni-network" element={<OurPassout />} />
+        <Route
+          path="/our-passouts/*"
+          element={<Navigate to="/alumni-network" replace />}
+        />
+        <Route
+          path="/passed-out/*"
+          element={<Navigate to="/alumni-network" replace />}
+        />
         <Route path="/enroll-now" element={<Enrool />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/passout-stories/:slug" element={<PassoutStoriesSlug />} />

@@ -229,7 +229,7 @@ body {
   width: 100%;
   margin-bottom: 1em;
   min-width: 100%;
-  /* ✅ keeps normal tables full width */
+  /* keeps normal tables full width */
 }
 
 .ck-content table th,
@@ -246,25 +246,13 @@ body {
 
 /* ----------------------------------------------------------- */
 
-/* @keyframes marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee {
-  animation: marquee var(--duration, 1s) linear infinite;
-} */
 @keyframes marquee {
   from {
     transform: translateX(0);
   }
 
   to {
-    transform: translateX(-50%);
+    transform: translateX(calc(-100% - 1rem));
   }
 }
 

@@ -28,7 +28,7 @@ const routePrefetch = {
   "/cfe-free-resources": () =>
     import("../pages/free-resources/cfe-free-resources"),
   "/blogs": () => import("../pages/Blog/Blog"),
-  "/our-passouts": () => import("../pages/OurPassout/OurPassout"),
+  "/alumni-network": () => import("../pages/OurPassout/OurPassout"),
   "/corporate-training": () =>
     import("../pages/corporate-training/corporate-training"),
   "/contact": () => import("../pages/contact/contact"),
@@ -97,7 +97,7 @@ const Navbar = () => {
       link: "#",
       submenu: [
         { name: "Blog", link: "/blogs" },
-        { name: "Our Passout", link: "/our-passouts" },
+        { name: "Alumni Network", link: "/alumni-network" },
         { name: "Corporate Training", link: "/corporate-training" },
       ],
     },

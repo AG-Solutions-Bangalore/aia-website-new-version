@@ -61,7 +61,7 @@ const HOME_FALLBACK_SLIDES = [
   {
     id: 8,
     imageUrl: `${HOME_BANNER_BASE}4.webp`,
-    link: "our-passouts",
+    link: "alumni-network",
     alt: "CIA-Passouts",
   },
   {
@@ -179,7 +179,7 @@ const HOME_FALLBACK_ANNOUNCEMENTS = [
     id: 8,
     title: "CIA Passouts",
     subtext: "CIA Passouts",
-    link: "our-passouts",
+    link: "alumni-network",
   },
   {
     id: 9,

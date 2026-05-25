@@ -8,8 +8,13 @@
       "permanent": true
     },
     {
-      "source": "/passed-out",
-      "destination": "/our-passouts",
+      "source": "/passed-out(/)?",
+      "destination": "/alumni-network",
+      "permanent": true
+    },
+    {
+      "source": "/our-passouts(/)?",
+      "destination": "/alumni-network",
       "permanent": true
     },
     {

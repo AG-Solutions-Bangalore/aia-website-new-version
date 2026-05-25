@@ -2,7 +2,8 @@ export const SITE_URL = "https://aia.in.net";
 
 const CANONICAL_PATH_ALIASES = {
   "/about-us": "/about-aia",
-  "/passed-out": "/our-passouts",
+  "/passed-out": "/alumni-network",
+  "/our-passouts": "/alumni-network",
   "/corpo": "/corporate-training",
   "/enroll": "/enroll-now",
   "/corporate-training/cia-curriculum": "/cia-curriculum",

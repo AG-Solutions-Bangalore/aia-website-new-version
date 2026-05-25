@@ -12,7 +12,7 @@ const CiaCurrWhyAia = () => {
         heading="Key Advantages of AIA CIA 3-Part Prep Course"
         items={[
           {
-            img: `${IMAGE_PATH}/teacher-svgrepo-com.webp`,
+            img: `${IMAGE_PATH}/becker_software.webp`,
             title: "Becker Software Access",
           },
           {

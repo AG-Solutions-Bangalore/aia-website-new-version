@@ -179,31 +179,42 @@ const PassoutResult = () => {
             <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-48 bg-linear-to-r from-background sm:block" />
             <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-48 bg-linear-to-l from-background sm:block" />
           </div> */}
-          <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
+          <div className="relative flex w-full overflow-hidden">
             <div
-              ref={marqueeRef}
-              className="group flex shrink-0 justify-around gap-4 animate-marquee group-hover:paused"
+              className="group flex gap-4"
               style={{ ["--duration"]: `${duration}s` }}
             >
-              {testimonials.map((testimonial, i) => (
-                <TestimonialCardCourse
-                  key={`first-${i}`}
-                  author={testimonial.author}
-                  href={testimonial.href}
-                  alt={testimonial.alt}
-                  target={testimonial.target}
-                />
-              ))}
+              {/* FIRST SET */}
+              <div
+                ref={marqueeRef}
+                className="flex shrink-0 gap-4 animate-marquee group-hover:paused"
+              >
+                {testimonials.map((testimonial, i) => (
+                  <TestimonialCardCourse
+                    key={`first-${i}`}
+                    author={testimonial.author}
+                    href={testimonial.href}
+                    alt={testimonial.alt}
+                    target={testimonial.target}
+                  />
+                ))}
+              </div>
 
-              {testimonials.map((testimonial, i) => (
-                <TestimonialCardCourse
-                  key={`second-${i}`}
-                  author={testimonial.author}
-                  href={testimonial.href}
-                  alt={testimonial.alt}
-                  target={testimonial.target}
-                />
-              ))}
+              {/* DUPLICATE SET */}
+              <div
+                className="flex shrink-0 gap-4 animate-marquee group-hover:paused"
+                aria-hidden="true"
+              >
+                {testimonials.map((testimonial, i) => (
+                  <TestimonialCardCourse
+                    key={`second-${i}`}
+                    author={testimonial.author}
+                    href={testimonial.href}
+                    alt={testimonial.alt}
+                    target={testimonial.target}
+                  />
+                ))}
+              </div>
             </div>
 
             <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-48 bg-linear-to-r from-background sm:block" />

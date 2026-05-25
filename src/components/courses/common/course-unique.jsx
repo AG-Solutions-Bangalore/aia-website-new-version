@@ -13,6 +13,24 @@ export default function CourseUnique({
   lastText = "",
   button = true,
 }) {
+  const rowStartClasses = [
+    "lg:row-start-1",
+    "lg:row-start-2",
+    "lg:row-start-3",
+    "lg:row-start-4",
+    "lg:row-start-5",
+    "lg:row-start-6",
+    "lg:row-start-7",
+    "lg:row-start-8",
+    "lg:row-start-9",
+    "lg:row-start-10",
+  ];
+
+  const leftServices = services.filter((s) => s.position === "left");
+  const rightServices = services.filter((s) => s.position === "right");
+  const maxRows = Math.max(leftServices.length, rightServices.length);
+  const lastTextRowClass = rowStartClasses[maxRows] || "";
+
   return (
     <section
       id="unique-section"
@@ -36,26 +54,27 @@ export default function CourseUnique({
         </p>
 
         {/* Mobile: Single column, Tablet/Desktop: Two columns */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 lg:gap-8 relative">
-          {/* Left Column - All services will stack on mobile, split on desktop */}
-          <div className="space-y-8 md:space-y-12 lg:space-y-16">
-            {services
-              .filter((s) => s.position === "left")
-              .map((service, index) => (
-                <ServiceItem key={`left-${index}`} {...service} />
-              ))}
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-8 md:gap-x-8 md:gap-y-12 lg:gap-x-8 lg:gap-y-16 relative">
+          {leftServices.map((service, index) => {
+            const rowClass = rowStartClasses[index] || "";
+            return (
+              <div key={`left-${index}`} className={`lg:col-start-1 ${rowClass}`}>
+                <ServiceItem {...service} />
+              </div>
+            );
+          })}
 
-          <div className="space-y-8 md:space-y-12 lg:space-y-16 mt-0 lg:mt-0">
-            {services
-              .filter((s) => s.position === "right")
-              .map((service, index) => (
-                <ServiceItem key={`right-${index}`} {...service} />
-              ))}
-          </div>
+          {rightServices.map((service, index) => {
+            const rowClass = rowStartClasses[index] || "";
+            return (
+              <div key={`right-${index}`} className={`lg:col-start-2 ${rowClass}`}>
+                <ServiceItem {...service} />
+              </div>
+            );
+          })}
 
           {lastText && (
-            <div className="font-bold w-full col-span-1 lg:col-span-2 text-center text-base md:text-lg lg:text-xl mt-4 md:mt-6 px-2">
+            <div className={`font-bold w-full col-span-1 lg:col-span-2 text-center text-base md:text-lg lg:text-xl mt-4 md:mt-6 px-2 ${lastTextRowClass}`}>
               {lastText}
             </div>
           )}

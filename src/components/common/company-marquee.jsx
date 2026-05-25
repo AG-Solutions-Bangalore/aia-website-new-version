@@ -7,12 +7,12 @@ const CompanyMarquee = ({ companies }) => {
     <>
       <style>
         {`
-          @keyframes marquee {
+          @keyframes companyMarquee {
             0% { transform: translateX(0); }
             100% { transform: translateX(-100%); }
           }
-          .marquee {
-            animation: marquee 80s linear infinite;
+          .company-marquee {
+            animation: companyMarquee 80s linear infinite;
           }
         `}
       </style>
@@ -41,7 +41,7 @@ const CompanyMarquee = ({ companies }) => {
           {[1, 2].map((loop) => (
             <div
               key={loop}
-              className="flex marquee whitespace-nowrap items-center"
+              className="flex company-marquee whitespace-nowrap items-center"
               aria-hidden={loop === 2}
             >
               {companies.map((c, i) => (

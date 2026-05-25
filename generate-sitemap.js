@@ -11,7 +11,8 @@ const API_URL = "https://aia.in.net/webapi/public/api/getSitemap";
 
 const ROUTE_ALIASES = {
   "about-us": "about-aia",
-  "passed-out": "our-passouts",
+  "passed-out": "alumni-network",
+  "our-passouts": "alumni-network",
   corpo: "corporate-training",
   enroll: "enroll-now",
   "corporate-training/cia-curriculum": "cia-curriculum",
@@ -30,7 +31,7 @@ const STATIC_ROUTES = new Set([
   "/cams-free-resources",
   "/cfe-free-resources",
   "/blogs",
-  "/our-passouts",
+  "/alumni-network",
   "/enroll-now",
   "/contact",
   "/corporate-training",

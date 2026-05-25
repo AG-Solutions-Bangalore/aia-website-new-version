@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import PopUp from "@/components/common/pop-up";
 import PassoutBanner from "@/components/passout/passout-banner";
@@ -12,12 +12,16 @@ const WhatsappCarosal = lazy(
   () => import("@/components/common/whatsapp-carosal"),
 );
 const HomeReview = lazy(() => import("@/components/home/home-review"));
+const AlumniDirectory = lazy(
+  () => import("@/components/passout/alumni-directory"),
+);
 const HomeAlumniWork = lazy(
   () => import("@/components/home/home-alumini-work"),
 );
 
 const OurPassout = () => {
   const refs = useRef({
+    directory: { current: null },
     success: { current: null },
     youtube: { current: null },
     whatsapp: { current: null },
@@ -67,6 +71,14 @@ const OurPassout = () => {
       <PopUp slug="Passed-Out" />
       <PassoutBanner />
       <PassoutResult />
+
+      <div ref={refs.directory}>
+        {visible.directory && (
+          <Suspense fallback={null}>
+            <AlumniDirectory />
+          </Suspense>
+        )}
+      </div>
 
       <div ref={refs.success}>
         {visible.success && (
