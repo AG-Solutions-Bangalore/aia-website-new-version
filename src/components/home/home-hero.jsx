@@ -190,7 +190,7 @@ const HOME_FALLBACK_ANNOUNCEMENTS = [
   },
   {
     id: 10,
-    title: "Trusted by professionals across 36+ countries worldwide.",
+    title: "Trusted by professionals across 40+ countries worldwide.",
     subtext:
       "Join the global CFE network and build a career in fraud examination.",
     link: "cfe-curriculum",

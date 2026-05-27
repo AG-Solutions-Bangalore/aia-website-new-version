@@ -67,8 +67,7 @@ export default function App() {
   const location = useLocation();
   const [loadDeferredWidgets, setLoadDeferredWidgets] = useState(false);
   const isPrerendering = isReactSnapPrerender();
-  const shouldRenderGlobalMeta =
-    location.pathname !== "/" && !isBlogDetailPath(location.pathname);
+  const shouldRenderGlobalMeta = !isBlogDetailPath(location.pathname);
 
   useEffect(() => {
     if (isPrerendering) return;
@@ -85,6 +84,22 @@ export default function App() {
         <Route
           path="/about-us"
           element={<Navigate to="/about-aia" replace />}
+        />
+        <Route
+          path="/about-aia/cia-curriculum"
+          element={<Navigate to="/cia-curriculum" replace />}
+        />
+        <Route
+          path="/about-aia/cams"
+          element={<Navigate to="/cams" replace />}
+        />
+        <Route
+          path="/about-aia/cfe-curriculum"
+          element={<Navigate to="/cfe-curriculum" replace />}
+        />
+        <Route
+          path="/about-aia/cia-challenge-curriculum"
+          element={<Navigate to="/cia-challenge-curriculum" replace />}
         />
         <Route path="/cfe-curriculum" element={<CFECurriculam />} />
         <Route path="/cia-curriculum" element={<CIACurriculam />} />

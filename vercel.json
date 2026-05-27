@@ -3,6 +3,17 @@
   "cleanUrls": true,
   "redirects": [
     {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.aia.in.net"
+        }
+      ],
+      "destination": "https://aia.in.net/:path*",
+      "permanent": true
+    },
+    {
       "source": "/about-us",
       "destination": "/about-aia",
       "permanent": true
@@ -25,6 +36,26 @@
     {
       "source": "/enroll",
       "destination": "/enroll-now",
+      "permanent": true
+    },
+    {
+      "source": "/about-aia/cia-curriculum",
+      "destination": "/cia-curriculum",
+      "permanent": true
+    },
+    {
+      "source": "/about-aia/cams",
+      "destination": "/cams",
+      "permanent": true
+    },
+    {
+      "source": "/about-aia/cfe-curriculum",
+      "destination": "/cfe-curriculum",
+      "permanent": true
+    },
+    {
+      "source": "/about-aia/cia-challenge-curriculum",
+      "destination": "/cia-challenge-curriculum",
       "permanent": true
     },
     {

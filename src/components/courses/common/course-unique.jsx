@@ -49,7 +49,7 @@ export default function CourseUnique({
           />
         </div>
 
-        <p className="text-center max-w-2xl mx-auto mb-8 md:mb-12 lg:mb-16 text-sm md:text-base text-[#0F3652] px-2">
+        <p className="text-center max-w-4xl mx-auto mb-8 md:mb-12 lg:mb-16 text-sm md:text-base text-[#0F3652] px-2">
           {description}
         </p>
 

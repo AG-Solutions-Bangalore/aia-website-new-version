@@ -1,36 +1,30 @@
-import React, { useState, useMemo, useEffect } from "react";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import { BASE_URL } from "@/api/base-url";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import {
-  Search,
-  MapPin,
+  Briefcase,
   Building2,
   Calendar,
-  GraduationCap,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
   Globe,
+  GraduationCap,
   Grid,
   List,
+  MapPin,
   RefreshCw,
-  ChevronDown,
-  ChevronRight,
-  ChevronLeft,
+  Search,
   SlidersHorizontal,
   X,
-  Briefcase,
 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
 // Import shadcn/ui components
-import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Skeleton } from "@/components/ui/skeleton";
 import {
   Table,
   TableBody,
@@ -39,7 +33,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Skeleton } from "@/components/ui/skeleton";
 
 // High-quality SVG logos for Big 4 + HSBC + Mapped Companies
 const LOGOS = {
@@ -167,9 +160,16 @@ const AlumniDirectory = () => {
       ) {
         industry = "Big 4";
       } else if (
-        ["bank", "ubs", "coinbase", "tgb", "hsbc", "exchange", "induslnd", "indusind"].some(
-          (c) => nameLower.includes(c),
-        )
+        [
+          "bank",
+          "ubs",
+          "coinbase",
+          "tgb",
+          "hsbc",
+          "exchange",
+          "induslnd",
+          "indusind",
+        ].some((c) => nameLower.includes(c))
       ) {
         industry = "Banking";
       } else if (

@@ -42,7 +42,12 @@ export default function Home() {
       <DeferredPopUp slug="home" />
 
       <HomeHero slug="home" bottombar="true" />
-      <LazySection {...homeSectionProps} minHeight="400px">
+      <LazySection
+        {...homeSectionProps}
+        minHeight="400px"
+        prerender
+        deferUntilIdle={false}
+      >
         <HomeAbout />
       </LazySection>
 

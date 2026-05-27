@@ -4,18 +4,16 @@ import CourseAboutH1 from "../courses/common/course-aboutH1";
 
 const PdfJoinDialog = lazy(() => import("../common/PdfForm"));
 
-
 const HomeAbout = () => {
-
   return (
     <>
       <CourseAboutH1
         badgeText="Empowering Professionals Through Global Certifications & Structured Approach"
         heading="Excellence in Professional Education"
         description={`
-The Academy of Internal Audit (AIA) is a leading professional training institute dedicated to helping aspirants succeed in international certification programs. Beyond clearing exams, AIA focuses on building real-world competence in learners for audit, risk, and compliance roles.
+<strong>The Academy of Internal Audit (AIA) is a leading professional training institute dedicated to helping aspirants succeed in Global certification programs.</strong> Beyond clearing exams, AIA focuses on building real-world competence in learners for audit, risk, and compliance roles.
 \n
-Guided by industry experts with hands-on experience, our practical training ensures learners understand concept & apply them effectively in professional scenarios. Today, AIA has expanded its reach across 36+ countries within 5 years of its journey, along with a 99.6% success rate & high learner satisfaction, guiding professionals toward respected international certifications with confidence and clarity.
+Guided by industry experts with hands-on experience, our practical training ensures learners understand concepts & apply them effectively in professional scenarios. Today, AIA has expanded its reach across <strong>40+ countries</strong> within <strong>6 years of its journey</strong>, along with a <strong>99.6% success rate & high learner satisfaction</strong>, guiding professionals toward respected global certifications with confidence and clarity.
 
 
 `}
@@ -49,7 +47,7 @@ Guided by industry experts with hands-on experience, our practical training ensu
             title: "Trained & Certified",
             show: "true",
           },
-          { display: "36+ Countries", title: "Served", show: "true" },
+          { display: "40+ Countries", title: "Served", show: "true" },
         ]}
       />
     </>
