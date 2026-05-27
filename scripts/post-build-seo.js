@@ -10,8 +10,19 @@ const DIST_DIR = path.resolve(__dirname, '../dist');
 const META_PATH = path.resolve(__dirname, '../src/meta/meta.json');
 
 function upsertHeadTag(html, selector, tag) {
-  const nextHtml = html.replace(selector, tag);
-  if (nextHtml !== html) return nextHtml;
+  const globalFlags = selector.flags.includes('g')
+    ? selector.flags
+    : `${selector.flags}g`;
+  const globalSelector = new RegExp(selector.source, globalFlags);
+  let replaced = false;
+
+  const nextHtml = html.replace(globalSelector, () => {
+    if (replaced) return '';
+    replaced = true;
+    return tag;
+  });
+
+  if (replaced) return nextHtml;
   return html.replace('<head>', `<head>\n    ${tag}`);
 }
 
@@ -27,22 +38,23 @@ async function prerenderHomepage() {
       title: "AIA | Best Training Institute for Certification Courses",
       description: "Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses."
     };
+    const canonicalUrl = 'https://aia.in.net/';
 
     let html = fs.readFileSync(DIST_PATH, 'utf-8');
 
     html = upsertHeadTag(html, /<title>.*?<\/title>/, `<title>${homeMeta.title}</title>`);
     
-    html = upsertHeadTag(html, /<meta\s+name="title"[^>]*>/, `<meta name="title" content="${homeMeta.title}">`);
-    html = upsertHeadTag(html, /<meta\s+name="description"[^>]*>/, `<meta name="description" content="${homeMeta.description}">`);
-    html = upsertHeadTag(html, /<meta\s+property="og:title"[^>]*>/, `<meta property="og:title" content="${homeMeta.title}">`);
-    html = upsertHeadTag(html, /<meta\s+property="og:description"[^>]*>/, `<meta property="og:description" content="${homeMeta.description}">`);
-    html = upsertHeadTag(html, /<meta\s+property="og:type"[^>]*>/, `<meta property="og:type" content="website">`);
-    html = upsertHeadTag(html, /<meta\s+name="twitter:card"[^>]*>/, `<meta name="twitter:card" content="summary_large_image">`);
-    html = upsertHeadTag(html, /<meta\s+name="twitter:title"[^>]*>/, `<meta name="twitter:title" content="${homeMeta.title}">`);
-    html = upsertHeadTag(html, /<meta\s+name="twitter:description"[^>]*>/, `<meta name="twitter:description" content="${homeMeta.description}">`);
-
-    html = html.replace(/\s*<link\s+rel="canonical"[^>]*>/g, "");
-    html = html.replace(/\s*<meta\s+property="og:url"[^>]*>/g, "");
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="title")[^>]*>/i, `<meta name="title" content="${homeMeta.title}">`);
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="description")[^>]*>/i, `<meta name="description" content="${homeMeta.description}">`);
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:title")[^>]*>/i, `<meta property="og:title" content="${homeMeta.title}">`);
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:description")[^>]*>/i, `<meta property="og:description" content="${homeMeta.description}">`);
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:type")[^>]*>/i, `<meta property="og:type" content="website">`);
+    html = upsertHeadTag(html, /<link\b(?=[^>]*\brel="canonical")[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:url")[^>]*>/i, `<meta property="og:url" content="${canonicalUrl}">`);
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="twitter:url")[^>]*>/i, `<meta property="twitter:url" content="${canonicalUrl}">`);
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:card")[^>]*>/i, `<meta name="twitter:card" content="summary_large_image">`);
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:title")[^>]*>/i, `<meta name="twitter:title" content="${homeMeta.title}">`);
+    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:description")[^>]*>/i, `<meta name="twitter:description" content="${homeMeta.description}">`);
 
     fs.writeFileSync(DIST_PATH, html);
     console.log('✅ Injected Homepage SEO into dist/index.html');

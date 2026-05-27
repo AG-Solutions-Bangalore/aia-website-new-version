@@ -8,6 +8,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShareButtons } from "./share-button";
 import OptimizedImage from "@/components/common/optmized-image";
+import { titleFromSlug } from "@/utils/titleFromSlug";
 
 const FALLBACK_IMAGE_PATH = "/no-image.svg";
 const FALLBACK_IMAGE_URL = "https://aia.in.net/no-image.svg";
@@ -61,8 +62,13 @@ const BlogDetails = () => {
   const blogCanonical = blogSlug
     ? buildCanonicalUrl(`/blogs/${blogSlug}`)
     : buildCanonicalUrl("/blogs");
-  const blogTitle = blog ? (blog.blog_meta_title || blog.blog_heading) : "AIA Blog";
-  const blogDescription = blog ? (blog.blog_meta_description || blog.blog_short_description) : "";
+  const fallbackBlogTitle = `${titleFromSlug(id)} | AIA Blog`;
+  const blogTitle = blog
+    ? blog.blog_meta_title || blog.blog_heading
+    : fallbackBlogTitle;
+  const blogDescription = blog
+    ? blog.blog_meta_description || blog.blog_short_description
+    : "Read certification insights, exam preparation guidance, and career advice from Academy of Internal Audit.";
   const blogKeywords = blog ? (blog.blog_meta_keywords || "") : "";
   const blogImageUrl = getRemoteImageUrl(
     imageBaseUrl,
@@ -313,6 +319,13 @@ const BlogDetails = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-white py-12">
+        <Helmet>
+          <title>{blogTitle}</title>
+          <meta name="title" content={blogTitle} />
+          <meta name="description" content={blogDescription} />
+          <link rel="canonical" href={blogCanonical} />
+          <meta property="og:url" content={blogCanonical} />
+        </Helmet>
         <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-pulse space-y-8">
             <div className="h-8 bg-[#0F3652]/10 rounded w-1/4 mb-8"></div>
@@ -331,6 +344,14 @@ const BlogDetails = () => {
   if (!blog) {
     return (
       <div className="min-h-screen bg-white py-12">
+        <Helmet>
+          <title>{blogTitle}</title>
+          <meta name="title" content={blogTitle} />
+          <meta name="description" content={blogDescription} />
+          <meta name="robots" content="noindex, follow" />
+          <link rel="canonical" href={blogCanonical} />
+          <meta property="og:url" content={blogCanonical} />
+        </Helmet>
         <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-2xl font-bold text-[#0F3652] mb-4">
             Blog not found

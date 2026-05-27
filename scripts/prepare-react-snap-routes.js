@@ -10,9 +10,10 @@ const packagePath = path.join(rootDir, "package.json");
 const sitemapPath = path.join(rootDir, "public", "sitemap.xml");
 const siteOrigin = "https://aia.in.net";
 
-// Default total react-snap routes, including /404.html.
+// Default to every SEO-safe sitemap route so crawlers receive canonical,
+// title, meta description, and H1 content on all indexed URLs.
 // Override per build with REACT_SNAP_ROUTE_LIMIT=80, 160, or "all".
-const DEFAULT_REACT_SNAP_ROUTE_LIMIT = 48;
+const DEFAULT_REACT_SNAP_ROUTE_LIMIT = Number.POSITIVE_INFINITY;
 const DEFAULT_REACT_SNAP_PORT = 45679;
 
 const staticRoutes = new Set([
@@ -59,6 +60,10 @@ const redirectOnlyRoutes = new Set([
   "/our-passouts",
   "/corpo",
   "/enroll",
+  "/about-aia/cia-curriculum",
+  "/about-aia/cams",
+  "/about-aia/cfe-curriculum",
+  "/about-aia/cia-challenge-curriculum",
   "/corporate-training/cia-curriculum",
   "/corporate-training/cams",
   "/corporate-training/cfe-curriculum",
@@ -70,6 +75,22 @@ const requiredCanonicalCheckRoutes = new Set([
   "/blogs/academy-of-internal-audit-national-recognition",
   "/blogs/what-is-anti-money-laundering",
   "/blogs/how-to-become-a-forensic-accountant",
+  "/blogs/steps-to-become-cfe",
+  "/blogs/cfe-job-opportunities",
+  "/blogs/anti-money-laundering-certificate",
+  "/blogs/aml-career",
+  "/blogs/cia-course-eligibility-criteria",
+  "/blogs/cia-certification-cost-duration-india",
+  "/blogs/certified-fraud-examiner-role",
+  "/blogs/cfe-module-2",
+  "/blogs/steps-of-internal-audit",
+  "/blogs/cfe-module-1",
+  "/blogs/cfe-module-3",
+  "/blogs/aml-compliance",
+  "/blogs/certified-fraud-examiner",
+  "/blogs/cfe-certification-cost",
+  "/blogs/fraud-investigator",
+  "/blogs/kyc-compliance",
 ]);
 
 const dynamicSeoRoutePatterns = [
