@@ -19,15 +19,15 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { name: "Home", href: "/" },
-                { name: "About AIA", href: "/about-aia" },
-                { name: "Blog", href: "/blogs" },
-                { name: "Alumni Network", href: "/alumni-network" },
-                { name: "CFE Free Resources", href: "/cfe-free-resources" },
-                { name: "Corporate Training", href: "/corporate-training" },
-                { name: "Enroll Now", href: "/enroll-now" },
-                { name: "Contact Us", href: "/contact" },
-                { name: "Policies", href: "/policies" },
-                { name: "Terms and Conditions", href: "/terms-and-conditions" },
+                { name: "About AIA", href: "/about-aia/" },
+                { name: "Blog", href: "/blogs/" },
+                { name: "Alumni Network", href: "/alumni-network/" },
+                { name: "CFE Free Resources", href: "/cfe-free-resources/" },
+                { name: "Corporate Training", href: "/corporate-training/" },
+                { name: "Enroll Now", href: "/enroll-now/" },
+                { name: "Contact Us", href: "/contact/" },
+                { name: "Policies", href: "/policies/" },
+                { name: "Terms and Conditions", href: "/terms-and-conditions/" },
               ].map((link, idx) => (
                 <li key={idx} className="group">
                   <Link
@@ -51,13 +51,13 @@ export default function Footer() {
             </h4>
             <ul className="space-y-3">
               {[
-                { name: "CFE Curriculum", href: "/cfe-curriculum" },
-                { name: "CIA Curriculum", href: "/cia-curriculum" },
+                { name: "CFE Curriculum", href: "/cfe-curriculum/" },
+                { name: "CIA Curriculum", href: "/cia-curriculum/" },
                 {
                   name: "CIA Challenge Curriculum",
-                  href: "/cia-challenge-curriculum",
+                  href: "/cia-challenge-curriculum/",
                 },
-                { name: "CAMS", href: "/cams" },
+                { name: "CAMS", href: "/cams/" },
               ].map((course, idx) => (
                 <li key={idx} className="group">
                   <Link

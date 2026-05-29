@@ -115,12 +115,12 @@ const Blog = () => {
   }, [showAllTrending, trendingBlogs.length]);
 
   const handleBlogClick = (slug) => {
-    window.open(`/blogs/${slug}`, "_blank");
+    window.open(`/blogs/${slug}/`, "_blank");
   };
 
   const handleCategoryClick = (category) => {
     window.open(
-      `/blogs/course/${category.toLowerCase().replace(/\s+/g, "-")}`,
+      `/blogs/course/${category.toLowerCase().replace(/\s+/g, "-")}/`,
       "_blank",
       "noopener,noreferrer",
     );
@@ -228,7 +228,7 @@ const Blog = () => {
                       type="button"
                       key={blog.id}
                       onClick={() => {
-                        window.open(`/blogs/${blog.blog_slug}`, "_blank");
+                        window.open(`/blogs/${blog.blog_slug}/`, "_blank");
                         setSearchTerm("");
                         setShowDropdown(false);
                       }}
@@ -429,7 +429,7 @@ const Blog = () => {
             />
             <div className="flex flex-wrap gap-4 justify-center">
               <button
-                onClick={() => navigate("/contact")}
+                onClick={() => navigate("/contact/")}
                 className=" cursor-pointer px-6 py-3 bg-[#F3831C] text-white rounded-lg font-medium hover:bg-[#F3831C]/90 transition-colors"
               >
                 Contact Now

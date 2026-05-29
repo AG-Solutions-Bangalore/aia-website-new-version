@@ -132,7 +132,7 @@ async function generateSitemapXML() {
           .split("/")
           .map((part) => encodeURIComponent(part))
           .join("/");
-        const finalUrl = pathname === "/" ? `${BASE_URL}/` : `${BASE_URL}${encodedPath}`;
+        const finalUrl = pathname === "/" ? `${BASE_URL}/` : `${BASE_URL}${encodedPath}/`;
 
         if (urlSet.has(finalUrl)) return;
         urlSet.add(finalUrl);

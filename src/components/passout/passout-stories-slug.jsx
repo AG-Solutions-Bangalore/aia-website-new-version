@@ -30,6 +30,14 @@ const PassoutStoriesSlug = () => {
     return `https://${url}`;
   };
 
+  const joinImageUrl = (baseUrl, imageName) => {
+    if (!baseUrl || !imageName) return "";
+    return `${baseUrl.replace(/\/+$/, "")}/${String(imageName).replace(
+      /^\/+/,
+      "",
+    )}`;
+  };
+
   if (isLoading) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
@@ -49,13 +57,13 @@ const PassoutStoriesSlug = () => {
   }
 
   const courseRoutes = {
-    CAMS: "/cams",
-    CFE: "/cfe-curriculum",
-    CIA: "/cia-curriculum",
-    "CIA Part 1": "/cia-curriculum",
-    "CIA Part 2": "/cia-curriculum",
-    "CIA Part 3": "/cia-curriculum",
-    CIAC: "/cia-challenge-curriculum",
+    CAMS: "/cams/",
+    CFE: "/cfe-curriculum/",
+    CIA: "/cia-curriculum/",
+    "CIA Part 1": "/cia-curriculum/",
+    "CIA Part 2": "/cia-curriculum/",
+    "CIA Part 3": "/cia-curriculum/",
+    CIAC: "/cia-challenge-curriculum/",
   };
 
   const {
@@ -79,12 +87,20 @@ const PassoutStoriesSlug = () => {
     student_story_box_details4,
   } = storyData.data;
 
-  const companyImageUrl =
+  const companyImageBaseUrl =
     storyData.image_url.find((img) => img.image_for === "Student Company")
-      ?.image_url + company?.student_company_image;
-  const BannerImageUrl = storyData.image_url.find(
+      ?.image_url || "";
+  const companyImageUrl = joinImageUrl(
+    companyImageBaseUrl,
+    company?.student_company_image,
+  );
+  const bannerImageBaseUrl = storyData.image_url.find(
     (img) => img.image_for === "Student",
-  )?.image_url;
+  )?.image_url || "";
+  const bannerImageUrl = joinImageUrl(
+    bannerImageBaseUrl,
+    student_story_banner_image,
+  );
 
   const linkedinUrl = formatLinkedInUrl(student_linkedin_link);
 
@@ -96,7 +112,7 @@ const PassoutStoriesSlug = () => {
             <div className="pt-4 sm:pt-6 lg:pt-8">
               <div className="flex items-start">
                 <Link
-                  to="/alumni-network"
+                  to="/alumni-network/"
                   className="inline-flex items-center gap-2 group transition-colors text-[#0F3652] hover:text-[#0F3652]"
                 >
                   <svg
@@ -121,12 +137,14 @@ const PassoutStoriesSlug = () => {
 
               <div className="flex justify-center">
                 <div className="mt-2 relative overflow-hidden max-w-5xl rounded-xl sm:rounded-2xl lg:rounded-3xl">
-                  <img
-                    src={`${BannerImageUrl}/${student_story_banner_image}`}
-                    alt={student_story_banner_image_alt}
-                    className="w-full h-auto max-h-[250px] sm:max-h-[350px] md:max-h-[400px] lg:max-h-[500px] object-contain mt-2 sm:mt-3 lg:mt-4"
-                    loading="eager"
-                  />
+                  {bannerImageUrl && (
+                    <img
+                      src={bannerImageUrl}
+                      alt={student_story_banner_image_alt || student_name}
+                      className="w-full h-auto max-h-[250px] sm:max-h-[350px] md:max-h-[400px] lg:max-h-[500px] object-contain mt-2 sm:mt-3 lg:mt-4"
+                      loading="eager"
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -242,7 +260,7 @@ const PassoutStoriesSlug = () => {
                           aria-label="View All Success Stories"
                         >
                           <Link
-                            to={courseRoutes[student_course] || "/courses"}
+                            to={courseRoutes[student_course] || "/"}
                             className="block w-full"
                           >
                             <span className="relative z-10 text-white text-xs sm:text-sm">

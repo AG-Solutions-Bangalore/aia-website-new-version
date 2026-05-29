@@ -28,7 +28,7 @@ Guided by industry experts with hands-on experience, our practical training ensu
               />
             </Suspense>
             <Link
-              to="/about-us"
+              to="/about-aia/"
               className="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2 bg-[#F3831C] text-white rounded-none hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors duration-300"
             >
               Know More

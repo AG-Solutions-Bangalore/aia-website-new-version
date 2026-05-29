@@ -32,6 +32,7 @@ export default function Meta() {
   const pageMeta = metaDataConfig[routeKey] || DEFAULT_META;
 
   const baseUrl = SITE_URL;
+  const rootUrl = `${baseUrl}/`;
   const canonicalUrl = buildCanonicalUrl(pathname);
 
   // Organization Schema
@@ -40,7 +41,7 @@ export default function Meta() {
     "@type": "Organization",
     "name": "AIA",
     "alternateName": "Academy of Internal Audit",
-    "url": baseUrl,
+    "url": rootUrl,
     "logo": `${baseUrl}/webapi/public/assets/images/web_images/new_logo.webp`,
     "sameAs": [
       "https://www.facebook.com/@academyofinternalaudit",
@@ -59,12 +60,12 @@ export default function Meta() {
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": baseUrl
+      "item": rootUrl
     }
   ];
 
   pathParts.forEach((part, index) => {
-    const url = `${baseUrl}/${pathParts.slice(0, index + 1).join("/")}`;
+    const url = buildCanonicalUrl(`/${pathParts.slice(0, index + 1).join("/")}`);
     breadcrumbItems.push({
       "@type": "ListItem",
       "position": index + 2,
@@ -83,10 +84,10 @@ export default function Meta() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "AIA",
-    "url": baseUrl,
+    "url": rootUrl,
     "potentialAction": {
       "@type": "SearchAction",
-      "target": `${baseUrl}/blogs?s={search_term_string}`,
+      "target": `${baseUrl}/blogs/?s={search_term_string}`,
       "query-input": "required name=search_term_string"
     }
   };

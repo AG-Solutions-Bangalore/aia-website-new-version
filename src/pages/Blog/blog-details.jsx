@@ -308,12 +308,12 @@ const BlogDetails = () => {
   };
 
   const handleRelatedBlogClick = (slug) => {
-    navigate(`/blogs/${slug}`);
+    navigate(`/blogs/${slug}/`);
     window.scrollTo(0, 0);
   };
 
   const goBack = () => {
-    navigate("/blogs");
+    navigate("/blogs/");
   };
 
   if (loading) {
