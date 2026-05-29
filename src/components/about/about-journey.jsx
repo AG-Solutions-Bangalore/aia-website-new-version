@@ -109,7 +109,7 @@ const AboutJourney = () => {
 
   const activeStep = Math.min(
     Math.floor(progress * processSteps.length),
-    processSteps.length - 1
+    processSteps.length - 1,
   );
   return (
     <>
@@ -124,7 +124,7 @@ const AboutJourney = () => {
                 global learning ecosystem. Each year at AIA marks a deliberate
                 step forward, building structure, earning learner trust, and
                 strengthening outcomes. From guiding the first 3 learners batch
-                of CFE in 2021 to shaping careers across 36+ countries in 2026 &
+                of CFE in 2021 to shaping careers across 40+ Countries in 2026 &
                 still counting, the journey has been defined by consistency,
                 practical learning, and expert-led mentorship.
               </p>

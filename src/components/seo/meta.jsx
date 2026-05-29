@@ -4,20 +4,76 @@ import { buildCanonicalUrl, SITE_URL } from "@/lib/seo";
 import metaDataConfig from "../../meta/meta.json";
 
 const DEFAULT_META = {
-  title: "AIA | Best Training Institute for Certification Courses",
+  title: "Best Training Institute For Top Certification Courses- AIA",
   description:
     "Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses.",
   keywords: "CIA, CFE, CAMS, Internal Audit, Training Institute, Fraud Examiner",
 };
 
+const UPPERCASE_WORDS = {
+  aia: "AIA",
+  cams: "CAMS",
+  cfe: "CFE",
+  cia: "CIA",
+  ciac: "CIAC",
+};
+
+function titleFromSlug(value = "") {
+  return decodeURIComponent(value)
+    .split("-")
+    .filter(Boolean)
+    .map((word) => UPPERCASE_WORDS[word.toLowerCase()] || `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
+    .join(" ");
+}
+
+function cfeModuleTitle(value = "") {
+  const match = value.match(/^cfe-(\d+)$/i);
+  return match ? `CFE Module ${match[1]}` : titleFromSlug(value);
+}
+
+function buildDynamicMeta(pathname) {
+  const parts = pathname.split("/").filter(Boolean);
+
+  if (parts[0] === "blogs" && parts[1] === "course" && parts[2]) {
+    const courseName = titleFromSlug(parts[2]);
+    return {
+      title: `${courseName} Certification Articles | Academy of Internal Audit`,
+      description: `Explore ${courseName} certification articles, exam tips, syllabus guidance, and career insights from Academy of Internal Audit experts.`,
+      keywords: `${courseName} blogs, ${courseName} certification articles, ${courseName} exam tips`,
+    };
+  }
+
+  if (parts[0] === "cfe-free-resource" && parts[1]) {
+    const moduleName = cfeModuleTitle(parts[1]);
+    return {
+      title: `${moduleName} Practice Questions | Free CFE Resources`,
+      description: `Practice ${moduleName} questions with answers and explanations from Academy of Internal Audit to strengthen your CFE exam preparation.`,
+      keywords: `${moduleName} practice questions, CFE free resources, CFE exam preparation`,
+    };
+  }
+
+  if (parts[0] === "passout-stories" && parts[1]) {
+    const storyName = titleFromSlug(parts[1]);
+    return {
+      title: `${storyName} | Student Success Story | AIA`,
+      description: `Read ${storyName}'s AIA success story after clearing CIA, CFE or CAMS exams. Get inspired by their journey, preparation strategy, and results.`,
+      keywords: `${storyName} success story, AIA alumni, CIA CFE CAMS results`,
+    };
+  }
+
+  return null;
+}
+
 function matchRoute(pathname) {
+  const normalizedPathname = pathname.replace(/\/+$/, "") || "/";
+
   return Object.keys(metaDataConfig)
     .sort((a, b) => b.split("/").length - a.split("/").length)
     .find((route) => {
-      if (!route.includes(":")) return route === pathname;
+      if (!route.includes(":")) return route === normalizedPathname;
 
       const routeParts = route.split("/").filter(Boolean);
-      const pathParts = pathname.split("/").filter(Boolean);
+      const pathParts = normalizedPathname.split("/").filter(Boolean);
 
       return (
         routeParts.length === pathParts.length &&
@@ -28,8 +84,9 @@ function matchRoute(pathname) {
 
 export default function Meta() {
   const { pathname } = useLocation();
+  const normalizedPathname = pathname.replace(/\/+$/, "") || "/";
   const routeKey = matchRoute(pathname);
-  const pageMeta = metaDataConfig[routeKey] || DEFAULT_META;
+  const pageMeta = buildDynamicMeta(normalizedPathname) || metaDataConfig[routeKey] || DEFAULT_META;
 
   const baseUrl = SITE_URL;
   const rootUrl = `${baseUrl}/`;
@@ -54,7 +111,7 @@ export default function Meta() {
   };
 
   // Breadcrumb Schema
-  const pathParts = pathname.split("/").filter(Boolean);
+  const pathParts = normalizedPathname.split("/").filter(Boolean);
   const breadcrumbItems = [
     {
       "@type": "ListItem",

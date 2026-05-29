@@ -248,7 +248,7 @@ const EnroolMap = ({ courseCode }) => {
     <>
       <div className="mt-6">
         <SectionHeading
-          title="Trusted by Professionals Across 36+ Countries Around the World"
+          title="Trusted by Professionals Across 40+ Countries Around the World"
           description="AIA’s global learning community brings together working professionals, helping them build practical expertise that delivers real-world impact."
           align="center"
         />

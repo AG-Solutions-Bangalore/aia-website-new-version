@@ -12,10 +12,18 @@ const SITEMAP_PATH = path.resolve(__dirname, '../dist/sitemap.xml');
 const SITE_ORIGIN = 'https://aia.in.net';
 
 const DEFAULT_META = {
-  title: 'AIA | Best Training Institute for Certification Courses',
+  title: 'Best Training Institute For Top Certification Courses- AIA',
   description:
     'Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses.',
   keywords: 'CIA, CFE, CAMS, Internal Audit, Training Institute, Fraud Examiner',
+};
+
+const UPPERCASE_WORDS = {
+  aia: 'AIA',
+  cams: 'CAMS',
+  cfe: 'CFE',
+  cia: 'CIA',
+  ciac: 'CIAC',
 };
 
 function upsertHeadTag(html, selector, tag) {
@@ -73,6 +81,52 @@ function buildCanonicalUrl(routePath) {
   return normalized === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${normalized}/`;
 }
 
+function titleFromSlug(value = '') {
+  return decodeURIComponent(value)
+    .split('-')
+    .filter(Boolean)
+    .map((word) => UPPERCASE_WORDS[word.toLowerCase()] || `${word.charAt(0).toUpperCase()}${word.slice(1)}`)
+    .join(' ');
+}
+
+function cfeModuleTitle(value = '') {
+  const match = value.match(/^cfe-(\d+)$/i);
+  return match ? `CFE Module ${match[1]}` : titleFromSlug(value);
+}
+
+function buildDynamicMeta(routePath) {
+  const parts = normalizeRoutePath(routePath).split('/').filter(Boolean);
+
+  if (parts[0] === 'blogs' && parts[1] === 'course' && parts[2]) {
+    const courseName = titleFromSlug(parts[2]);
+    return {
+      title: `${courseName} Certification Articles | Academy of Internal Audit`,
+      description: `Explore ${courseName} certification articles, exam tips, syllabus guidance, and career insights from Academy of Internal Audit experts.`,
+      keywords: `${courseName} blogs, ${courseName} certification articles, ${courseName} exam tips`,
+    };
+  }
+
+  if (parts[0] === 'cfe-free-resource' && parts[1]) {
+    const moduleName = cfeModuleTitle(parts[1]);
+    return {
+      title: `${moduleName} Practice Questions | Free CFE Resources`,
+      description: `Practice ${moduleName} questions with answers and explanations from Academy of Internal Audit to strengthen your CFE exam preparation.`,
+      keywords: `${moduleName} practice questions, CFE free resources, CFE exam preparation`,
+    };
+  }
+
+  if (parts[0] === 'passout-stories' && parts[1]) {
+    const storyName = titleFromSlug(parts[1]);
+    return {
+      title: `${storyName} | Student Success Story | AIA`,
+      description: `Read ${storyName}'s AIA success story after clearing CIA, CFE or CAMS exams. Get inspired by their journey, preparation strategy, and results.`,
+      keywords: `${storyName} success story, AIA alumni, CIA CFE CAMS results`,
+    };
+  }
+
+  return null;
+}
+
 function matchMetaRoute(routePath, metaData) {
   const normalized = normalizeRoutePath(routePath);
   if (metaData[normalized]) return normalized;
@@ -94,7 +148,7 @@ function matchMetaRoute(routePath, metaData) {
 
 function getMetaForRoute(routePath, metaData) {
   const routeKey = matchMetaRoute(routePath, metaData);
-  return metaData[routeKey] || DEFAULT_META;
+  return buildDynamicMeta(routePath) || metaData[routeKey] || DEFAULT_META;
 }
 
 function applySeoTags(html, routePath, metaData) {
@@ -145,7 +199,7 @@ async function prerenderHomepage() {
 
     const metaData = JSON.parse(fs.readFileSync(META_PATH, 'utf-8'));
     const homeMeta = metaData['/'] || {
-      title: "AIA | Best Training Institute for Certification Courses",
+      title: "Best Training Institute For Top Certification Courses- AIA",
       description: "Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses."
     };
     const canonicalUrl = 'https://aia.in.net/';

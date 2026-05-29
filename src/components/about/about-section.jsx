@@ -50,7 +50,7 @@ const AboutSection = () => {
               <p className="text-justify">
                 Over the last five years, AIA has evolved into a trusted global
                 learning ecosystem, having trained 2,000+ professionals across
-                36+ countries, with a proven 99.6% success rate. More than
+                40+ Countries, with a proven 99.6% success rate. More than
                 outcomes, our success is measured by the careers we help shape -
                 from aspiring professionals entering audit roles with confidence
                 to experienced practitioners advancing into global leadership
@@ -58,16 +58,10 @@ const AboutSection = () => {
                 continuous guidance, AIA enables professionals to thrive
                 throughout their careers.
               </p>
-
             </div>
-
-
           </div>
-
         </div>
-
       </div>
-
     </div>
   );
 };
