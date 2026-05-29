@@ -8,6 +8,15 @@ const __dirname = path.dirname(__filename);
 const DIST_PATH = path.resolve(__dirname, '../dist/index.html');
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const META_PATH = path.resolve(__dirname, '../src/meta/meta.json');
+const SITEMAP_PATH = path.resolve(__dirname, '../dist/sitemap.xml');
+const SITE_ORIGIN = 'https://aia.in.net';
+
+const DEFAULT_META = {
+  title: 'AIA | Best Training Institute for Certification Courses',
+  description:
+    'Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses.',
+  keywords: 'CIA, CFE, CAMS, Internal Audit, Training Institute, Fraud Examiner',
+};
 
 function upsertHeadTag(html, selector, tag) {
   const globalFlags = selector.flags.includes('g')
@@ -24,6 +33,107 @@ function upsertHeadTag(html, selector, tag) {
 
   if (replaced) return nextHtml;
   return html.replace('<head>', `<head>\n    ${tag}`);
+}
+
+function escapeHtml(value = '') {
+  return String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function escapeAttribute(value = '') {
+  return escapeHtml(value).replace(/"/g, '&quot;');
+}
+
+function normalizeRoutePath(value) {
+  if (!value) return '/';
+
+  let pathname = String(value).trim();
+
+  try {
+    const parsed = new URL(pathname, SITE_ORIGIN);
+    pathname = parsed.pathname;
+  } catch {
+    // Plain route paths are already usable.
+  }
+
+  try {
+    pathname = decodeURI(pathname);
+  } catch {
+    // Keep malformed escaped paths unchanged.
+  }
+
+  pathname = pathname.startsWith('/') ? pathname : `/${pathname}`;
+  return pathname.replace(/\/+$/, '') || '/';
+}
+
+function buildCanonicalUrl(routePath) {
+  const normalized = normalizeRoutePath(routePath);
+  return normalized === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${normalized}/`;
+}
+
+function matchMetaRoute(routePath, metaData) {
+  const normalized = normalizeRoutePath(routePath);
+  if (metaData[normalized]) return normalized;
+
+  return Object.keys(metaData)
+    .sort((a, b) => b.split('/').length - a.split('/').length)
+    .find((route) => {
+      if (!route.includes(':')) return route === normalized;
+
+      const routeParts = route.split('/').filter(Boolean);
+      const pathParts = normalized.split('/').filter(Boolean);
+
+      return (
+        routeParts.length === pathParts.length &&
+        routeParts.every((part, index) => part.startsWith(':') || part === pathParts[index])
+      );
+    });
+}
+
+function getMetaForRoute(routePath, metaData) {
+  const routeKey = matchMetaRoute(routePath, metaData);
+  return metaData[routeKey] || DEFAULT_META;
+}
+
+function applySeoTags(html, routePath, metaData) {
+  const pageMeta = getMetaForRoute(routePath, metaData);
+  const pageTitle = pageMeta.title || DEFAULT_META.title;
+  const pageDescription = pageMeta.description || DEFAULT_META.description;
+  const pageKeywords = pageMeta.keywords || DEFAULT_META.keywords;
+  const canonicalUrl = buildCanonicalUrl(routePath);
+
+  html = upsertHeadTag(html, /<title>.*?<\/title>/i, `<title>${escapeHtml(pageTitle)}</title>`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="title")[^>]*>/i, `<meta name="title" content="${escapeAttribute(pageTitle)}">`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="description")[^>]*>/i, `<meta name="description" content="${escapeAttribute(pageDescription)}">`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="keywords")[^>]*>/i, `<meta name="keywords" content="${escapeAttribute(pageKeywords)}">`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="robots")[^>]*>/i, '<meta name="robots" content="index, follow">');
+  html = upsertHeadTag(html, /<link\b(?=[^>]*\brel="canonical")[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:url")[^>]*>/i, `<meta property="og:url" content="${canonicalUrl}">`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:title")[^>]*>/i, `<meta property="og:title" content="${escapeAttribute(pageTitle)}">`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:description")[^>]*>/i, `<meta property="og:description" content="${escapeAttribute(pageDescription)}">`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="twitter:url")[^>]*>/i, `<meta property="twitter:url" content="${canonicalUrl}">`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:title")[^>]*>/i, `<meta name="twitter:title" content="${escapeAttribute(pageTitle)}">`);
+  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:description")[^>]*>/i, `<meta name="twitter:description" content="${escapeAttribute(pageDescription)}">`);
+
+  return html;
+}
+
+function readSitemapRoutes() {
+  if (!fs.existsSync(SITEMAP_PATH)) return [];
+
+  const sitemap = fs.readFileSync(SITEMAP_PATH, 'utf-8');
+  return Array.from(sitemap.matchAll(/<loc>(.*?)<\/loc>/g), ([, loc]) =>
+    normalizeRoutePath(loc),
+  );
+}
+
+function getRouteIndexPath(routePath) {
+  const normalized = normalizeRoutePath(routePath);
+  if (normalized === '/') return DIST_PATH;
+
+  return path.join(DIST_DIR, ...normalized.split('/').filter(Boolean), 'index.html');
 }
 
 async function prerenderHomepage() {
@@ -90,4 +200,27 @@ function materializeCleanUrlHtmlFiles() {
   console.log('✅ Materialized clean URL HTML files for prerendered routes');
 }
 
-prerenderHomepage().then(materializeCleanUrlHtmlFiles);
+function ensureSitemapRouteHtmlFiles() {
+  if (!fs.existsSync(DIST_PATH)) return;
+
+  const metaData = JSON.parse(fs.readFileSync(META_PATH, 'utf-8'));
+  const shellHtml = fs.readFileSync(DIST_PATH, 'utf-8');
+  const routes = readSitemapRoutes();
+  let created = 0;
+
+  routes.forEach((routePath) => {
+    const indexPath = getRouteIndexPath(routePath);
+    if (fs.existsSync(indexPath)) return;
+
+    const html = applySeoTags(shellHtml, routePath, metaData);
+    fs.mkdirSync(path.dirname(indexPath), { recursive: true });
+    fs.writeFileSync(indexPath, html);
+    created += 1;
+  });
+
+  console.log(`Ensured canonical HTML files for sitemap routes (${created} created)`);
+}
+
+prerenderHomepage()
+  .then(ensureSitemapRouteHtmlFiles)
+  .then(materializeCleanUrlHtmlFiles);

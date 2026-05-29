@@ -70,7 +70,7 @@ const CourseBlog = ({ course, title }) => {
             </h2>
             <Button
               className="rounded-xl mt-6 px-5 text-base relative cursor-pointer overflow-hidden group"
-              onClick={() => window.open(`/blogs`, "_blank")}
+              onClick={() => window.open(`/blogs/`, "_blank")}
               variant="ghost"
               aria-label="Explore Siga"
             >
@@ -101,7 +101,7 @@ const CourseBlog = ({ course, title }) => {
                     <motion.div
                       key={blog.id}
                       onClick={() =>
-                        window.open(`/blogs/${blog.blog_slug}`, "_blank")
+                        window.open(`/blogs/${blog.blog_slug}/`, "_blank")
                       }
                       className="group w-64 shrink-0 cursor-pointer"
                       whileHover={{ y: -5 }}
@@ -161,7 +161,7 @@ const CourseBlog = ({ course, title }) => {
                             size="sm"
                             className="mt-3 w-full cursor-pointer bg-[#F3831C] text-white hover:bg-[#F3831C]/90"
                             onClick={() =>
-                              window.open(`/blogs/${blog.blog_slug}`, "_blank")
+                              window.open(`/blogs/${blog.blog_slug}/`, "_blank")
                             }
                           >
                             Read More

@@ -222,7 +222,7 @@ export default function NotFound() {
                     : "translateY(0)",
                   transition: "border-color 0.2s, transform 0.15s",
                 }}
-                onClick={() => navigate("/contact")}
+                onClick={() => navigate("/contact/")}
               >
                 Contact Support
               </a>

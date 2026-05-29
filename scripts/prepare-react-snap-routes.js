@@ -183,7 +183,7 @@ const maxBlogRoutes = toRouteLimit(
   process.env.REACT_SNAP_MAX_BLOG_ROUTES,
   Number.POSITIVE_INFINITY,
 );
-const includePassoutRoutes = process.env.REACT_SNAP_INCLUDE_PASSOUT !== "false";
+const includePassoutRoutes = process.env.REACT_SNAP_INCLUDE_PASSOUT === "true";
 const includeFreeResourceDetails =
   process.env.REACT_SNAP_INCLUDE_FREE_RESOURCE_DETAILS !== "false";
 

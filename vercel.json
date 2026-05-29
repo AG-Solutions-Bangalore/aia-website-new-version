@@ -1,5 +1,5 @@
 {
-  "trailingSlash": false,
+  "trailingSlash": true,
   "cleanUrls": true,
   "redirects": [
     {
@@ -15,62 +15,62 @@
     },
     {
       "source": "/about-us",
-      "destination": "/about-aia",
+      "destination": "/about-aia/",
       "permanent": true
     },
     {
       "source": "/passed-out(/)?",
-      "destination": "/alumni-network",
+      "destination": "/alumni-network/",
       "permanent": true
     },
     {
       "source": "/our-passouts(/)?",
-      "destination": "/alumni-network",
+      "destination": "/alumni-network/",
       "permanent": true
     },
     {
       "source": "/corpo",
-      "destination": "/corporate-training",
+      "destination": "/corporate-training/",
       "permanent": true
     },
     {
       "source": "/enroll",
-      "destination": "/enroll-now",
+      "destination": "/enroll-now/",
       "permanent": true
     },
     {
       "source": "/about-aia/cia-curriculum",
-      "destination": "/cia-curriculum",
+      "destination": "/cia-curriculum/",
       "permanent": true
     },
     {
       "source": "/about-aia/cams",
-      "destination": "/cams",
+      "destination": "/cams/",
       "permanent": true
     },
     {
       "source": "/about-aia/cfe-curriculum",
-      "destination": "/cfe-curriculum",
+      "destination": "/cfe-curriculum/",
       "permanent": true
     },
     {
       "source": "/about-aia/cia-challenge-curriculum",
-      "destination": "/cia-challenge-curriculum",
+      "destination": "/cia-challenge-curriculum/",
       "permanent": true
     },
     {
       "source": "/corporate-training/cia-curriculum",
-      "destination": "/cia-curriculum",
+      "destination": "/cia-curriculum/",
       "permanent": true
     },
     {
       "source": "/corporate-training/cams",
-      "destination": "/cams",
+      "destination": "/cams/",
       "permanent": true
     },
     {
       "source": "/corporate-training/cfe-curriculum",
-      "destination": "/cfe-curriculum",
+      "destination": "/cfe-curriculum/",
       "permanent": true
     }
   ],

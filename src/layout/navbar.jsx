@@ -20,18 +20,18 @@ const SocialMark = ({ children }) => (
 );
 
 const routePrefetch = {
-  "/about-aia": () => import("../pages/About/About"),
-  "/cfe-curriculum": () => import("../pages/Courses/CFECurriculam"),
-  "/cia-curriculum": () => import("../pages/Courses/CIACurriculam"),
-  "/cia-challenge-curriculum": () => import("../pages/Courses/CIAChallenge"),
-  "/cams": () => import("../pages/Courses/CAMS"),
-  "/cfe-free-resources": () =>
+  "/about-aia/": () => import("../pages/About/About"),
+  "/cfe-curriculum/": () => import("../pages/Courses/CFECurriculam"),
+  "/cia-curriculum/": () => import("../pages/Courses/CIACurriculam"),
+  "/cia-challenge-curriculum/": () => import("../pages/Courses/CIAChallenge"),
+  "/cams/": () => import("../pages/Courses/CAMS"),
+  "/cfe-free-resources/": () =>
     import("../pages/free-resources/cfe-free-resources"),
-  "/blogs": () => import("../pages/Blog/Blog"),
-  "/alumni-network": () => import("../pages/OurPassout/OurPassout"),
-  "/corporate-training": () =>
+  "/blogs/": () => import("../pages/Blog/Blog"),
+  "/alumni-network/": () => import("../pages/OurPassout/OurPassout"),
+  "/corporate-training/": () =>
     import("../pages/corporate-training/corporate-training"),
-  "/contact": () => import("../pages/contact/contact"),
+  "/contact/": () => import("../pages/contact/contact"),
 };
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -70,40 +70,40 @@ const Navbar = () => {
     },
     {
       title: "About AIA",
-      link: "/about-aia",
+      link: "/about-aia/",
       submenu: null,
     },
     {
       title: "Courses",
       link: "#",
       submenu: [
-        { name: "CFE Curriculum", link: "/cfe-curriculum" },
-        { name: "CIA Curriculum", link: "/cia-curriculum" },
-        { name: "CIA Challenge", link: "/cia-challenge-curriculum" },
-        { name: "CAMS", link: "/cams" },
+        { name: "CFE Curriculum", link: "/cfe-curriculum/" },
+        { name: "CIA Curriculum", link: "/cia-curriculum/" },
+        { name: "CIA Challenge", link: "/cia-challenge-curriculum/" },
+        { name: "CAMS", link: "/cams/" },
       ],
     },
     {
       title: "Free Resources",
       link: "#",
       submenu: [
-        { name: "CFE", link: "/cfe-free-resources" },
-        { name: "CIA", link: "/cia-free-resources" },
-        { name: "CAMS", link: "/cams-free-resources" },
+        { name: "CFE", link: "/cfe-free-resources/" },
+        { name: "CIA", link: "/cia-free-resources/" },
+        { name: "CAMS", link: "/cams-free-resources/" },
       ],
     },
     {
       title: "Other",
       link: "#",
       submenu: [
-        { name: "Blog", link: "/blogs" },
-        { name: "Alumni Network", link: "/alumni-network" },
-        { name: "Corporate Training", link: "/corporate-training" },
+        { name: "Blog", link: "/blogs/" },
+        { name: "Alumni Network", link: "/alumni-network/" },
+        { name: "Corporate Training", link: "/corporate-training/" },
       ],
     },
     {
       title: "Contact US",
-      link: "/contact",
+      link: "/contact/",
       submenu: null,
     },
   ];
