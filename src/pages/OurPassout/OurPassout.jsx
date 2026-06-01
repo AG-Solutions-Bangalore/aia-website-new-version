@@ -72,13 +72,13 @@ const OurPassout = () => {
       <PassoutBanner />
       <PassoutResult />
 
-      {/* <div ref={refs.directory}>
+      <div ref={refs.directory}>
         {visible.directory && (
           <Suspense fallback={null}>
             <AlumniDirectory />
           </Suspense>
         )}
-      </div> */}
+      </div>
 
       <div ref={refs.success}>
         {visible.success && (

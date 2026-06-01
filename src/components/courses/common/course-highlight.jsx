@@ -11,7 +11,7 @@ const CourseHighLight = ({
     { value: 10000, suffix: "+ Hours", subtitle: "Expert Mentoring Sessions" },
     { value: 99.6, suffix: "%", subtitle: "Success Rate" },
     { value: 2000, suffix: "+ Professionals", subtitle: "Trained & Certified" },
-    { value: 36, suffix: "+ Countries", subtitle: "Served" },
+    { value: 40, suffix: "+ Countries", subtitle: "Served" },
   ],
   logos = partnerLogos,
 }) => {
