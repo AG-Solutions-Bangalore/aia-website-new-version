@@ -54,12 +54,10 @@ const AlumniDirectory = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCourses, setSelectedCourses] = useState([]);
   const [selectedYears, setSelectedYears] = useState([]);
-  const [selectedCountries, setSelectedCountries] = useState([]);
-  const [selectedCompanies, setSelectedCompanies] = useState([]);
-  const [selectedDesignations, setSelectedDesignations] = useState([]);
-  const [companySearch, setCompanySearch] = useState("");
-  const [designationSearch, setDesignationSearch] = useState("");
-  const [countrySearch, setCountrySearch] = useState("");
+  const [selectedCountryReasons, setSelectedCountryReasons] = useState([]);
+  const [selectedIndustryTypes, setSelectedIndustryTypes] = useState([]);
+  const [industryTypeSearch, setIndustryTypeSearch] = useState("");
+  const [countryReasonSearch, setCountryReasonSearch] = useState("");
 
   // --- State for UI Layout ---
   const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'table'
@@ -68,14 +66,12 @@ const AlumniDirectory = () => {
   const [expandedSections, setExpandedSections] = useState({
     course: true,
     year: true,
-    country: true,
-    company: true,
-    designation: false,
+    countryReason: true,
+    industryType: true,
   });
 
-  const [showAllCompanies, setShowAllCompanies] = useState(false);
-  const [showAllDesignations, setShowAllDesignations] = useState(false);
-  const [showAllCountries, setShowAllCountries] = useState(false);
+  const [showAllIndustryTypes, setShowAllIndustryTypes] = useState(false);
+  const [showAllCountryReasons, setShowAllCountryReasons] = useState(false);
 
   const itemsPerPage = 8;
 
@@ -121,7 +117,7 @@ const AlumniDirectory = () => {
   const alumniList = useMemo(() => {
     if (!yearData?.data) return [];
 
-    return yearData.data.map((student, index) => {
+    return yearData.data.map((student) => {
       const year = student.student_passout_year || "2025";
 
       // Normalize course
@@ -238,6 +234,8 @@ const AlumniDirectory = () => {
         companyName,
         companyLogoUrl,
         industry,
+        industryType: student.student_company_industry_type || "",
+        countryReason: student.country_reason || "",
         country,
         state,
         city,
@@ -250,30 +248,26 @@ const AlumniDirectory = () => {
   const counts = useMemo(() => {
     const courseCounts = {};
     const yearCounts = {};
-    const countryCounts = {};
-    const companyCounts = {};
-    const designationCounts = {};
+    const countryReasonCounts = {};
+    const industryTypeCounts = {};
 
     alumniList.forEach((item) => {
       if (item.course)
         courseCounts[item.course] = (courseCounts[item.course] || 0) + 1;
       if (item.year) yearCounts[item.year] = (yearCounts[item.year] || 0) + 1;
-      if (item.country)
-        countryCounts[item.country] = (countryCounts[item.country] || 0) + 1;
-      if (item.companyName)
-        companyCounts[item.companyName] =
-          (companyCounts[item.companyName] || 0) + 1;
-      if (item.designation)
-        designationCounts[item.designation] =
-          (designationCounts[item.designation] || 0) + 1;
+      if (item.countryReason)
+        countryReasonCounts[item.countryReason] =
+          (countryReasonCounts[item.countryReason] || 0) + 1;
+      if (item.industryType)
+        industryTypeCounts[item.industryType] =
+          (industryTypeCounts[item.industryType] || 0) + 1;
     });
 
     return {
       courseCounts,
       yearCounts,
-      countryCounts,
-      companyCounts,
-      designationCounts,
+      countryReasonCounts,
+      industryTypeCounts,
     };
   }, [alumniList]);
 
@@ -283,71 +277,51 @@ const AlumniDirectory = () => {
     return [...new Set(courses)].sort();
   }, [alumniList]);
 
-  const countryOptions = useMemo(() => {
-    const countries = alumniList.map((item) => item.country).filter(Boolean);
-    return [...new Set(countries)].sort();
+  const countryReasonOptions = useMemo(() => {
+    const reasons = alumniList
+      .map((item) => item.countryReason)
+      .filter(Boolean);
+    return [...new Set(reasons)].sort();
   }, [alumniList]);
 
-  const companyOptionsList = useMemo(() => {
-    const companies = alumniList
-      .map((item) => item.companyName)
+  const industryTypeOptions = useMemo(() => {
+    const industryTypes = alumniList
+      .map((item) => item.industryType)
       .filter(Boolean);
-    return [...new Set(companies)].sort();
-  }, [alumniList]);
-
-  const designationOptionsList = useMemo(() => {
-    const designations = alumniList
-      .map((item) => item.designation)
-      .filter(Boolean);
-    return [...new Set(designations)].sort();
+    return [...new Set(industryTypes)].sort();
   }, [alumniList]);
 
   // --- Search Filtering inside dynamic checkboxes ---
-  const filteredCountryOptions = useMemo(() => {
-    if (countrySearch.trim()) {
-      return countryOptions.filter((c) =>
-        c.toLowerCase().includes(countrySearch.toLowerCase()),
+  const filteredCountryReasonOptions = useMemo(() => {
+    if (countryReasonSearch.trim()) {
+      return countryReasonOptions.filter((reason) =>
+        reason.toLowerCase().includes(countryReasonSearch.toLowerCase()),
       );
     }
-    return countryOptions;
-  }, [countryOptions, countrySearch]);
+    return countryReasonOptions;
+  }, [countryReasonOptions, countryReasonSearch]);
 
-  const filteredCompanyOptions = useMemo(() => {
-    if (companySearch.trim()) {
-      return companyOptionsList.filter((c) =>
-        c.toLowerCase().includes(companySearch.toLowerCase()),
+  const filteredIndustryTypeOptions = useMemo(() => {
+    if (industryTypeSearch.trim()) {
+      return industryTypeOptions.filter((type) =>
+        type.toLowerCase().includes(industryTypeSearch.toLowerCase()),
       );
     }
-    return companyOptionsList;
-  }, [companyOptionsList, companySearch]);
-
-  const filteredDesignationOptions = useMemo(() => {
-    if (designationSearch.trim()) {
-      return designationOptionsList.filter((d) =>
-        d.toLowerCase().includes(designationSearch.toLowerCase()),
-      );
-    }
-    return designationOptionsList;
-  }, [designationOptionsList, designationSearch]);
+    return industryTypeOptions;
+  }, [industryTypeOptions, industryTypeSearch]);
 
   // --- Show More / Less Slicing ---
-  const displayedCountries = useMemo(() => {
-    return showAllCountries
-      ? filteredCountryOptions
-      : filteredCountryOptions.slice(0, 5);
-  }, [filteredCountryOptions, showAllCountries]);
+  const displayedCountryReasons = useMemo(() => {
+    return showAllCountryReasons
+      ? filteredCountryReasonOptions
+      : filteredCountryReasonOptions.slice(0, 5);
+  }, [filteredCountryReasonOptions, showAllCountryReasons]);
 
-  const displayedCompanies = useMemo(() => {
-    return showAllCompanies
-      ? filteredCompanyOptions
-      : filteredCompanyOptions.slice(0, 5);
-  }, [filteredCompanyOptions, showAllCompanies]);
-
-  const displayedDesignations = useMemo(() => {
-    return showAllDesignations
-      ? filteredDesignationOptions
-      : filteredDesignationOptions.slice(0, 5);
-  }, [filteredDesignationOptions, showAllDesignations]);
+  const displayedIndustryTypes = useMemo(() => {
+    return showAllIndustryTypes
+      ? filteredIndustryTypeOptions
+      : filteredIndustryTypeOptions.slice(0, 5);
+  }, [filteredIndustryTypeOptions, showAllIndustryTypes]);
 
   // --- Dynamic Filtering Logic ---
   const filteredAlumni = useMemo(() => {
@@ -381,19 +355,14 @@ const AlumniDirectory = () => {
         if (!selectedYears.includes(item.year)) return false;
       }
 
-      // 4. Country Filter
-      if (selectedCountries.length > 0) {
-        if (!selectedCountries.includes(item.country)) return false;
+      // 4. Region Filter
+      if (selectedCountryReasons.length > 0) {
+        if (!selectedCountryReasons.includes(item.countryReason)) return false;
       }
 
-      // 5. Company Filter
-      if (selectedCompanies.length > 0) {
-        if (!selectedCompanies.includes(item.companyName)) return false;
-      }
-
-      // 6. Designation Filter
-      if (selectedDesignations.length > 0) {
-        if (!selectedDesignations.includes(item.designation)) return false;
+      // 5. Industry Type Filter
+      if (selectedIndustryTypes.length > 0) {
+        if (!selectedIndustryTypes.includes(item.industryType)) return false;
       }
 
       return true;
@@ -403,9 +372,8 @@ const AlumniDirectory = () => {
     searchQuery,
     selectedCourses,
     selectedYears,
-    selectedCountries,
-    selectedCompanies,
-    selectedDesignations,
+    selectedCountryReasons,
+    selectedIndustryTypes,
   ]);
 
   // --- Pagination Logic ---
@@ -422,22 +390,9 @@ const AlumniDirectory = () => {
     searchQuery,
     selectedCourses,
     selectedYears,
-    selectedCountries,
-    selectedCompanies,
-    selectedDesignations,
+    selectedCountryReasons,
+    selectedIndustryTypes,
   ]);
-
-  // --- Scroll to Left Filter Panel Section on Quick Tab Click ---
-  const scrollToFilter = (sectionId) => {
-    const el = document.getElementById(sectionId);
-    if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "nearest" });
-      el.classList.add("ring-2", "ring-[#F3831C]", "ring-offset-2");
-      setTimeout(() => {
-        el.classList.remove("ring-2", "ring-[#F3831C]", "ring-offset-2");
-      }, 1500);
-    }
-  };
 
   // --- Toggle Handler Helpers ---
   const handleCourseToggle = (course) => {
@@ -454,25 +409,19 @@ const AlumniDirectory = () => {
     );
   };
 
-  const handleCountryToggle = (country) => {
-    setSelectedCountries((prev) =>
-      prev.includes(country)
-        ? prev.filter((c) => c !== country)
-        : [...prev, country],
+  const handleCountryReasonToggle = (reason) => {
+    setSelectedCountryReasons((prev) =>
+      prev.includes(reason)
+        ? prev.filter((item) => item !== reason)
+        : [...prev, reason],
     );
   };
 
-  const handleCompanyToggle = (company) => {
-    setSelectedCompanies((prev) =>
-      prev.includes(company)
-        ? prev.filter((c) => c !== company)
-        : [...prev, company],
-    );
-  };
-
-  const handleDesignationToggle = (desg) => {
-    setSelectedDesignations((prev) =>
-      prev.includes(desg) ? prev.filter((d) => d !== desg) : [...prev, desg],
+  const handleIndustryTypeToggle = (industryType) => {
+    setSelectedIndustryTypes((prev) =>
+      prev.includes(industryType)
+        ? prev.filter((item) => item !== industryType)
+        : [...prev, industryType],
     );
   };
 
@@ -484,12 +433,10 @@ const AlumniDirectory = () => {
     setSearchQuery("");
     setSelectedCourses([]);
     setSelectedYears([]);
-    setSelectedCountries([]);
-    setSelectedCompanies([]);
-    setSelectedDesignations([]);
-    setCompanySearch("");
-    setDesignationSearch("");
-    setCountrySearch("");
+    setSelectedCountryReasons([]);
+    setSelectedIndustryTypes([]);
+    setIndustryTypeSearch("");
+    setCountryReasonSearch("");
   };
 
   const courseColors = {
@@ -533,7 +480,7 @@ const AlumniDirectory = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
           <div className="bg-white rounded-xl border border-gray-200 p-4">
             <div className="flex flex-wrap gap-2.5">
-              {[...Array(5)].map((_, i) => (
+              {[...Array(4)].map((_, i) => (
                 <Skeleton
                   key={i}
                   className="h-9 w-28 rounded-md bg-slate-100"
@@ -548,7 +495,7 @@ const AlumniDirectory = () => {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             {/* Sidebar Skeleton */}
             <div className="hidden md:block md:col-span-1 space-y-5">
-              {[...Array(5)].map((_, i) => (
+              {[...Array(4)].map((_, i) => (
                 <div
                   key={i}
                   className="bg-white rounded-lg border border-gray-200 p-4 space-y-3.5"
@@ -607,14 +554,11 @@ const AlumniDirectory = () => {
     if (selectedCourses.length > 0) {
       text += ` in ${selectedCourses.join(", ")}`;
     }
-    if (selectedCompanies.length > 0) {
-      text += ` from ${selectedCompanies.join(", ")}`;
+    if (selectedIndustryTypes.length > 0) {
+      text += ` in ${selectedIndustryTypes.join(", ")} industry`;
     }
-    if (selectedCountries.length > 0) {
-      text += `, ${selectedCountries.join(", ")}`;
-    }
-    if (selectedDesignations.length > 0) {
-      text += ` working as ${selectedDesignations.join(", ")}`;
+    if (selectedCountryReasons.length > 0) {
+      text += `, ${selectedCountryReasons.join(", ")}`;
     }
     if (selectedYears.length > 0) {
       text += ` (${selectedYears.join(", ")})`;
@@ -712,7 +656,7 @@ const AlumniDirectory = () => {
         </div>
       </div>
 
-      {/* 2. QUICK FILTER TABS */}
+      {/* 2. QUICK FILTER TABS
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
         <div className="bg-white rounded-xl shadow-xs border border-gray-200 p-4">
           <div className="flex flex-wrap items-center gap-3 justify-between">
@@ -768,7 +712,7 @@ const AlumniDirectory = () => {
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* 3. MAIN DIRECTORY LAYOUT */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -863,223 +807,150 @@ const AlumniDirectory = () => {
               )}
             </div>
 
-            {/* Filter Group: Country */}
+            {/* Filter Group: Region */}
             <div
-              id="filter-section-region"
+              id="filter-section-country-reason"
               className="bg-white rounded-lg border border-gray-200 shadow-xs overflow-hidden"
             >
               <button
-                onClick={() => toggleSection("country")}
+                onClick={() => toggleSection("countryReason")}
                 className="w-full flex items-center justify-between p-4 font-bold text-sm text-slate-800 bg-slate-50/50 hover:bg-slate-50 transition-colors cursor-pointer"
               >
                 <span className="flex items-center gap-2">
                   <Globe className="w-4 h-4 text-indigo-500" />
-                  Country
+                  Region
                 </span>
-                {expandedSections.country ? (
+                {expandedSections.countryReason ? (
                   <ChevronDown className="w-4 h-4 text-gray-400" />
                 ) : (
                   <ChevronRight className="w-4 h-4 text-gray-400" />
                 )}
               </button>
 
-              {expandedSections.country && (
+              {expandedSections.countryReason && (
                 <div className="p-4 border-t border-gray-100 space-y-3">
                   <div className="relative">
                     <Input
                       type="text"
-                      placeholder="Search Country..."
-                      value={countrySearch}
-                      onChange={(e) => setCountrySearch(e.target.value)}
+                      placeholder="Search Region..."
+                      value={countryReasonSearch}
+                      onChange={(e) => setCountryReasonSearch(e.target.value)}
                       className="text-xs bg-gray-50/50 pr-8 h-8 rounded-md"
                     />
                     <Search className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2" />
                   </div>
 
                   <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-                    {displayedCountries.map((c) => (
-                      <div key={c} className="flex items-center gap-3">
+                    {displayedCountryReasons.map((reason) => (
+                      <div key={reason} className="flex items-center gap-3">
                         <Checkbox
-                          id={`country-${c}`}
-                          checked={selectedCountries.includes(c)}
-                          onCheckedChange={() => handleCountryToggle(c)}
+                          id={`country-reason-${reason}`}
+                          checked={selectedCountryReasons.includes(reason)}
+                          onCheckedChange={() => handleCountryReasonToggle(reason)}
                         />
                         <label
-                          htmlFor={`country-${c}`}
+                          htmlFor={`country-reason-${reason}`}
                           className="text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer select-none flex-1 flex justify-between"
                         >
-                          <span>{c}</span>
+                          <span>{reason}</span>
                           <span className="text-xs text-gray-450 font-semibold">
-                            ({counts.countryCounts[c] || 0})
+                            ({counts.countryReasonCounts[reason] || 0})
                           </span>
                         </label>
                       </div>
                     ))}
-                    {displayedCountries.length === 0 && (
+                    {displayedCountryReasons.length === 0 && (
                       <p className="text-xs text-gray-400 italic">
-                        No countries found
+                        No regions found
                       </p>
                     )}
                   </div>
 
-                  {filteredCountryOptions.length > 5 && (
+                  {filteredCountryReasonOptions.length > 5 && (
                     <button
-                      onClick={() => setShowAllCountries(!showAllCountries)}
+                      onClick={() =>
+                        setShowAllCountryReasons(!showAllCountryReasons)
+                      }
                       className="text-xs text-blue-600 hover:underline font-semibold block mt-1 cursor-pointer"
                     >
-                      {showAllCountries
+                      {showAllCountryReasons
                         ? "Show Less"
-                        : `Show More (${filteredCountryOptions.length - 5})`}
+                        : `Show More (${filteredCountryReasonOptions.length - 5})`}
                     </button>
                   )}
                 </div>
               )}
             </div>
 
-            {/* Filter Group: Company */}
+            {/* Filter Group: Industry Type */}
             <div
-              id="filter-section-company"
+              id="filter-section-industry-type"
               className="bg-white rounded-lg border border-gray-200 shadow-xs overflow-hidden"
             >
               <button
-                onClick={() => toggleSection("company")}
+                onClick={() => toggleSection("industryType")}
                 className="w-full flex items-center justify-between p-4 font-bold text-sm text-slate-800 bg-slate-50/50 hover:bg-slate-50 transition-colors cursor-pointer"
               >
                 <span className="flex items-center gap-2">
                   <Building2 className="w-4 h-4 text-teal-500" />
-                  Company
+                  Industry Type
                 </span>
-                {expandedSections.company ? (
+                {expandedSections.industryType ? (
                   <ChevronDown className="w-4 h-4 text-gray-400" />
                 ) : (
                   <ChevronRight className="w-4 h-4 text-gray-400" />
                 )}
               </button>
 
-              {expandedSections.company && (
+              {expandedSections.industryType && (
                 <div className="p-4 border-t border-gray-100 space-y-3">
                   <div className="relative">
                     <Input
                       type="text"
-                      placeholder="Search Company..."
-                      value={companySearch}
-                      onChange={(e) => setCompanySearch(e.target.value)}
+                      placeholder="Search Industry Type..."
+                      value={industryTypeSearch}
+                      onChange={(e) => setIndustryTypeSearch(e.target.value)}
                       className="text-xs bg-gray-50/50 pr-8 h-8 rounded-md"
                     />
                     <Search className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2" />
                   </div>
 
                   <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-                    {displayedCompanies.map((comp) => (
-                      <div key={comp} className="flex items-center gap-3">
+                    {displayedIndustryTypes.map((type) => (
+                      <div key={type} className="flex items-center gap-3">
                         <Checkbox
-                          id={`company-${comp}`}
-                          checked={selectedCompanies.includes(comp)}
-                          onCheckedChange={() => handleCompanyToggle(comp)}
+                          id={`industry-type-${type}`}
+                          checked={selectedIndustryTypes.includes(type)}
+                          onCheckedChange={() => handleIndustryTypeToggle(type)}
                         />
                         <label
-                          htmlFor={`company-${comp}`}
+                          htmlFor={`industry-type-${type}`}
                           className="text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer select-none flex-1 flex justify-between"
                         >
-                          <span>{comp}</span>
+                          <span>{type}</span>
                           <span className="text-xs text-gray-450 font-semibold">
-                            ({counts.companyCounts[comp] || 0})
+                            ({counts.industryTypeCounts[type] || 0})
                           </span>
                         </label>
                       </div>
                     ))}
-                    {displayedCompanies.length === 0 && (
+                    {displayedIndustryTypes.length === 0 && (
                       <p className="text-xs text-gray-400 italic">
-                        No companies found
+                        No industry types found
                       </p>
                     )}
                   </div>
 
-                  {filteredCompanyOptions.length > 5 && (
-                    <button
-                      onClick={() => setShowAllCompanies(!showAllCompanies)}
-                      className="text-xs text-blue-600 hover:underline font-semibold block mt-1 cursor-pointer"
-                    >
-                      {showAllCompanies
-                        ? "Show Less"
-                        : `Show More (${filteredCompanyOptions.length - 5})`}
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
-
-            {/* Filter Group: Designation */}
-            <div
-              id="filter-section-designation"
-              className="bg-white rounded-lg border border-gray-200 shadow-xs overflow-hidden"
-            >
-              <button
-                onClick={() => toggleSection("designation")}
-                className="w-full flex items-center justify-between p-4 font-bold text-sm text-slate-800 bg-slate-50/50 hover:bg-slate-50 transition-colors cursor-pointer"
-              >
-                <span className="flex items-center gap-2">
-                  <Briefcase className="w-4 h-4 text-orange-500" />
-                  Designation
-                </span>
-                {expandedSections.designation ? (
-                  <ChevronDown className="w-4 h-4 text-gray-400" />
-                ) : (
-                  <ChevronRight className="w-4 h-4 text-gray-400" />
-                )}
-              </button>
-
-              {expandedSections.designation && (
-                <div className="p-4 border-t border-gray-100 space-y-3">
-                  <div className="relative">
-                    <Input
-                      type="text"
-                      placeholder="Search Designation..."
-                      value={designationSearch}
-                      onChange={(e) => setDesignationSearch(e.target.value)}
-                      className="text-xs bg-gray-50/50 pr-8 h-8 rounded-md"
-                    />
-                    <Search className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2" />
-                  </div>
-
-                  <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-                    {displayedDesignations.map((desg) => (
-                      <div key={desg} className="flex items-center gap-3">
-                        <Checkbox
-                          id={`designation-${desg}`}
-                          checked={selectedDesignations.includes(desg)}
-                          onCheckedChange={() => handleDesignationToggle(desg)}
-                        />
-                        <label
-                          htmlFor={`designation-${desg}`}
-                          className="text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer select-none flex-1 flex justify-between"
-                        >
-                          <span className="truncate max-w-[120px]" title={desg}>
-                            {desg}
-                          </span>
-                          <span className="text-xs text-gray-450 font-semibold">
-                            ({counts.designationCounts[desg] || 0})
-                          </span>
-                        </label>
-                      </div>
-                    ))}
-                    {displayedDesignations.length === 0 && (
-                      <p className="text-xs text-gray-450 italic">
-                        No designations found
-                      </p>
-                    )}
-                  </div>
-
-                  {filteredDesignationOptions.length > 5 && (
+                  {filteredIndustryTypeOptions.length > 5 && (
                     <button
                       onClick={() =>
-                        setShowAllDesignations(!showAllDesignations)
+                        setShowAllIndustryTypes(!showAllIndustryTypes)
                       }
                       className="text-xs text-blue-600 hover:underline font-semibold block mt-1 cursor-pointer"
                     >
-                      {showAllDesignations
+                      {showAllIndustryTypes
                         ? "Show Less"
-                        : `Show More (${filteredDesignationOptions.length - 5})`}
+                        : `Show More (${filteredIndustryTypeOptions.length - 5})`}
                     </button>
                   )}
                 </div>
@@ -1141,7 +1012,7 @@ const AlumniDirectory = () => {
                   No matches found
                 </h4>
                 <p className="text-sm text-gray-500 max-w-sm mx-auto mb-4">
-                  We couldn't find any professionals matching your search query
+                  We couldn&apos;t find any professionals matching your search query
                   or filters.
                 </p>
                 <Button
@@ -1452,129 +1323,85 @@ const AlumniDirectory = () => {
                   </div>
                 </div>
 
-                {/* Country */}
+                {/* Region */}
                 <div>
                   <h4 className="font-bold text-xs text-[#0F3652] uppercase tracking-wider mb-2.5">
-                    Country
+                    Region
                   </h4>
                   <div className="relative mb-3">
                     <Input
                       type="text"
-                      placeholder="Search Country..."
-                      value={countrySearch}
-                      onChange={(e) => setCountrySearch(e.target.value)}
+                      placeholder="Search Region..."
+                      value={countryReasonSearch}
+                      onChange={(e) => setCountryReasonSearch(e.target.value)}
                       className="text-xs pr-8 h-8 rounded-md"
                     />
                     <Search className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2" />
                   </div>
                   <div className="space-y-2.5 max-h-40 overflow-y-auto pr-1">
-                    {filteredCountryOptions.map((c) => (
-                      <div key={c} className="flex items-center gap-3">
+                    {filteredCountryReasonOptions.map((reason) => (
+                      <div key={reason} className="flex items-center gap-3">
                         <Checkbox
-                          id={`mob-country-${c}`}
-                          checked={selectedCountries.includes(c)}
-                          onCheckedChange={() => handleCountryToggle(c)}
+                          id={`mob-country-reason-${reason}`}
+                          checked={selectedCountryReasons.includes(reason)}
+                          onCheckedChange={() => handleCountryReasonToggle(reason)}
                         />
                         <label
-                          htmlFor={`mob-country-${c}`}
+                          htmlFor={`mob-country-reason-${reason}`}
                           className="text-sm font-medium text-gray-600 flex-1 flex justify-between select-none"
                         >
-                          <span>{c}</span>
+                          <span>{reason}</span>
                           <span className="text-xs text-gray-400">
-                            ({counts.countryCounts[c] || 0})
+                            ({counts.countryReasonCounts[reason] || 0})
                           </span>
                         </label>
                       </div>
                     ))}
-                    {filteredCountryOptions.length === 0 && (
+                    {filteredCountryReasonOptions.length === 0 && (
                       <p className="text-xs text-gray-400 italic">
-                        No countries found
+                        No regions found
                       </p>
                     )}
                   </div>
                 </div>
 
-                {/* Company */}
+                {/* Industry Type */}
                 <div>
                   <h4 className="font-bold text-xs text-[#0F3652] uppercase tracking-wider mb-2.5">
-                    Company
+                    Industry Type
                   </h4>
                   <div className="relative mb-3">
                     <Input
                       type="text"
-                      placeholder="Search Company..."
-                      value={companySearch}
-                      onChange={(e) => setCompanySearch(e.target.value)}
+                      placeholder="Search Industry Type..."
+                      value={industryTypeSearch}
+                      onChange={(e) => setIndustryTypeSearch(e.target.value)}
                       className="text-xs pr-8 h-8 rounded-md"
                     />
                     <Search className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2" />
                   </div>
                   <div className="space-y-2.5 max-h-40 overflow-y-auto pr-1">
-                    {filteredCompanyOptions.map((comp) => (
-                      <div key={comp} className="flex items-center gap-3">
+                    {filteredIndustryTypeOptions.map((type) => (
+                      <div key={type} className="flex items-center gap-3">
                         <Checkbox
-                          id={`mob-company-${comp}`}
-                          checked={selectedCompanies.includes(comp)}
-                          onCheckedChange={() => handleCompanyToggle(comp)}
+                          id={`mob-industry-type-${type}`}
+                          checked={selectedIndustryTypes.includes(type)}
+                          onCheckedChange={() => handleIndustryTypeToggle(type)}
                         />
                         <label
-                          htmlFor={`mob-company-${comp}`}
+                          htmlFor={`mob-industry-type-${type}`}
                           className="text-sm font-medium text-gray-600 flex-1 flex justify-between select-none"
                         >
-                          <span>{comp}</span>
+                          <span>{type}</span>
                           <span className="text-xs text-gray-400">
-                            ({counts.companyCounts[comp] || 0})
+                            ({counts.industryTypeCounts[type] || 0})
                           </span>
                         </label>
                       </div>
                     ))}
-                    {filteredCompanyOptions.length === 0 && (
+                    {filteredIndustryTypeOptions.length === 0 && (
                       <p className="text-xs text-gray-400 italic">
-                        No companies found
-                      </p>
-                    )}
-                  </div>
-                </div>
-
-                {/* Designation */}
-                <div>
-                  <h4 className="font-bold text-xs text-[#0F3652] uppercase tracking-wider mb-2.5">
-                    Designation
-                  </h4>
-                  <div className="relative mb-3">
-                    <Input
-                      type="text"
-                      placeholder="Search Designation..."
-                      value={designationSearch}
-                      onChange={(e) => setDesignationSearch(e.target.value)}
-                      className="text-xs pr-8 h-8 rounded-md"
-                    />
-                    <Search className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2" />
-                  </div>
-                  <div className="space-y-2.5 max-h-40 overflow-y-auto pr-1">
-                    {filteredDesignationOptions.map((desg) => (
-                      <div key={desg} className="flex items-center gap-3">
-                        <Checkbox
-                          id={`mob-designation-${desg}`}
-                          checked={selectedDesignations.includes(desg)}
-                          onCheckedChange={() => handleDesignationToggle(desg)}
-                        />
-                        <label
-                          htmlFor={`mob-designation-${desg}`}
-                          className="text-sm font-medium text-gray-600 flex-1 flex justify-between select-none"
-                        >
-                          <span className="truncate max-w-[120px]" title={desg}>
-                            {desg}
-                          </span>
-                          <span className="text-xs text-gray-450 font-semibold">
-                            ({counts.designationCounts[desg] || 0})
-                          </span>
-                        </label>
-                      </div>
-                    ))}
-                    {filteredDesignationOptions.length === 0 && (
-                      <p className="text-xs text-gray-400 italic">
-                        No designations found
+                        No industry types found
                       </p>
                     )}
                   </div>

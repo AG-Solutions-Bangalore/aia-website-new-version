@@ -5,27 +5,22 @@ import OptimizedImage from "@/components/common/optmized-image";
 const BannerLogos = () => {
   const logos = [
     {
-      src: `${IMAGE_PATH}/IIA.webp`,
-      alt: "IIA - Institute of Internal Auditors Logo",
-      title: "IIA Learning Partner",
-    },
-    {
-      src: `${IMAGE_PATH}/BECKER.webp`,
-      alt: "Becker Logo",
-      title: "Authorized Becker Distributor",
+      src: `${IMAGE_PATH}/mix.webp`,
+      alt: "IIA Learning Partner and Becker Authorized Distributor Logos",
+      title: "IIA Learning Partner and Authorized Becker Distributor",
     },
   ];
 
   return (
-    <section 
-      className="bg-white py-6 md:py-8 border-gray-100" 
+    <section
+      className="bg-white py-6 md:py-8 border-gray-100"
       aria-label="Accreditations and Partners"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 lg:gap-24">
           {logos.map((logo, index) => (
-            <div 
-              key={index} 
+            <div
+              key={index}
               className="flex flex-col items-center gap-2 group transition-transform duration-300 hover:-translate-y-1"
               title={logo.title}
             >
@@ -33,8 +28,8 @@ const BannerLogos = () => {
                 <OptimizedImage
                   src={logo.src}
                   alt={logo.alt}
-                  width={200}
-                  height={80}
+                  width={420}
+                  height={100}
                   className="h-full w-auto object-contain"
                   priority={true}
                 />
