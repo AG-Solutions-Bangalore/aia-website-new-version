@@ -17,6 +17,9 @@ const CourseResult = lazy(
 const CfeJourney = lazy(
   () => import("@/components/courses/cfe-curriculam/cfe-journey"),
 );
+const CfeResidentialBanner = lazy(
+  () => import("@/components/courses/cfe-curriculam/cfe-residential-banner"),
+);
 const CfeWhyAia = lazy(
   () => import("@/components/courses/cfe-curriculam/cfe-why-aia"),
 );
@@ -91,6 +94,10 @@ const CFECurriculam = () => {
 
       <LazySection minHeight={500}>
         <CfeJourney />
+      </LazySection>
+
+      <LazySection minHeight={640}>
+        <CfeResidentialBanner />
       </LazySection>
 
       <LazySection minHeight={450}>

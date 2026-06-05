@@ -10,7 +10,7 @@ const ACCREDITATIONS = [
     alt: "IAO logo",
     link: "https://www.iao.org/India-Haryana/Academy-of-Internal-Audit",
     containerClass: "hover:scale-110",
-    desktopImgClass: "w-24 h-24 object-contain",
+    desktopImgClass: "h-24 w-auto object-contain",
     mobileImgClass: "w-full h-14 sm:h-16 object-contain",
   },
   // {
@@ -19,7 +19,7 @@ const ACCREDITATIONS = [
   //   alt: "IIA logo",
   //   link: "https://iiaindia.co/GlobalCertification/LearningPartner",
   //   containerClass: "scale-150 hover:scale-175",
-  //   desktopImgClass: "w-32 h-32 object-contain",
+  //   desktopImgClass: "h-24 w-auto object-contain",
   //   mobileImgClass: "w-full h-16 sm:h-20 object-contain scale-[1.6] ml-3",
   // },
   {
@@ -27,7 +27,7 @@ const ACCREDITATIONS = [
     src: `${IMAGE_PATH}/BECKER.webp`,
     alt: "Becker logo",
     containerClass: "hover:scale-110",
-    desktopImgClass: "w-32 h-32 object-contain",
+    desktopImgClass: "h-24 w-auto object-contain",
     mobileImgClass: "w-full h-8 sm:h-20 object-contain",
   },
   {
@@ -35,7 +35,7 @@ const ACCREDITATIONS = [
     src: `${IMAGE_PATH}/ISO.webp`,
     alt: "ISO logo",
     containerClass: "hover:scale-110",
-    desktopImgClass: "w-24 h-24 object-contain",
+    desktopImgClass: "h-24 w-auto object-contain",
     mobileImgClass: "w-full h-14 sm:h-16 object-contain",
   },
   {
@@ -43,7 +43,7 @@ const ACCREDITATIONS = [
     src: `${IMAGE_PATH}/ISACA.webp`,
     alt: "ISACA logo",
     containerClass: "hover:scale-110",
-    desktopImgClass: "w-48 h-48 object-contain",
+    desktopImgClass: "h-24 w-auto object-contain",
     mobileImgClass: "w-full h-20 sm:h-24 object-contain",
     mobileWrapperClass: "col-start-2 sm:col-start-auto",
   },
@@ -52,7 +52,7 @@ const ACCREDITATIONS = [
   //   src: `${IMAGE_PATH}/Gleim.webp`,
   //   alt: "Gleim logo",
   //   containerClass: "hover:scale-110",
-  //   desktopImgClass: "w-32 h-32 object-contain",
+  //   desktopImgClass: "h-24 w-auto object-contain",
   //   mobileImgClass: "w-full h-16 sm:h-20 object-contain",
   // },
   {
@@ -61,7 +61,7 @@ const ACCREDITATIONS = [
     alt: "GSAAA logo",
     link: "https://www.gsaaa.org/india/academy-of-internal-audit",
     containerClass: "hover:scale-110",
-    desktopImgClass: "w-24 h-24 object-contain",
+    desktopImgClass: "h-24 w-auto object-contain",
     mobileImgClass: "w-full h-14 sm:h-16 object-contain",
   },
 ];

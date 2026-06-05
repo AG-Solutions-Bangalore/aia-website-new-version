@@ -49,6 +49,38 @@ const LOGOS = {
   BDO: "https://upload.wikimedia.org/wikipedia/commons/a/a8/BDO_Logo.svg",
 };
 
+const REGION_GROUPS = [
+  {
+    value: "india",
+    label: "India",
+    searchPlaceholder: "Search Indian states...",
+    emptyText: "No Indian states found",
+  },
+  {
+    value: "global",
+    label: "Global",
+    searchPlaceholder: "Search countries...",
+    emptyText: "No global locations found",
+  },
+];
+
+const normalizeString = (value) => String(value ?? "").trim();
+
+const normalizeCountryName = (countryName) => {
+  const country = normalizeString(countryName);
+  const lowerCountry = country.toLowerCase();
+
+  if (!country || lowerCountry.startsWith("india")) return "India";
+  if (lowerCountry === "uae" || lowerCountry === "united arab emirates") {
+    return "UAE";
+  }
+
+  return country;
+};
+
+const getRegionKey = (group, name) =>
+  `${group}:${normalizeString(name).toLowerCase()}`;
+
 const AlumniDirectory = () => {
   // --- State for Filters ---
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,6 +90,7 @@ const AlumniDirectory = () => {
   const [selectedIndustryTypes, setSelectedIndustryTypes] = useState([]);
   const [industryTypeSearch, setIndustryTypeSearch] = useState("");
   const [countryReasonSearch, setCountryReasonSearch] = useState("");
+  const [activeRegionGroup, setActiveRegionGroup] = useState("india");
 
   // --- State for UI Layout ---
   const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'table'
@@ -71,9 +104,8 @@ const AlumniDirectory = () => {
   });
 
   const [showAllIndustryTypes, setShowAllIndustryTypes] = useState(false);
-  const [showAllCountryReasons, setShowAllCountryReasons] = useState(false);
 
-  const itemsPerPage = 8;
+  const itemsPerPage = 12;
 
   // --- API Queries ---
   // 1. Fetch Year-based passout students
@@ -181,11 +213,11 @@ const AlumniDirectory = () => {
       }
 
       // Region hierarchy mapping
-      let country = student.country_name || "India";
-      let city = student.country_city || "";
+      let country = normalizeCountryName(student.country_name || "India");
+      let city = normalizeString(student.country_city);
       let state = "";
 
-      if (country.toLowerCase().trim() === "india") {
+      if (country === "India") {
         country = "India";
         const cityLower = city.toLowerCase();
         if (cityLower.includes("hyderabad")) {
@@ -201,10 +233,7 @@ const AlumniDirectory = () => {
         } else {
           state = "Punjab";
         }
-      } else if (
-        country.toLowerCase().trim() === "uae" ||
-        country.toLowerCase().trim() === "united arab emirates"
-      ) {
+      } else if (country === "UAE") {
         country = "UAE";
         state = "UAE";
       } else if (country.toLowerCase().trim() === "singapore") {
@@ -224,6 +253,15 @@ const AlumniDirectory = () => {
         (student.student_company_image
           ? `${companyImageBase}${student.student_company_image}`
           : "");
+      const countryReason = normalizeString(student.country_reason);
+      const regionGroup = country === "India" ? "india" : "global";
+      const regionName =
+        regionGroup === "india"
+          ? countryReason && countryReason.toLowerCase() !== "global"
+            ? countryReason
+            : state || city || "India"
+          : country;
+      const regionKey = getRegionKey(regionGroup, regionName);
 
       return {
         ...student,
@@ -235,10 +273,13 @@ const AlumniDirectory = () => {
         companyLogoUrl,
         industry,
         industryType: student.student_company_industry_type || "",
-        countryReason: student.country_reason || "",
+        countryReason,
         country,
         state,
         city,
+        regionGroup,
+        regionName,
+        regionKey,
         studentImageUrl,
       };
     });
@@ -248,16 +289,19 @@ const AlumniDirectory = () => {
   const counts = useMemo(() => {
     const courseCounts = {};
     const yearCounts = {};
-    const countryReasonCounts = {};
+    const regionCounts = {};
+    const regionGroupCounts = {};
     const industryTypeCounts = {};
 
     alumniList.forEach((item) => {
       if (item.course)
         courseCounts[item.course] = (courseCounts[item.course] || 0) + 1;
       if (item.year) yearCounts[item.year] = (yearCounts[item.year] || 0) + 1;
-      if (item.countryReason)
-        countryReasonCounts[item.countryReason] =
-          (countryReasonCounts[item.countryReason] || 0) + 1;
+      if (item.regionKey)
+        regionCounts[item.regionKey] = (regionCounts[item.regionKey] || 0) + 1;
+      if (item.regionGroup)
+        regionGroupCounts[item.regionGroup] =
+          (regionGroupCounts[item.regionGroup] || 0) + 1;
       if (item.industryType)
         industryTypeCounts[item.industryType] =
           (industryTypeCounts[item.industryType] || 0) + 1;
@@ -266,7 +310,8 @@ const AlumniDirectory = () => {
     return {
       courseCounts,
       yearCounts,
-      countryReasonCounts,
+      regionCounts,
+      regionGroupCounts,
       industryTypeCounts,
     };
   }, [alumniList]);
@@ -277,12 +322,37 @@ const AlumniDirectory = () => {
     return [...new Set(courses)].sort();
   }, [alumniList]);
 
-  const countryReasonOptions = useMemo(() => {
-    const reasons = alumniList
-      .map((item) => item.countryReason)
-      .filter(Boolean);
-    return [...new Set(reasons)].sort();
+  const regionOptions = useMemo(() => {
+    const optionsByKey = new Map();
+
+    alumniList.forEach((item) => {
+      if (!item.regionKey || !item.regionName || !item.regionGroup) return;
+
+      if (!optionsByKey.has(item.regionKey)) {
+        optionsByKey.set(item.regionKey, {
+          key: item.regionKey,
+          label: item.regionName,
+          group: item.regionGroup,
+        });
+      }
+    });
+
+    return [...optionsByKey.values()].sort((a, b) =>
+      a.label.localeCompare(b.label),
+    );
   }, [alumniList]);
+
+  const selectedRegionLabels = useMemo(() => {
+    const labelByKey = new Map(
+      regionOptions.map((option) => [option.key, option.label]),
+    );
+
+    return selectedCountryReasons.map((key) => labelByKey.get(key) || key);
+  }, [regionOptions, selectedCountryReasons]);
+
+  const activeRegionConfig =
+    REGION_GROUPS.find((group) => group.value === activeRegionGroup) ||
+    REGION_GROUPS[0];
 
   const industryTypeOptions = useMemo(() => {
     const industryTypes = alumniList
@@ -293,13 +363,17 @@ const AlumniDirectory = () => {
 
   // --- Search Filtering inside dynamic checkboxes ---
   const filteredCountryReasonOptions = useMemo(() => {
+    const options = regionOptions.filter(
+      (option) => option.group === activeRegionGroup,
+    );
+
     if (countryReasonSearch.trim()) {
-      return countryReasonOptions.filter((reason) =>
-        reason.toLowerCase().includes(countryReasonSearch.toLowerCase()),
+      return options.filter((option) =>
+        option.label.toLowerCase().includes(countryReasonSearch.toLowerCase()),
       );
     }
-    return countryReasonOptions;
-  }, [countryReasonOptions, countryReasonSearch]);
+    return options;
+  }, [regionOptions, activeRegionGroup, countryReasonSearch]);
 
   const filteredIndustryTypeOptions = useMemo(() => {
     if (industryTypeSearch.trim()) {
@@ -311,12 +385,6 @@ const AlumniDirectory = () => {
   }, [industryTypeOptions, industryTypeSearch]);
 
   // --- Show More / Less Slicing ---
-  const displayedCountryReasons = useMemo(() => {
-    return showAllCountryReasons
-      ? filteredCountryReasonOptions
-      : filteredCountryReasonOptions.slice(0, 5);
-  }, [filteredCountryReasonOptions, showAllCountryReasons]);
-
   const displayedIndustryTypes = useMemo(() => {
     return showAllIndustryTypes
       ? filteredIndustryTypeOptions
@@ -357,7 +425,7 @@ const AlumniDirectory = () => {
 
       // 4. Region Filter
       if (selectedCountryReasons.length > 0) {
-        if (!selectedCountryReasons.includes(item.countryReason)) return false;
+        if (!selectedCountryReasons.includes(item.regionKey)) return false;
       }
 
       // 5. Industry Type Filter
@@ -438,6 +506,97 @@ const AlumniDirectory = () => {
     setIndustryTypeSearch("");
     setCountryReasonSearch("");
   };
+
+  const renderRegionFilterContent = (idPrefix, isMobile = false) => (
+    <div className={isMobile ? "space-y-3" : "space-y-3"}>
+      <div className="grid grid-cols-2 gap-2">
+        {REGION_GROUPS.map((group) => {
+          const isActive = activeRegionGroup === group.value;
+
+          return (
+            <button
+              key={group.value}
+              type="button"
+              onClick={() => {
+                setActiveRegionGroup(group.value);
+                setCountryReasonSearch("");
+              }}
+              aria-pressed={isActive}
+              className={`rounded-md border px-2 py-2 text-xs font-bold transition-colors cursor-pointer ${
+                isActive
+                  ? "border-[#0F3652] bg-[#0F3652] text-white"
+                  : "border-gray-200 bg-white text-gray-600 hover:border-[#0F3652]/40 hover:text-[#0F3652]"
+              }`}
+            >
+              <span>{group.label}</span>
+              <span
+                className={`ml-1 font-semibold ${
+                  isActive ? "text-white/80" : "text-gray-400"
+                }`}
+              >
+                ({counts.regionGroupCounts[group.value] || 0})
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="relative">
+        <Input
+          type="text"
+          placeholder={activeRegionConfig.searchPlaceholder}
+          value={countryReasonSearch}
+          onChange={(e) => setCountryReasonSearch(e.target.value)}
+          className={`text-xs pr-8 h-8 rounded-md ${
+            isMobile ? "" : "bg-gray-50/50"
+          }`}
+        />
+        <Search className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2" />
+      </div>
+
+      <div
+        className={`space-y-2.5 overflow-y-auto pr-1 ${
+          isMobile ? "max-h-40" : "max-h-48"
+        }`}
+      >
+        {filteredCountryReasonOptions.map((option) => {
+          const inputId = `${idPrefix}-${option.key.replace(/[^a-z0-9]+/gi, "-")}`;
+
+          return (
+            <div key={option.key} className="flex items-center gap-3">
+              <Checkbox
+                id={inputId}
+                checked={selectedCountryReasons.includes(option.key)}
+                onCheckedChange={() => handleCountryReasonToggle(option.key)}
+              />
+              <label
+                htmlFor={inputId}
+                className={`text-sm font-medium text-gray-600 flex-1 flex justify-between select-none ${
+                  isMobile ? "" : "hover:text-gray-900 cursor-pointer"
+                }`}
+              >
+                <span>{option.label}</span>
+                <span
+                  className={`text-xs ${
+                    isMobile
+                      ? "text-gray-400"
+                      : "text-gray-450 font-semibold"
+                  }`}
+                >
+                  ({counts.regionCounts[option.key] || 0})
+                </span>
+              </label>
+            </div>
+          );
+        })}
+        {filteredCountryReasonOptions.length === 0 && (
+          <p className="text-xs text-gray-400 italic">
+            {activeRegionConfig.emptyText}
+          </p>
+        )}
+      </div>
+    </div>
+  );
 
   const courseColors = {
     CFE: "text-blue-600 bg-blue-50 border-blue-200",
@@ -558,7 +717,7 @@ const AlumniDirectory = () => {
       text += ` in ${selectedIndustryTypes.join(", ")} industry`;
     }
     if (selectedCountryReasons.length > 0) {
-      text += `, ${selectedCountryReasons.join(", ")}`;
+      text += `, ${selectedRegionLabels.join(", ")}`;
     }
     if (selectedYears.length > 0) {
       text += ` (${selectedYears.join(", ")})`;
@@ -569,17 +728,17 @@ const AlumniDirectory = () => {
   return (
     <section className="bg-slate-50/50 py-12 md:py-16">
       {/* 1. HERO SECTION */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#0b283d] via-[#0F3652] to-[#17486b] px-6 py-12 text-center shadow-xl md:px-12 md:py-16">
+      <div className="w-full mb-12">
+        <div className="relative flex min-h-[420px] items-center justify-center overflow-hidden bg-gradient-to-br from-[#0b283d] via-[#0F3652] to-[#17486b] px-4 py-12 text-center shadow-xl sm:px-6 lg:px-8 md:py-16">
           <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center mix-blend-overlay"></div>
 
-          <div className="relative z-10 max-w-3xl mx-auto">
+          <div className="relative z-10 w-full max-w-5xl mx-auto">
             <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
               AIA Global Professional Network
             </h2>
             <p className="mt-4 text-sm sm:text-base md:text-lg text-slate-200">
-              Explore our global community of certified professionals across
-              industries, companies & regions.
+              Explore and connect with our global community of certified
+              professionals across multiple industries.
             </p>
 
             {/* Search Input */}
@@ -604,10 +763,10 @@ const AlumniDirectory = () => {
                 </span>
                 <div className="text-left">
                   <p className="text-xl sm:text-2xl font-bold leading-tight">
-                    5,200+
+                    2000+
                   </p>
                   <p className="text-xs text-slate-300 font-medium">
-                    Professionals
+                    Professionals Certified
                   </p>
                 </div>
               </div>
@@ -618,7 +777,7 @@ const AlumniDirectory = () => {
                 </span>
                 <div className="text-left">
                   <p className="text-xl sm:text-2xl font-bold leading-tight">
-                    18
+                    40+
                   </p>
                   <p className="text-xs text-slate-300 font-medium">
                     Countries
@@ -632,10 +791,10 @@ const AlumniDirectory = () => {
                 </span>
                 <div className="text-left">
                   <p className="text-xl sm:text-2xl font-bold leading-tight">
-                    350+
+                    99.6%
                   </p>
                   <p className="text-xs text-slate-300 font-medium">
-                    Hiring Companies
+                    Success Rate
                   </p>
                 </div>
               </div>
@@ -646,9 +805,11 @@ const AlumniDirectory = () => {
                 </span>
                 <div className="text-left">
                   <p className="text-xl sm:text-2xl font-bold leading-tight">
-                    120+
+                    100%
                   </p>
-                  <p className="text-xs text-slate-300 font-medium">Cities</p>
+                  <p className="text-xs text-slate-300 font-medium">
+                    Satisfied Learners
+                  </p>
                 </div>
               </div>
             </div>
@@ -829,55 +990,7 @@ const AlumniDirectory = () => {
 
               {expandedSections.countryReason && (
                 <div className="p-4 border-t border-gray-100 space-y-3">
-                  <div className="relative">
-                    <Input
-                      type="text"
-                      placeholder="Search Region..."
-                      value={countryReasonSearch}
-                      onChange={(e) => setCountryReasonSearch(e.target.value)}
-                      className="text-xs bg-gray-50/50 pr-8 h-8 rounded-md"
-                    />
-                    <Search className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2" />
-                  </div>
-
-                  <div className="space-y-2.5 max-h-48 overflow-y-auto pr-1">
-                    {displayedCountryReasons.map((reason) => (
-                      <div key={reason} className="flex items-center gap-3">
-                        <Checkbox
-                          id={`country-reason-${reason}`}
-                          checked={selectedCountryReasons.includes(reason)}
-                          onCheckedChange={() => handleCountryReasonToggle(reason)}
-                        />
-                        <label
-                          htmlFor={`country-reason-${reason}`}
-                          className="text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer select-none flex-1 flex justify-between"
-                        >
-                          <span>{reason}</span>
-                          <span className="text-xs text-gray-450 font-semibold">
-                            ({counts.countryReasonCounts[reason] || 0})
-                          </span>
-                        </label>
-                      </div>
-                    ))}
-                    {displayedCountryReasons.length === 0 && (
-                      <p className="text-xs text-gray-400 italic">
-                        No regions found
-                      </p>
-                    )}
-                  </div>
-
-                  {filteredCountryReasonOptions.length > 5 && (
-                    <button
-                      onClick={() =>
-                        setShowAllCountryReasons(!showAllCountryReasons)
-                      }
-                      className="text-xs text-blue-600 hover:underline font-semibold block mt-1 cursor-pointer"
-                    >
-                      {showAllCountryReasons
-                        ? "Show Less"
-                        : `Show More (${filteredCountryReasonOptions.length - 5})`}
-                    </button>
-                  )}
+                  {renderRegionFilterContent("region")}
                 </div>
               )}
             </div>
@@ -1328,41 +1441,7 @@ const AlumniDirectory = () => {
                   <h4 className="font-bold text-xs text-[#0F3652] uppercase tracking-wider mb-2.5">
                     Region
                   </h4>
-                  <div className="relative mb-3">
-                    <Input
-                      type="text"
-                      placeholder="Search Region..."
-                      value={countryReasonSearch}
-                      onChange={(e) => setCountryReasonSearch(e.target.value)}
-                      className="text-xs pr-8 h-8 rounded-md"
-                    />
-                    <Search className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2" />
-                  </div>
-                  <div className="space-y-2.5 max-h-40 overflow-y-auto pr-1">
-                    {filteredCountryReasonOptions.map((reason) => (
-                      <div key={reason} className="flex items-center gap-3">
-                        <Checkbox
-                          id={`mob-country-reason-${reason}`}
-                          checked={selectedCountryReasons.includes(reason)}
-                          onCheckedChange={() => handleCountryReasonToggle(reason)}
-                        />
-                        <label
-                          htmlFor={`mob-country-reason-${reason}`}
-                          className="text-sm font-medium text-gray-600 flex-1 flex justify-between select-none"
-                        >
-                          <span>{reason}</span>
-                          <span className="text-xs text-gray-400">
-                            ({counts.countryReasonCounts[reason] || 0})
-                          </span>
-                        </label>
-                      </div>
-                    ))}
-                    {filteredCountryReasonOptions.length === 0 && (
-                      <p className="text-xs text-gray-400 italic">
-                        No regions found
-                      </p>
-                    )}
-                  </div>
+                  {renderRegionFilterContent("mob-region", true)}
                 </div>
 
                 {/* Industry Type */}

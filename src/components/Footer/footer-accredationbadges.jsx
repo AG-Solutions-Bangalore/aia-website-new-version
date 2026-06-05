@@ -7,11 +7,11 @@ const AccreditationBadges = () => {
       alt: "IAO",
       href: "https://www.iao.org/India-Haryana/Academy-of-Internal-Audit",
     },
-    {
-      img: `${IMAGE_PATH}/IIA.webp`,
-      alt: "IIA",
-      href: "https://iiaindia.co/GlobalCertification/LearningPartner",
-    },
+    // {
+    //   img: `${IMAGE_PATH}/IIA.webp`,
+    //   alt: "IIA",
+    //   href: "https://iiaindia.co/GlobalCertification/LearningPartner",
+    // },
     {
       img: `${IMAGE_PATH}/BECKER.webp`,
       alt: "Becker",
@@ -24,10 +24,10 @@ const AccreditationBadges = () => {
       img: `${IMAGE_PATH}/ISACA.webp`,
       alt: "ISACA",
     },
-    {
-      img: `${IMAGE_PATH}/Gleim.webp`,
-      alt: "Gleim",
-    },
+    // {
+    //   img: `${IMAGE_PATH}/Gleim.webp`,
+    //   alt: "Gleim",
+    // },
     {
       img: `${IMAGE_PATH}/GSAAA.webp`,
       alt: "GSAAA",
@@ -36,7 +36,7 @@ const AccreditationBadges = () => {
   ];
 
   return (
-    <div className="grid grid-cols-4 sm:grid-cols-7 lg:grid-cols-7 gap-2 sm:gap-3 lg:gap-4 items-center w-full max-w-full pb-3 overflow-hidden">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 sm:gap-3 lg:gap-4 items-center w-full max-w-full pb-3 overflow-hidden">
       {badges.map(({ img, alt, href }) => {
         const inner = (
           <div className="bg-white border border-gray-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)] rounded-lg sm:rounded-xl p-1.5 sm:p-2 w-full aspect-square sm:aspect-[4/3] lg:aspect-[5/4] max-w-16 sm:max-w-20 lg:max-w-24 mx-auto flex items-center justify-center transition-all duration-500 group-hover:border-[#fa8017] group-hover:shadow-lg group-hover:shadow-orange-500/10">
@@ -62,7 +62,11 @@ const AccreditationBadges = () => {
             {inner}
           </a>
         ) : (
-          <div key={alt} className="group min-w-0 transition-transform" title={alt}>
+          <div
+            key={alt}
+            className="group min-w-0 transition-transform"
+            title={alt}
+          >
             {inner}
           </div>
         );

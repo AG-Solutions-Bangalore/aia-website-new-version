@@ -10,6 +10,10 @@ const DIST_DIR = path.resolve(__dirname, '../dist');
 const META_PATH = path.resolve(__dirname, '../src/meta/meta.json');
 const SITEMAP_PATH = path.resolve(__dirname, '../dist/sitemap.xml');
 const SITE_ORIGIN = 'https://aia.in.net';
+const BLOG_LIST_API_URL = `${SITE_ORIGIN}/webapi/public/api/getAllBlogs`;
+const BLOG_DETAIL_API_URL = `${SITE_ORIGIN}/webapi/public/api/getBlogbySlug`;
+const API_TIMEOUT_MS = 30000;
+const BLOG_META_FETCH_CONCURRENCY = 6;
 
 const DEFAULT_META = {
   title: 'Best Training Institute For Top Certification Courses- AIA',
@@ -43,6 +47,20 @@ function upsertHeadTag(html, selector, tag) {
   return html.replace('<head>', `<head>\n    ${tag}`);
 }
 
+function headMetaSelector(attributeName, value) {
+  return new RegExp(
+    `<meta\\b(?=[^>]*\\b${attributeName}=["']${value}["'])[^>]*>`,
+    'i',
+  );
+}
+
+function headMetaNameOrPropertySelector(value) {
+  return new RegExp(
+    `<meta\\b(?=[^>]*\\b(?:name|property)=["']${value}["'])[^>]*>`,
+    'i',
+  );
+}
+
 function escapeHtml(value = '') {
   return String(value)
     .replace(/&/g, '&amp;')
@@ -52,6 +70,10 @@ function escapeHtml(value = '') {
 
 function escapeAttribute(value = '') {
   return escapeHtml(value).replace(/"/g, '&quot;');
+}
+
+function normalizeText(value = '') {
+  return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
 function normalizeRoutePath(value) {
@@ -79,6 +101,15 @@ function normalizeRoutePath(value) {
 function buildCanonicalUrl(routePath) {
   const normalized = normalizeRoutePath(routePath);
   return normalized === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${normalized}/`;
+}
+
+function getBlogSlugFromRoute(routePath) {
+  const parts = normalizeRoutePath(routePath).split('/').filter(Boolean);
+  if (parts.length === 2 && parts[0] === 'blogs' && parts[1] !== 'course') {
+    return parts[1];
+  }
+
+  return null;
 }
 
 function titleFromSlug(value = '') {
@@ -146,30 +177,135 @@ function matchMetaRoute(routePath, metaData) {
     });
 }
 
-function getMetaForRoute(routePath, metaData) {
+function getBlogMeta(blog, fallbackSlug = '') {
+  if (!blog) return null;
+
+  const slug = normalizeText(blog.blog_slug || fallbackSlug);
+  const fallbackTitle = slug ? `${titleFromSlug(slug)} | AIA Blog` : DEFAULT_META.title;
+  const fallbackDescription =
+    'Read certification insights, exam preparation guidance, and career advice from Academy of Internal Audit.';
+
+  return {
+    title: normalizeText(blog.blog_meta_title || blog.blog_heading || fallbackTitle),
+    description: normalizeText(
+      blog.blog_meta_description ||
+        blog.blog_short_description ||
+        fallbackDescription,
+    ),
+    keywords: normalizeText(blog.blog_meta_keywords || ''),
+  };
+}
+
+async function fetchJson(url) {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), API_TIMEOUT_MS);
+
+  try {
+    const response = await fetch(url, {
+      headers: { 'Cache-Control': 'no-cache' },
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    return await response.json();
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+async function mapWithConcurrency(items, limit, mapper) {
+  const results = new Array(items.length);
+  let nextIndex = 0;
+
+  async function worker() {
+    while (nextIndex < items.length) {
+      const currentIndex = nextIndex;
+      nextIndex += 1;
+      results[currentIndex] = await mapper(items[currentIndex], currentIndex);
+    }
+  }
+
+  await Promise.all(
+    Array.from(
+      { length: Math.min(limit, items.length) },
+      () => worker(),
+    ),
+  );
+
+  return results;
+}
+
+async function buildBlogMetaMap(routes) {
+  const slugs = Array.from(
+    new Set(routes.map(getBlogSlugFromRoute).filter(Boolean)),
+  );
+  const blogMetaBySlug = new Map();
+
+  if (slugs.length === 0) return blogMetaBySlug;
+
+  try {
+    const blogListResponse = await fetchJson(BLOG_LIST_API_URL);
+    const blogList = Array.isArray(blogListResponse?.data)
+      ? blogListResponse.data
+      : [];
+
+    blogList.forEach((blog) => {
+      if (!blog?.blog_slug) return;
+      blogMetaBySlug.set(blog.blog_slug, getBlogMeta(blog, blog.blog_slug));
+    });
+  } catch (error) {
+    console.warn(`Could not load blog list metadata: ${error.message}`);
+  }
+
+  await mapWithConcurrency(slugs, BLOG_META_FETCH_CONCURRENCY, async (slug) => {
+    try {
+      const blogDetailResponse = await fetchJson(
+        `${BLOG_DETAIL_API_URL}/${encodeURIComponent(slug)}`,
+      );
+      const blogMeta = getBlogMeta(blogDetailResponse?.data, slug);
+      if (blogMeta) blogMetaBySlug.set(slug, blogMeta);
+    } catch (error) {
+      console.warn(`Could not load blog metadata for ${slug}: ${error.message}`);
+    }
+  });
+
+  const loadedRouteMetaCount = slugs.filter((slug) => blogMetaBySlug.has(slug)).length;
+  console.log(`Loaded SEO metadata for ${loadedRouteMetaCount}/${slugs.length} blog routes`);
+  return blogMetaBySlug;
+}
+
+function getMetaForRoute(routePath, metaData, blogMetaBySlug = new Map()) {
+  const blogSlug = getBlogSlugFromRoute(routePath);
+  if (blogSlug && blogMetaBySlug.has(blogSlug)) {
+    return blogMetaBySlug.get(blogSlug);
+  }
+
   const routeKey = matchMetaRoute(routePath, metaData);
   return buildDynamicMeta(routePath) || metaData[routeKey] || DEFAULT_META;
 }
 
-function applySeoTags(html, routePath, metaData) {
-  const pageMeta = getMetaForRoute(routePath, metaData);
+function applySeoTags(html, routePath, metaData, blogMetaBySlug) {
+  const pageMeta = getMetaForRoute(routePath, metaData, blogMetaBySlug);
   const pageTitle = pageMeta.title || DEFAULT_META.title;
   const pageDescription = pageMeta.description || DEFAULT_META.description;
   const pageKeywords = pageMeta.keywords || DEFAULT_META.keywords;
   const canonicalUrl = buildCanonicalUrl(routePath);
 
   html = upsertHeadTag(html, /<title>.*?<\/title>/i, `<title>${escapeHtml(pageTitle)}</title>`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="title")[^>]*>/i, `<meta name="title" content="${escapeAttribute(pageTitle)}">`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="description")[^>]*>/i, `<meta name="description" content="${escapeAttribute(pageDescription)}">`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="keywords")[^>]*>/i, `<meta name="keywords" content="${escapeAttribute(pageKeywords)}">`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="robots")[^>]*>/i, '<meta name="robots" content="index, follow">');
-  html = upsertHeadTag(html, /<link\b(?=[^>]*\brel="canonical")[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:url")[^>]*>/i, `<meta property="og:url" content="${canonicalUrl}">`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:title")[^>]*>/i, `<meta property="og:title" content="${escapeAttribute(pageTitle)}">`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:description")[^>]*>/i, `<meta property="og:description" content="${escapeAttribute(pageDescription)}">`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="twitter:url")[^>]*>/i, `<meta property="twitter:url" content="${canonicalUrl}">`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:title")[^>]*>/i, `<meta name="twitter:title" content="${escapeAttribute(pageTitle)}">`);
-  html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:description")[^>]*>/i, `<meta name="twitter:description" content="${escapeAttribute(pageDescription)}">`);
+  html = upsertHeadTag(html, headMetaSelector('name', 'title'), `<meta name="title" content="${escapeAttribute(pageTitle)}">`);
+  html = upsertHeadTag(html, headMetaSelector('name', 'description'), `<meta name="description" content="${escapeAttribute(pageDescription)}">`);
+  html = upsertHeadTag(html, headMetaSelector('name', 'keywords'), `<meta name="keywords" content="${escapeAttribute(pageKeywords)}">`);
+  html = upsertHeadTag(html, headMetaSelector('name', 'robots'), '<meta name="robots" content="index, follow">');
+  html = upsertHeadTag(html, /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
+  html = upsertHeadTag(html, headMetaSelector('property', 'og:url'), `<meta property="og:url" content="${canonicalUrl}">`);
+  html = upsertHeadTag(html, headMetaSelector('property', 'og:title'), `<meta property="og:title" content="${escapeAttribute(pageTitle)}">`);
+  html = upsertHeadTag(html, headMetaSelector('property', 'og:description'), `<meta property="og:description" content="${escapeAttribute(pageDescription)}">`);
+  html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:url'), `<meta property="twitter:url" content="${canonicalUrl}">`);
+  html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:title'), `<meta name="twitter:title" content="${escapeAttribute(pageTitle)}">`);
+  html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:description'), `<meta name="twitter:description" content="${escapeAttribute(pageDescription)}">`);
 
   return html;
 }
@@ -206,19 +342,19 @@ async function prerenderHomepage() {
 
     let html = fs.readFileSync(DIST_PATH, 'utf-8');
 
-    html = upsertHeadTag(html, /<title>.*?<\/title>/, `<title>${homeMeta.title}</title>`);
+    html = upsertHeadTag(html, /<title>.*?<\/title>/i, `<title>${escapeHtml(homeMeta.title)}</title>`);
     
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="title")[^>]*>/i, `<meta name="title" content="${homeMeta.title}">`);
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="description")[^>]*>/i, `<meta name="description" content="${homeMeta.description}">`);
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:title")[^>]*>/i, `<meta property="og:title" content="${homeMeta.title}">`);
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:description")[^>]*>/i, `<meta property="og:description" content="${homeMeta.description}">`);
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:type")[^>]*>/i, `<meta property="og:type" content="website">`);
-    html = upsertHeadTag(html, /<link\b(?=[^>]*\brel="canonical")[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="og:url")[^>]*>/i, `<meta property="og:url" content="${canonicalUrl}">`);
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bproperty="twitter:url")[^>]*>/i, `<meta property="twitter:url" content="${canonicalUrl}">`);
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:card")[^>]*>/i, `<meta name="twitter:card" content="summary_large_image">`);
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:title")[^>]*>/i, `<meta name="twitter:title" content="${homeMeta.title}">`);
-    html = upsertHeadTag(html, /<meta\b(?=[^>]*\bname="twitter:description")[^>]*>/i, `<meta name="twitter:description" content="${homeMeta.description}">`);
+    html = upsertHeadTag(html, headMetaSelector('name', 'title'), `<meta name="title" content="${escapeAttribute(homeMeta.title)}">`);
+    html = upsertHeadTag(html, headMetaSelector('name', 'description'), `<meta name="description" content="${escapeAttribute(homeMeta.description)}">`);
+    html = upsertHeadTag(html, headMetaSelector('property', 'og:title'), `<meta property="og:title" content="${escapeAttribute(homeMeta.title)}">`);
+    html = upsertHeadTag(html, headMetaSelector('property', 'og:description'), `<meta property="og:description" content="${escapeAttribute(homeMeta.description)}">`);
+    html = upsertHeadTag(html, headMetaSelector('property', 'og:type'), `<meta property="og:type" content="website">`);
+    html = upsertHeadTag(html, /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
+    html = upsertHeadTag(html, headMetaSelector('property', 'og:url'), `<meta property="og:url" content="${canonicalUrl}">`);
+    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:url'), `<meta property="twitter:url" content="${canonicalUrl}">`);
+    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:card'), `<meta name="twitter:card" content="summary_large_image">`);
+    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:title'), `<meta name="twitter:title" content="${escapeAttribute(homeMeta.title)}">`);
+    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:description'), `<meta name="twitter:description" content="${escapeAttribute(homeMeta.description)}">`);
 
     fs.writeFileSync(DIST_PATH, html);
     console.log('✅ Injected Homepage SEO into dist/index.html');
@@ -254,25 +390,35 @@ function materializeCleanUrlHtmlFiles() {
   console.log('✅ Materialized clean URL HTML files for prerendered routes');
 }
 
-function ensureSitemapRouteHtmlFiles() {
+async function ensureSitemapRouteHtmlFiles() {
   if (!fs.existsSync(DIST_PATH)) return;
 
   const metaData = JSON.parse(fs.readFileSync(META_PATH, 'utf-8'));
   const shellHtml = fs.readFileSync(DIST_PATH, 'utf-8');
   const routes = readSitemapRoutes();
+  const blogMetaBySlug = await buildBlogMetaMap(routes);
   let created = 0;
+  let updated = 0;
 
   routes.forEach((routePath) => {
     const indexPath = getRouteIndexPath(routePath);
-    if (fs.existsSync(indexPath)) return;
+    const existed = fs.existsSync(indexPath);
+    const sourceHtml = existed ? fs.readFileSync(indexPath, 'utf-8') : shellHtml;
+    const html = applySeoTags(sourceHtml, routePath, metaData, blogMetaBySlug);
 
-    const html = applySeoTags(shellHtml, routePath, metaData);
     fs.mkdirSync(path.dirname(indexPath), { recursive: true });
-    fs.writeFileSync(indexPath, html);
-    created += 1;
+    if (!existed || html !== sourceHtml) {
+      fs.writeFileSync(indexPath, html);
+    }
+
+    if (existed) {
+      updated += 1;
+    } else {
+      created += 1;
+    }
   });
 
-  console.log(`Ensured canonical HTML files for sitemap routes (${created} created)`);
+  console.log(`Ensured canonical HTML files for sitemap routes (${created} created, ${updated} checked)`);
 }
 
 prerenderHomepage()

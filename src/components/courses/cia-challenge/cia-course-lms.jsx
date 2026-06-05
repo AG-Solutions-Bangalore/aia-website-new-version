@@ -56,8 +56,8 @@ const CiaCourseLms = ({ image }) => {
         description={
           <>
             We provide globally trusted Official <strong>Becker</strong> and{" "}
-            <strong>Gleim</strong> study materials for CIA Challenge prep to
-            ensure exam-focused learning experience for professionals.
+            study materials for CIA Challenge prep to ensure exam-focused
+            learning experience for professionals.
           </>
         }
         courseFeatures={courseFeatures}
