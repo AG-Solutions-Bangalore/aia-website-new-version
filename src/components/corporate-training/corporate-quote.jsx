@@ -6,13 +6,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import axios from "axios";
 import { X } from "lucide-react";
 import { useState } from "react";
@@ -57,8 +50,10 @@ export const CorporateQuoteForm = ({
     }
     if (!formData.userCourse)
       newErrors.userCourse = "Service selection is required";
-    if (!formData.userCourseMode) newErrors.userCourseMode = "Mode is required";
-    if (!formData.userLocation) newErrors.userLocation = "Location is required";
+    if (!formData.userCourseMode.trim())
+      newErrors.userCourseMode = "Mode is required";
+    if (!formData.userLocation.trim())
+      newErrors.userLocation = "Location is required";
     return newErrors;
   };
 
@@ -202,36 +197,30 @@ export const CorporateQuoteForm = ({
 
         {/* Service */}
         <div>
-          <Select
+          <label htmlFor="corporate-user-course" className="sr-only">
+            Service Interested In
+          </label>
+          <select
+            id="corporate-user-course"
+            name="userCourse"
             value={formData.userCourse}
-            onValueChange={(value) => {
-              setFormData((prev) => ({ ...prev, userCourse: value }));
-              setErrors((prev) => ({ ...prev, userCourse: "" }));
-            }}
+            onChange={handleChange}
+            className={`w-full h-[38px] px-3 border rounded-md bg-white text-sm shadow-none focus:outline-none focus:ring-1 focus:ring-[#F3831C] ${
+              errors.userCourse ? "border-red-500" : "border-gray-300"
+            }`}
           >
-            <SelectTrigger
-              aria-label="Service Interested In"
-              className={`w-full h-[38px] px-3 text-sm shadow-none focus:ring-1 focus:ring-[#F3831C] ${
-                errors.userCourse ? "border-red-500" : "border-gray-300"
-              }`}
-            >
-              <SelectValue placeholder="Service Interested In *" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Certified Fraud Examiner">
-                Certified Fraud Examiner
-              </SelectItem>
-              <SelectItem value="Certified Internal Auditor">
-                Certified Internal Auditor
-              </SelectItem>
-              <SelectItem value="Certified Anti Money Laundering Specialist">
-                Certified Anti Money Laundering Specialist
-              </SelectItem>
-              <SelectItem value="CIA Challenge Exam">
-                CIA Challenge Exam
-              </SelectItem>
-            </SelectContent>
-          </Select>
+            <option value="">Service Interested In *</option>
+            <option value="Certified Fraud Examiner">
+              Certified Fraud Examiner
+            </option>
+            <option value="Certified Internal Auditor">
+              Certified Internal Auditor
+            </option>
+            <option value="Certified Anti Money Laundering Specialist">
+              Certified Anti Money Laundering Specialist
+            </option>
+            <option value="CIA Challenge Exam">CIA Challenge Exam</option>
+          </select>
           {errors.userCourse && (
             <p className="text-red-500 text-xs mt-1">{errors.userCourse}</p>
           )}
@@ -239,28 +228,24 @@ export const CorporateQuoteForm = ({
 
         {/* Training Mode */}
         <div>
-          <Select
+          <label htmlFor="corporate-training-mode" className="sr-only">
+            Type of Training
+          </label>
+          <select
+            id="corporate-training-mode"
+            name="userCourseMode"
             value={formData.userCourseMode}
-            onValueChange={(value) => {
-              setFormData((prev) => ({ ...prev, userCourseMode: value }));
-              setErrors((prev) => ({ ...prev, userCourseMode: "" }));
-            }}
+            onChange={handleChange}
+            className={`w-full h-[38px] px-3 border rounded-md bg-white text-sm shadow-none focus:outline-none focus:ring-1 focus:ring-[#F3831C] ${
+              errors.userCourseMode ? "border-red-500" : "border-gray-300"
+            }`}
           >
-            <SelectTrigger
-              aria-label="Type of Training"
-              className={`w-full h-[38px] px-3 text-sm shadow-none focus:ring-1 focus:ring-[#F3831C] ${
-                errors.userCourseMode ? "border-red-500" : "border-gray-300"
-              }`}
-            >
-              <SelectValue placeholder="Type of Training *" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="Onsite">Onsite</SelectItem>
-              <SelectItem value="Virtual">Virtual</SelectItem>
-              <SelectItem value="Hybrid">Hybrid</SelectItem>
-              <SelectItem value="Not Yet Decided">Not Yet Decided</SelectItem>
-            </SelectContent>
-          </Select>
+            <option value="">Type of Training *</option>
+            <option value="Onsite">Onsite</option>
+            <option value="Virtual">Virtual</option>
+            <option value="Hybrid">Hybrid</option>
+            <option value="Not Yet Decided">Not Yet Decided</option>
+          </select>
           {errors.userCourseMode && (
             <p className="text-red-500 text-xs mt-1">{errors.userCourseMode}</p>
           )}

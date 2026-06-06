@@ -55,7 +55,7 @@ const CiaCourseLms = ({ image }) => {
         cardTitle="AIA CIA Challenge Prep Course - What you will get"
         description={
           <>
-            We provide globally trusted Official <strong>Becker</strong> and{" "}
+            We provide globally trusted Official <strong>Becker </strong> 
             study materials for CIA Challenge prep to ensure exam-focused
             learning experience for professionals.
           </>

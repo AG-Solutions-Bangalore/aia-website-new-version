@@ -34,6 +34,20 @@ const CorporateReview = lazy(
   () => import("@/components/corporate-training/corporate-review"),
 );
 
+const lazySectionOrder = [
+  "whyAia",
+  "partner",
+  "quote1",
+  "deliver",
+  "carousel",
+  "connection",
+  "quote2",
+  "highlight",
+  "faq",
+  "trainer",
+  "review",
+];
+
 const CorporateTraining = () => {
   const refs = useRef({
     whyAia: { current: null },
@@ -49,41 +63,62 @@ const CorporateTraining = () => {
     review: { current: null },
   }).current;
 
-  const [visible, setVisible] = useState({});
+  const [visible, setVisible] = useState({ whyAia: true });
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const key = entry.target.dataset.section;
-
-            setVisible((prev) => ({
-              ...prev,
-              [key]: true,
-            }));
-
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      {
-        rootMargin: "150px",
-        threshold: 0.1,
-      },
+    const nextSectionIndex = lazySectionOrder.findIndex(
+      (key) => !visible[key],
     );
 
-    Object.keys(refs).forEach((key) => {
-      const ref = refs[key];
+    if (nextSectionIndex === -1) return undefined;
 
-      if (ref.current) {
-        ref.current.dataset.section = key;
-        observer.observe(ref.current);
+    const nextSection = lazySectionOrder[nextSectionIndex];
+    const target = refs[nextSection].current;
+    const previousSection =
+      nextSectionIndex > 0 ? lazySectionOrder[nextSectionIndex - 1] : null;
+    const previousTarget = previousSection
+      ? refs[previousSection].current
+      : null;
+
+    if (!target) return undefined;
+
+    target.dataset.section = nextSection;
+
+    const revealNextSection = () => {
+      if (
+        previousTarget &&
+        previousTarget.getBoundingClientRect().height <= 1
+      ) {
+        return;
       }
-    });
 
-    return () => observer.disconnect();
-  }, [refs]);
+      const targetTop = target.getBoundingClientRect().top;
+
+      if (targetTop <= window.innerHeight + 150) {
+        setVisible((prev) =>
+          prev[nextSection] ? prev : { ...prev, [nextSection]: true },
+        );
+      }
+    };
+
+    const resizeObserver = previousTarget
+      ? new ResizeObserver(revealNextSection)
+      : null;
+    const animationFrame = window.requestAnimationFrame(revealNextSection);
+    const interval = window.setInterval(revealNextSection, 200);
+
+    resizeObserver?.observe(previousTarget);
+    window.addEventListener("scroll", revealNextSection, { passive: true });
+    window.addEventListener("resize", revealNextSection);
+
+    return () => {
+      window.cancelAnimationFrame(animationFrame);
+      window.clearInterval(interval);
+      resizeObserver?.disconnect();
+      window.removeEventListener("scroll", revealNextSection);
+      window.removeEventListener("resize", revealNextSection);
+    };
+  }, [refs, visible]);
 
   return (
     <>
@@ -92,7 +127,7 @@ const CorporateTraining = () => {
       <CorporateWhy />
       <HomeCourses certificationCourses={CorporatecertificationCourses} />
 
-      <div ref={refs.whyAia}>
+      <div ref={refs.whyAia} className="min-h-px">
         {visible.whyAia && (
           <Suspense fallback={null}>
             <CorporateWhyAia />
@@ -100,7 +135,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.partner}>
+      <div ref={refs.partner} className="min-h-px">
         {visible.partner && (
           <Suspense fallback={null}>
             <AboutPartner />
@@ -108,7 +143,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.quote1}>
+      <div ref={refs.quote1} className="min-h-px">
         {visible.quote1 && (
           <Suspense fallback={null}>
             <CorporateQuoteDialog
@@ -123,7 +158,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.deliver}>
+      <div ref={refs.deliver} className="min-h-px">
         {visible.deliver && (
           <Suspense fallback={null}>
             <CorporateDeliver />
@@ -131,7 +166,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.carousel}>
+      <div ref={refs.carousel} className="min-h-px">
         {visible.carousel && (
           <Suspense fallback={null}>
             <CorporateCarousel />
@@ -139,7 +174,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.connection}>
+      <div ref={refs.connection} className="min-h-px">
         {visible.connection && (
           <Suspense fallback={null}>
             <CamsConnection
@@ -150,7 +185,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.quote2}>
+      <div ref={refs.quote2} className="min-h-px">
         {visible.quote2 && (
           <Suspense fallback={null}>
             <CorporateQuoteDialog
@@ -165,7 +200,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.highlight}>
+      <div ref={refs.highlight} className="min-h-px">
         {visible.highlight && (
           <Suspense fallback={null}>
             <CorporateHighlight />
@@ -173,7 +208,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.faq}>
+      <div ref={refs.faq} className="min-h-px">
         {visible.faq && (
           <Suspense fallback={null}>
             <CorporateFaq />
@@ -181,7 +216,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.trainer}>
+      <div ref={refs.trainer} className="min-h-px">
         {visible.trainer && (
           <Suspense fallback={null}>
             <CorporateTrainer />
@@ -189,7 +224,7 @@ const CorporateTraining = () => {
         )}
       </div>
 
-      <div ref={refs.review}>
+      <div ref={refs.review} className="min-h-px">
         {visible.review && (
           <Suspense fallback={null}>
             <CorporateReview />

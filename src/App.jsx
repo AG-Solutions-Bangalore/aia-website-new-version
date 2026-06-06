@@ -26,6 +26,7 @@ const AboutPage = lazy(() => import("./pages/About/About"));
 const CorporateTraining = lazy(
   () => import("./pages/corporate-training/corporate-training"),
 );
+const AiaTimes = lazy(() => import("./pages/aia-times/aia-times"));
 const Policies = lazy(() => import("./pages/policies/policies"));
 const TermsAndConditions = lazy(
   () => import("./pages/terms-and-conditions/terms-and-conditions"),
@@ -132,6 +133,7 @@ export default function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/passout-stories/:slug" element={<PassoutStoriesSlug />} />
         <Route path="/corporate-training" element={<CorporateTraining />} />
+        <Route path="/aia-times" element={<AiaTimes />} />
         <Route
           path="/corporate-training/cia-curriculum"
           element={<Navigate to="/cia-curriculum/" replace />}

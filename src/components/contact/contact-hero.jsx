@@ -14,6 +14,7 @@ const ContactHero = () => {
     userMobile: "",
     userLocation: "",
     userCourse: "",
+    referred_from: "",
     userMessage: "",
     userType: "contact",
     utm_source: "",
@@ -88,8 +89,12 @@ const ContactHero = () => {
     if (!formData.userEmail.trim()) newErrors.userEmail = "Email is required";
     if (!formData.userMobile.trim())
       newErrors.userMobile = "Mobile number is required";
+    if (!formData.userLocation.trim())
+      newErrors.userLocation = "Location is required";
     if (!formData.userCourse)
       newErrors.userCourse = "Service selection is required";
+    if (!formData.referred_from)
+      newErrors.referred_from = "Please select how you know about AIA";
     return newErrors;
   }, [formData]);
 
@@ -271,7 +276,7 @@ const ContactHero = () => {
 
                   <div className="space-y-2">
                     <label htmlFor="contact-user-location" className="block text-sm font-medium text-gray-700">
-                      Location
+                      Location <span className="text-red-600">*</span>
                     </label>
                     <input
                       id="contact-user-location"
@@ -279,9 +284,15 @@ const ContactHero = () => {
                       name="userLocation"
                       value={formData.userLocation}
                       onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                      className={`w-full px-4 py-2.5 rounded border ${errors.userLocation ? "border-red-500" : "border-gray-300"
+                        } focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500`}
                       placeholder="Location"
                     />
+                    {errors.userLocation && (
+                      <p className="text-red-500 text-xs">
+                        {errors.userLocation}
+                      </p>
+                    )}
                   </div>
                 </div>
 
@@ -322,6 +333,7 @@ const ContactHero = () => {
                   <div className="space-y-2">
                     <label htmlFor="contact-referred-from" className="block text-sm font-medium text-gray-700">
                       How You Know About AIA?{" "}
+                      <span className="text-red-600">*</span>
                     </label>
                     <div>
                       <select

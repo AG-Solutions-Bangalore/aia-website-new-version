@@ -39,6 +39,7 @@ const STATIC_ROUTES = new Set([
   "/enroll-now",
   "/contact",
   "/corporate-training",
+  "/aia-times",
   "/policies",
   "/terms-and-conditions",
 ]);
