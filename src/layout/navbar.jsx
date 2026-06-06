@@ -31,6 +31,7 @@ const routePrefetch = {
   "/alumni-network/": () => import("../pages/OurPassout/OurPassout"),
   "/corporate-training/": () =>
     import("../pages/corporate-training/corporate-training"),
+  // "/aia-times/": () => import("../pages/aia-times/aia-times"),
   "/contact/": () => import("../pages/contact/contact"),
 };
 const Navbar = () => {
@@ -97,6 +98,7 @@ const Navbar = () => {
       link: "#",
       submenu: [
         { name: "Blog", link: "/blogs/" },
+        { name: "AIA Times", link: "/aia-times/" },
         { name: "Alumni Network", link: "/alumni-network/" },
         { name: "Corporate Training", link: "/corporate-training/" },
       ],
@@ -169,8 +171,9 @@ const Navbar = () => {
                   href={link.href}
                   className={`
             flex min-h-10 items-center gap-2 relative ${link.color}
-            ${link.underline
-                      ? `
+            ${
+              link.underline
+                ? `
               transition-colors duration-300
               after:content-['']
               after:absolute
@@ -187,10 +190,13 @@ const Navbar = () => {
               hover:after:scale-x-100
               hover:after:origin-left
             `
-                      : ""
-                    }
+                : ""
+            }
           `}
-                  aria-label={link.ariaLabel || (link.text ? `Contact via ${link.text}` : undefined)}
+                  aria-label={
+                    link.ariaLabel ||
+                    (link.text ? `Contact via ${link.text}` : undefined)
+                  }
                 >
                   {link.icon}
                   {link.text && <span>{link.text}</span>}
@@ -275,10 +281,11 @@ const Navbar = () => {
 
                   {item.submenu && (
                     <ul
-                      className={`absolute top-full left-0 mt-2 px-6 bg-white rounded-lg shadow-xl min-w-[220px] py-2 transition-all duration-300 ${activeDropdown === index
-                        ? "opacity-100 visible translate-y-0"
-                        : "opacity-0 invisible translate-y-2"
-                        }`}
+                      className={`absolute top-full left-0 mt-2 px-6 bg-white rounded-lg shadow-xl min-w-[220px] py-2 transition-all duration-300 ${
+                        activeDropdown === index
+                          ? "opacity-100 visible translate-y-0"
+                          : "opacity-0 invisible translate-y-2"
+                      }`}
                     >
                       {item.submenu.map((subItem, subIndex) => (
                         <li key={subIndex}>
@@ -361,8 +368,9 @@ const Navbar = () => {
           </div>
 
           <div
-            className={`lg:hidden fixed top-0 left-0 w-80 h-screen bg-white shadow-2xl transition-transform duration-300 overflow-y-auto z-50 ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-              }`}
+            className={`lg:hidden fixed top-0 left-0 w-80 h-screen bg-white shadow-2xl transition-transform duration-300 overflow-y-auto z-50 ${
+              isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+            }`}
           >
             <div className="p-6">
               <button
@@ -397,8 +405,9 @@ const Navbar = () => {
                           {item.title}
                           <ChevronDown
                             size={16}
-                            className={`transition-transform ${activeDropdown === index ? "rotate-180" : ""
-                              }`}
+                            className={`transition-transform ${
+                              activeDropdown === index ? "rotate-180" : ""
+                            }`}
                           />
                         </button>
 
