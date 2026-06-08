@@ -212,9 +212,8 @@ const CAMSFlashCard = () => {
       <Drawer
         open={openDrawer !== null}
         onOpenChange={handleDrawerChange}
-        snapPoints={[0.7]}
       >
-        <DrawerContent className="flex max-h-[95vh] flex-col">
+        <DrawerContent className="flex max-h-[75vh] flex-col">
           <DrawerHeader
             className="text-white flex flex-row justify-between items-center"
             style={{ backgroundColor: "#0F3652" }}
