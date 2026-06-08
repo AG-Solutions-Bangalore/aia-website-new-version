@@ -19,7 +19,7 @@ export default function WhatsNewSection() {
           </div>
 
           <div className="min-w-0">
-            <div className="overflow-x-auto pb-6 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div className="overflow-x-auto pb-6">
               <div className="flex w-max min-w-full gap-5">
                 {whatsNewItems.map((item, index) => (
                   <article

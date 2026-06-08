@@ -19,7 +19,7 @@ import { cn } from "@/lib/utils";
 import { BookOpen, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
-import ArticleContentBlock, { ArticleInlineContent } from "./article-content-block";
+import ArticleContentBlock from "./article-content-block";
 import FlipbookSection from "./flipbook-section";
 import {
   ASSET_BASE,
@@ -37,6 +37,19 @@ function getMagazineDownloadData(issue) {
     userCourse: getMagazineDownloadCourse(issue),
     userMessage: `AIA Times magazine PDF request: ${issue.title} (${issue.issueDate})`,
   };
+}
+
+function getCardDescription(article) {
+  const description = (article.description || "").trim();
+  const lead = article.subheading?.trim();
+
+  if (!description || !lead) {
+    return description;
+  }
+
+  return description.toLowerCase().startsWith(lead.toLowerCase())
+    ? description.slice(lead.length).trim()
+    : description;
 }
 
 export default function IssueShelf({ selectedIssue, onSelectIssue }) {
@@ -70,90 +83,128 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
 
   const issueDetails =
     selectedIssue.isAvailable && articles.length > 0 ? (
-      <div className="mt-10 flex w-full flex-col gap-y-1 bg-white">
+      <div className="mt-16 flex w-full flex-col divide-y divide-[#EAEAEA] bg-white">
         {articles.map((item, index) => {
           const imageFirst = index % 2 === 0;
-          const imageWidth = item.imageWidth || "390px";
+          const cardDescription = getCardDescription(item);
+          const prefixText = item.bodyLabel || (!item.bodyLabel && item.subheading ? item.subheading : "");
+          let cleanPrefixText = prefixText.trim();
+          if (cleanPrefixText.endsWith(":")) {
+            cleanPrefixText = cleanPrefixText.slice(0, -1).trim();
+          }
+          const isLongPrefix = cleanPrefixText.length > 30;
+
           const imageBlock = (
-            <div className="flex h-[220px] items-center justify-center rounded-xl bg-[#efefef] p-3 sm:h-[240px] lg:h-[242px]">
-              <div
-                className="flex h-full w-full items-center justify-center overflow-hidden rounded-xl"
-                style={{ maxWidth: imageWidth }}
-              >
+            <div className="w-full aspect-[1.6] flex items-center justify-center rounded-[20px] bg-[#F2F2F2] p-4">
+              <div className="h-full w-full overflow-hidden rounded-[14px]">
                 <OptimizedImage
                   src={`${ASSET_BASE}/${item.image}`}
                   alt={item.heading}
-                  width={720}
+                  width={520}
                   height={430}
-                  className="h-full w-full rounded-lg object-contain"
+                  className="h-full w-full object-contain"
                 />
               </div>
             </div>
           );
+
           const textBlock = (
-            <div className="flex min-w-0 flex-col text-left text-[15px] font-medium leading-[1.35] text-black">
-              <p className="[text-align:justify]">
-                {item.bodyLabel && (
-                  <strong className="font-extrabold italic text-black">
-                    {item.bodyLabel}{" "}
-                  </strong>
-                )}
-                <ArticleInlineContent
-                  content={item.descriptionContent || item.description}
-                  keyPrefix={`${item.title}-description`}
-                />
-              </p>
+            <div className="flex min-w-0 flex-col text-left">
+              {isLongPrefix ? (
+                <>
+                  <p className="text-[15px] md:text-[16px] font-extrabold italic leading-relaxed text-black mb-3">
+                    {cleanPrefixText}
+                  </p>
+                  <p className="text-[15px] md:text-[16px] font-medium leading-relaxed text-[#333333] [text-align:justify]">
+                    {cardDescription}
+                  </p>
+                </>
+              ) : (
+                <p className="text-[15px] md:text-[16px] font-medium leading-relaxed text-[#333333] [text-align:justify]">
+                  {cleanPrefixText && (
+                    <span className="font-extrabold italic text-black mr-2">
+                      {cleanPrefixText}
+                    </span>
+                  )}
+                  {cardDescription}
+                </p>
+              )}
               <button
                 type="button"
                 onClick={() => setOpenArticleId(item.title)}
                 className={cn(
-                  "mt-3 inline-flex cursor-pointer w-fit text-sm font-extrabold italic text-[#f36f21] transition-colors hover:text-[#0F3652]",
-                  !imageFirst && "self-end",
+                  "mt-5 inline-flex w-fit cursor-pointer text-sm font-extrabold italic text-[#f36f21] transition-colors hover:text-[#0F3652]",
+                  imageFirst ? "self-start" : "self-end",
                 )}
               >
                 Read More
               </button>
             </div>
           );
+
           const headingBlock = (
-            <div className={cn("mb-4", imageFirst ? "text-left" : "text-right")}>
-              <p className="text-sm font-extrabold italic text-[#f36f21]">
+            <div className={cn("flex flex-col text-black", imageFirst ? "text-left" : "text-right")}>
+              <p className="text-[13px] sm:text-sm font-extrabold italic tracking-wider text-[#f36f21]">
                 {item.label} {item.title}
               </p>
-              <h3 className="mt-3 text-2xl font-extrabold leading-tight text-black">
+              <h3 className="mt-2.5 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-black">
                 {item.heading}
               </h3>
-              <p className="mt-1 text-base font-extrabold leading-snug text-black md:text-lg">
-                {item.subheading}
-              </p>
+              {item.subheading && (
+                <p className="mt-1 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-black">
+                  {item.subheading}
+                </p>
+              )}
             </div>
           );
 
           return (
             <article
               key={item.title}
-              className="bg-[#F7F7F7] px-6 py-6 md:px-8"
+              className="bg-white py-10 md:py-14"
             >
-              <div className="grid gap-x-7 lg:grid-cols-2">
+              <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div
-                  className={cn(imageFirst ? "lg:col-start-1" : "lg:col-start-2")}
+                  className="grid grid-cols-1 lg:grid-cols-12 gap-y-6 lg:gap-y-4 lg:gap-x-16 items-start"
                 >
-                  {headingBlock}
-                </div>
-              </div>
+                  {/* Heading */}
+                  <div
+                    className={cn(
+                      "order-1 w-full mx-auto",
+                      imageFirst
+                        ? "lg:col-start-1 lg:col-end-6 lg:row-start-1 lg:ml-0 lg:mr-auto"
+                        : "lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mr-0 lg:ml-auto",
+                    )}
+                    style={{ maxWidth: item.imageWidth || "470px" }}
+                  >
+                    {headingBlock}
+                  </div>
 
-              <div className="grid gap-7 lg:grid-cols-2 lg:items-start">
-                {imageFirst ? (
-                  <>
+                  {/* Image */}
+                  <div
+                    className={cn(
+                      "order-2 w-full mx-auto",
+                      imageFirst
+                        ? "lg:col-start-1 lg:col-end-6 lg:row-start-2 lg:ml-0 lg:mr-auto"
+                        : "lg:col-start-8 lg:col-end-13 lg:row-start-2 lg:mr-0 lg:ml-auto",
+                    )}
+                    style={{ maxWidth: item.imageWidth || "470px" }}
+                  >
                     {imageBlock}
+                  </div>
+
+                  {/* Text */}
+                  <div
+                    className={cn(
+                      "order-3",
+                      imageFirst
+                        ? "lg:col-start-6 lg:col-end-13 lg:row-start-2"
+                        : "lg:col-start-1 lg:col-end-8 lg:row-start-2",
+                    )}
+                  >
                     {textBlock}
-                  </>
-                ) : (
-                  <>
-                    {textBlock}
-                    {imageBlock}
-                  </>
-                )}
+                  </div>
+                </div>
               </div>
             </article>
           );
@@ -338,7 +389,6 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
               ))}
             </div>
           </aside>
-
         </div>
       </div>
 
@@ -356,7 +406,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
               <DrawerTitle className="text-xl font-bold text-white sm:text-2xl">
                 {openArticle?.heading}
               </DrawerTitle>
-              <DrawerDescription className="mt-2 text-sm font-semibold text-[#F3831C]">
+              <DrawerDescription className="mt-1.5 text-xs sm:text-sm font-semibold text-[#F3831C]">
                 {openArticle?.label} {openArticle?.title}
                 {openArticle?.subheading ? ` - ${openArticle.subheading}` : ""}
               </DrawerDescription>
@@ -374,7 +424,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
           <div className="flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-7">
             {openArticle && (
               <div className="mx-auto flex max-w-4xl flex-col gap-6 pb-28">
-                <div className="flex min-h-[260px] items-center justify-center rounded-xl bg-slate-100 p-3">
+                <div className="flex min-h-[200px] sm:min-h-[260px] items-center justify-center rounded-xl bg-slate-100 p-3">
                   <div
                     className="flex w-full items-center justify-center overflow-hidden rounded-xl"
                     style={{ maxWidth: openArticle.imageWidth || "520px" }}
@@ -389,10 +439,10 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                   </div>
                 </div>
                 <div>
-                  <p className="text-xl font-extrabold italic leading-snug text-black">
+                  <p className="text-lg sm:text-xl font-extrabold italic leading-snug text-black">
                     {openArticle.subheading}
                   </p>
-                  <div className="mt-4 space-y-4 text-base leading-8 text-slate-800">
+                  <div className="mt-4 space-y-4 text-[15px] sm:text-base leading-7 sm:leading-8 text-slate-800">
                     {openArticle.fullContent.map((block, index) => (
                       <ArticleContentBlock
                         key={`${openArticle.title}-${index}`}
