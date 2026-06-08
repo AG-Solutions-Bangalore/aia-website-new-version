@@ -21,6 +21,11 @@ export default function PdfJoinDialog({
   buttonlabel,
   triggerClassName,
   buttonClassName,
+  extraFormData = {},
+  hideLocation = false,
+  fieldOrder = "emailFirst",
+  submitLabel = "Submit Now",
+  successMessage,
 }) {
   const [formData, setFormData] = useState({
     userName: "",
@@ -116,16 +121,21 @@ export default function PdfJoinDialog({
       return;
     }
     setLoader(true);
-    console.log(formData);
     try {
+      const payload = {
+        ...formData,
+        ...extraFormData,
+      };
       const res = await axios.post(
         `${BASE_URL}/api/create-webenquiry`,
-        formData,
+        payload,
         { headers: { "Content-Type": "application/json" } },
       );
       if (res.data.code == "200") {
         toast.success(
-          res.data.msg || "Broucher sent to Your gmail successfully!",
+          successMessage ||
+          res.data.msg ||
+          "Brochure sent to your email successfully!",
         );
         setFormData({
           userName: "",
@@ -158,6 +168,55 @@ export default function PdfJoinDialog({
   const triggerButtonClassName =
     buttonClassName ||
     "bg-[#F3831C] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#F3831C] transition-all cursor-pointer";
+  const showPhoneBeforeEmail = fieldOrder === "phoneFirst";
+
+  const nameField = (
+    <div>
+      <Label className="text-[#0F3652]">Name *</Label>
+      <Input
+        name="userName"
+        value={formData.userName}
+        onChange={handleChange}
+        className={inputStyle}
+      />
+      {errors.userName && (
+        <p className="text-red-500 text-xs mt-1">{errors.userName}</p>
+      )}
+    </div>
+  );
+
+  const emailField = (
+    <div>
+      <Label className="text-[#0F3652]">Email Address *</Label>
+      <Input
+        name="userEmail"
+        type="email"
+        value={formData.userEmail}
+        onChange={handleChange}
+        className={inputStyle}
+      />
+      {errors.userEmail && (
+        <p className="text-red-500 text-xs mt-1">{errors.userEmail}</p>
+      )}
+    </div>
+  );
+
+  const phoneField = (
+    <div>
+      <Label className="text-[#0F3652]">Phone Number *</Label>
+      <Input
+        name="userMobile"
+        type="tel"
+        value={formData.userMobile}
+        onChange={handleChange}
+        className={inputStyle}
+        maxLength={10}
+      />
+      {errors.userMobile && (
+        <p className="text-red-500 text-xs mt-1">{errors.userMobile}</p>
+      )}
+    </div>
+  );
 
   return (
     <Dialog>
@@ -199,62 +258,25 @@ export default function PdfJoinDialog({
         <div className="flex-1 overflow-y-auto overscroll-contain px-4 py-4 sm:px-6 sm:py-5">
           <form onSubmit={handleSubmit} className="space-y-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <Label className="text-[#0F3652]">Full Name *</Label>
-                <Input
-                  name="userName"
-                  value={formData.userName}
-                  onChange={handleChange}
-                  className={inputStyle}
-                />
-                {errors.userName && (
-                  <p className="text-red-500 text-xs mt-1">{errors.userName}</p>
-                )}
-              </div>
-
-              <div>
-                <Label className="text-[#0F3652]">Mobile Number *</Label>
-                <Input
-                  name="userMobile"
-                  type="tel"
-                  value={formData.userMobile}
-                  onChange={handleChange}
-                  className={inputStyle}
-                  maxLength={10}
-                />
-                {errors.userMobile && (
-                  <p className="text-red-500 text-xs mt-1">
-                    {errors.userMobile}
-                  </p>
-                )}
-              </div>
+              {nameField}
+              {showPhoneBeforeEmail ? phoneField : emailField}
             </div>
 
-            <div>
-              <Label className="text-[#0F3652]">Email Address *</Label>
-              <Input
-                name="userEmail"
-                type="email"
-                value={formData.userEmail}
-                onChange={handleChange}
-                className={inputStyle}
-              />
-              {errors.userEmail && (
-                <p className="text-red-500 text-xs mt-1">{errors.userEmail}</p>
-              )}
-            </div>
+            {showPhoneBeforeEmail ? emailField : phoneField}
 
-            <div className="grid grid-cols-1 sm:grid-cols-1 gap-3">
-              <div>
-                <Label className="text-[#0F3652]">Location</Label>
-                <Input
-                  name="userLocation"
-                  value={formData.userLocation}
-                  onChange={handleChange}
-                  className={inputStyle}
-                />
+            {!hideLocation && (
+              <div className="grid grid-cols-1 sm:grid-cols-1 gap-3">
+                <div>
+                  <Label className="text-[#0F3652]">Location</Label>
+                  <Input
+                    name="userLocation"
+                    value={formData.userLocation}
+                    onChange={handleChange}
+                    className={inputStyle}
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Submit is inside the scroll area — always reachable by scrolling */}
             <Button
@@ -262,7 +284,7 @@ export default function PdfJoinDialog({
               disabled={loader}
               className="w-full bg-[#0F3652] hover:bg-[#0c2c42] text-white py-2.5 rounded-none cursor-pointer mt-1"
             >
-              {loader ? "Submitting..." : "Submit Now"}
+              {loader ? "Submitting..." : submitLabel}
             </Button>
           </form>
         </div>
