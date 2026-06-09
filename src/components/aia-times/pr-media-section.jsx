@@ -18,14 +18,27 @@ export default function PrMediaSection() {
   const prItems = useMemo(() => {
     const imageBase = getImageBase(data, "Pr");
     const noImage = getImageBase(data, "No Image") || SERVER_NO_IMAGE;
-    return (data?.data || []).map((item) => ({
-      id: item.id,
-      title: item.pr_heading,
-      buttonTitle: item.button_title,
-      link: item.pr_link,
-      image: item.pr_l_image ? `${imageBase}${item.pr_l_image}` : noImage,
-      alt: item.pr_image_alt || item.button_title || "AIA media feature",
-    }));
+    return (data?.data || []).map((item) => {
+      let title = item.pr_heading;
+      const lowerButton = (item.button_title || "").toLowerCase();
+
+      if (lowerButton.includes("apn news")) {
+        title = "APN News Featured Academy of Internal Audit";
+      } else if (lowerButton.includes("yourstory") || lowerButton.includes("your story")) {
+        title = "YourStory Features Puneet Garg’s Views on the Union Budget";
+      } else if (lowerButton.includes("hans india")) {
+        title = "Puneet Garg Shares Expert Insights in The Hans India";
+      }
+
+      return {
+        id: item.id,
+        title,
+        buttonTitle: item.button_title,
+        link: item.pr_link,
+        image: item.pr_l_image ? `${imageBase}${item.pr_l_image}` : noImage,
+        alt: item.pr_image_alt || item.button_title || "AIA media feature",
+      };
+    });
   }, [data]);
 
   const featured =
@@ -43,7 +56,7 @@ export default function PrMediaSection() {
     )
     .filter(Boolean);
 
-  const preferredBottomTitles = ["Your Story", "Tycoon", "News18"];
+  const preferredBottomTitles = ["Yourstory", "Tycoon", "News18"];
   const bottomPreferredItems = preferredBottomTitles
     .map((title) =>
       prItems.find(
@@ -63,7 +76,7 @@ export default function PrMediaSection() {
   );
   const bottomItems = [...bottomPreferredItems, ...remainingBottomItems].slice(
     0,
-    3,
+    6,
   );
 
   if (isLoading) {
@@ -159,14 +172,14 @@ export default function PrMediaSection() {
         </div>
 
         {bottomItems.length > 0 && (
-          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+          <div className="mt-10 flex overflow-x-auto gap-5 pb-4 scrollbar-thin scrollbar-thumb-[#F3831C]/20 scrollbar-track-transparent">
             {bottomItems.map((item) => (
               <a
                 key={item.id}
                 href={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group grid gap-3 sm:grid-cols-[150px_1fr] sm:items-center"
+                className="group grid gap-3 sm:grid-cols-[150px_1fr] sm:items-center w-[280px] sm:w-[360px] md:w-[380px] shrink-0"
               >
                 <div className="overflow-hidden border-2 border-[#F3831C] bg-white">
                   <OptimizedImage

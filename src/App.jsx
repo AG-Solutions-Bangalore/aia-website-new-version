@@ -39,6 +39,9 @@ const PassoutStoriesSlug = lazy(
   () => import("./components/passout/passout-stories-slug"),
 );
 const NotFound = lazy(() => import("./components/common/not-found"));
+const FlipbookSection = lazy(
+  () => import("./components/aia-times/flipbook-section"),
+);
 
 import ScrollToTop from "./components/common/scroll-to-top";
 import blogRedirects from "./routes/blog-redirects";
@@ -134,6 +137,7 @@ export default function App() {
         <Route path="/passout-stories/:slug" element={<PassoutStoriesSlug />} />
         <Route path="/corporate-training" element={<CorporateTraining />} />
         <Route path="/aia-times" element={<AiaTimes />} />
+        <Route path="/aia-times/flip-book" element={<FlipbookSection />} />
         <Route
           path="/corporate-training/cia-curriculum"
           element={<Navigate to="/cia-curriculum/" replace />}

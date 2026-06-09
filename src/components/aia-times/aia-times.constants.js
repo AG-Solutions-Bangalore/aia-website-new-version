@@ -54,7 +54,7 @@ export const issueSections = [
       ". They understand how systems work, and more importantly, how people expect those systems to behave. Instead of forcing their way through controls, they design transactions that fit perfectly within them. The result? Fraud that doesn\u2019t look like fraud.",
     ),
     image: "cover_story.webp",
-    imageWidth: "520px",
+    imageWidth: "470px",
     icon: "Icon1.webp",
     bodyLabel: "",
     fullContent: [
@@ -291,7 +291,7 @@ export const issueSections = [
         bi("In simple terms, a naturally grown dataset, digit 1 leads 30%, 2 leads 17%, and all the way down to digit 9, it appears 4.6% of the time. The pattern is logarithmic, consistent, and remarkably predictable across industries, geographies, and time periods."),
       ),
     image: "learning_topic.webp",
-    imageWidth: "390px",
+    imageWidth: "470px",
     icon: "Icon3.webp",
     bodyLabel: "You don't always need a confession. Sometimes, the numbers confess themselves. So What Is Benford's Law?",
     fullContent: [
@@ -437,7 +437,7 @@ export const issueSections = [
     description:
       "CA and Partner at BDO India's Risk Advisory Services division, brings over 23 years of experience in risk consulting across audit, compliance, and financial controls. His expertise spans risk-based internal audits, SOX and IFC frameworks, and business process improvement - with deep specialisation in the BFSI and Fintech sectors. He has led complex engagements across India, US, UK, Dubai, and other European geographies, working with large multinational clients on KYC reviews, transaction monitoring, internal controls, and regulatory compliance. In this conversation, Tarun shares the insights that only come from two decades of working inside the system.",
     image: "expert_talk.webp",
-    imageWidth: "250px",
+    imageWidth: "470px",
     icon: "Icon2.webp",
     bodyLabel: "Tarun Kher,",
     fullContent: [

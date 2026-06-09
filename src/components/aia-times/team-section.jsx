@@ -61,7 +61,7 @@ export default function TeamSection() {
                 alt={member.alt}
                 width={180}
                 height={180}
-                className="mx-auto h-32 w-32 rounded-full object-cover"
+                className="mx-auto h-28 w-28 rounded-full object-cover object-top"
                 onError={(event) => {
                   event.currentTarget.onerror = null;
                   event.currentTarget.src = SERVER_NO_IMAGE;

@@ -7,20 +7,11 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { BookOpen, X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import ArticleContentBlock from "./article-content-block";
-import FlipbookSection from "./flipbook-section";
 import {
   ASSET_BASE,
   MAGAZINE_COURSE,
@@ -28,7 +19,7 @@ import {
 } from "./aia-times.constants";
 
 function getMagazineDownloadCourse(issue) {
-  return `${MAGAZINE_COURSE} - ${issue.title}`;
+  return MAGAZINE_COURSE;
 }
 
 function getMagazineDownloadData(issue) {
@@ -54,7 +45,6 @@ function getCardDescription(article) {
 
 export default function IssueShelf({ selectedIssue, onSelectIssue }) {
   const [openArticleId, setOpenArticleId] = useState(null);
-  const [isFlipbookOpen, setIsFlipbookOpen] = useState(false);
   const articles = selectedIssue?.highlights || [];
   const openArticle =
     articles.find((article) => article.title === openArticleId) || null;
@@ -78,7 +68,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
 
   const openEMagazine = (issueId) => {
     onSelectIssue(issueId);
-    setIsFlipbookOpen(true);
+    window.open("/aia-times/flip-book", "_blank", "noopener,noreferrer");
   };
 
   const issueDetails =
@@ -459,21 +449,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
         </DrawerContent>
       </Drawer>
 
-      <Dialog open={isFlipbookOpen} onOpenChange={setIsFlipbookOpen}>
-        <DialogContent className="max-h-[78vh] w-[92vw] mt-16 max-w-5xl overflow-hidden border-0 bg-[#0F3652] p-0 shadow-2xl sm:rounded-md">
-          <DialogHeader className="sr-only">
-            <DialogTitle>AIA Times E-Magazine</DialogTitle>
-            <DialogDescription>
-              Read the complete AIA Times magazine in flipbook format.
-            </DialogDescription>
-          </DialogHeader>
-          <DialogClose className="absolute right-3 top-3 z-10 inline-flex min-h-10 min-w-10 items-center justify-center rounded-sm bg-[#F3831C] text-white transition-colors hover:bg-[#d96f10]">
-            <X size={18} />
-            <span className="sr-only">Close e-magazine</span>
-          </DialogClose>
-          <FlipbookSection isPopup />
-        </DialogContent>
-      </Dialog>
+
     </section>
   );
 }

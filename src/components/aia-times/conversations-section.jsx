@@ -3,7 +3,6 @@ import OptimizedImage from "@/components/common/optmized-image";
 import { ASSET_BASE, conversationItems } from "./aia-times.constants";
 
 export default function ConversationsSection() {
-  const youtubeUrl = conversationItems[0].href;
 
   return (
     <section className="bg-white py-8 md:py-10">
@@ -54,7 +53,7 @@ export default function ConversationsSection() {
 
         <div className="mt-6 text-center">
           <a
-            href={youtubeUrl}
+            href="https://www.youtube.com/@academyofia"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-10 items-center justify-center bg-[#F3831C] px-7 py-2 text-sm font-bold text-white transition-colors hover:bg-[#d96f10]"
