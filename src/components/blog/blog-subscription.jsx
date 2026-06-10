@@ -97,7 +97,7 @@ export default function BlogSubscribeSection() {
             <Button
               type="submit"
               disabled={isSubscribing}
-              className="h-12 px-10 text-base font-semibold bg-[#F3831C] hover:bg-[#0F3652] text-white rounded-none transition-all"
+              className="h-12 px-10 text-base font-semibold bg-[#F3831C] hover:bg-[#0F3652] text-white rounded-none transition-all cursor-pointer"
             >
               {isSubscribing ? "Subscribing..." : "Subscribe for Free"}
             </Button>

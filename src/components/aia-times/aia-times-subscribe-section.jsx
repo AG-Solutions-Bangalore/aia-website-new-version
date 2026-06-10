@@ -31,7 +31,7 @@ export default function AiaTimesSubscribeSection() {
                   <ArrowRight size={18} />
                 </>
               }
-              buttonClassName="mt-7 min-h-12 rounded-sm bg-[#20233d] px-7 py-3 text-sm font-semibold uppercase tracking-[0.28em] text-white shadow-sm hover:bg-[#15172b]"
+              buttonClassName="mt-7 min-h-12 rounded-sm bg-[#20233d] px-7 py-3 text-sm font-semibold uppercase tracking-[0.28em] text-white shadow-sm hover:bg-[#15172b] cursor-pointer"
               extraFormData={{
                 userType: MAGAZINE_COURSE,
                 userCourse: "AIA Times Subscription",

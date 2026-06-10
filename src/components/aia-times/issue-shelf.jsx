@@ -253,7 +253,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                     <PdfJoinDialog
                       course={getMagazineDownloadCourse(selectedIssue)}
                       buttonlabel="Download Magazine"
-                      buttonClassName="min-h-11 rounded-md bg-[#f36f21] px-7 py-2.5 text-sm font-semibold text-white hover:bg-[#d85f18]"
+                      buttonClassName="min-h-11 cursor-pointer rounded-md bg-[#f36f21] px-7 py-2.5 text-sm font-semibold text-white hover:bg-[#d85f18]"
                       extraFormData={getMagazineDownloadData(selectedIssue)}
                       hideLocation
                       submitLabel="Send Magazine"
@@ -262,7 +262,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                     <button
                       type="button"
                       onClick={() => openEMagazine(selectedIssue.id)}
-                      className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#f36f21] px-7 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#d85f18]"
+                      className="inline-flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-md bg-[#f36f21] px-7 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#d85f18]"
                     >
                       <BookOpen size={17} />
                       View E-Magazine
@@ -273,7 +273,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                     <PdfJoinDialog
                       course={MAGAZINE_COURSE}
                       buttonlabel="Get Notified"
-                      buttonClassName="min-h-11 rounded-md bg-[#f36f21] px-7 py-2.5 text-sm font-semibold text-white hover:bg-[#d85f18]"
+                      buttonClassName="min-h-11 rounded-md bg-[#f36f21] px-7 py-2.5 text-sm font-semibold text-white hover:bg-[#d85f18] cursor-pointer"
                     />
                   </div>
                 )}
@@ -351,7 +351,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                         <button
                           type="button"
                           onClick={() => readIssue(issue.id)}
-                          className="inline-flex min-h-8 items-center justify-center rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-[11px] font-semibold text-black transition-colors hover:bg-[#f36f21] hover:text-white"
+                          className="inline-flex cursor-pointer min-h-8 items-center justify-center rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-[11px] font-semibold text-black transition-colors hover:bg-[#f36f21] hover:text-white"
                         >
                           Read Issue
                         </button>
@@ -360,7 +360,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                       <PdfJoinDialog
                         course={MAGAZINE_COURSE}
                         buttonlabel="Get Notified"
-                        buttonClassName="mt-3 min-h-8 rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#f36f21] hover:text-white"
+                        buttonClassName="mt-3 cursor-pointer min-h-8 rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#f36f21] hover:text-white"
                       />
                     )}
                   </div>
