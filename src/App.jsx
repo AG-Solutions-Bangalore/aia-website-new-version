@@ -7,6 +7,7 @@ const CAMS = lazy(() => import("./pages/Courses/CAMS"));
 const CFECurriculam = lazy(() => import("./pages/Courses/CFECurriculam"));
 const CIAChallenge = lazy(() => import("./pages/Courses/CIAChallenge"));
 const CIACurriculam = lazy(() => import("./pages/Courses/CIACurriculam"));
+const CISA = lazy(() => import("./pages/Courses/CISA"));
 const FreeResources = lazy(
   () => import("./pages/free-resources/cfe-free-resources"),
 );
@@ -59,7 +60,7 @@ const FloatingContact = lazy(
 const LazyToaster = lazy(() =>
   import("sonner").then((module) => ({ default: module.Toaster })),
 );
-const Meta = lazy(() => import("./components/seo/meta"));
+import Meta from "./components/seo/meta";
 const AppQueryProvider = lazy(() => import("./lib/query-provider"));
 
 function isBlogDetailPath(pathname) {
@@ -109,9 +110,14 @@ export default function App() {
           path="/about-aia/cia-challenge-curriculum"
           element={<Navigate to="/cia-challenge-curriculum/" replace />}
         />
+        <Route
+          path="/about-aia/cisa"
+          element={<Navigate to="/cisa/" replace />}
+        />
         <Route path="/cfe-curriculum" element={<CFECurriculam />} />
         <Route path="/cia-curriculum" element={<CIACurriculam />} />
         <Route path="/cia-challenge-curriculum" element={<CIAChallenge />} />
+        <Route path="/cisa" element={<CISA />} />
         <Route path="/cams" element={<CAMS />} />
         <Route path="/cia-free-resources" element={<CIAFreeResources />} />
         <Route path="/cams-free-resources" element={<CAMSFreeResources />} />
@@ -149,6 +155,10 @@ export default function App() {
         <Route
           path="/corporate-training/cfe-curriculum"
           element={<Navigate to="/cfe-curriculum/" replace />}
+        />
+        <Route
+          path="/corporate-training/cisa"
+          element={<Navigate to="/cisa/" replace />}
         />
         <Route path="/policies" element={<Policies />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />

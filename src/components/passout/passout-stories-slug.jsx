@@ -64,6 +64,7 @@ const PassoutStoriesSlug = () => {
     "CIA Part 2": "/cia-curriculum/",
     "CIA Part 3": "/cia-curriculum/",
     CIAC: "/cia-challenge-curriculum/",
+    CISA: "/cisa/",
   };
 
   const {

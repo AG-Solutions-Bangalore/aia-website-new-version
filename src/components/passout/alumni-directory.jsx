@@ -249,10 +249,11 @@ const AlumniDirectory = () => {
         : "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200";
 
       const companyLogoUrl =
-        LOGOS[companyName] ||
         (student.student_company_image
           ? `${companyImageBase}${student.student_company_image}`
-          : "");
+          : "") ||
+        LOGOS[companyName] ||
+        "";
       const countryReason = normalizeString(student.country_reason);
       const regionGroup = country === "India" ? "india" : "global";
       const regionName =

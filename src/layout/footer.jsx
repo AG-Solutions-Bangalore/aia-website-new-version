@@ -58,6 +58,7 @@ export default function Footer() {
                   name: "CIA Challenge Curriculum",
                   href: "/cia-challenge-curriculum/",
                 },
+                { name: "CISA", href: "/cisa/" },
                 { name: "CAMS", href: "/cams/" },
               ].map((course, idx) => (
                 <li key={idx} className="group">

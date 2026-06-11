@@ -24,6 +24,7 @@ const routePrefetch = {
   "/cfe-curriculum/": () => import("../pages/Courses/CFECurriculam"),
   "/cia-curriculum/": () => import("../pages/Courses/CIACurriculam"),
   "/cia-challenge-curriculum/": () => import("../pages/Courses/CIAChallenge"),
+  "/cisa/": () => import("../pages/Courses/CISA"),
   "/cams/": () => import("../pages/Courses/CAMS"),
   "/cfe-free-resources/": () =>
     import("../pages/free-resources/cfe-free-resources"),
@@ -81,6 +82,7 @@ const Navbar = () => {
         { name: "CFE Curriculum", link: "/cfe-curriculum/" },
         { name: "CIA Curriculum", link: "/cia-curriculum/" },
         { name: "CIA Challenge", link: "/cia-challenge-curriculum/" },
+        { name: "CISA", link: "/cisa/" },
         { name: "CAMS", link: "/cams/" },
       ],
     },

@@ -109,6 +109,11 @@ const BANNER_FALLBACKS = {
     alt: "cia-challenge-curriculum",
     link: null,
   },
+  cisa: {
+    image: "15.webp",
+    alt: "cisa-certification",
+    link: null,
+  },
   "cia-free-resources": {
     image: "24.webp",
     alt: "CIA Free Resources",

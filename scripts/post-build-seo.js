@@ -294,18 +294,18 @@ function applySeoTags(html, routePath, metaData, blogMetaBySlug) {
   const pageKeywords = pageMeta.keywords || DEFAULT_META.keywords;
   const canonicalUrl = buildCanonicalUrl(routePath);
 
-  html = upsertHeadTag(html, /<title>.*?<\/title>/i, `<title>${escapeHtml(pageTitle)}</title>`);
-  html = upsertHeadTag(html, headMetaSelector('name', 'title'), `<meta name="title" content="${escapeAttribute(pageTitle)}">`);
-  html = upsertHeadTag(html, headMetaSelector('name', 'description'), `<meta name="description" content="${escapeAttribute(pageDescription)}">`);
-  html = upsertHeadTag(html, headMetaSelector('name', 'keywords'), `<meta name="keywords" content="${escapeAttribute(pageKeywords)}">`);
-  html = upsertHeadTag(html, headMetaSelector('name', 'robots'), '<meta name="robots" content="index, follow">');
-  html = upsertHeadTag(html, /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
-  html = upsertHeadTag(html, headMetaSelector('property', 'og:url'), `<meta property="og:url" content="${canonicalUrl}">`);
-  html = upsertHeadTag(html, headMetaSelector('property', 'og:title'), `<meta property="og:title" content="${escapeAttribute(pageTitle)}">`);
-  html = upsertHeadTag(html, headMetaSelector('property', 'og:description'), `<meta property="og:description" content="${escapeAttribute(pageDescription)}">`);
-  html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:url'), `<meta property="twitter:url" content="${canonicalUrl}">`);
-  html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:title'), `<meta name="twitter:title" content="${escapeAttribute(pageTitle)}">`);
-  html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:description'), `<meta name="twitter:description" content="${escapeAttribute(pageDescription)}">`);
+  html = upsertHeadTag(html, /<title>.*?<\/title>/i, `<title data-rh="true">${escapeHtml(pageTitle)}</title>`);
+  html = upsertHeadTag(html, headMetaSelector('name', 'title'), `<meta name="title" content="${escapeAttribute(pageTitle)}" data-rh="true">`);
+  html = upsertHeadTag(html, headMetaSelector('name', 'description'), `<meta name="description" content="${escapeAttribute(pageDescription)}" data-rh="true">`);
+  html = upsertHeadTag(html, headMetaSelector('name', 'keywords'), `<meta name="keywords" content="${escapeAttribute(pageKeywords)}" data-rh="true">`);
+  html = upsertHeadTag(html, headMetaSelector('name', 'robots'), '<meta name="robots" content="index, follow" data-rh="true">');
+  html = upsertHeadTag(html, /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" data-rh="true">`);
+  html = upsertHeadTag(html, headMetaSelector('property', 'og:url'), `<meta property="og:url" content="${canonicalUrl}" data-rh="true">`);
+  html = upsertHeadTag(html, headMetaSelector('property', 'og:title'), `<meta property="og:title" content="${escapeAttribute(pageTitle)}" data-rh="true">`);
+  html = upsertHeadTag(html, headMetaSelector('property', 'og:description'), `<meta property="og:description" content="${escapeAttribute(pageDescription)}" data-rh="true">`);
+  html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:url'), `<meta property="twitter:url" content="${canonicalUrl}" data-rh="true">`);
+  html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:title'), `<meta name="twitter:title" content="${escapeAttribute(pageTitle)}" data-rh="true">`);
+  html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:description'), `<meta name="twitter:description" content="${escapeAttribute(pageDescription)}" data-rh="true">`);
 
   return html;
 }
@@ -342,19 +342,19 @@ async function prerenderHomepage() {
 
     let html = fs.readFileSync(DIST_PATH, 'utf-8');
 
-    html = upsertHeadTag(html, /<title>.*?<\/title>/i, `<title>${escapeHtml(homeMeta.title)}</title>`);
+    html = upsertHeadTag(html, /<title>.*?<\/title>/i, `<title data-rh="true">${escapeHtml(homeMeta.title)}</title>`);
     
-    html = upsertHeadTag(html, headMetaSelector('name', 'title'), `<meta name="title" content="${escapeAttribute(homeMeta.title)}">`);
-    html = upsertHeadTag(html, headMetaSelector('name', 'description'), `<meta name="description" content="${escapeAttribute(homeMeta.description)}">`);
-    html = upsertHeadTag(html, headMetaSelector('property', 'og:title'), `<meta property="og:title" content="${escapeAttribute(homeMeta.title)}">`);
-    html = upsertHeadTag(html, headMetaSelector('property', 'og:description'), `<meta property="og:description" content="${escapeAttribute(homeMeta.description)}">`);
-    html = upsertHeadTag(html, headMetaSelector('property', 'og:type'), `<meta property="og:type" content="website">`);
-    html = upsertHeadTag(html, /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}">`);
-    html = upsertHeadTag(html, headMetaSelector('property', 'og:url'), `<meta property="og:url" content="${canonicalUrl}">`);
-    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:url'), `<meta property="twitter:url" content="${canonicalUrl}">`);
-    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:card'), `<meta name="twitter:card" content="summary_large_image">`);
-    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:title'), `<meta name="twitter:title" content="${escapeAttribute(homeMeta.title)}">`);
-    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:description'), `<meta name="twitter:description" content="${escapeAttribute(homeMeta.description)}">`);
+    html = upsertHeadTag(html, headMetaSelector('name', 'title'), `<meta name="title" content="${escapeAttribute(homeMeta.title)}" data-rh="true">`);
+    html = upsertHeadTag(html, headMetaSelector('name', 'description'), `<meta name="description" content="${escapeAttribute(homeMeta.description)}" data-rh="true">`);
+    html = upsertHeadTag(html, headMetaSelector('property', 'og:title'), `<meta property="og:title" content="${escapeAttribute(homeMeta.title)}" data-rh="true">`);
+    html = upsertHeadTag(html, headMetaSelector('property', 'og:description'), `<meta property="og:description" content="${escapeAttribute(homeMeta.description)}" data-rh="true">`);
+    html = upsertHeadTag(html, headMetaSelector('property', 'og:type'), `<meta property="og:type" content="website" data-rh="true">`);
+    html = upsertHeadTag(html, /<link\b(?=[^>]*\brel=["']canonical["'])[^>]*>/i, `<link rel="canonical" href="${canonicalUrl}" data-rh="true">`);
+    html = upsertHeadTag(html, headMetaSelector('property', 'og:url'), `<meta property="og:url" content="${canonicalUrl}" data-rh="true">`);
+    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:url'), `<meta property="twitter:url" content="${canonicalUrl}" data-rh="true">`);
+    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:card'), `<meta name="twitter:card" content="summary_large_image" data-rh="true">`);
+    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:title'), `<meta name="twitter:title" content="${escapeAttribute(homeMeta.title)}" data-rh="true">`);
+    html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:description'), `<meta name="twitter:description" content="${escapeAttribute(homeMeta.description)}" data-rh="true">`);
 
     fs.writeFileSync(DIST_PATH, html);
     console.log('✅ Injected Homepage SEO into dist/index.html');

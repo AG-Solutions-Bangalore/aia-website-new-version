@@ -10,9 +10,11 @@ const CANONICAL_PATH_ALIASES = {
   "/about-aia/cams": "/cams",
   "/about-aia/cfe-curriculum": "/cfe-curriculum",
   "/about-aia/cia-challenge-curriculum": "/cia-challenge-curriculum",
+  "/about-aia/cisa": "/cisa",
   "/corporate-training/cia-curriculum": "/cia-curriculum",
   "/corporate-training/cams": "/cams",
   "/corporate-training/cfe-curriculum": "/cfe-curriculum",
+  "/corporate-training/cisa": "/cisa",
 };
 
 export function normalizeCanonicalPath(path = "/") {

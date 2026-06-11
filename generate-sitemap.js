@@ -19,9 +19,11 @@ const ROUTE_ALIASES = {
   "about-aia/cams": "cams",
   "about-aia/cfe-curriculum": "cfe-curriculum",
   "about-aia/cia-challenge-curriculum": "cia-challenge-curriculum",
+  "about-aia/cisa": "cisa",
   "corporate-training/cia-curriculum": "cia-curriculum",
   "corporate-training/cams": "cams",
   "corporate-training/cfe-curriculum": "cfe-curriculum",
+  "corporate-training/cisa": "cisa",
 };
 
 const STATIC_ROUTES = new Set([
@@ -30,6 +32,7 @@ const STATIC_ROUTES = new Set([
   "/cfe-curriculum",
   "/cia-curriculum",
   "/cia-challenge-curriculum",
+  "/cisa",
   "/cams",
   "/cia-free-resources",
   "/cams-free-resources",
@@ -45,7 +48,7 @@ const STATIC_ROUTES = new Set([
 ]);
 
 const CFE_RESOURCE_MODULES = ["CFE-1", "CFE-2", "CFE-3", "CFE-4"];
-const BLOG_COURSE_CATEGORIES = ["cfe", "cia", "cams"];
+const BLOG_COURSE_CATEGORIES = ["cfe", "cia", "cams", "cisa"];
 
 function slugify(value) {
   return String(value || "")
