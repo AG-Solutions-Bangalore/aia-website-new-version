@@ -2,7 +2,7 @@ import React, { lazy } from "react";
 
 import DeferredPopUp from "@/components/common/deferred-popup";
 import LazySection from "@/components/common/lazy-section";
-import CisaHero from "@/components/courses/cisa/cisa-hero";
+import HomeHero from "@/components/home/home-hero";
 import CisaAbout from "@/components/courses/cisa/cisa-about";
 import BannerLogos from "@/components/courses/common/banner-logos";
 
@@ -21,9 +21,7 @@ const CourseResult = lazy(
 const CisaJourney = lazy(
   () => import("@/components/courses/cisa/cisa-journey"),
 );
-const CisaWhyAia = lazy(
-  () => import("@/components/courses/cisa/cisa-why-aia"),
-);
+const CisaWhyAia = lazy(() => import("@/components/courses/cisa/cisa-why-aia"));
 const WhatsappCarosal = lazy(
   () => import("@/components/common/whatsapp-carosal"),
 );
@@ -37,24 +35,18 @@ const CourseReview = lazy(() => import("@/components/common/course-review"));
 const CourseYoutube = lazy(
   () => import("@/components/courses/common/course-youtube"),
 );
-const Pdf = lazy(
-  () => import("@/components/common/pdf"),
-);
+const Pdf = lazy(() => import("@/components/common/pdf"));
 const CourseYoutubeLecture = lazy(
   () => import("@/components/courses/common/course-youtube-lecture"),
 );
 const CisaCourseLms = lazy(
   () => import("@/components/courses/cisa/cisa-course-lms"),
 );
-const CisaUnique = lazy(
-  () => import("@/components/courses/cisa/cisa-unique"),
-);
+const CisaUnique = lazy(() => import("@/components/courses/cisa/cisa-unique"));
 const CourseAchivers = lazy(
   () => import("@/components/common/course-achivers"),
 );
-const HomeBlog = lazy(
-  () => import("@/components/home/home-blogs"),
-);
+const HomeBlog = lazy(() => import("@/components/home/home-blogs"));
 const CamsConnection = lazy(
   () => import("@/components/courses/cams/cams-connection"),
 );
@@ -68,23 +60,13 @@ const CISA = () => {
     <div>
       {/* Initial load */}
       <DeferredPopUp slug="CISA" />
-      <CisaHero />
-      <BannerLogos />
+      <HomeHero slug="cisa" />
+      {/* <BannerLogos /> */}
       <CisaAbout />
 
       {/* Eligibility Requirements */}
       <LazySection minHeight={450}>
         <CisaEligibility />
-      </LazySection>
-
-      {/* Achievers - Top Students */}
-      <LazySection minHeight={420}>
-        <CourseTopStudent
-          courseSlug="cisa"
-          needPrefix="false"
-          title="We Stand by Results"
-          subtitle="Meet our latest CISA Achievers who successfully earned their credentials with AIA!"
-        />
       </LazySection>
 
       {/* Journey Guide */}
@@ -188,10 +170,11 @@ const CISA = () => {
         <CamsConnection
           title="The Right Certification Starts With The Right Choice"
           description="Find the certification that aligns with your background and career stage"
-          buttonColors={["#a8e6f3", "#fee1c6", "#e2ffdc"]}
+          buttonColors={["#a8e6f3", "#fee1c6", "#e2ffdc", "#f5dbf5"]}
           images={[
             { image: "hiw_cfe.webp", link: "/cfe-curriculum" },
             { image: "hiw_cia.webp", link: "/cia-curriculum" },
+            { image: "hiw_ciac.webp", link: "/cia-challenge-curriculum" },
             { image: "hiw_cams.webp", link: "/cams" },
           ]}
         />

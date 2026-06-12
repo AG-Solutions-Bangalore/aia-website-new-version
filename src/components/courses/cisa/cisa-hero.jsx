@@ -16,7 +16,7 @@ const CisaHero = () => {
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             <div className="inline-block bg-white border-4 border-[#F3831C] px-6 py-3 rounded-2xl shadow-md">
               <span className="text-[#F3831C] text-base sm:text-lg md:text-xl lg:text-2xl font-extrabold tracking-wide block">
-                Become a CISA with India's Leading Institute AIA
+                Become a CISA with India&apos;s Leading Institute AIA
               </span>
             </div>
 

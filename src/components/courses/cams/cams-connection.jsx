@@ -64,7 +64,7 @@ const CamsConnection = ({
               </div>
             ))}
           </div> */}
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-8 md:px-16 justify-items-center">
+          <div className={`mt-8 grid grid-cols-1 md:grid-cols-2 ${images.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"} gap-6 px-4 sm:px-8 md:px-16 justify-items-center`}>
             {images.map((item, index) => {
               const isLast = index === images.length - 1;
               const isOdd = images.length % 2 !== 0;

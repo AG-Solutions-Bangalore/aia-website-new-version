@@ -60,7 +60,7 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
         "Strengthen retention with the interactive Game Centre featuring 7 learning games along with 200+ flash cards designed for quick revision, concept reinforcement, and more engaging CISA exam preparation.",
     },
     {
-      title: "Exam Registration Fees Guidance",
+      title: "Exam Registration Fees",
       description:
         "Receive guidance and support for the CISA exam registration process, along with ISACA exam registration fee benefits available through the official learning kit of ISACA.",
     },
@@ -192,7 +192,7 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
         </div>
       </section>
 
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 px-4">
         <CfeJoinDialog
           title="Join AIA CISA LMS"
           subtitle="Online Training and Certification Course"
@@ -207,9 +207,10 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
               hover:bg-[#F3831C]/90
               transition-all
               cursor-pointer
+              w-full sm:w-auto
             "
         >
-          <Link to={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer" className="w-full text-center">
             Enroll Now
           </Link>
         </Button>

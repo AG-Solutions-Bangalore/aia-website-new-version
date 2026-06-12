@@ -34,7 +34,7 @@ const CisaWhyAia = () => {
         ]}
       />
 
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 px-4">
         <CfeJoinDialog
           title="Join AIA CISA LMS"
           subtitle="Online Training and Certification Course"
@@ -49,9 +49,10 @@ const CisaWhyAia = () => {
               hover:bg-[#F3831C]/90
               transition-all
               cursor-pointer
+              w-full sm:w-auto
             "
         >
-          <Link to={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer" className="w-full text-center">
             Enroll Now
           </Link>
         </Button>

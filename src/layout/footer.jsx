@@ -28,7 +28,10 @@ export default function Footer() {
                 { name: "Enroll Now", href: "/enroll-now/" },
                 { name: "Contact Us", href: "/contact/" },
                 { name: "Policies", href: "/policies/" },
-                { name: "Terms and Conditions", href: "/terms-and-conditions/" },
+                {
+                  name: "Terms and Conditions",
+                  href: "/terms-and-conditions/",
+                },
               ].map((link, idx) => (
                 <li key={idx} className="group">
                   <Link
@@ -58,8 +61,9 @@ export default function Footer() {
                   name: "CIA Challenge Curriculum",
                   href: "/cia-challenge-curriculum/",
                 },
-                { name: "CISA", href: "/cisa/" },
+
                 { name: "CAMS", href: "/cams/" },
+                { name: "CISA", href: "/cisa/" },
               ].map((course, idx) => (
                 <li key={idx} className="group">
                   <Link

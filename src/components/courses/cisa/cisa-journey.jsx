@@ -23,6 +23,17 @@ const CisaJourney = () => {
         },
         {
           number: 2,
+          title: "FORMAT OF EXAM",
+          items: [
+            "Questions - 150 MCQs",
+            "Duration - 4 Hours",
+            "Passing Score - 450 /800",
+            "In-Person & Online Computer-Based Exam",
+            "No Negative Marking",
+          ],
+        },
+        {
+          number: 3,
           title: "DOMAINS FOR LEARNING",
           items: [
             "IS Audit Standards & Ethics",
@@ -31,17 +42,6 @@ const CisaJourney = () => {
             "Business Resilience & Recovery",
             "Protection of Information Assets",
             "Exam Strategy & Approach",
-          ],
-        },
-        {
-          number: 3,
-          title: "CISA EXAM FORMAT",
-          items: [
-            "Questions - 150 MCQs",
-            "Duration - 4 Hours",
-            "Passing Score - 450 / 800",
-            "In-Person & Online CBT Exam",
-            "No Negative Marking",
           ],
         },
       ]}

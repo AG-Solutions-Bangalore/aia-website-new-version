@@ -12,32 +12,31 @@ const CisaEligibility = () => {
           align="center"
         />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 mt-12">
           {/* Left Side: Path & Eligibility */}
-          <div className="space-y-6 text-[#0F3652] bg-slate-50/50 p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
-            <h3 className="text-xl font-bold text-[#0F3652]">Is CISA the Right Path for You?</h3>
-            <p className="text-base leading-relaxed">
-              CISA Certification is the right path for professionals who:
-            </p>
-            <ul className="list-disc pl-6 space-y-3 leading-relaxed text-sm sm:text-base">
-              <li>
-                Have a minimum of <strong>5 years of professional experience</strong> in information systems auditing, control, or security.
-              </li>
-              <li>
-                Work in <strong>IT audit, IS governance, risk, compliance</strong>, or cybersecurity roles.
-              </li>
-              <li>
-                Candidates with basic knowledge of IT Audit concepts are recommended to obtain the IT Audit Fundamentals certification to better understand the domain.
-              </li>
-            </ul>
-            <p className="text-sm italic text-gray-600">
-              If you're still building your experience, you can begin preparing now and apply for certification once you meet the requirements.
-            </p>
+          <div className="flex flex-col justify-between text-[#0F3652] bg-slate-50/50 p-6 sm:p-8 rounded-2xl border border-gray-100 shadow-sm">
+            <div className="space-y-6">
+              <h3 className="text-xl font-bold text-[#0F3652]">CISA Certification is the right path for those who:</h3>
+              <ul className="list-disc pl-6 space-y-3 leading-relaxed text-sm sm:text-base">
+                <li>
+                  Have a minimum of <strong>5 years of professional experience</strong> in information systems auditing, control, or security.
+                </li>
+                <li>
+                  Work in <strong>IT audit, IS governance, risk, compliance</strong>, or cybersecurity roles.
+                </li>
+                <li>
+                  Candidates with basic knowledge of IT Audit concepts are recommended to obtain the IT Audit Fundamentals certification to better understand the domain.
+                </li>
+              </ul>
+              <p className="text-sm italic text-gray-600">
+                If you&apos;re still building your experience, you can begin preparing now and apply for certification once you meet the requirements.
+              </p>
+            </div>
             
-            <div className="pt-4">
+            <div className="pt-6">
               <CfeJoinDialog
                 title="Check Your CISA Eligibility"
-                subtitle="Speak with our expert mentors to evaluate your profile and waivers"
+                subtitle="Check your eligibility in minutes - speak with an expert."
                 course="CISA"
                 buttonlabel="Check Eligibility with an Expert"
               />
@@ -60,11 +59,11 @@ const CisaEligibility = () => {
                 </thead>
                 <tbody className="text-[#0F3652]">
                   <tr className="border-b border-[#0F3652]/10 hover:bg-[#F3831C]/5 transition-colors">
-                    <td className="py-3.5 px-4 font-medium">Bachelor's Degree (any field)</td>
+                    <td className="py-3.5 px-4 font-medium">Bachelor&apos;s Degree (any field)</td>
                     <td className="py-3.5 px-4 text-right font-bold text-[#F3831C]">2 Years</td>
                   </tr>
                   <tr className="border-b border-[#0F3652]/10 hover:bg-[#F3831C]/5 transition-colors">
-                    <td className="py-3.5 px-4 font-medium">Master's Degree (IT / Security related)</td>
+                    <td className="py-3.5 px-4 font-medium">Master&apos;s Degree (IT / Security related)</td>
                     <td className="py-3.5 px-4 text-right font-bold text-[#F3831C]">3 Years</td>
                   </tr>
                   <tr className="border-b border-[#0F3652]/10 hover:bg-[#F3831C]/5 transition-colors">
@@ -83,22 +82,22 @@ const CisaEligibility = () => {
 
         {/* Work Experience Detail Banner */}
         <div className="mt-12 bg-[#0F3652] text-white p-6 sm:p-8 rounded-2xl shadow-md">
-          <h3 className="text-xl font-bold mb-4">Detailed Work Experience Requirements</h3>
+          <h3 className="text-xl font-bold mb-4">Work Experience Requirements</h3>
           <p className="text-sm sm:text-base mb-4 text-gray-200 leading-relaxed">
-            ISACA requires CISA applicants to submit verification of work experience in information systems auditing, control, or security.
+            ISACA requires a minimum of 5 years of professional work experience in information systems auditing, control, or security.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
             <div className="bg-white/10 p-5 rounded-lg border border-white/10">
               <span className="text-[#F3831C] font-bold text-lg block mb-1">Domain Coverage</span>
-              <p className="text-xs sm:text-sm text-gray-200">At least 1 of the 5 official CISA domains must be covered in your submitted professional experience.</p>
+              <p className="text-xs sm:text-sm text-gray-200">At least 1 of the 5 CISA domains must be covered in your experience.</p>
             </div>
             <div className="bg-white/10 p-5 rounded-lg border border-white/10">
               <span className="text-[#F3831C] font-bold text-lg block mb-1">10-Year Timeframe</span>
-              <p className="text-xs sm:text-sm text-gray-200">All experience must be earned within the 10 years before the certification application date.</p>
+              <p className="text-xs sm:text-sm text-gray-200">Experience must be earned within 10 years before the certification application date.</p>
             </div>
             <div className="bg-white/10 p-5 rounded-lg border border-white/10">
-              <span className="text-[#F3831C] font-bold text-lg block mb-1">Exam timeframe</span>
-              <p className="text-xs sm:text-sm text-gray-200">Or experience can be verified and submitted within 5 years after passing the CISA exam.</p>
+              <span className="text-[#F3831C] font-bold text-lg block mb-1">Exam Timeframe</span>
+              <p className="text-xs sm:text-sm text-gray-200">Or within 5 years after passing the CISA exam.</p>
             </div>
           </div>
         </div>

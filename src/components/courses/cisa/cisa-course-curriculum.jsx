@@ -96,12 +96,12 @@ const CisaCourseCurriculum = () => {
       <CourseCurriculum
         title="CISA Certification Curriculum"
         description={`The Certified Information Systems Auditor (CISA) credential is globally recognised as the benchmark for professionals in IT auditing, information systems control, and cybersecurity governance. The certification validates a professional's ability to audit, control, monitor, and assess an organisation's information technology and business systems.
-        <br/><br/>
-        At AIA, we design our CISA preparation programme to ensure that candidates develop both exam readiness and real-world audit judgement. The course structure helps learners understand IT governance frameworks, assess system vulnerabilities, evaluate business resilience, and apply audit standards the way they are tested and practised, in the field.`}
+
+At AIA, we design our CISA preparation programme to ensure that candidates develop both exam readiness and real-world audit judgement. The course structure helps learners understand IT governance frameworks, assess system vulnerabilities, evaluate business resilience, and apply audit standards the way they are tested and practised, in the field.`}
         curriculumData={curriculumData}
       />
 
-      <div className="flex justify-center gap-2 mt-4">
+      <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 px-4">
         <CfeJoinDialog
           title="Join AIA CISA LMS"
           subtitle="Online Training and Certification Course"
@@ -116,9 +116,10 @@ const CisaCourseCurriculum = () => {
               hover:bg-[#F3831C]/90
               transition-all
               cursor-pointer
+              w-full sm:w-auto
             "
         >
-          <Link to={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer" className="w-full text-center">
             Enroll Now
           </Link>
         </Button>

@@ -62,7 +62,7 @@ const CourseCurriculum = ({
                           className="text-[#0F3652] text-sm leading-relaxed mb-2 text-justify"
                           dangerouslySetInnerHTML={{ __html: paragraph }}
                         />
-                      ))
+                      )),
                   )}
                 </div>
               )}
@@ -89,7 +89,7 @@ const CourseCurriculum = ({
 
           {/* RIGHT SIDE CONTENT */}
           <div className="w-[70%]">
-            <div className="bg-white rounded-br-3xl rounded-tl-3xl p-4 shadow-lg shadow-black/20 border border-[#F3831C]/20 h-full text-justify">
+            <div className="bg-white rounded-br-3xl rounded-tl-3xl p-6 sm:p-8 md:p-10 shadow-lg shadow-black/20 border border-[#F3831C]/20 h-full text-justify">
               {activeContent?.content?.length ? (
                 activeContent.content.map((text, index) =>
                   text
@@ -101,7 +101,7 @@ const CourseCurriculum = ({
                         className="text-[#0F3652] leading-relaxed mb-2"
                         dangerouslySetInnerHTML={{ __html: paragraph }}
                       />
-                    ))
+                    )),
                 )
               ) : (
                 <p className="text-[#0F3652]/60 text-sm text-center py-8">

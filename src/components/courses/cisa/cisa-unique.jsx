@@ -28,7 +28,7 @@ const CisaUnique = () => {
           ),
           title: "ISACA Authorised Training Organisation",
           description:
-            "AIA is officially recognised by ISACA to deliver CISA preparation. Every session, every resource, and every concept is aligned to ISACA's global exam standards, so you prepare with full confidence.",
+            "AIA is officially recognised by ISACA to deliver CISA preparation. Every session, every resource, and every concept is aligned to ISACA's global exam standards, so you prepare with full confidence and authority.",
           position: "left",
         },
         {
@@ -58,7 +58,7 @@ const CisaUnique = () => {
           ),
           title: "Expert-Led Teaching Methodology",
           description:
-            "Our preparation is led by Puneet Garg, an APMG Authorised Trainer with deep expertise in IS audit and governance. Every session is designed to build exam readiness and professional judgement.",
+            "Our preparation is led by Puneet Garg, APMG Authorised Trainer with deep expertise in IS audit and governance. Every session is designed to build exam readiness and professional judgement simultaneously.",
           position: "right",
         },
         {
@@ -68,7 +68,7 @@ const CisaUnique = () => {
           ),
           title: "Instant Doubt Solving Support with Faculty",
           description:
-            "AIA provides instant doubt-solving support where learners can actively address their queries on WhatsApp directly with our expert faculty to resolve doubts quickly.",
+            "AIA provide instant doubt-solving support where learners can actively address their queries on WhatsApp with faculty.",
           position: "right",
         },
         {
@@ -78,7 +78,7 @@ const CisaUnique = () => {
           ),
           title: "Mentorship & Enrolment Support",
           description:
-            "From CISA Exam registration guidance to final exam readiness, we support learners at every stage. At AIA, we simplify the ISACA enrolment process and ensure a smooth journey.",
+            "From CISA Exam registration guidance to final exam readiness, we support learners at every stage. At AIA, we simplify the ACFE enrolment process and ensure a smooth journey.",
           position: "right",
         },
       ]}
