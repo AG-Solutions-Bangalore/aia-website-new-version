@@ -110,8 +110,9 @@
   );
 }
 
-/* Page image fills its page cleanly */
-.fb-page-img {
+/* Page image/canvas fills its page cleanly */
+.fb-page-img,
+.fb-page-canvas {
   display: block;
   width: 100%;
   height: 100%;
