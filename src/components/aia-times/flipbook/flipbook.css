@@ -1,0 +1,293 @@
+/* ============================================================
+   AIA Times Flipbook — Heyzine-style visual treatment
+   ============================================================ */
+
+/* Layout shell ------------------------------------------------ */
+.fb-shell {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background: #0f3652;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Subtle ambient glow behind the magazine */
+.fb-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse 60% 50% at 50% 45%,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(15, 54, 82, 0) 70%
+  );
+  pointer-events: none;
+}
+
+.fb-shell.fb-popup {
+  min-height: 0;
+  height: 100%;
+}
+
+.fb-stage {
+  position: relative;
+  width: 100%;
+  max-width: 80rem; /* max-w-7xl */
+  padding: 2.5rem 1rem 5.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+/* Premium 3D book stage -------------------------------------- */
+/* NOTE: do NOT put `filter` or `backdrop-filter` on this element or any
+   ancestor of the book — it flattens page-flip's preserve-3d context and
+   tears the page-turn animation. box-shadow is safe and is applied to the
+   page items themselves below so the shadow always hugs the book. */
+.fb-book-3d {
+  position: relative;
+  margin: 0 auto;
+  display: block;
+}
+
+/* The book wrapper itself (HTMLFlipBook renders a div here) */
+.fb-book-3d .stf__parent {
+  margin: 0 auto;
+}
+
+/* Premium layered drop shadow on the pages (hugs the book regardless of
+   spread/single layout). transform-style + perspective are already set by
+   page-flip's own CSS — we only add shadow + rounded outer edge. */
+.fb-book-3d .stf__item {
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.35), 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* Pages get a soft inner edge shadow for paper depth */
+.fb-page-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+}
+
+/* Inner shadow that reads as the gutter/spine on spread pages */
+.fb-page-inner::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 30px;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Right page: shadow on its left edge (toward the spine) */
+.fb-page-inner--right::after {
+  left: 0;
+  background: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0.06) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Left page: shadow on its right edge (toward the spine) */
+.fb-page-inner--left::after {
+  right: 0;
+  background: linear-gradient(
+    to left,
+    rgba(0, 0, 0, 0.22) 0%,
+    rgba(0, 0, 0, 0.06) 40%,
+    rgba(0, 0, 0, 0) 100%
+  );
+}
+
+/* Page image fills its page cleanly */
+.fb-page-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fff;
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Single (portrait) page — drop the gutter shadow */
+.fb-book-3d.fb-portrait .fb-page-inner::after {
+  display: none;
+}
+
+/* Controls bar ------------------------------------------------ */
+.fb-controls {
+  position: absolute;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 9999px;
+  background: rgba(8, 28, 43, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+  z-index: 5;
+}
+
+.fb-control-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  color: #eaf2fb;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  cursor: pointer;
+  transition: background-color 0.18s ease, color 0.18s ease,
+    transform 0.18s ease, opacity 0.18s ease;
+}
+
+.fb-control-btn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.2);
+  color: #fff;
+}
+
+.fb-control-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.fb-control-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.fb-control-btn--full {
+  width: auto;
+  min-width: 2.5rem;
+  padding: 0 0.4rem;
+}
+
+.fb-indicator {
+  min-width: 4.5rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #eaf2fb;
+  letter-spacing: 0.02em;
+  user-select: none;
+}
+
+.fb-indicator strong {
+  color: #fff;
+  font-weight: 700;
+}
+
+.fb-indicator span {
+  opacity: 0.6;
+}
+
+/* Divider between indicator and fullscreen */
+.fb-controls-divider {
+  width: 1px;
+  height: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Loading state ------------------------------------------------ */
+.fb-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #eaf2fb;
+  z-index: 6;
+}
+
+.fb-spinner {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-top-color: #fff;
+  animation: fb-spin 0.8s linear infinite;
+}
+
+.fb-loading-text {
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
+/* Per-page shimmer until the image is decoded */
+.fb-page-shimmer {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    #f2f4f7 30%,
+    #e3e8ef 50%,
+    #f2f4f7 70%
+  );
+  background-size: 200% 100%;
+  animation: fb-shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes fb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fb-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Fullscreen adjustments */
+.fb-shell:fullscreen {
+  background: #0f3652;
+}
+.fb-shell:fullscreen .fb-stage {
+  height: 100vh;
+  padding-bottom: 6rem;
+}
+
+/* Small screens — tighter stage */
+@media (max-width: 640px) {
+  .fb-stage {
+    padding: 1.25rem 0.75rem 5rem;
+  }
+  .fb-controls {
+    bottom: 1rem;
+    gap: 0.4rem;
+    padding: 0.4rem 0.5rem;
+  }
+  .fb-control-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+  .fb-indicator {
+    min-width: 3.75rem;
+    font-size: 0.72rem;
+  }
+}

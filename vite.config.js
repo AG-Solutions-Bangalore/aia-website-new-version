@@ -144,6 +144,14 @@ export default defineConfig({
             if (id.includes("swiper") || id.includes("embla-carousel")) {
               return "carousel-vendor";
             }
+
+            // Flipbook engine — only used on the /aia-times/flip-book route
+            if (
+              id.includes("/node_modules/react-pageflip/") ||
+              id.includes("/node_modules/page-flip/")
+            ) {
+              return "flipbook-vendor";
+            }
           }
         },
       },
