@@ -32,29 +32,29 @@ const computePageSize = (isPortrait) => {
 };
 
 /**
- * Heyzine-style flipbook reader.
+ * Heyzine-style flipbook reader powered by PDF.js.
  *
  * @param {object} props
- * @param {Array<Array<string>>} props.pageSources
- *   Array where each item is an array of candidate image URLs (fallback chain)
- *   for a single page. Typically built from `flipbookPageSources` in
- *   aia-times.constants.js.
+ * @param {string} [props.pdfUrl="https://aia.in.net/webapi/public/assets/pdf/AIA_Times_Magazine.pdf"]
+ *   URL to the magazine PDF file.
  * @param {boolean} [props.isPopup=false]
  *   When true, fills its parent container instead of the full viewport.
  * @param {string} [props.alt="AIA Times E-Magazine"]
- *   Alt text base for each page image.
+ *   Alt text base for each page.
  */
 export default function FlipBook({
-  pageSources = [],
+  pdfUrl = "/AIA_Times_Magazine.pdf",
   isPopup = false,
   alt = "AIA Times E-Magazine",
 }) {
   const bookRef = useRef(null); // ref to HTMLFlipBook → .current.pageFlip()
   const shellRef = useRef(null); // the fullscreen container
 
+  const [pdf, setPdf] = useState(null);
+  const [loadingError, setLoadingError] = useState(null);
   const [ready, setReady] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [totalPages, setTotalPages] = useState(pageSources.length);
+  const [totalPages, setTotalPages] = useState(0);
   const [orientation, setOrientation] = useState("landscape");
   const [isFlipping, setIsFlipping] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -80,12 +80,39 @@ export default function FlipBook({
     };
   }, []);
 
-  // size="stretch" + autoSize: page-flip sizes the book from the parent
-  // element (.fb-book-3d) on every resize and centers it via its own internal
-  // bounds math. The parent MUST have a real height for stretch to work —
-  // that's what was missing before and caused the off-center / collapsed
-  // layout. We cap width with maxWidth/minWidth so the book never exceeds
-  // one page width. Orientation (1 vs 2 pages) is reported back to us.
+  // --- Load PDF Document using pdfjs-dist ---------------------------------
+  useEffect(() => {
+    let active = true;
+
+    const loadPdf = async () => {
+      try {
+        const pdfjs = await import("pdfjs-dist");
+        
+        // Use CDN worker URL to bypass local server MIME type blocks (.mjs content-type)
+        // and avoid dynamic asset hash matching issues in production.
+        pdfjs.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@6.0.227/build/pdf.worker.min.mjs";
+
+        const loadingTask = pdfjs.getDocument({ url: pdfUrl });
+        const pdfDoc = await loadingTask.promise;
+        if (active) {
+          setPdf(pdfDoc);
+          setTotalPages(pdfDoc.numPages);
+          setLoadingError(null);
+        }
+      } catch (err) {
+        console.error("Failed to load PDF:", err);
+        if (active) {
+          setLoadingError(err.message || "Failed to load magazine PDF.");
+        }
+      }
+    };
+
+    loadPdf();
+
+    return () => {
+      active = false;
+    };
+  }, [pdfUrl]);
 
   // --- Imperative helpers (use the underlying PageFlip instance) ---------
   const getFlip = useCallback(() => bookRef.current?.pageFlip?.(), []);
@@ -106,7 +133,6 @@ export default function FlipBook({
     const onKey = (e) => {
       const target = e.target;
       const tag = target?.tagName;
-      // Don't hijack arrow keys while typing in a field / editing content.
       if (
         tag === "INPUT" ||
         tag === "TEXTAREA" ||
@@ -156,88 +182,95 @@ export default function FlipBook({
   }, []);
 
   const handleChangeState = useCallback((e) => {
-    // "read" = idle, others ("flipping", "user_fold", "fold_corner") = animating
     setIsFlipping(e?.data !== "read");
   }, []);
 
   const handleInit = useCallback(() => {
     const flip = getFlip();
     if (!flip) return;
-    setTotalPages(flip.getPageCount?.() ?? pageSources.length);
+    setTotalPages(flip.getPageCount?.() ?? (pdf ? pdf.numPages : 0));
     setOrientation(
       flip.getOrientation?.() === "portrait" ? "portrait" : "landscape",
     );
     setCurrentPage(flip.getCurrentPageIndex?.() ?? 0);
     setReady(true);
-  }, [getFlip, pageSources.length]);
+  }, [getFlip, pdf]);
 
   // --- Derived bounds ----------------------------------------------------
   const isPortrait = orientation === "portrait";
   const canPrev = currentPage > 0;
   const canNext = currentPage < totalPages - 1;
 
-  // --- Memoized pages: build once per pageSources set -------------------
-  const pages = useMemo(
-    () =>
-      pageSources.map((sources, i) => (
-        <FlipBookPage
-          key={i}
-          sources={sources}
-          number={i + 1}
-          side={i % 2 === 0 ? "right" : "left"}
-          alt={alt}
-        />
-      )),
-    [pageSources, alt],
-  );
+  // --- Memoized pages: build once per pdf set ----------------------------
+  const pages = useMemo(() => {
+    if (!pdf) return [];
+    return Array.from({ length: totalPages }, (_, i) => (
+      <FlipBookPage
+        key={i}
+        pdf={pdf}
+        pageNumber={i + 1}
+        side={i % 2 === 0 ? "right" : "left"}
+        alt={alt}
+      />
+    ));
+  }, [pdf, totalPages, alt]);
 
-  // showCover = first/last page treated as hard covers (premium feel).
-  // usePortrait lets it collapse to single page on narrow viewports.
+  const showBook = ready && pdf && !loadingError;
+
   return (
     <div
       ref={shellRef}
       className={`fb-shell${isPopup ? " fb-popup" : ""}`}
       aria-label="AIA Times E-Magazine flipbook"
     >
-      <div className="fb-stage">
-        <div
-          className={`fb-book-3d${isPortrait ? " fb-portrait" : ""}`}
-          style={{ width: "100%", height: pageSize.height }}
-        >
-          <HTMLFlipBook
-            ref={bookRef}
-            width={pageSize.width}
-            height={pageSize.height}
-            size="stretch"
-            minWidth={Math.min(pageSize.width, 280)}
-            maxWidth={pageSize.width}
-            minHeight={Math.min(pageSize.height, 380)}
-            maxHeight={pageSize.height}
-            autoSize
-            drawShadow
-            flippingTime={800}
-            usePortrait
-            startZIndex={0}
-            maxShadowOpacity={0.5}
-            showCover
-            mobileScrollSupport={false}
-            clickEventForward
-            useMouseEvents
-            className="fb-flipbook"
-            onInit={handleInit}
-            onFlip={handleFlip}
-            onChangeOrientation={handleChangeOrientation}
-            onChangeState={handleChangeState}
-          >
-            {pages}
-          </HTMLFlipBook>
+      {loadingError ? (
+        <div className="fb-loading fb-error" aria-live="assertive">
+          <span className="fb-error-icon">⚠️</span>
+          <span className="fb-loading-text">{loadingError}</span>
         </div>
-      </div>
+      ) : (
+        <div className="fb-stage">
+          <div
+            className={`fb-book-3d${isPortrait ? " fb-portrait" : ""}`}
+            style={{ width: "100%", height: pageSize.height }}
+          >
+            {pdf && (
+              <HTMLFlipBook
+                ref={bookRef}
+                width={pageSize.width}
+                height={pageSize.height}
+                size="stretch"
+                minWidth={Math.min(pageSize.width, 280)}
+                maxWidth={pageSize.width}
+                minHeight={Math.min(pageSize.height, 380)}
+                maxHeight={pageSize.height}
+                autoSize
+                drawShadow
+                flippingTime={800}
+                usePortrait
+                startZIndex={0}
+                maxShadowOpacity={0.5}
+                showCover
+                mobileScrollSupport={false}
+                clickEventForward
+                useMouseEvents
+                className="fb-flipbook"
+                onInit={handleInit}
+                onFlip={handleFlip}
+                onChangeOrientation={handleChangeOrientation}
+                onChangeState={handleChangeState}
+              >
+                {pages}
+              </HTMLFlipBook>
+            )}
+          </div>
+        </div>
+      )}
 
-      {!ready && (
+      {!showBook && !loadingError && (
         <div className="fb-loading" aria-live="polite">
           <span className="fb-spinner" />
-          <span className="fb-loading-text">Opening the magazine…</span>
+          <span className="fb-loading-text">Loading the magazine PDF…</span>
         </div>
       )}
 
@@ -245,8 +278,8 @@ export default function FlipBook({
         currentPage={currentPage}
         totalPages={totalPages}
         orientation={orientation}
-        canPrev={canPrev && !isFlipping}
-        canNext={canNext && !isFlipping}
+        canPrev={canPrev && !isFlipping && ready}
+        canNext={canNext && !isFlipping && ready}
         isFullscreen={isFullscreen}
         onPrev={goPrev}
         onNext={goNext}

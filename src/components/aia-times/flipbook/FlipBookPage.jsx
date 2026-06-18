@@ -1,65 +1,88 @@
-import { forwardRef, memo, useEffect, useState } from "react";
+import { forwardRef, memo, useEffect, useRef, useState } from "react";
 
 /**
- * A single flipbook page.
+ * A single PDF-rendered flipbook page.
  *
- * `react-pageflip` clones each child and attaches a DOM ref to it, so the
- * outer element here MUST be a real DOM node (a <div>) that forwards its ref.
- * We therefore wrap in forwardRef (memo alone would strip the ref).
- *
- * Image loading + multi-source fallback are handled inline (rather than via
- * SourceFallbackImage) so we get precise onLoad/onError control and a clean
- * per-page loading shimmer. Pages render once and are memoized — only the
- * page whose image finishes loading re-renders; siblings are untouched
- * during a flip.
- *
- * `side` ("left" | "right") drives the inner gutter/spine shadow so a
- * two-page spread reads like a real magazine. In single-page (portrait)
- * mode the parent wrapper drops the gutter shadow.
+ * Renders page content on an HTML5 `<canvas>` using `pdfjs-dist`.
  */
 const FlipBookPageImpl = forwardRef(function FlipBookPage(props, ref) {
   const {
-    sources = [],
-    alt = "Magazine page",
+    pdf = null,
+    pageNumber = 0,
     side = "right",
-    number = 0,
+    alt = "Magazine page",
   } = props;
 
-  const [sourceIndex, setSourceIndex] = useState(0);
+  const canvasRef = useRef(null);
   const [loaded, setLoaded] = useState(false);
-  const currentSrc = sources[sourceIndex];
+  const renderTaskRef = useRef(null);
 
-  // Reset when the source list changes (e.g. different magazine).
+  // Render the PDF page to the canvas.
   useEffect(() => {
-    setSourceIndex(0);
-    setLoaded(false);
-  }, [sources]);
+    if (!pdf || !pageNumber) return;
+    let active = true;
 
-  // No more candidate sources to try — stop showing the shimmer.
-  useEffect(() => {
-    if (!currentSrc) setLoaded(true);
-  }, [currentSrc]);
+    const renderPage = async () => {
+      try {
+        const page = await pdf.getPage(pageNumber);
+        if (!active) return;
+
+        // Use a high resolution scale for sharp text rendering.
+        const viewport = page.getViewport({ scale: 1.5 });
+
+        const canvas = canvasRef.current;
+        if (!canvas) return;
+
+        const context = canvas.getContext("2d");
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        const renderContext = {
+          canvasContext: context,
+          viewport: viewport,
+        };
+
+        // Cancel previous render task if active
+        if (renderTaskRef.current) {
+          renderTaskRef.current.cancel();
+        }
+
+        const renderTask = page.render(renderContext);
+        renderTaskRef.current = renderTask;
+
+        await renderTask.promise;
+
+        if (active) {
+          setLoaded(true);
+        }
+      } catch (err) {
+        // Ignore task cancellation errors
+        if (err.name !== "RenderingCancelledException") {
+          console.error("Error rendering PDF page:", err);
+        }
+      }
+    };
+
+    renderPage();
+
+    return () => {
+      active = false;
+      if (renderTaskRef.current) {
+        renderTaskRef.current.cancel();
+      }
+    };
+  }, [pdf, pageNumber]);
 
   return (
     <div ref={ref} className="fb-page-wrapper">
       <div className={`fb-page-inner fb-page-inner--${side}`} data-side={side}>
         {!loaded && <span className="fb-page-shimmer" aria-hidden="true" />}
-        {currentSrc && (
-          <img
-            key={currentSrc}
-            src={currentSrc}
-            alt={`${alt}${number ? ` — page ${number}` : ""}`}
-            className="fb-page-img"
-            loading="eager"
-            decoding="async"
-            draggable={false}
-            onLoad={() => setLoaded(true)}
-            onError={() => {
-              // Try the next candidate source; if none remain, hide shimmer.
-              setSourceIndex((i) => i + 1);
-            }}
-          />
-        )}
+        <canvas
+          ref={canvasRef}
+          className="fb-page-canvas"
+          role="img"
+          aria-label={`${alt}${pageNumber ? ` — page ${pageNumber}` : ""}`}
+        />
       </div>
     </div>
   );

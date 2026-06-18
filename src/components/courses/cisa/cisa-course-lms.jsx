@@ -95,6 +95,7 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
         }
         courseFeatures={exclusiveFeatures}
         image={image}
+        gridClass="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:mt-10"
       />
 
       {/* Official CISA Prep Kit of ISACA Slider Section */}
@@ -194,7 +195,7 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
 
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 px-4">
         <CfeJoinDialog
-          title="Join AIA CISA LMS"
+          title="Know more about AIA CISA prep course"
           subtitle="Online Training and Certification Course"
           course="CISA"
           buttonlabel="Talk to Us"
