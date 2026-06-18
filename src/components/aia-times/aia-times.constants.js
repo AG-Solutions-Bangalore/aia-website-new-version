@@ -525,13 +525,13 @@ export const conversationItems = [
   },
   {
     type: "Interview",
-    title: "CFE Success Story - Meet Ms. Lakshmi Kolla",
+    title: "Real Success Stories of CFE, CIA & CAMS Achievers",
     date: "20 May 2026",
     description:
-      "Get inspired by the Ms. Lakshmi Kolla, CFE real-life success story with AIA!",
+      "AIA shares numerous success stories of its passout students who have earned credentials such as CFE, CIA, and CAMS.",
     image: "interview.webp",
     imageAlt: "CFE Success Story interview",
-    href: "https://www.youtube.com/watch?v=S75ikx5OqOg",
+    href: "https://www.youtube.com/playlist?list=PLHH4EQbbvYIZSnYeZNB3-zoHdVGS6BvWV",
   },
 ];
 
