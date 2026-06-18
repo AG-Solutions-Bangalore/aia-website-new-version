@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CourseLms = ({ courseFeatures, cardTitle, image, description }) => {
+const CourseLms = ({ courseFeatures, cardTitle, image, description, gridClass }) => {
   const labels = [
     "Dedicated Support Person",
     "Updated Study Curriculum",
@@ -82,7 +82,7 @@ const CourseLms = ({ courseFeatures, cardTitle, image, description }) => {
             description={description}
             align="center"
           />
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:mt-10">
+          <div className={gridClass || "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:mt-10"}>
             {courseFeatures.map((feature, index) => (
               <div
                 key={index}

@@ -20,7 +20,7 @@ const CisaWhyAia = () => {
             title: "APMG Authorised Trainer",
           },
           {
-            img: `${IMAGE_PATH}/books-svgrepo-com.webp`,
+            img: `${IMAGE_PATH}/new_logo.webp`,
             title: "AIA Short Notes & Distractors",
           },
           {
@@ -36,7 +36,7 @@ const CisaWhyAia = () => {
 
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-8 px-4">
         <CfeJoinDialog
-          title="Join AIA CISA LMS"
+          title="Know more about AIA CISA prep course"
           subtitle="Online Training and Certification Course"
           course="CISA"
           buttonlabel="Let's Connect"

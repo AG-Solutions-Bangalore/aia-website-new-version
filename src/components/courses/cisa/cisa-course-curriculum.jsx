@@ -103,7 +103,7 @@ At AIA, we design our CISA preparation programme to ensure that candidates devel
 
       <div className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4 px-4">
         <CfeJoinDialog
-          title="Join AIA CISA LMS"
+          title="Know more about AIA CISA prep course"
           subtitle="Online Training and Certification Course"
           course="CISA"
           buttonlabel="Know More"

@@ -27,8 +27,8 @@ const CisaJourney = () => {
           items: [
             "Questions - 150 MCQs",
             "Duration - 4 Hours",
-            "Passing Score - 450 /800",
-            "In-Person & Online Computer-Based Exam",
+            "Passing Score - 450 / 800",
+            "In Person & Online Based Exam",
             "No Negative Marking",
           ],
         },
