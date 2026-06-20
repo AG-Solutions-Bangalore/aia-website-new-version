@@ -38,7 +38,20 @@ export default function IssueDetailsSection({ selectedIssue }) {
               <div>
                 {index % 2 === 0 ? (
                   <h2 className="mb-5 text-2xl font-extrabold leading-tight text-black md:text-3xl">
-                    {item.heading}
+                    {item.label === "01" ? (
+                      <>
+                        Decoding the Mindset Behind
+                        <br />
+                        <span className="text-blue-600">Every Financial Crime</span>
+                      </>
+                    ) : item.label === "02" ? (
+                      <>
+                        The Toshiba Fraud Story:{" "}
+                        <span className="text-blue-600">Corporate Fraud</span>
+                      </>
+                    ) : (
+                      item.heading
+                    )}
                   </h2>
                 ) : (
                   <div className="mb-5 text-right">
@@ -46,11 +59,34 @@ export default function IssueDetailsSection({ selectedIssue }) {
                       {item.label} {item.title}
                     </p>
                     <h2 className="mt-3 text-2xl font-extrabold leading-tight text-black md:text-3xl">
-                      {item.heading}
+                      {item.label === "01" ? (
+                        <>
+                          Decoding the Mindset Behind
+                          <br />
+                          <span className="text-blue-600">Every Financial Crime</span>
+                        </>
+                      ) : item.label === "02" ? (
+                        <>
+                          The Toshiba Fraud Story:{" "}
+                          <span className="text-blue-600">Corporate Fraud</span>
+                        </>
+                      ) : (
+                        item.heading
+                      )}
                     </h2>
-                    <p className="mt-1 text-lg font-extrabold leading-snug text-black">
-                      {item.subheading}
-                    </p>
+                    {item.subheading && (
+                      <p className="mt-1 text-lg font-extrabold leading-snug text-black">
+                        {item.label === "03" ? (
+                          <>
+                            Numbers Don't Lie - But They Do
+                            <br />
+                            <span className="text-blue-600">Reveal</span>
+                          </>
+                        ) : (
+                          item.subheading
+                        )}
+                      </p>
+                    )}
                   </div>
                 )}
                 <div className="overflow-hidden rounded-md bg-slate-100 p-3">
@@ -73,9 +109,17 @@ export default function IssueDetailsSection({ selectedIssue }) {
                     "rounded-lg border-2 border-[#f36f21] bg-white p-5",
                 )}
               >
-                {index % 2 === 0 && (
+                {index % 2 === 0 && item.subheading && (
                   <p className="text-lg font-extrabold italic leading-snug text-black">
-                    {item.subheading}
+                    {item.label === "03" ? (
+                      <>
+                        Numbers Don't Lie - But They Do
+                        <br />
+                        <span className="text-blue-600">Reveal</span>
+                      </>
+                    ) : (
+                      item.subheading
+                    )}
                   </p>
                 )}
                 <p className="mt-3 text-base leading-7 text-black">
@@ -131,7 +175,20 @@ export default function IssueDetailsSection({ selectedIssue }) {
           <DrawerHeader className="flex flex-row items-start justify-between gap-4 bg-[#0F3652] text-left text-white">
             <div>
               <DrawerTitle className="text-xl font-bold text-white sm:text-2xl">
-                {openArticle?.heading}
+                {openArticle?.label === "01" ? (
+                  <>
+                    Decoding the Mindset Behind
+                    <br />
+                    <span className="text-blue-400">Every Financial Crime</span>
+                  </>
+                ) : openArticle?.label === "02" ? (
+                  <>
+                    The Toshiba Fraud Story:{" "}
+                    <span className="text-blue-400">Corporate Fraud</span>
+                  </>
+                ) : (
+                  openArticle?.heading
+                )}
               </DrawerTitle>
               <DrawerDescription className="mt-2 text-sm font-semibold text-[#F3831C]">
                 {openArticle?.label} {openArticle?.title}
@@ -161,9 +218,19 @@ export default function IssueDetailsSection({ selectedIssue }) {
                   />
                 </div>
                 <div>
-                  <p className="text-xl font-extrabold italic leading-snug text-black">
-                    {openArticle.subheading}
-                  </p>
+                  {openArticle.subheading && (
+                    <p className="text-xl font-extrabold italic leading-snug text-black">
+                      {openArticle.label === "03" ? (
+                        <>
+                          Numbers Don't Lie - But They Do
+                          <br />
+                          <span className="text-blue-600">Reveal</span>
+                        </>
+                      ) : (
+                        openArticle.subheading
+                      )}
+                    </p>
+                  )}
                   <div className="mt-4 space-y-4 text-base leading-8 text-slate-800">
                     {openArticle.fullContent.map((block, index) => (
                       <ArticleContentBlock

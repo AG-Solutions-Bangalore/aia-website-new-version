@@ -34,7 +34,7 @@ export default function ConversationsSection() {
                 </h3>
                 <p className="mt-2 text-sm leading-6 text-black">
                   <strong className="font-semibold italic text-black">
-                    {item.date} -{" "}
+                    {item.date} {item.date && "-"}{" "}
                   </strong>
                   {item.description}
                 </p>

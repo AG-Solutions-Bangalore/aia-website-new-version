@@ -138,11 +138,32 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                 {item.label} {item.title}
               </p>
               <h3 className="mt-2.5 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-black">
-                {item.heading}
+                {item.label === "01" ? (
+                  <>
+                    Decoding the Mindset Behind
+                    <br />
+                    <span className="text-blue-600">Every Financial Crime</span>
+                  </>
+                ) : item.label === "02" ? (
+                  <>
+                    The Toshiba Fraud Story:{" "}
+                    <span className="text-blue-600">Corporate Fraud</span>
+                  </>
+                ) : (
+                  item.heading
+                )}
               </h3>
               {item.subheading && (
                 <p className="mt-1 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-black">
-                  {item.subheading}
+                  {item.label === "03" ? (
+                    <>
+                      Numbers Don't Lie - But They Do
+                      <br />
+                      <span className="text-blue-600">Reveal</span>
+                    </>
+                  ) : (
+                    item.subheading
+                  )}
                 </p>
               )}
             </div>
@@ -467,7 +488,20 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
           <DrawerHeader className="flex flex-row items-start justify-between gap-4 bg-[#0F3652] text-left text-white">
             <div>
               <DrawerTitle className="text-xl font-bold text-white sm:text-2xl">
-                {openArticle?.heading}
+                {openArticle?.label === "01" ? (
+                  <>
+                    Decoding the Mindset Behind
+                    <br />
+                    <span className="text-blue-400">Every Financial Crime</span>
+                  </>
+                ) : openArticle?.label === "02" ? (
+                  <>
+                    The Toshiba Fraud Story:{" "}
+                    <span className="text-blue-400">Corporate Fraud</span>
+                  </>
+                ) : (
+                  openArticle?.heading
+                )}
               </DrawerTitle>
               <DrawerDescription className="mt-1.5 text-xs sm:text-sm font-semibold text-[#F3831C]">
                 {openArticle?.label} {openArticle?.title}
@@ -502,9 +536,19 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                   </div>
                 </div>
                 <div>
-                  <p className="text-lg sm:text-xl font-extrabold italic leading-snug text-black">
-                    {openArticle.subheading}
-                  </p>
+                  {openArticle.subheading && (
+                    <p className="text-lg sm:text-xl font-extrabold italic leading-snug text-black">
+                      {openArticle.label === "03" ? (
+                        <>
+                          Numbers Don't Lie - But They Do
+                          <br />
+                          <span className="text-blue-600">Reveal</span>
+                        </>
+                      ) : (
+                        openArticle.subheading
+                      )}
+                    </p>
+                  )}
                   <div className="mt-4 space-y-4 text-[15px] sm:text-base leading-7 sm:leading-8 text-slate-800">
                     {openArticle.fullContent.map((block, index) => (
                       <ArticleContentBlock
