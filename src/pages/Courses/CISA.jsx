@@ -64,6 +64,15 @@ const CISA = () => {
       {/* <BannerLogos /> */}
       <CisaAbout />
 
+      <LazySection minHeight={420}>
+        <CourseTopStudent
+          courseSlug="all"
+          needPrefix="true"
+          title="Meet our AIA Certified Achievers"
+          subtitle="Meet AIA’s latest achievers who successfully earned their credentials through structured preparation and exam-ready guidance."
+        />
+      </LazySection>
+
       {/* Eligibility Requirements */}
       <LazySection minHeight={450}>
         <CisaEligibility />

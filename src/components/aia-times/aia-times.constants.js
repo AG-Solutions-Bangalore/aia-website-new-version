@@ -41,8 +41,7 @@ export const issueSections = [
     label: "01",
     title: "Cover Story",
     heading: "Decoding the Mindset Behind Every Financial Crime",
-    subheading:
-      "The biggest risk in financial crime isn\u2019t what is hidden. It\u2019s what looks normal.",
+    subheading: "",
     description:
       "The biggest risk in financial crime isn\u2019t what is hidden. It\u2019s what looks normal. Most financial crimes don\u2019t break the system. They quietly work within it. And that\u2019s exactly why they\u2019re getting harder to catch. Fraudsters today are strategic. They understand how systems work, and more importantly, how people expect those systems to behave. Instead of forcing their way through controls, they design transactions that fit perfectly within them. The result? Fraud that doesn\u2019t look like fraud.",
     descriptionContent: rt(
@@ -179,7 +178,7 @@ export const issueSections = [
     label: "02",
     title: "Case Study",
     heading: "The Toshiba Fraud Story:",
-    subheading: "When Corporate Pressure Becomes Corporate Fraud",
+    subheading: "When Corporate Pressure Becomes",
     description:
       "For decades, Toshiba was regarded as a symbol of corporate reliability. Known for its engineering excellence and disciplined operations, the company enjoyed strong investor confidence and global credibility. That reputation suffered a major blow in 2015 when an independent investigation revealed that Toshiba had overstated its profits by nearly USD 1.2 billion over several years. What made the scandal particularly significant was not the complexity of the fraud, but the culture behind it. The Toshiba case remains one of the strongest examples of how organizational pressure and weak challenge culture can gradually distort financial reporting without obvious signs of traditional fraud. For auditors and compliance professionals, the case highlights a critical reality: financial manipulation often develops slowly through normalized compromises rather than deliberate large-scale deception from the outset.",
     descriptionContent: rt(
@@ -526,7 +525,7 @@ export const conversationItems = [
   {
     type: "Interview",
     title: "Real Success Stories of CFE, CIA & CAMS Achievers",
-    date: "20 May 2026",
+    date: "",
     description:
       "AIA shares numerous success stories of its passout students who have earned credentials such as CFE, CIA, and CAMS.",
     image: "interview.webp",

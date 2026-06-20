@@ -37,7 +37,7 @@ const SectionHeading = ({
 
       <div className={`inline-block mb-3 ${isCenter ? "mx-auto" : ""}`}>
         <h2
-          className={`text-xl md:text-4xl font-bold text-[#0F3652] ${titleClass}`}
+          className={`text-xl md:text-4xl font-bold text-[#0F3652] ${isCenter ? "text-center" : "text-left"} ${titleClass}`}
         >
           <span
             className={` ${preheadingclassName ? preheadingclassName : "text-[#F3831C]"
@@ -45,7 +45,12 @@ const SectionHeading = ({
           >
             {preheading}
           </span>{" "}
-          {title} <span className="text-[#F3831C]">{highlight1}</span>
+          {typeof title === "string" ? (
+            <span dangerouslySetInnerHTML={{ __html: title }} />
+          ) : (
+            title
+          )}{" "}
+          <span className="text-[#F3831C]">{highlight1}</span>
         </h2>
 
         {highlight && (
