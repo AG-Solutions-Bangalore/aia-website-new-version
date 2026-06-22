@@ -114,11 +114,7 @@ export default function IssueDetailsSection({ selectedIssue }) {
                     </h2>
                     {item.subheading && (
                       <p className={cn("mt-1 text-lg font-extrabold leading-snug text-[#0b314c]", (item.label === "03" || item.label === "02") && "whitespace-nowrap")}>
-                        {item.label === "03" ? (
-                          <>Numbers Don't Lie - But They Do<br />Reveal</>
-                        ) : (
-                          item.subheading
-                        )}
+                        {item.subheading}
                       </p>
                     )}
                   </div>
@@ -195,11 +191,7 @@ export default function IssueDetailsSection({ selectedIssue }) {
                 <div>
                   {openArticle.subheading && (
                     <p className={cn("text-xl font-extrabold italic leading-snug text-[#0b314c]", openArticle.label === "03" && "lg:whitespace-nowrap")}>
-                      {openArticle.label === "03" ? (
-                        <>Numbers Don't Lie - But They Do<br />Reveal</>
-                      ) : (
-                        openArticle.subheading
-                      )}
+                      {openArticle.subheading}
                     </p>
                   )}
                   <div className="mt-4 space-y-4 text-base leading-8 text-slate-800">
