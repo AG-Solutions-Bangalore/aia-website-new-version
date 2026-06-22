@@ -150,11 +150,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
               </h3>
               {item.subheading && (
                 <p className={cn("mt-1 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-[#0b314c]", (item.label === "03" || item.label === "02") && "whitespace-nowrap")}>
-                  {item.label === "03" ? (
-                    <>Numbers Don't Lie - But They Do<br />Reveal</>
-                  ) : (
-                    item.subheading
-                  )}
+                  {item.subheading}
                 </p>
               )}
             </div>
