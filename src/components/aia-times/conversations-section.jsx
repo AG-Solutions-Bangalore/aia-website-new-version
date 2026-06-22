@@ -7,7 +7,7 @@ export default function ConversationsSection() {
   return (
     <section className="bg-white py-8 md:py-10">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h2 className="text-center text-4xl font-extrabold leading-tight text-black md:text-6xl">
+        <h2 className="text-center text-4xl font-extrabold leading-tight text-logo-color md:text-6xl">
           Watch the Conversations{" "}
           <span className="text-[#F3831C]">That Matter</span>
         </h2>
@@ -26,14 +26,14 @@ export default function ConversationsSection() {
                 className="h-auto w-full object-contain"
               />
               <div className="pt-1">
-                <p className="text-xs font-medium italic text-black">
+                <p className="text-xs font-medium italic text-logo-color">
                   {item.type}
                 </p>
-                <h3 className="mt-2 text-xl font-extrabold leading-tight text-black md:text-2xl">
+                <h3 className="mt-2 text-xl font-extrabold leading-tight text-logo-color md:text-2xl">
                   {item.title}
                 </h3>
-                <p className="mt-2 text-sm leading-6 text-black">
-                  <strong className="font-semibold italic text-black">
+                <p className="mt-2 text-sm leading-6 text-logo-color">
+                  <strong className="font-semibold italic text-logo-color">
                     {item.date} {item.date && "-"}{" "}
                   </strong>
                   {item.description}

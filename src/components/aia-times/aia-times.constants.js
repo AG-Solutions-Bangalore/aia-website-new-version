@@ -177,8 +177,8 @@ export const issueSections = [
   {
     label: "02",
     title: "Case Study",
-    heading: "The Toshiba Fraud Story:",
-    subheading: "When Corporate Pressure Becomes",
+    heading: "The Toshiba Fraud Story",
+    subheading: "When Corporate Pressure Becomes Corporate Fraud",
     description:
       "For decades, Toshiba was regarded as a symbol of corporate reliability. Known for its engineering excellence and disciplined operations, the company enjoyed strong investor confidence and global credibility. That reputation suffered a major blow in 2015 when an independent investigation revealed that Toshiba had overstated its profits by nearly USD 1.2 billion over several years. What made the scandal particularly significant was not the complexity of the fraud, but the culture behind it. The Toshiba case remains one of the strongest examples of how organizational pressure and weak challenge culture can gradually distort financial reporting without obvious signs of traditional fraud. For auditors and compliance professionals, the case highlights a critical reality: financial manipulation often develops slowly through normalized compromises rather than deliberate large-scale deception from the outset.",
     descriptionContent: rt(

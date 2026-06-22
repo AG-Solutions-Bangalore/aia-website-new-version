@@ -19,13 +19,15 @@ body {
   /* Chrome, Safari */
 }
 
-
 :root {
   /* AIA PRIMARY */
   --primary: oklch(0.205 0 0);
   /* #0067DA */
   --primary-foreground: oklch(0.985 0 0);
   /* white */
+
+  /* AIA LOGO */
+  --logo-color: #0b314c;
 
   /* AIA SECONDARY */
   --secondary: oklch(0.97 0 0);
@@ -286,10 +288,12 @@ body {
 }
 
 .shimmer {
-  background: linear-gradient(90deg,
-      rgba(229, 231, 235, 0.9) 25%,
-      rgba(255, 255, 255, 0.6) 50%,
-      rgba(229, 231, 235, 0.9) 75%);
+  background: linear-gradient(
+    90deg,
+    rgba(229, 231, 235, 0.9) 25%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(229, 231, 235, 0.9) 75%
+  );
   background-size: 200% 100%;
   animation: shimmerMove 1.6s infinite linear;
 }

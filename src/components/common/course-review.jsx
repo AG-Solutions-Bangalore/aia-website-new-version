@@ -92,9 +92,10 @@ const CourseReview = ({ slug, title }) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["course-testimonials", slug],
     queryFn: async () => {
-      const res = await axios.get(
-        `${BASE_URL}/api/getTestimonialbyCourse/${slug}`
-      );
+      const endpoint = slug === "home" || slug === "all"
+        ? `${BASE_URL}/api/getAllTestimonials`
+        : `${BASE_URL}/api/getTestimonialbyCourse/${slug}`;
+      const res = await axios.get(endpoint);
       return res.data;
     },
   });

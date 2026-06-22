@@ -45,7 +45,7 @@ export default function TeamSection() {
   return (
     <section className="bg-[#ECECEC] py-12 md:py-16">
       <div className="mx-auto max-w-340 px-4 text-center sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-extrabold leading-tight text-black md:text-6xl">
+        <h2 className="text-3xl font-extrabold leading-tight text-logo-color md:text-6xl">
           Team for Your <span className="text-[#F3831C]">Endless Support</span>
         </h2>
         <p className="mt-3 text-base italic text-slate-700 md:text-lg">

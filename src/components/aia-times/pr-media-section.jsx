@@ -95,7 +95,7 @@ export default function PrMediaSection() {
     <section className="bg-[#ECECEC] py-10 md:py-14">
       <div className="mx-auto max-w-340 px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h2 className="text-4xl font-extrabold leading-tight text-black md:text-6xl">
+          <h2 className="text-4xl font-extrabold leading-tight text-logo-color md:text-6xl">
             News & Media <span className="text-[#F3831C]">Spotlights</span>
           </h2>
           <p className="mt-4 text-base font-medium text-black md:text-lg">
@@ -126,10 +126,10 @@ export default function PrMediaSection() {
                 />
               </div>
               <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <h3 className="whitespace-pre-line text-xl font-extrabold italic leading-snug text-black underline decoration-black underline-offset-3">
+                <h3 className="whitespace-pre-line text-xl font-extrabold italic leading-snug text-logo-color underline decoration-black underline-offset-3">
                   {featured.title}
                 </h3>
-                <span className="inline-flex min-h-7 w-fit shrink-0 items-center justify-center rounded-full border border-[#F3831C] px-3 py-1 text-[11px] font-bold text-black transition-colors group-hover:bg-[#F3831C] group-hover:text-white">
+                <span className="inline-flex min-h-7 w-fit shrink-0 items-center justify-center rounded-full border border-[#F3831C] px-3 py-1 text-[11px] font-bold text-logo-color  transition-colors group-hover:bg-[#F3831C] group-hover:text-white">
                   Read More on {featured.buttonTitle}
                 </span>
               </div>
@@ -159,10 +159,10 @@ export default function PrMediaSection() {
                   />
                 </div>
                 <div>
-                  <h3 className="whitespace-pre-line text-base font-extrabold italic leading-snug text-black underline decoration-black underline-offset-3">
+                  <h3 className="whitespace-pre-line text-base font-extrabold italic leading-snug text-logo-color underline decoration-black underline-offset-3">
                     {item.title}
                   </h3>
-                  <span className="mt-3 inline-flex min-h-7 w-fit items-center justify-center rounded-full border border-[#F3831C] px-3 py-1 text-[10px] font-bold text-black transition-colors group-hover:bg-[#F3831C] group-hover:text-white">
+                  <span className="mt-3 inline-flex min-h-7 w-fit items-center justify-center rounded-full border border-[#F3831C] px-3 py-1 text-[10px] font-bold text-logo-color transition-colors group-hover:bg-[#F3831C] group-hover:text-white">
                     Read More on {item.buttonTitle}
                   </span>
                 </div>
@@ -195,10 +195,10 @@ export default function PrMediaSection() {
                   />
                 </div>
                 <div>
-                  <h3 className="whitespace-pre-line text-sm font-extrabold italic leading-snug text-black underline decoration-black underline-offset-3">
+                  <h3 className="whitespace-pre-line text-sm font-extrabold italic leading-snug text-logo-color underline decoration-black underline-offset-3">
                     {item.title}
                   </h3>
-                  <span className="mt-3 inline-flex min-h-7 w-fit items-center justify-center rounded-full border border-[#F3831C] px-3 py-1 text-[10px] font-bold text-black transition-colors group-hover:bg-[#F3831C] group-hover:text-white">
+                  <span className="mt-3 inline-flex min-h-7 w-fit items-center justify-center rounded-full border border-[#F3831C] px-3 py-1 text-[10px] font-bold text-logo-color transition-colors group-hover:bg-[#F3831C] group-hover:text-white">
                     Read More on {item.buttonTitle}
                   </span>
                 </div>

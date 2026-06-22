@@ -95,7 +95,7 @@ export default function AiaTimesContactSection() {
       <div className="mx-auto grid max-w-340 gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_1fr] lg:items-start lg:px-8">
         <div className="pt-3 lg:pr-12">
           <p className="max-w-2xl text-sm font-normal leading-5 text-[#F3831C] lg:whitespace-nowrap">AIA TIMES empowers professionals to learn, exchange ideas, and keep pace with industry trends.</p>
-          <h2 className="mt-4 text-4xl font-extrabold leading-tight text-[#0F3652] md:text-5xl">
+          <h2 className="mt-4 text-4xl font-extrabold leading-tight text-logo-color md:text-5xl">
             Connect with AIA TIMES
           </h2>
           <p className="mt-7 max-w-2xl text-base font-medium leading-7 text-[#4f7196]">
