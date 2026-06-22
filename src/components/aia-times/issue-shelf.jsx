@@ -102,7 +102,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
             <div className="flex min-w-0 flex-col text-left">
               {isLongPrefix ? (
                 <>
-                  <p className="text-[15px] md:text-[16px] font-extrabold italic leading-relaxed text-black mb-3">
+                  <p className="text-[15px] md:text-[16px] font-extrabold italic leading-relaxed text-[#0b314c] mb-3">
                     {cleanPrefixText}
                   </p>
                   <p className="text-[15px] md:text-[16px] font-medium leading-relaxed text-[#333333] [text-align:justify]">
@@ -112,7 +112,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
               ) : (
                 <p className="text-[15px] md:text-[16px] font-medium leading-relaxed text-[#333333] [text-align:justify]">
                   {cleanPrefixText && (
-                    <span className="font-extrabold italic text-black mr-2">
+                    <span className="font-extrabold italic text-[#0b314c] mr-2">
                       {cleanPrefixText}
                     </span>
                   )}
@@ -137,30 +137,21 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
               <p className="text-[13px] sm:text-sm font-extrabold italic tracking-wider text-[#f36f21]">
                 {item.label} {item.title}
               </p>
-              <h3 className="mt-2.5 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-black">
+              <h3 className="mt-2.5 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-[#0b314c]">
                 {item.label === "01" ? (
                   <>
                     Decoding the Mindset Behind
                     <br />
-                    <span className="text-blue-600">Every Financial Crime</span>
-                  </>
-                ) : item.label === "02" ? (
-                  <>
-                    The Toshiba Fraud Story:{" "}
-                    <span className="text-blue-600">Corporate Fraud</span>
+                    Every Financial Crime
                   </>
                 ) : (
                   item.heading
                 )}
               </h3>
               {item.subheading && (
-                <p className="mt-1 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-black">
+                <p className={cn("mt-1 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-[#0b314c]", (item.label === "03" || item.label === "02") && "whitespace-nowrap")}>
                   {item.label === "03" ? (
-                    <>
-                      Numbers Don't Lie - But They Do
-                      <br />
-                      <span className="text-blue-600">Reveal</span>
-                    </>
+                    <>Numbers Don't Lie - But They Do<br />Reveal</>
                   ) : (
                     item.subheading
                   )}
@@ -181,12 +172,8 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                   {/* Heading */}
                   <div
                     className={cn(
-                      "order-1 w-full mx-auto",
-                      imageFirst
-                        ? "lg:col-start-1 lg:col-end-6 lg:row-start-1 lg:ml-0 lg:mr-auto"
-                        : "lg:col-start-8 lg:col-end-13 lg:row-start-1 lg:mr-0 lg:ml-auto",
+                      "order-1 w-full lg:col-start-1 lg:col-end-13 lg:row-start-1",
                     )}
-                    style={{ maxWidth: item.imageWidth || "470px" }}
                   >
                     {headingBlock}
                   </div>
@@ -227,10 +214,10 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
     <section className="bg-[#F7F7F7] py-10 md:py-14">
       <div className="mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
-          <h1 className="text-4xl font-extrabold leading-tight text-black md:text-7xl">
+          <h1 className="text-4xl font-extrabold leading-tight text-logo-color md:text-7xl">
             AIA Times <span className="text-[#ea6b2a]">Magazine</span>
           </h1>
-          <p className="mx-auto mt-5 max-w-5xl text-base leading-7 text-black md:text-lg">
+          <p className="mx-auto mt-5 max-w-5xl text-base leading-7 text-logo-color md:text-lg">
             Explore the latest insights, industry trends, expert opinions, and
             success stories from the world of audit, risk, and finance.
           </p>
@@ -260,10 +247,10 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                 <p className="text-sm italic text-black">
                   {selectedIssue.category}
                 </p>
-                <h2 className="mt-2 text-2xl font-extrabold leading-tight text-black md:text-3xl">
+                <h2 className="mt-2 text-2xl font-extrabold leading-tight text-logo-color md:text-3xl">
                   {selectedIssue.title}
                 </h2>
-                <p className="mt-4 max-w-3xl text-base italic leading-7 text-black">
+                <p className="mt-4 max-w-3xl text-base italic leading-7 text-logo-color">
                   {selectedIssue.displayDate}
                   {selectedIssue.isAvailable && " - "}
                   {selectedIssue.description}
@@ -492,12 +479,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                   <>
                     Decoding the Mindset Behind
                     <br />
-                    <span className="text-blue-400">Every Financial Crime</span>
-                  </>
-                ) : openArticle?.label === "02" ? (
-                  <>
-                    The Toshiba Fraud Story:{" "}
-                    <span className="text-blue-400">Corporate Fraud</span>
+                    Every Financial Crime
                   </>
                 ) : (
                   openArticle?.heading
@@ -537,16 +519,8 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                 </div>
                 <div>
                   {openArticle.subheading && (
-                    <p className="text-lg sm:text-xl font-extrabold italic leading-snug text-black">
-                      {openArticle.label === "03" ? (
-                        <>
-                          Numbers Don't Lie - But They Do
-                          <br />
-                          <span className="text-blue-600">Reveal</span>
-                        </>
-                      ) : (
-                        openArticle.subheading
-                      )}
+                    <p className="text-lg sm:text-xl font-extrabold italic leading-snug text-[#0b314c]">
+                      {openArticle.subheading}
                     </p>
                   )}
                   <div className="mt-4 space-y-4 text-[15px] sm:text-base leading-7 sm:leading-8 text-slate-800">

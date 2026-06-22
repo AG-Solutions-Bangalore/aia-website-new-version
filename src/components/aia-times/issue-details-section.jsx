@@ -36,58 +36,18 @@ export default function IssueDetailsSection({ selectedIssue }) {
           {articles.map((item, index) => {
             const imageBlock = (
               <div>
-                {index % 2 === 0 ? (
-                  <h2 className="mb-5 text-2xl font-extrabold leading-tight text-black md:text-3xl">
+                {index % 2 === 0 && (
+                  <h2 className="mb-5 text-2xl font-extrabold leading-tight text-[#0b314c] md:text-3xl">
                     {item.label === "01" ? (
                       <>
                         Decoding the Mindset Behind
                         <br />
-                        <span className="text-blue-600">Every Financial Crime</span>
-                      </>
-                    ) : item.label === "02" ? (
-                      <>
-                        The Toshiba Fraud Story:{" "}
-                        <span className="text-blue-600">Corporate Fraud</span>
+                        Every Financial Crime
                       </>
                     ) : (
                       item.heading
                     )}
                   </h2>
-                ) : (
-                  <div className="mb-5 text-right">
-                    <p className="text-lg font-extrabold italic text-[#f36f21]">
-                      {item.label} {item.title}
-                    </p>
-                    <h2 className="mt-3 text-2xl font-extrabold leading-tight text-black md:text-3xl">
-                      {item.label === "01" ? (
-                        <>
-                          Decoding the Mindset Behind
-                          <br />
-                          <span className="text-blue-600">Every Financial Crime</span>
-                        </>
-                      ) : item.label === "02" ? (
-                        <>
-                          The Toshiba Fraud Story:{" "}
-                          <span className="text-blue-600">Corporate Fraud</span>
-                        </>
-                      ) : (
-                        item.heading
-                      )}
-                    </h2>
-                    {item.subheading && (
-                      <p className="mt-1 text-lg font-extrabold leading-snug text-black">
-                        {item.label === "03" ? (
-                          <>
-                            Numbers Don't Lie - But They Do
-                            <br />
-                            <span className="text-blue-600">Reveal</span>
-                          </>
-                        ) : (
-                          item.subheading
-                        )}
-                      </p>
-                    )}
-                  </div>
                 )}
                 <div className="overflow-hidden rounded-md bg-slate-100 p-3">
                   <OptimizedImage
@@ -110,13 +70,9 @@ export default function IssueDetailsSection({ selectedIssue }) {
                 )}
               >
                 {index % 2 === 0 && item.subheading && (
-                  <p className="text-lg font-extrabold italic leading-snug text-black">
+                  <p className={cn("text-lg font-extrabold italic leading-snug text-[#0b314c]", item.label === "03" && "lg:whitespace-nowrap")}>
                     {item.label === "03" ? (
-                      <>
-                        Numbers Don't Lie - But They Do
-                        <br />
-                        <span className="text-blue-600">Reveal</span>
-                      </>
+                      <>Numbers Don't Lie - But They Do<br />Reveal</>
                     ) : (
                       item.subheading
                     )}
@@ -146,19 +102,41 @@ export default function IssueDetailsSection({ selectedIssue }) {
             return (
               <article
                 key={item.title}
-                className="grid gap-7 px-4 py-8 md:px-8 md:py-10 lg:grid-cols-2 lg:items-center"
+                className="px-4 py-8 md:px-8 md:py-10"
               >
-                {index % 2 === 0 ? (
-                  <>
-                    {imageBlock}
-                    {textBlock}
-                  </>
-                ) : (
-                  <>
-                    {textBlock}
-                    {imageBlock}
-                  </>
+                {index % 2 !== 0 && (
+                  <div className="mb-8 text-right w-full">
+                    <p className="text-lg font-extrabold italic text-[#f36f21]">
+                      {item.label} {item.title}
+                    </p>
+                    <h2 className="mt-3 text-2xl font-extrabold leading-tight text-[#0b314c] md:text-3xl">
+                      {item.heading}
+                    </h2>
+                    {item.subheading && (
+                      <p className={cn("mt-1 text-lg font-extrabold leading-snug text-[#0b314c]", (item.label === "03" || item.label === "02") && "whitespace-nowrap")}>
+                        {item.label === "03" ? (
+                          <>Numbers Don't Lie - But They Do<br />Reveal</>
+                        ) : (
+                          item.subheading
+                        )}
+                      </p>
+                    )}
+                  </div>
                 )}
+                
+                <div className="grid gap-7 lg:grid-cols-2 lg:items-center">
+                  {index % 2 === 0 ? (
+                    <>
+                      {imageBlock}
+                      {textBlock}
+                    </>
+                  ) : (
+                    <>
+                      {textBlock}
+                      {imageBlock}
+                    </>
+                  )}
+                </div>
               </article>
             );
           })}
@@ -179,13 +157,10 @@ export default function IssueDetailsSection({ selectedIssue }) {
                   <>
                     Decoding the Mindset Behind
                     <br />
-                    <span className="text-blue-400">Every Financial Crime</span>
+                    Every Financial Crime
                   </>
                 ) : openArticle?.label === "02" ? (
-                  <>
-                    The Toshiba Fraud Story:{" "}
-                    <span className="text-blue-400">Corporate Fraud</span>
-                  </>
+                  <>The Toshiba Fraud Story</>
                 ) : (
                   openArticle?.heading
                 )}
@@ -219,13 +194,9 @@ export default function IssueDetailsSection({ selectedIssue }) {
                 </div>
                 <div>
                   {openArticle.subheading && (
-                    <p className="text-xl font-extrabold italic leading-snug text-black">
+                    <p className={cn("text-xl font-extrabold italic leading-snug text-[#0b314c]", openArticle.label === "03" && "lg:whitespace-nowrap")}>
                       {openArticle.label === "03" ? (
-                        <>
-                          Numbers Don't Lie - But They Do
-                          <br />
-                          <span className="text-blue-600">Reveal</span>
-                        </>
+                        <>Numbers Don't Lie - But They Do<br />Reveal</>
                       ) : (
                         openArticle.subheading
                       )}

@@ -109,7 +109,10 @@ const CISA = () => {
 
       {/* Google Reviews */}
       <LazySection minHeight={450}>
-        <CourseReview slug="CIA" title="300+ Professional Experiences Shared" />
+        <CourseReview
+          slug="home"
+          title="300+ Professional Experiences Shared"
+        />
       </LazySection>
 
       {/* YouTube Success Interviews */}
@@ -152,7 +155,7 @@ const CISA = () => {
 
       {/* Study Materials & ISACA Prep Kit slider */}
       <LazySection minHeight={420}>
-        <CisaCourseLms image="lms_CIA.webp" />
+        <CisaCourseLms image="lms_CISA.webp" />
       </LazySection>
 
       {/* Unique features checklist */}
