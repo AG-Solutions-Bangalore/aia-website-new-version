@@ -26,12 +26,10 @@ const CfePracticeQuestion = () => {
     switch (moduleCode) {
       case "CFE-1":
         return "MODULE-I: FINANCIAL TRANSACTIONS AND FRAUD SCHEMES";
-      case "CFE-2":
-        return "MODULE-II: LAW";
       case "CFE-3":
-        return "MODULE-III: INVESTIGATION";
+        return "MODULE-II: INVESTIGATION";
       case "CFE-4":
-        return "MODULE-IV: FRAUD PREVENTION & DETERRENCE";
+        return "MODULE-III: FRAUD PREVENTION & DETERRENCE";
       default:
         return "MODULE-I: FINANCIAL TRANSACTIONS AND FRAUD SCHEMES";
     }

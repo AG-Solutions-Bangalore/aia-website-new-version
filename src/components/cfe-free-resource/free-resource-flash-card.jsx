@@ -54,21 +54,21 @@ const FreeResourceFlashCard = () => {
         title: "Financial Transactions \n & Fraud Schemes",
         icon: `${IMAGE_PATH}/flash_card_1.webp`,
       },
+      // 2: {
+      //   id: 2,
+      //   number: "02",
+      //   title: "Law",
+      //   icon: `${IMAGE_PATH}/flash_card_2.webp`,
+      // },
       2: {
         id: 2,
         number: "02",
-        title: "Law",
-        icon: `${IMAGE_PATH}/flash_card_2.webp`,
+        title: "Investigation",
+        icon: `${IMAGE_PATH}/flash_card_3.webp`,
       },
       3: {
         id: 3,
         number: "03",
-        title: "Investigation",
-        icon: `${IMAGE_PATH}/flash_card_3.webp`,
-      },
-      4: {
-        id: 4,
-        number: "04",
         title: "Fraud Prevention \n & Deterrence",
         icon: `${IMAGE_PATH}/flash_card_4.webp`,
       },
@@ -164,7 +164,7 @@ const FreeResourceFlashCard = () => {
       />
 
       <div className="mx-auto max-w-5xl cursor-pointer">
-        <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-4 md:gap-10">
+        <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-3 md:gap-10">
           {modules.map((module) => (
             <div
               key={module.id}

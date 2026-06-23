@@ -35,26 +35,18 @@ const FreeResourcePracticeQuestion = () => {
             (q) => q.questions_module === "CFE-1",
           ),
         };
-      case "CFE-2":
-        return {
-          id: 2,
-          title: "MODULE-II: LAW",
-          questions: questionsData.filter(
-            (q) => q.questions_module === "CFE-2",
-          ),
-        };
       case "CFE-3":
         return {
-          id: 3,
-          title: "MODULE-III: INVESTIGATION",
+          id: 2,
+          title: "MODULE-II: INVESTIGATION",
           questions: questionsData.filter(
             (q) => q.questions_module === "CFE-3",
           ),
         };
       case "CFE-4":
         return {
-          id: 4,
-          title: "MODULE-IV: FRAUD PREVENTION & DETERRENCE",
+          id: 3,
+          title: "MODULE-III: FRAUD PREVENTION & DETERRENCE",
           questions: questionsData.filter(
             (q) => q.questions_module === "CFE-4",
           ),
@@ -70,7 +62,6 @@ const FreeResourcePracticeQuestion = () => {
 
   const modules = [
     getModuleData("CFE-1"),
-    getModuleData("CFE-2"),
     getModuleData("CFE-3"),
     getModuleData("CFE-4"),
   ];

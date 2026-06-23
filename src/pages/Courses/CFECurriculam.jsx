@@ -96,9 +96,9 @@ const CFECurriculam = () => {
         <CfeJourney />
       </LazySection>
 
-      <LazySection minHeight={640}>
+      {/* <LazySection minHeight={640}>
         <CfeResidentialBanner />
-      </LazySection>
+      </LazySection> */}
 
       <LazySection minHeight={450}>
         <CfeWhyAia />
