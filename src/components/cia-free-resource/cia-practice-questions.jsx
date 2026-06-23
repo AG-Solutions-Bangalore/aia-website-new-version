@@ -17,7 +17,7 @@ const CIAPracticeQuestion = () => {
     queryKey: ["practice-question-cia"],
     queryFn: async () => {
       const response = await axios.get(
-        `${BASE_URL}/api/getQuestionAnswerByCourse/CIA`
+        `${BASE_URL}/api/getQuestionAnswerByCourse/CIA`,
       );
       return response.data;
     },
@@ -33,45 +33,37 @@ const CIAPracticeQuestion = () => {
           id: 1,
           title: "SECTION-I: INTERNAL AUDIT PROFESSIONALISM AND QUALITY",
           questions: questionsData.filter(
-            (q) => q.questions_module === "CIA-1"
-          ),
-        };
-      case "CIA-2":
-        return {
-          id: 2,
-          title: "SECTION-II: INTERNAL AUDIT OPERATIONS AND AUDIT PLAN",
-          questions: questionsData.filter(
-            (q) => q.questions_module === "CIA-2"
+            (q) => q.questions_module === "CIA-1",
           ),
         };
       case "CIA-3":
         return {
-          id: 3,
-          title: "SECTION-III: ENGAGEMENT PLANNING",
+          id: 2,
+          title: "SECTION-II: ENGAGEMENT PLANNING",
           questions: questionsData.filter(
-            (q) => q.questions_module === "CIA-3"
+            (q) => q.questions_module === "CIA-3",
           ),
         };
       case "CIA-4":
         return {
-          id: 4,
-          title: "SECTION-IV: ENGAGEMENT PERFORMANCE",
+          id: 3,
+          title: "SECTION-III: ENGAGEMENT PERFORMANCE",
           questions: questionsData.filter(
-            (q) => q.questions_module === "CIA-4"
+            (q) => q.questions_module === "CIA-4",
           ),
         };
       case "CIA-5":
         return {
-          id: 5,
-          title: "SECTION-V: ENGAGEMENT RESULTS AND MONITORING",
+          id: 4,
+          title: "SECTION-IV: ENGAGEMENT RESULTS AND MONITORING",
           questions: questionsData.filter(
-            (q) => q.questions_module === "CIA-5"
+            (q) => q.questions_module === "CIA-5",
           ),
         };
       default:
         return {
           id: 1,
-          title: "MODULE-I: FINANCIAL TRANSACTIONS AND FRAUD SCHEMES",
+          title: "SECTION-I: INTERNAL AUDIT PROFESSIONALISM AND QUALITY",
           questions: [],
         };
     }
@@ -79,7 +71,6 @@ const CIAPracticeQuestion = () => {
 
   const modules = [
     getModuleData("CIA-1"),
-    getModuleData("CIA-2"),
     getModuleData("CIA-3"),
     getModuleData("CIA-4"),
     getModuleData("CIA-5"),
@@ -192,11 +183,11 @@ const CIAPracticeQuestion = () => {
                       ? isCorrect
                         ? "border-[#21bf73] bg-[#21bf73]"
                         : isSelected
-                        ? "border-red-500 bg-red-500"
-                        : "border-gray-300 bg-white"
+                          ? "border-red-500 bg-red-500"
+                          : "border-gray-300 bg-white"
                       : isSelected
-                      ? "border-[#0F3652] bg-white"
-                      : "border-gray-300 bg-white"
+                        ? "border-[#0F3652] bg-white"
+                        : "border-gray-300 bg-white"
                   }
                 `}
               >
@@ -215,8 +206,8 @@ const CIAPracticeQuestion = () => {
                   showCorrect && isCorrect
                     ? "text-[#21bf73] font-medium"
                     : showCorrect && isSelected && !isCorrect
-                    ? "text-red-500 font-medium"
-                    : ""
+                      ? "text-red-500 font-medium"
+                      : ""
                 }
               `}
             >
@@ -510,7 +501,7 @@ const CIAPracticeQuestion = () => {
                 {renderNavButtons(
                   currentQuestion,
                   isLastQuestion,
-                  currentQuestionIndex === 0
+                  currentQuestionIndex === 0,
                 )}
               </div>
             </div>

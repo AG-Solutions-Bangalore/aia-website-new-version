@@ -36,26 +36,18 @@ const CAMSPracticeQuestion = () => {
             (q) => q.questions_module === "CAMS-1"
           ),
         };
-      case "CAMS-2":
-        return {
-          id: 2,
-          title: "SECTION-II: GLOBAL AFC FRAMEWORKS, GOVERNANCE, AND REGULATIONS",
-          questions: questionsData.filter(
-            (q) => q.questions_module === "CAMS-2"
-          ),
-        };
       case "CAMS-3":
         return {
-          id: 3,
-          title: "SECTION-III: BUILDING AN AFC COMPLIANCE PROGRAM",
+          id: 2,
+          title: "SECTION-II: BUILDING AN AFC COMPLIANCE PROGRAM",
           questions: questionsData.filter(
             (q) => q.questions_module === "CAMS-3"
           ),
         };
       case "CAMS-4":
         return {
-          id: 4,
-          title: "SECTION-IV: TOOLS AND TECHNOLOGIES TO FIGHT FINANCIAL CRIMES",
+          id: 3,
+          title: "SECTION-III: TOOLS AND TECHNOLOGIES TO FIGHT FINANCIAL CRIMES",
           questions: questionsData.filter(
             (q) => q.questions_module === "CAMS-4"
           ),
@@ -63,7 +55,7 @@ const CAMSPracticeQuestion = () => {
       default:
         return {
           id: 1,
-          title: "SECTION-I: FINANCIAL TRANSACTIONS AND FRAUD SCHEMES",
+          title: "SECTION-I: UNDERSTANDING THE RISKS AND METHODS OF FINANCIAL CRIME",
           questions: [],
         };
     }
@@ -71,7 +63,6 @@ const CAMSPracticeQuestion = () => {
 
   const modules = [
     getModuleData("CAMS-1"),
-    getModuleData("CAMS-2"),
     getModuleData("CAMS-3"),
     getModuleData("CAMS-4"),
   ];
