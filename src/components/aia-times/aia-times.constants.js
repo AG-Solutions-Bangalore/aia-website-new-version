@@ -28,12 +28,12 @@ export const whatsNewItems = [
       "Exclusive CIA short study notes launched by AIA for smart and strategic CIA prep.",
     image: "time_cia_short_notes.webp",
   },
-  {
-    title: "CFE 4-Day Residential Program",
-    description:
-      "Admissions open for AIA's exclusive 4-day CFE residential training program.",
-    image: "time_cfe_resident_al_program.webp",
-  },
+  // {
+  //   title: "CFE 4-Day Residential Program",
+  //   description:
+  //     "Admissions open for AIA's exclusive 4-day CFE residential training program.",
+  //   image: "time_cfe_resident_al_program.webp",
+  // },
 ];
 
 export const issueSections = [

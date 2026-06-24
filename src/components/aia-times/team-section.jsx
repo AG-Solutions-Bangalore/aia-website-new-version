@@ -53,7 +53,7 @@ export default function TeamSection() {
           queries, or assistance.
         </p>
 
-        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {team.map((member) => (
             <article key={member.id} className="text-center">
               <OptimizedImage

@@ -20,16 +20,16 @@ export default function WhatsNewSection() {
 
           <div className="min-w-0">
             <div className="overflow-x-auto pb-6">
-              <div className="flex w-max min-w-full gap-5">
+              <div className="flex w-full gap-6">
                 {whatsNewItems.map((item, index) => (
                   <article
                     key={item.title}
                     className={cn(
-                      "w-60 shrink-0 pl-5 text-center",
-                      index > 0 && "border-l border-white/70",
+                      "flex-1 min-w-[240px] text-center",
+                      index > 0 && "border-l border-white/70 pl-6",
                     )}
                   >
-                    <div className="flex h-36 w-full items-center justify-center bg-white p-4">
+                    <div className="mx-auto flex h-36 w-60 items-center justify-center bg-white p-4">
                       <OptimizedImage
                         src={`${ASSET_BASE}/${item.image}`}
                         alt={item.title}
