@@ -9,10 +9,10 @@ const CompanyMarquee = ({ companies }) => {
         {`
           @keyframes companyMarquee {
             0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+            100% { transform: translateX(-120%); }
           }
           .company-marquee {
-            animation: companyMarquee 80s linear infinite;
+            animation: companyMarquee 120s linear infinite;
           }
         `}
       </style>
@@ -51,7 +51,7 @@ const CompanyMarquee = ({ companies }) => {
                     alt={c.alt}
                     className="h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
                     style={{ maxWidth: "240px" }}
-                     loading="lazy"
+                    loading="lazy"
                   />
                 </div>
               ))}

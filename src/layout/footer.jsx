@@ -21,7 +21,7 @@ export default function Footer() {
                 { name: "Home", href: "/" },
                 { name: "About AIA", href: "/about-aia/" },
                 { name: "Blog", href: "/blogs/" },
-                { name: "AIA Times", href: "/aia-times/" },
+                // { name: "AIA Times", href: "/aia-times/" },
                 { name: "Alumni Network", href: "/alumni-network/" },
                 { name: "CFE Free Resources", href: "/cfe-free-resources/" },
                 { name: "Corporate Training", href: "/corporate-training/" },
@@ -63,7 +63,7 @@ export default function Footer() {
                 },
 
                 { name: "CAMS", href: "/cams/" },
-                { name: "CISA", href: "/cisa/" },
+                // { name: "CISA", href: "/cisa/" },
               ].map((course, idx) => (
                 <li key={idx} className="group">
                   <Link

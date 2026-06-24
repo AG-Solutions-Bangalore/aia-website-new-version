@@ -83,7 +83,7 @@ const Navbar = () => {
         { name: "CIA Curriculum", link: "/cia-curriculum/" },
         { name: "CIA Challenge", link: "/cia-challenge-curriculum/" },
         { name: "CAMS", link: "/cams/" },
-        { name: "CISA", link: "/cisa/" },
+        // { name: "CISA", link: "/cisa/" },
       ],
     },
     {
@@ -100,7 +100,7 @@ const Navbar = () => {
       link: "#",
       submenu: [
         { name: "Blog", link: "/blogs/" },
-        { name: "AIA Times", link: "/aia-times/" },
+        // { name: "AIA Times", link: "/aia-times/" },
         { name: "Alumni Network", link: "/alumni-network/" },
         { name: "Corporate Training", link: "/corporate-training/" },
       ],
