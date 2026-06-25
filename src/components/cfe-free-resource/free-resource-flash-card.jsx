@@ -51,7 +51,7 @@ const FreeResourceFlashCard = () => {
       1: {
         id: 1,
         number: "01",
-        title: "Financial Transactions \n & Fraud Schemes",
+        title: "Fraud Schemes and Financial Crimes",
         icon: `${IMAGE_PATH}/flash_card_1.webp`,
       },
       // 2: {
@@ -63,13 +63,13 @@ const FreeResourceFlashCard = () => {
       2: {
         id: 2,
         number: "02",
-        title: "Investigation",
+        title: "Fraud Investigations and Legal Issues",
         icon: `${IMAGE_PATH}/flash_card_3.webp`,
       },
       3: {
         id: 3,
         number: "03",
-        title: "Fraud Prevention \n & Deterrence",
+        title: "Fraud Prevention and Deterrence",
         icon: `${IMAGE_PATH}/flash_card_4.webp`,
       },
     };

@@ -1,4 +1,3 @@
-
 import { BASE_URL } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -17,7 +16,9 @@ const FreeResourcePracticeQuestion = () => {
   } = useQuery({
     queryKey: ["practice-question-cfe"],
     queryFn: async () => {
-      const response = await axios.get(`${BASE_URL}/api/getQuestionAnswerByCourse/CFE`);
+      const response = await axios.get(
+        `${BASE_URL}/api/getQuestionAnswerByCourse/CFE`,
+      );
       return response.data;
     },
     retry: 3,
@@ -30,7 +31,7 @@ const FreeResourcePracticeQuestion = () => {
       case "CFE-1":
         return {
           id: 1,
-          title: "MODULE-I: FINANCIAL TRANSACTIONS AND FRAUD SCHEMES",
+          title: "MODULE-I: Fraud Schemes and Financial Crimes",
           questions: questionsData.filter(
             (q) => q.questions_module === "CFE-1",
           ),
@@ -38,7 +39,7 @@ const FreeResourcePracticeQuestion = () => {
       case "CFE-3":
         return {
           id: 2,
-          title: "MODULE-II: INVESTIGATION",
+          title: "MODULE-II: Fraud Investigations and Legal Issues",
           questions: questionsData.filter(
             (q) => q.questions_module === "CFE-3",
           ),
@@ -46,7 +47,7 @@ const FreeResourcePracticeQuestion = () => {
       case "CFE-4":
         return {
           id: 3,
-          title: "MODULE-III: FRAUD PREVENTION & DETERRENCE",
+          title: "MODULE-III: Fraud Prevention and Deterrence",
           questions: questionsData.filter(
             (q) => q.questions_module === "CFE-4",
           ),
