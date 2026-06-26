@@ -96,19 +96,23 @@ const Navbar = () => {
       ],
     },
     {
+      title: "Alumni Network",
+      link: "/alumni-network/",
+      submenu: null,
+    },
+    {
+      title: "Corporate Training",
+      link: "/corporate-training/",
+      submenu: null,
+    },
+    {
       title: "Other",
       link: "#",
       submenu: [
         { name: "Blog", link: "/blogs/" },
         { name: "AIA Times", link: "/aia-times/" },
-        { name: "Alumni Network", link: "/alumni-network/" },
-        { name: "Corporate Training", link: "/corporate-training/" },
+        { name: "Contact US", link: "/contact/" },
       ],
-    },
-    {
-      title: "Contact US",
-      link: "/contact/",
-      submenu: null,
     },
   ];
 
