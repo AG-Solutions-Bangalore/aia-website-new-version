@@ -177,7 +177,7 @@ function matchMetaRoute(routePath, metaData) {
     });
 }
 
-function getBlogMeta(blog, fallbackSlug = '') {
+function getBlogMeta(blog, fallbackSlug = '', imageBaseUrl = '') {
   if (!blog) return null;
 
   const slug = normalizeText(blog.blog_slug || fallbackSlug);
@@ -193,6 +193,8 @@ function getBlogMeta(blog, fallbackSlug = '') {
         fallbackDescription,
     ),
     keywords: normalizeText(blog.blog_meta_keywords || ''),
+    rawBlog: blog,
+    imageBaseUrl: imageBaseUrl,
   };
 }
 
@@ -248,13 +250,18 @@ async function buildBlogMetaMap(routes) {
 
   try {
     const blogListResponse = await fetchJson(BLOG_LIST_API_URL);
+    const blogImageConfig = blogListResponse?.image_url?.find(
+      (item) => item.image_for === "Blog",
+    );
+    const listImageBaseUrl = blogImageConfig ? blogImageConfig.image_url : "https://aia.in.net/webapi/public/assets/images/blog_images/";
+
     const blogList = Array.isArray(blogListResponse?.data)
       ? blogListResponse.data
       : [];
 
     blogList.forEach((blog) => {
       if (!blog?.blog_slug) return;
-      blogMetaBySlug.set(blog.blog_slug, getBlogMeta(blog, blog.blog_slug));
+      blogMetaBySlug.set(blog.blog_slug, getBlogMeta(blog, blog.blog_slug, listImageBaseUrl));
     });
   } catch (error) {
     console.warn(`Could not load blog list metadata: ${error.message}`);
@@ -265,7 +272,11 @@ async function buildBlogMetaMap(routes) {
       const blogDetailResponse = await fetchJson(
         `${BLOG_DETAIL_API_URL}/${encodeURIComponent(slug)}`,
       );
-      const blogMeta = getBlogMeta(blogDetailResponse?.data, slug);
+      const blogImageConfig = blogDetailResponse?.image_url?.find(
+        (item) => item.image_for === "Blog",
+      );
+      const detailImageBaseUrl = blogImageConfig ? blogImageConfig.image_url : "https://aia.in.net/webapi/public/assets/images/blog_images/";
+      const blogMeta = getBlogMeta(blogDetailResponse?.data, slug, detailImageBaseUrl);
       if (blogMeta) blogMetaBySlug.set(slug, blogMeta);
     } catch (error) {
       console.warn(`Could not load blog metadata for ${slug}: ${error.message}`);
@@ -306,6 +317,65 @@ function applySeoTags(html, routePath, metaData, blogMetaBySlug) {
   html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:url'), `<meta property="twitter:url" content="${canonicalUrl}" data-rh="true">`);
   html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:title'), `<meta name="twitter:title" content="${escapeAttribute(pageTitle)}" data-rh="true">`);
   html = upsertHeadTag(html, headMetaNameOrPropertySelector('twitter:description'), `<meta name="twitter:description" content="${escapeAttribute(pageDescription)}" data-rh="true">`);
+
+  // Inject BlogPosting schema tag if this is a blog detail page
+  const blogSlug = getBlogSlugFromRoute(routePath);
+  if (blogSlug && pageMeta.rawBlog) {
+    const blog = pageMeta.rawBlog;
+    const formatSchemaDate = (dateString) => {
+      if (!dateString) return "";
+      try {
+        const date = new Date(dateString);
+        if (isNaN(date.getTime())) return "";
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, "0");
+        const day = String(date.getDate()).padStart(2, "0");
+        return `${year}-${month}-${day}`;
+      } catch {
+        return "";
+      }
+    };
+
+    const imageUrl = blog.blog_images && pageMeta.imageBaseUrl
+      ? `${pageMeta.imageBaseUrl}${blog.blog_images}`
+      : 'https://aia.in.net/no-image.svg';
+
+    const blogSchema = {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": canonicalUrl,
+      },
+      "headline": blog.blog_heading,
+      "description": blog.blog_short_description || pageDescription,
+      "image": imageUrl,
+      "author": {
+        "@type": "Organization",
+        "name": "AIA"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Academy of Internal Audit",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://aia.in.net/webapi/public/assets/images/web_images/new_logo.webp"
+        }
+      },
+      "datePublished": formatSchemaDate(blog.created_at) || formatSchemaDate(blog.blog_created),
+      "dateModified": formatSchemaDate(blog.updated_at) || formatSchemaDate(blog.blog_created)
+    };
+
+    const schemaTag = `<script type="application/ld+json" data-rh="true">${JSON.stringify(blogSchema)}</script>`;
+    
+    // Replace existing BlogPosting schema if it exists, otherwise append to head
+    const existingSchemaRegex = /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>\{[^}]*?"@type"\s*:\s*["']BlogPosting["'][^}]*?\}<\/script>/gi;
+    if (existingSchemaRegex.test(html)) {
+      html = html.replace(existingSchemaRegex, schemaTag);
+    } else {
+      html = html.replace('</head>', `    ${schemaTag}\n</head>`);
+    }
+  }
 
   return html;
 }

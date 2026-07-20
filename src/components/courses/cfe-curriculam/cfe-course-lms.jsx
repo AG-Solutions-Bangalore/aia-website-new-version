@@ -10,10 +10,10 @@ const CfeCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
     {
       title: "CFE Personalised Study Material",
       description:
-        "AIA provides concise, exam-focused study notes distilled from the extensive 2000 pages manual into 250 pages. This will help you cover key concepts efficiently & 10x advance your prep from others.",
+        "AIA’s CFE Exam Prep course provides concise, exam-focused study notes distilled from the extensive 2000-page manual into 250 pages. This will help you cover key concepts efficiently & 10x advance your prep from others.",
     },
     {
-      title: "Practice Questions",
+      title: "CFE Practice Questions",
       description:
         "Access 1,500+ CFE practice questions on AIA LMS with answers and detailed explanations. This will test your understanding and build confidence by closely matching the actual exam format.",
     },
@@ -40,7 +40,7 @@ const CfeCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
     {
       title: "6 Full-Length Mock Tests",
       description:
-        "Attempt six full-length mock tests, two per module, designed to simulate the real CFE exam environment, which helps to improve time management and refine exam strategy.",
+        "In this CFE Exam prep course, you can access six full-length mock tests, two per module, designed to simulate the real CFE exam environment, which helps to improve time management and refine exam strategy.",
     },
     {
       title: "CFE Exam Registration Support",
@@ -50,7 +50,7 @@ const CfeCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
     {
       title: "CFE Exam Distractors",
       description:
-        "Get access to exclusively designed exam distractors, which help you to identify and eliminate exam traps in CFE exam, improving accuracy, & train your mind for better decision-making.",
+        "Get access to exclusively designed exam distractors, which help you to identify and eliminate exam traps in CFE exam, improving accuracy & train your mind for better decision-making.",
     },
     // {
     //   title: "Updated Study Material",

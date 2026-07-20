@@ -13,7 +13,7 @@ const CamsCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
         "At AIA, we provide carefully curated study notes that simplify your preparation, keeping it well-structured and helping you quickly understand key concepts without feeling overwhelmed.",
     },
     {
-      title: "Practice Questions",
+      title: "CAMS Practice Questions",
       description:
         "Get access to 1,000+ CAMS practice questions with correct answers and clear explanations. These questions help you test your understanding and prepare confidently for the actual exam format.",
     },

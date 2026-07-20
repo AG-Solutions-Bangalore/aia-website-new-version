@@ -43,6 +43,7 @@ const NotFound = lazy(() => import("./components/common/not-found"));
 const FlipbookSection = lazy(
   () => import("./components/aia-times/flipbook-section"),
 );
+const FilterPage = lazy(() => import("./pages/Filter/FilterPage"));
 
 import ScrollToTop from "./components/common/scroll-to-top";
 import blogRedirects from "./routes/blog-redirects";
@@ -130,6 +131,8 @@ export default function App() {
         <Route path="/blogs/:id" element={<BlogDetails />} />
         <Route path="/blogs/course/:courseName" element={<BlogCourse />} />
         <Route path="/alumni-network" element={<OurPassout />} />
+        <Route path="/fillter" element={<FilterPage />} />
+        <Route path="/filter" element={<Navigate to="/fillter" replace />} />
         <Route
           path="/our-passouts/*"
           element={<Navigate to="/alumni-network/" replace />}

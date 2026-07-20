@@ -28,7 +28,7 @@ const CfeUnique = () => {
             ),
             title: "Expert-Curated CFE Study Material",
             description:
-              "AIA simplifies CFE prep with exam-focused <strong>250-pages concrete notes that cover relevant and up-to-date concepts only,</strong> helping professionals study effectively.",
+              "AIA simplifies CFE Exam Prep with exam-focused 250-pages concrete CFE notes that cover relevant and up-to-date concepts only, helping professionals study effectively",
             position: "left",
           },
           {
@@ -38,7 +38,7 @@ const CfeUnique = () => {
             ),
             title: "Structured & Practical Fraud-Focused Learning",
             description:
-              "Our CFE prep follows a clear, structured learning path built around practical fraud scenarios. Each concept is explain learners how fraud actually occurs in depth. about how fraud actually occurs.",
+              "Our CFE exam prep follows a clear, structured learning path built around practical fraud scenarios. Each concept is explain learners how fraud actually occurs in depth, about how fraud actually occurs.",
             position: "left",
           },
           {
@@ -46,7 +46,7 @@ const CfeUnique = () => {
             secondaryIcon: (
               <Star className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
             ),
-            title: "Live Interactive Sessions with Faculty",
+            title: "Live Doubt Sessions with Faculty",
             description:
               "AIA conducts live sessions where learners can actively address their queries and get a chance to gain insights from experienced fellow professionals from different industries.",
             position: "left",
@@ -68,7 +68,7 @@ const CfeUnique = () => {
             ),
             title: "Proven Exam-Oriented Training Methodology",
             description:
-              "<strong>Our training aligns with the latest 2026 CFE exam framework </strong> & fraud risk practices, explaining concepts from a fraudster’s perspective for practical understanding.",
+              "Our CFE training aligns with the latest 2026 CFE exam framework & fraud risk practices, explaining concepts from a fraudster’s perspective for practical understanding",
             position: "right",
           },
           {

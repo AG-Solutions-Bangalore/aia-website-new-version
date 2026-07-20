@@ -105,7 +105,7 @@ const AlumniDirectory = () => {
 
   const [showAllIndustryTypes, setShowAllIndustryTypes] = useState(false);
 
-  const itemsPerPage = 12;
+  const itemsPerPage = 20;
 
   // --- API Queries ---
   // 1. Fetch Year-based passout students

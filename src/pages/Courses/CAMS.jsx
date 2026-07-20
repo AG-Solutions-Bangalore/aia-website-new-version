@@ -114,7 +114,7 @@ const CAMS = () => {
       <LazySection minHeight={480}>
         <CourseYoutube
           courseSlug="cams"
-          title="Hear from Our Recently Qualified Professionals on YouTube"
+          title="Hear from Our Recently CAMS Qualified Professionals on YouTube"
           description="Watch AIA-trained professionals share their CAMS journey, exam strategies, and career insights in exclusive interviews with Puneet Sir on YouTube."
         />
       </LazySection>

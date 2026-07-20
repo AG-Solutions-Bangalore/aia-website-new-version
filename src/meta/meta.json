@@ -54,6 +54,16 @@
     "description": "Academy of Internal Audit celebrates 99.6% + pass rate - featuring recent CFE, CIA, CAMS alumni from 40+ countries around the globe sharing their success stories.",
     "keywords": "AIA alumni, student success stories, CIA pass outs, CFE results, CAMS success"
   },
+  "/fillter": {
+    "title": "Alumni Filter Directory | Academy of Internal Audit",
+    "description": "Search and filter through the Academy of Internal Audit global professional network and alumni directory.",
+    "keywords": "AIA alumni directory, filter alumni, CFE directory, CIA directory, CAMS directory"
+  },
+  "/filter": {
+    "title": "Alumni Filter Directory | Academy of Internal Audit",
+    "description": "Search and filter through the Academy of Internal Audit global professional network and alumni directory.",
+    "keywords": "AIA alumni directory, filter alumni, CFE directory, CIA directory, CAMS directory"
+  },
   "/aia-times": {
     "title": "AIA Times - Magazines, News, and PR Highlights | AIA",
     "description": "Explore AIA Times for the latest Magazines, news, media coverage, PR mentions, expert insights, and key updates from the Academy of Internal Audit.",
