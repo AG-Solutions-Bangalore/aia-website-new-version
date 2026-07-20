@@ -451,30 +451,26 @@ const BlogDetails = () => {
                 </div>
 
                 {blog.updated_at && (
-                  <>
-                    <span className="hidden sm:inline">•</span>
-                    <div className="flex items-center gap-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>
-                        Last Updated:{" "}
-                        <time dateTime={blog.updated_at}>
-                          {formatDate(blog.updated_at)}
-                        </time>
-                      </span>
-                    </div>
-                  </>
+                  <div className="flex items-center gap-2">
+                    <span className="hidden sm:inline text-[#0F3652]/40 mr-1">•</span>
+                    <Calendar className="w-4 h-4" />
+                    <span>
+                      Last Updated:{" "}
+                      <time dateTime={blog.updated_at}>
+                        {formatDate(blog.updated_at)}
+                      </time>
+                    </span>
+                  </div>
                 )}
 
-                <span className="hidden sm:inline">•</span>
-
                 <div className="flex items-center gap-2">
+                  <span className="hidden sm:inline text-[#0F3652]/40 mr-1">•</span>
                   <Clock className="w-4 h-4" />
                   <span>5 min read</span>
                 </div>
 
-                <span className="hidden sm:inline">•</span>
-
                 <div className="flex items-center gap-2">
+                  <span className="hidden sm:inline text-[#0F3652]/40 mr-1">•</span>
                   <span>Published by AIA</span>
                 </div>
               </div>
