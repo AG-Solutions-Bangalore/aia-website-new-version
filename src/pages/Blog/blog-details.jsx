@@ -3,7 +3,7 @@ import { Helmet } from "react-helmet-async";
 import { buildCanonicalUrl } from "@/lib/seo";
 import BlogFaq from "@/components/blog/blog-faq";
 import axios from "axios";
-import { ArrowLeft, Calendar, Clock, Image as ImageIcon } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Image as ImageIcon, User } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShareButtons } from "./share-button";
@@ -448,7 +448,7 @@ const BlogDetails = () => {
                       {formatDate(blog.blog_created)}
                     </time>
                   </span>
-                  <span className="hidden sm:inline text-[#0F3652]/40 ml-1">•</span>
+                  <span className="hidden sm:inline w-1 h-1 rounded-full bg-[#0F3652]/30 ml-1"></span>
                 </div>
 
                 {blog.updated_at && (
@@ -460,17 +460,18 @@ const BlogDetails = () => {
                         {formatDate(blog.updated_at)}
                       </time>
                     </span>
-                    <span className="hidden sm:inline text-[#0F3652]/40 ml-1">•</span>
+                    <span className="hidden sm:inline w-1 h-1 rounded-full bg-[#0F3652]/30 ml-1"></span>
                   </div>
                 )}
 
                 <div className="flex items-center gap-2">
                   <Clock className="w-4 h-4" />
                   <span>5 min read</span>
-                  <span className="hidden sm:inline text-[#0F3652]/40 ml-1">•</span>
+                  <span className="hidden sm:inline w-1 h-1 rounded-full bg-[#0F3652]/30 ml-1"></span>
                 </div>
 
                 <div className="flex items-center gap-2">
+                  <User className="w-4 h-4" />
                   <span>Published by AIA</span>
                 </div>
               </div>
