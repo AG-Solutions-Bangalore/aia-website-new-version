@@ -43,7 +43,7 @@ const ContactCard = ({ country, contacts }) => {
             <div className="group/number flex items-center gap-2">
               <a
                 href={`tel:${tel}`}
-                className="text-[12px] text-gray-300 hover:text-[#fa8017] leading-none"
+                className="text-[12px] text-gray-300 hover:text-[#fa8017] leading-none whitespace-nowrap"
               >
                 {number}
               </a>
