@@ -1,14 +1,13 @@
-import React, { lazy } from "react";
+import { lazy } from "react";
 
 import DeferredPopUp from "@/components/common/deferred-popup";
 import LazySection from "@/components/common/lazy-section";
-import HomeHero from "@/components/home/home-hero";
 import CisaAbout from "@/components/courses/cisa/cisa-about";
-import BannerLogos from "@/components/courses/common/banner-logos";
+import HomeHero from "@/components/home/home-hero";
 
-const CourseTopStudent = lazy(
-  () => import("@/components/courses/common/course-top-student"),
-);
+// const CourseTopStudent = lazy(
+//   () => import("@/components/courses/common/course-top-student"),
+// );
 const CisaCourseCurriculum = lazy(
   () => import("@/components/courses/cisa/cisa-course-curriculum"),
 );
@@ -64,14 +63,14 @@ const CISA = () => {
       {/* <BannerLogos /> */}
       <CisaAbout />
 
-      <LazySection minHeight={420}>
+      {/* <LazySection minHeight={420}>
         <CourseTopStudent
           courseSlug="all"
           needPrefix="true"
           title="Meet our AIA Certified Achievers"
           subtitle="Meet AIA’s latest achievers who successfully earned their credentials through structured preparation and exam-ready guidance."
         />
-      </LazySection>
+      </LazySection> */}
 
       {/* Eligibility Requirements */}
       <LazySection minHeight={450}>
@@ -112,6 +111,7 @@ const CISA = () => {
         <CourseReview
           slug="home"
           title="300+ Professional Experiences Shared"
+          limit={5}
         />
       </LazySection>
 

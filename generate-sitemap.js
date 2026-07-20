@@ -39,6 +39,7 @@ const STATIC_ROUTES = new Set([
   "/cfe-free-resources",
   "/blogs",
   "/alumni-network",
+  "/fillter",
   "/enroll-now",
   "/contact",
   "/corporate-training",

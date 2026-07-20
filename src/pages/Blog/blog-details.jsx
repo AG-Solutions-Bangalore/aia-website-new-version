@@ -76,6 +76,12 @@ const BlogDetails = () => {
     FALLBACK_IMAGE_URL,
   );
 
+  const formatSchemaDate = (dateString) => {
+    if (!dateString) return "";
+    const date = new Date(dateString);
+    return isNaN(date.getTime()) ? "" : date.toISOString().split("T")[0];
+  };
+
   const blogSchema = blog ? {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -98,8 +104,8 @@ const BlogDetails = () => {
         url: `https://aia.in.net/webapi/public/assets/images/web_images/new_logo.webp`,
       },
     },
-    datePublished: blog.created_at,
-    dateModified: blog.updated_at,
+    datePublished: formatSchemaDate(blog.created_at) || formatSchemaDate(blog.blog_created),
+    dateModified: formatSchemaDate(blog.updated_at) || formatSchemaDate(blog.blog_created),
   } : null;
 
   const faqSchema = faqItems.length > 0 ? {
@@ -290,11 +296,11 @@ const BlogDetails = () => {
   const formatDate = (dateString) => {
     if (!dateString) return "";
     const date = new Date(dateString);
-    return date.toLocaleDateString("en-US", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-    });
+    if (isNaN(date.getTime())) return "";
+    const day = date.getDate();
+    const month = date.toLocaleDateString("en-US", { month: "short" });
+    const year = date.getFullYear();
+    return `${day} ${month} ${year}`;
   };
 
   const getCourseColor = (course) => {
@@ -433,13 +439,31 @@ const BlogDetails = () => {
               )}
 
               {/* DATE SECTION AT BOTTOM */}
-              <div className="flex flex-wrap items-center gap-4 text-[#0F3652] text-sm mt-auto">
+              <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[#0F3652] text-sm mt-auto">
                 <div className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  <time dateTime={blog.blog_created}>
-                    {formatDate(blog.blog_created)}
-                  </time>
+                  <span>
+                    Published:{" "}
+                    <time dateTime={blog.blog_created}>
+                      {formatDate(blog.blog_created)}
+                    </time>
+                  </span>
                 </div>
+
+                {blog.updated_at && (
+                  <>
+                    <span className="hidden sm:inline">•</span>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>
+                        Last Updated:{" "}
+                        <time dateTime={blog.updated_at}>
+                          {formatDate(blog.updated_at)}
+                        </time>
+                      </span>
+                    </div>
+                  </>
+                )}
 
                 <span className="hidden sm:inline">•</span>
 

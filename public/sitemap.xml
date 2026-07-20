@@ -3,7 +3,7 @@
 
   <url>
     <loc>https://aia.in.net/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -464,32 +464,38 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://aia.in.net/blogs/cfe-certification/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://aia.in.net/blogs/course/cfe/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/blogs/course/cia/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/blogs/course/cams/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/blogs/course/cisa/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/mohammed-arshad-khan-ciac/</loc>
-    <lastmod>2026-06-11</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -501,7 +507,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/kartik-ravi-cams/</loc>
-    <lastmod>2026-06-15</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -519,7 +525,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/udita-dugar-cams/</loc>
-    <lastmod>2026-06-15</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -549,13 +555,13 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/mohit-grover-cfe/</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/suriya-selvam-cams/</loc>
-    <lastmod>2026-03-13</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -573,7 +579,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/ankita-gupta-ciac/</loc>
-    <lastmod>2026-06-11</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -597,67 +603,67 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/sanjay-namdeo-cfe/</loc>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/aboubacar-doumbia-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/supreetha-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/nathasha-dowrla-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/xavier-dinesh-kumar-cfe/</loc>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/viresh-karia-cfe/</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-07-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/prithvi-raj-chauhan-cfe/</loc>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/mahipal-singh-deora-cfe/</loc>
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/shiva-kumar-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/roshan-baretto-cfe/</loc>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/prateek-gehlot-cfe/</loc>
-    <lastmod>2026-03-25</lastmod>
+    <lastmod>2026-07-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -669,31 +675,31 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/balakrishnan-shanmugam-cfe/</loc>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-07-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/hemapreetha-j-cfe/</loc>
-    <lastmod>2026-03-24</lastmod>
+    <lastmod>2026-07-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/bodhi-aditya-phani-cfe/</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/ruma-das-cfe/</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/vinoth-kumar-cfe/</loc>
-    <lastmod>2026-04-06</lastmod>
+    <lastmod>2026-07-07</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -753,7 +759,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/minal-masurekar-cfe/</loc>
-    <lastmod>2026-03-01</lastmod>
+    <lastmod>2026-07-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -764,8 +770,8 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://aia.in.net/passout-stories/joyal-sijo-cia-part-2/</loc>
-    <lastmod>2026-06-18</lastmod>
+    <loc>https://aia.in.net/passout-stories/joyal-sijo-cia/</loc>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -819,13 +825,13 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/md-zane-alam-mashuk-cams/</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/nnamdi-ojebah-cams/</loc>
-    <lastmod>2026-06-14</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -885,19 +891,19 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/ajith-chandran-cams/</loc>
-    <lastmod>2026-06-15</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/rakesh-kumar-ciac/</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/sharon-james-ciac/</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -921,13 +927,13 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/shiv-prakash-cams/</loc>
-    <lastmod>2026-06-15</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/srikanth-gudipati-cams/</loc>
-    <lastmod>2026-06-03</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -951,13 +957,13 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/rajesh-sinha-cams/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/faisal-sayed-cfe/</loc>
-    <lastmod>2026-04-21</lastmod>
+    <lastmod>2026-07-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -981,7 +987,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/ashvitha-r-cfe/</loc>
-    <lastmod>2026-06-21</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -993,31 +999,31 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/saurabh-raghani-cfe/</loc>
-    <lastmod>2026-06-21</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/tarun-rana-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/kuldeep-patwal-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/swaroop-vyapari-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/sethulekshmy-sreedharan-cams/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1029,13 +1035,13 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/ramya-priya-cams/</loc>
-    <lastmod>2026-06-21</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/shikha-khandelwal-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1047,19 +1053,19 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/ankit-garg-cfe/</loc>
-    <lastmod>2026-06-18</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/nitesh-kumar-pandey-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/rajendra-kumar-cfe/</loc>
-    <lastmod>2026-06-19</lastmod>
+    <lastmod>2026-07-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -1070,38 +1076,62 @@
     <priority>0.6</priority>
   </url>
   <url>
+    <loc>https://aia.in.net/passout-stories/angel-susan-john-cia-part-1/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aia.in.net/passout-stories/rajni-kumari-cams/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aia.in.net/passout-stories/linata-joshi-cfe/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://aia.in.net/fillter/</loc>
+    <lastmod>2026-07-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://aia.in.net/policies/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://aia.in.net/terms-and-conditions/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://aia.in.net/cfe-free-resource/CFE-1/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/cfe-free-resource/CFE-2/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/cfe-free-resource/CFE-3/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/cfe-free-resource/CFE-4/</loc>
-    <lastmod>2026-06-26</lastmod>
+    <lastmod>2026-07-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

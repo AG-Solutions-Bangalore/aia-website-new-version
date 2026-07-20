@@ -82,7 +82,7 @@ const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
   );
 };
 
-const CourseReview = ({ slug, title }) => {
+const CourseReview = ({ slug, title, limit = 5 }) => {
   const containerRef = useRef(null);
   const [testimonials, setTestimonials] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
@@ -108,9 +108,10 @@ const CourseReview = ({ slug, title }) => {
 
       setImageUrl(studentImageUrlObj?.image_url || "");
 
-      setTestimonials(data.data || []);
+      const allTestimonials = data.data || [];
+      setTestimonials(limit ? allTestimonials.slice(0, limit) : allTestimonials);
     }
-  }, [data]);
+  }, [data, limit]);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,

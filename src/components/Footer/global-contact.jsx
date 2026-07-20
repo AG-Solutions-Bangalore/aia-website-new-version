@@ -65,14 +65,20 @@ const ContactCard = ({ country, contacts }) => {
 
             <div className="flex items-center gap-1 shrink-0">
               {zalo && (
-                <div className="w-6 h-6 bg-white/10 border border-white/10 rounded-md flex items-center justify-center cursor-pointer">
+                <a
+                  href={`https://zalo.me/${tel.replace('+', '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="min-h-10 min-w-10 bg-[#0068FF]/15 border border-[#0068FF]/30 rounded-md flex items-center justify-center text-[#0068FF] hover:bg-[#0068FF] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0068FF]"
+                  aria-label={`Zalo ${number}`}
+                >
                   <img
                     src={zalo}
                     alt="Zalo"
-                    className="w-3.5 h-3.5 rounded-sm"
+                    className="w-5 h-5 rounded-sm"
                     loading="lazy"
                   />
-                </div>
+                </a>
               )}
 
               {tel && (
