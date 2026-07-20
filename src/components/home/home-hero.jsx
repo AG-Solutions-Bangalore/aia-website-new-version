@@ -110,7 +110,7 @@ const BANNER_FALLBACKS = {
     link: null,
   },
   cisa: {
-    image: "15.webp",
+    image: "35.webp",
     alt: "cisa-certification",
     link: null,
   },
