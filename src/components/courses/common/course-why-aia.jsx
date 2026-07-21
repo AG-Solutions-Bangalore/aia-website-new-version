@@ -24,6 +24,8 @@ export default CourseWhyAia;
 
 const DiamondCard = ({ img, title }) => {
   const isLogo = img?.includes("new_logo.webp");
+  const isEmoji = img && !img.includes(".") && !img.includes("/");
+
   return (
     <div className="group w-full max-w-[160px] lg:max-w-[200px] mx-auto flex flex-col items-center justify-center">
       {/* Perfect square container */}
@@ -45,13 +47,19 @@ const DiamondCard = ({ img, title }) => {
         >
           {/* Inner Content */}
           <div className="absolute inset-0 -rotate-45 flex flex-col items-center justify-center px-4 text-center">
-            <div className="w-14 h-14 md:w-16 md:h-16 bg-[#0F3652]/10 rounded-full flex items-center justify-center mb-3">
-              <img
-                src={img}
-                alt={title}
-                className={`${isLogo ? "w-12 md:w-14 px-1" : "w-8 md:w-10"} object-contain`}
-                loading="lazy"
-              />
+            <div className="w-16 h-16 md:w-20 md:h-20 bg-[#0F3652]/10 rounded-full flex items-center justify-center mb-3">
+              {isEmoji ? (
+                <span className="text-3xl md:text-4xl select-none" role="img" aria-label={title}>
+                  {img}
+                </span>
+              ) : (
+                <img
+                  src={img}
+                  alt={title}
+                  className={`${isLogo ? "w-14 md:w-16 px-1" : "w-11 md:w-13"} object-contain`}
+                  loading="lazy"
+                />
+              )}
             </div>
 
             <h3 className="text-xs md:text-sm font-semibold text-[#0F3652] leading-tight">
