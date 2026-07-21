@@ -12,16 +12,16 @@ const CisaWhyAia = () => {
         heading="What Makes AIA's CISA Prep Stand Apart"
         items={[
           {
-            img: `${IMAGE_PATH}/ISACA.webp`,
-            title: "ISACA ATP Logo",
+            img: "📝",
+            title: "AIA Short Notes & Exam Distractors",
           },
           {
             img: `${IMAGE_PATH}/teacher-svgrepo-com.webp`,
             title: "APMG Authorised Trainer",
           },
           {
-            img: `${IMAGE_PATH}/new_logo.webp`,
-            title: "AIA Short Notes & Distractors",
+            img: `${IMAGE_PATH}/ISACA.webp`,
+            title: "ISACA Accredited Training Partner",
           },
           {
             img: `${IMAGE_PATH}/flash_card.webp`,
