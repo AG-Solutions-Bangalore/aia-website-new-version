@@ -68,7 +68,15 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
 
   const openEMagazine = (issueId) => {
     onSelectIssue(issueId);
-    window.open("/aia-times/flip-book", "_blank", "noopener,noreferrer");
+    const pdfUrl =
+      issueId === "august-2026" || issueId === "coming-soon"
+        ? "/AIA_Times_Magazine_vol2.pdf"
+        : "/AIA_Times_Magazine.pdf";
+    window.open(
+      `/aia-times/flip-book?pdf=${encodeURIComponent(pdfUrl)}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
   };
 
   const issueDetails =
@@ -77,7 +85,9 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
         {articles.map((item, index) => {
           const imageFirst = index % 2 === 0;
           const cardDescription = getCardDescription(item);
-          const prefixText = item.bodyLabel || (!item.bodyLabel && item.subheading ? item.subheading : "");
+          const prefixText =
+            item.bodyLabel ||
+            (!item.bodyLabel && item.subheading ? item.subheading : "");
           let cleanPrefixText = prefixText.trim();
           if (cleanPrefixText.endsWith(":")) {
             cleanPrefixText = cleanPrefixText.slice(0, -1).trim();
@@ -133,7 +143,12 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
           );
 
           const headingBlock = (
-            <div className={cn("flex flex-col text-black", imageFirst ? "text-left" : "text-right")}>
+            <div
+              className={cn(
+                "flex flex-col text-black",
+                imageFirst ? "text-left" : "text-right",
+              )}
+            >
               <p className="text-[13px] sm:text-sm font-extrabold italic tracking-wider text-[#f36f21]">
                 {item.label} {item.title}
               </p>
@@ -149,7 +164,13 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                 )}
               </h3>
               {item.subheading && (
-                <p className={cn("mt-1 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-[#0b314c]", (item.label === "03" || item.label === "02") && "whitespace-nowrap")}>
+                <p
+                  className={cn(
+                    "mt-1 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-[#0b314c]",
+                    (item.label === "03" || item.label === "02") &&
+                      "whitespace-nowrap",
+                  )}
+                >
                   {item.subheading}
                 </p>
               )}
@@ -157,14 +178,9 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
           );
 
           return (
-            <article
-              key={item.title}
-              className="bg-white py-10 md:py-14"
-            >
+            <article key={item.title} className="bg-white py-10 md:py-14">
               <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                <div
-                  className="grid grid-cols-1 lg:grid-cols-12 gap-y-6 lg:gap-y-4 lg:gap-x-16 items-start"
-                >
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-y-6 lg:gap-y-4 lg:gap-x-16 items-start">
                   {/* Heading */}
                   <div
                     className={cn(
@@ -363,7 +379,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                     ) : (
                       <PdfJoinDialog
                         course={MAGAZINE_COURSE}
-                        buttonlabel="Get Notified"
+                        buttonlabel="Read Issue"
                         buttonClassName="mt-3 cursor-pointer min-h-8 rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#f36f21] hover:text-white"
                       />
                     )}
@@ -535,8 +551,6 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
           </div>
         </DrawerContent>
       </Drawer>
-
-
     </section>
   );
 }

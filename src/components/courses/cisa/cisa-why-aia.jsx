@@ -12,7 +12,7 @@ const CisaWhyAia = () => {
         heading="What Makes AIA's CISA Prep Stand Apart"
         items={[
           {
-            img: "📝",
+            img: `${IMAGE_PATH}/note.webp`,
             title: "AIA Short Notes & Exam Distractors",
           },
           {

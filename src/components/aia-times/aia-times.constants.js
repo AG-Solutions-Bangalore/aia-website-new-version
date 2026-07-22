@@ -480,7 +480,385 @@ export const issueSections = [
   },
 ];
 
+export const vol02IssueSections = [
+  {
+    label: "01",
+    title: "Cover Story",
+    heading: "Individual Numbers Can Deceive, But Patterns Reveal the Truth",
+    subheading: "",
+    description:
+      "In early 2024, a finance employee at Arup, one of the world's largest engineering firms, joined a video conference call with his CFO and several senior colleagues. They discussed a confidential transaction. They looked real. They sounded real. They were not. Every person on that call was an AI-generated deepfake. By the time the fraud was discovered, the employee had wired $25 million to accounts controlled by fraudsters.",
+    descriptionContent: rt(
+      b("In early 2024,"),
+      " a finance employee at Arup, one of the world's largest engineering firms, joined a video conference call with his CFO and several senior colleagues. They discussed a confidential transaction. They looked real. They sounded real. They were not. Every person on that call was an AI-generated deepfake. By the time the fraud was discovered, the employee had wired $25 million to accounts controlled by fraudsters.",
+    ),
+    image: "vol 2_cover_story.webp",
+    imageWidth: "470px",
+    icon: "Icon1.webp",
+    bodyLabel: "",
+    fullContent: [
+      "In early 2024, a finance employee at Arup, one of the world's largest engineering firms, joined a video conference call with his CFO and several senior colleagues. They discussed a confidential transaction. They looked real. They sounded real. They were not. Every person on that call was an AI-generated deepfake. By the time the fraud was discovered, the employee had wired $25 million to accounts controlled by fraudsters.",
+      "No forged document. No hacked system. No inside accomplice. Just a pattern of behaviour, an unusual request, an unsolicited meeting, a sense of urgency, that an auditor trained to question the ordinary might have caught before the transfer was ever made. This is what fraud looks like in 2025. Not dramatic. Not always obvious. But always, always - built on a pattern.",
+      {
+        type: "heading",
+        text: "When the Numbers Grew Louder",
+      },
+      "The numbers are no longer quiet. In India, the Reserve Bank of India's most recent data shows bank frauds reached ₹48,021 crore in FY2025–26 - a 46.4% increase from the previous year and more than four times the ₹11,013 crore reported just two years earlier. The case count has fallen, but the average value per fraud has surged. Fewer frauds, far larger losses. The sophistication is rising faster than the frequency.",
+      {
+        type: "insight",
+        text: rt(
+          b("₹48,021 Cr. "),
+          "Bank fraud value reported in India - FY2025–26  |  RBI Annual Report 2026",
+        ),
+      },
+      "Globally, losses to occupational fraud are estimated at USD 5 trillion every year. A typical fraud case runs for twelve months before detection, and the longer it continues, the higher the resultant loss. What these numbers share is not a story about clever criminals. It is a story about patterns that were present, and unread.",
+      {
+        type: "heading",
+        text: "What Hides Between the Lines",
+      },
+      "Fraud rarely announces itself through a single, catastrophic transaction. The version that makes headlines - the overnight collapse, the missing crores, the sudden arrest - is the final chapter of a story that began months or years earlier in the quietest possible way. A vendor added to the master data without verification. An approval processed by the same person who raised the request. An invoice amount that lands, month after month, just below the threshold that would require a second signature.",
+      "Each of these events, reviewed in isolation, passes. It is only when they are read together, as a sequence, a pattern, a shape forming across time - that the fraud becomes visible.",
+      "More than half of all occupational frauds globally occur due to a lack of internal controls or an override of existing controls. The override is not the fraud - it is the pattern that enables it. And it is the pattern that conventional, point-in-time auditing is least equipped to catch.",
+      "The fraudster is not acting randomly. They are acting systematically. Which means the evidence of their system is always there - in the timing, the amounts, the approvals, the relationships.",
+      {
+        type: "heading",
+        text: "The Architect Behind the Pattern",
+      },
+      "Understanding how fraud is designed is the fastest route to understanding how to detect it. Experienced fraud examiners consistently observe that perpetrators think in systems, not transactions. They learn approval thresholds and stay beneath them. They identify the moments of lowest scrutiny - year-end, leadership transitions, the week before a scheduled audit - and concentrate their activity there. They build relationships that provide cover and create processes they control end-to-end.",
+      "According to ACFE data, excessive pressure from within the organisation is associated with a median fraud loss of $532,000, the highest of any behavioural red flag category. Pressure does not create fraud on its own. But it creates the rationalisation that allows someone to begin. And once begun, fraud follows patterns as predictable as the controls it exploits.",
+      "What this means for investigators is precise: the fraudster has already left a map. Every threshold avoided, every approval timed, every relationship cultivated to reduce scrutiny. They are decisions. And decisions, made consistently over time, form patterns that no amount of concealment can fully erase. The auditor's job is to read the map before the journey completes.",
+      {
+        type: "heading",
+        text: "The Pattern Is Changing. Are You?",
+      },
+      "The same technology giving investigators more data is giving fraudsters more weapons. AI-related fraud cases rose from 23% in 2024 to 35% of all cases in early 2025, according to Experian's UK Fraud and Financial Crime Report. Generative AI-enabled fraud losses are projected to reach $40 billion in the United States alone by 2027. In the first half of 2025, deepfake-related fraud losses exceeded $410 million globally, and advanced attacks involving deepfakes, AI-generated identities, and multilayered social engineering increased 180% year-over-year.",
+      {
+        type: "insight",
+        text: rt(
+          b("180% "),
+          "Year-over-year increase in advanced fraud attacks involving deepfakes and AI-generated identities  |  Sumsub Identity Fraud Report 2025–26",
+        ),
+      },
+      "In India, fraud cases reported to the RBI nearly tripled between 2023 and 2024 among digital banking institutions. Nearly 90% of all cases reported pertained to previous fiscal years - meaning the true present-day scale remains obscured by significant reporting delays. The fraud is moving faster. The patterns are being deliberately obscured. Detection cannot afford to stay at the same pace.",
+      {
+        type: "heading",
+        text: "Reading What the Data Won't Say Directly",
+      },
+      "The shift from conventional auditing to pattern-based investigation is not about adopting new software. It is about changing the question. A conventional audit asks: Is this transaction correct? A pattern-based investigation asks: what does this transaction look like in relation to every other transaction around it? That shift, from vertical review to horizontal analysis, is where hidden fraud becomes visible.",
+      "In practice, this means cross-referencing vendor master data against employee records to expose undisclosed relationships. It means applying journal entry testing to find manual overrides processed at unusual hours by unusual users. It means mapping approval chains to identify individuals who appear too consistently in too many high-value decisions. It means treating timing, frequency, and proximity not as background detail but as primary evidence.",
+      "Despite the growing complexity of fraud schemes, the median training budget per fraud investigator has remained stagnant at $2,000 since 2019. The tools are improving. The investment in the human capability to use them has not kept pace, and that gap is where patterns go unread.",
+      {
+        type: "insight",
+        text: rt(
+          bi(
+            '"Fraud survives where curiosity stops. The pattern was always there. It simply required someone willing to read it."',
+          ),
+        ),
+      },
+      {
+        type: "heading",
+        text: "See It Before It Surfaces",
+      },
+      "The most effective audit mindset is not one that assumes compliance. It assumes the opposite, and then works to prove itself wrong. This is not cynicism. It is professional rigour. It means reviewing a vendor relationship not just for whether invoices match, but for whether the relationship itself makes sense. It means treating a clean audit not as a conclusion, but as a reason to ask one more question.",
+      "Surprise audits reduce fraud losses by up to 63% compared to organisations that do not use them. External audits reduce losses by 52%. The mechanism behind both is the same: they introduce unpredictability into an environment that fraud depends on being predictable. They disrupt the pattern the fraudster has built their scheme around.",
+      "The professionals who will define the next decade of forensic audit are not simply the ones with the most technical knowledge. They are the ones who have trained themselves to be genuinely uncomfortable with easy answers, who follow a thread even when every individual piece of it looks perfectly normal, who understand that the space between data points is not empty. It is where the pattern lives.",
+      {
+        type: "insight",
+        text: rt(
+          bi(
+            '"Individual numbers can deceive. But patterns - read carefully, followed patiently - always reveal the truth."',
+          ),
+        ),
+      },
+    ],
+  },
+  {
+    label: "02",
+    title: "Case Study",
+    heading: "The Boss Scam",
+    subheading: "How a Fake Identity Drained Corporate Accounts",
+    description:
+      "When Authority Became the Weapon, and Trust Became the Vulnerability. In three Delhi-based companies, within a span of fourteen days, finance employees received urgent messages from what appeared to be their respective CEOs. The instructions were clear, confidential, and time-sensitive. The employees complied. A total of over ₹7 crore left corporate accounts before anyone realised the CEOs had never sent those messages.",
+    descriptionContent: rt(
+      b("When Authority Became the Weapon,"),
+      " and Trust Became the Vulnerability. In three Delhi-based companies, within a span of fourteen days, finance employees received urgent messages from what appeared to be their respective CEOs. The instructions were clear, confidential, and time-sensitive. The employees complied. A total of over ₹7 crore left corporate accounts before anyone realised the CEOs had never sent those messages.",
+    ),
+    image: "case_study.webp",
+    imageWidth: "470px",
+    icon: "Icon4.webp",
+    bodyLabel: "Case Overview:",
+    fullContent: [
+      rt(
+        b("When Authority Became the Weapon,"),
+        " and Trust Became the Vulnerability. In three Delhi-based companies, within a span of fourteen days, finance employees received urgent messages from what appeared to be their respective CEOs. The instructions were clear, confidential, and time-sensitive. The employees complied. A total of over ₹7 crore left corporate accounts before anyone realised the CEOs had never sent those messages.",
+      ),
+      "No system was hacked. No password was stolen. The only thing exploited was the most powerful force inside any organisation - the unquestioned authority of a senior leader. Cybercriminals invested significant time researching their targets - studying organisational hierarchies, communication styles, and internal financial workflows before executing the scam. The fraud walked through the front door wearing a familiar face.",
+      {
+        type: "insight",
+        text: rt(
+          b("Business Email Compromise (BEC) - "),
+          "A cyber-enabled fraud where criminals impersonate senior executives through fake business emails or messages to trick employees into authorising unauthorised financial transfers.",
+        ),
+      },
+      {
+        type: "heading",
+        text: "STAGE 1 - Reconnaissance: Learning the Organisation From the Outside",
+      },
+      "Before a single fraudulent message was sent, the attackers did their homework. Attackers leveraged lookalike domains, fake executive profiles, and AI-generated communications - using publicly available information from company websites, LinkedIn profiles, press releases, and social media to map internal hierarchies, identify finance decision-makers, and study the communication tone of senior executives.",
+      "They knew who reported to whom. They knew which employees had payment authority. They understood the internal language well enough to replicate it convincingly. By the time the first fraudulent message was sent, the attacker already knew exactly which person to target, which amount would not raise immediate suspicion, and which framing - urgency, confidentiality, authority - would be most effective.",
+      rt(
+        b("What this stage reveals: "),
+        "The fraud begins with a pattern of information gathering that left no financial trace and triggered no internal alert.",
+      ),
+      {
+        type: "heading",
+        text: "STAGE 2 - Entry: The Regulatory Disguise",
+      },
+      "The latest variant of the Boss Scam began with cybercriminals impersonating regulators, specifically the Reserve Bank of India, sending urgent messages to CEOs or senior executives via email, SMS or WhatsApp. These messages contained malicious archives disguised as urgent regulatory compliance documents or software updates.",
+      "When the senior executive - the intended impersonation target - opened the attachment, malware was delivered to their device. This gave attackers access to the executive's WhatsApp account, communication patterns, and in some cases, their contact list. The executive's own account was now the weapon.",
+      rt(
+        b("What this stage reveals: "),
+        "The fraud exploited a trust gap at the very top of the organisation. The CEO became a victim before the finance team became a target.",
+      ),
+      {
+        type: "heading",
+        text: "STAGE 3 - Execution: The Urgent Instruction",
+      },
+      "With access to, or a convincing replica of, the executive's communication channel, the attacker contacted the finance team directly. The scammer used a spoofed email address or compromised WhatsApp profile to send urgent-sounding messages to employees, portraying instructions as coming directly from the CEO or senior boss - instructing the employee to quickly transfer funds for an urgent, confidential business deal.",
+      "The instruction carried every marker of legitimacy - correct name, familiar tone, plausible business context. It also carried the one element most effective at bypassing verification: urgency. The request needed to be actioned immediately. It was confidential. It could not go through normal channels. Standard procedures would delay something important. The employee complied. The transfer was processed.",
+      rt(
+        b("What this stage reveals: "),
+        "Urgency and authority, combined, are the most effective fraud delivery mechanism ever identified. Neither requires technical sophistication to deploy.",
+      ),
+      {
+        type: "heading",
+        text: "STAGE 4 - Concealment: Staying Inside the Noise",
+      },
+      "The final stage of the Boss Scam was not dramatic. It was designed to be invisible. Transfer amounts were calibrated to fall within ranges that would not immediately trigger internal review thresholds. Instructions came through channels - WhatsApp, email- that were already part of normal workplace communication. The request referenced real business contexts - regulatory requirements, confidential acquisitions, vendor urgencies - that were plausible enough not to invite scrutiny.",
+      "By the time the fraud was discovered, the funds had moved through multiple accounts. In most documented cases, discovery occurred not through internal audit or monitoring - but when the real executive was contacted about a transaction they had never authorised.",
+      rt(
+        b("What this stage reveals: "),
+        "The fraud was designed to look like business as usual, and it succeeded because, in most organisations, business as usual lacks the verification layer that would have stopped it.",
+      ),
+      {
+        type: "heading",
+        text: "WHERE CONTROLS FAILED",
+      },
+      "The Boss Scam succeeded not because organisations lacked systems - but because the systems they had were never designed to question authority. No dual authorisation existed for high-value transfers initiated through digital channels. No callback protocol required finance teams to independently verify payment instructions with the requesting executive. The same employee who received the instruction processed the transfer - with no independent checkpoint between the two actions. At the senior level, executive devices lacked adequate malware protection, allowing attackers to compromise the very accounts the finance team trusted most. Most critically, no policy distinguished between a WhatsApp message and a formally authorised payment instruction. The controls existed on paper. The culture to enforce them did not.",
+      {
+        type: "heading",
+        text: "RED FLAGS MISSED",
+      },
+      "Every stage of the Boss Scam carried signals that, in hindsight, were impossible to ignore, and in real time, were ignored completely. The instruction arrived through WhatsApp, not through any formal authorisation channel. It was marked urgent and confidential - the two words most consistently present in social engineering attacks. No supporting documentation accompanied the request. The payee account details were new and unverified. The message arrived outside normal business hours. And to those who noticed it, the executive's tone felt slightly different - briefer, more transactional than usual. Each signal alone could be explained away. Together, they formed a pattern that a trained investigator or a finance team with a verification-first culture would have recognised before the transfer was ever processed.",
+      {
+        type: "heading",
+        text: "LESSONS FOR AUDITORS",
+      },
+      rt(
+        b("1. The Absence of a Paper Trail Is Itself a Red Flag\n"),
+        "In every documented Boss Scam case, the fraudulent payment instruction arrived without supporting documentation - no purchase order, no contract reference, no formal approval record. A payment that cannot be traced to a documented business need should not be processed, regardless of who appears to have authorised it. Auditors reviewing payment processes should specifically test for transactions where the authorisation chain begins and ends with a single digital message.",
+      ),
+      rt(
+        b("2. Urgency Is a Control Override, Not a Business Requirement\n"),
+        "The consistent presence of urgency across all Boss Scam cases is the mechanism by which normal verification is suspended. Internal audit should examine whether the organisation's payment approval process has a documented exception for urgent requests, and if so, whether that exception itself has adequate controls. Urgency should trigger more verification, not less.",
+      ),
+      rt(
+        b("3. Informal Communication Channels Are an Audit Blind Spot\n"),
+        "As organisations increasingly use messaging platforms for workplace communication and quick approvals, WhatsApp-based corporate fraud has emerged as a recurring pattern, particularly targeting finance teams and decision-makers. Auditors should assess whether payment authorisation policies explicitly address instructions received through informal channels, and whether finance teams have clarity on which channels carry authorisation authority and which do not.",
+      ),
+      rt(
+        b("4. The Entry Point Was the Executive, Not the Finance Team\n"),
+        "The Boss Scam succeeded in part because the fraud entered the organisation at the top, through the executive's device, before targeting the finance team. This means traditional fraud prevention focused on front-line employees misses the actual point of vulnerability. Auditors should evaluate whether cybersecurity controls, device policies, and awareness programmes extend to senior leadership with the same rigour applied to operational staff.",
+      ),
+      rt(
+        b("5. Pattern Recognition Must Extend Beyond Financial Data\n"),
+        "None of the red flags in the Boss Scam were financial in origin. They were behavioural - unusual timing, informal channels, absent documentation, tone inconsistencies. A fraud detection function that only reviews financial transactions will not catch a fraud that is designed to look like an authorised transaction. The auditor's lens must extend to process behaviour, communication patterns, and verification culture - not just numbers.",
+      ),
+      {
+        type: "heading",
+        text: "WHAT THIS MEANS FOR YOUR ORGANISATION",
+      },
+      rt(b("5 Controls to Implement Before This Happens to You")),
+      rt(
+        b("1. Implement Dual Authorisation for Emergency Transfers\n"),
+        "No single employee should have the authority to both receive a payment instruction and process the corresponding transfer. Two independent approvals, through two separate channels, should be the minimum standard.",
+      ),
+      rt(
+        b("2. Establish a Mandatory Callback Protocol\n"),
+        "Any payment instruction received via email or WhatsApp, regardless of the apparent sender, must be verbally confirmed with the executive through a pre-registered, independently verified phone number before processing.",
+      ),
+      rt(
+        b("3. Create a \"Pause and Verify\" Culture\n"),
+        "Urgency should be treated as a trigger for more scrutiny, not less. Finance teams need explicit policy backing, and leadership support to pause and verify before acting on any unusual instruction, regardless of apparent authority.",
+      ),
+      rt(
+        b("4. Define Authorised Payment Channels in Writing\n"),
+        "WhatsApp messages and informal emails should not carry payment authorisation authority. Organisations should formally document which channels constitute valid authorisation, and train finance teams to apply that distinction consistently.",
+      ),
+      rt(
+        b("5. Extend Cybersecurity Awareness Across the Organization\n"),
+        "Malicious attachments, fake regulatory communications, and compromised messaging accounts are not threats that only front-line employees face. Executive-level cyber hygiene - verified device management, attachment policies, account monitoring - is a direct fraud prevention control to extend cybersecurity awareness across the organization.",
+      ),
+      {
+        type: "disclaimer",
+        text: rt(
+          bi(
+            "Disclaimer: This case study is presented solely for educational purposes to identify governance failures, audit gaps, and financial risk lessons drawn from documented fraud patterns. All details are sourced from official advisories issued by I4C, the Ministry of Home Affairs, Government of India (June 2025), and verified law enforcement disclosures.",
+          ),
+        ),
+      },
+    ],
+  },
+  {
+    label: "03",
+    title: "Learning Topic",
+    heading: "Behavioural Pattern and Transaction pattern",
+    subheading: "",
+    description:
+      "Behavioural Pattern = When People Change, Numbers Follow. Behavioural patterns are the human signals that precede financial irregularities. Most auditors are trained to find fraud in spreadsheets. But experienced investigators will tell you something different - fraud almost always shows up in behaviour before it shows up in data. Transaction pattern = The Story That Numbers Tell When You Stop Reading Them One at a Time.",
+    descriptionContent: rt(
+      b("Behavioural Pattern = When People Change, Numbers Follow. "),
+      "Behavioural patterns are the human signals that precede financial irregularities. Most auditors are trained to find fraud in spreadsheets. But experienced investigators will tell you something different - fraud almost always shows up in behaviour before it shows up in data. ",
+      b("Transaction pattern = The Story That Numbers Tell When You Stop Reading Them One at a Time."),
+    ),
+    image: "learning_topic.webp",
+    imageWidth: "470px",
+    icon: "Icon3.webp",
+    bodyLabel: "",
+    fullContent: [
+      {
+        type: "heading",
+        text: "Behavioural Pattern = When People Change, Numbers Follow",
+      },
+      "Behavioural patterns are the human signals that precede financial irregularities. They don't appear in ledgers. They don't trigger system alerts. They are noticed or missed by the people in the room. Most auditors are trained to find fraud in spreadsheets. But experienced investigators will tell you something different - fraud almost always shows up in behaviour before it shows up in data.",
+      "One of the most consistently documented behavioural indicators across fraud investigations globally is lifestyle inconsistency, commonly referred to as living beyond one's means. When an employee's visible lifestyle, vehicles, property, travel, spending- does not align with their known compensation, it creates a signal that experienced investigators treat seriously. This is not about judgement. It is about the gap between what is visible and what is explainable. In a significant majority of occupational fraud cases reviewed by the ACFE, perpetrators displayed unexplained lifestyle changes before the fraud was ever formally detected. What makes behavioural signals genuinely dangerous is how ordinary they look. The fraud does not announce itself; it disguises itself as someone doing their job particularly well.",
+      {
+        type: "heading",
+        text: "Financial Institutions",
+      },
+      "In banks, insurance companies, and investment firms, behavioural fraud patterns are closely tied to access and client relationships. The most common signal is account ownership behaviour - a relationship manager or operations executive who becomes intensely possessive of specific accounts, clients, or transactions. They resist team reviews, discourage colleague involvement, and ensure that communication with a particular client runs exclusively through them.",
+      "The second pattern is process avoidance. Employees involved in fraud consistently find reasons to bypass verification steps; they process transactions during off-hours, approve requests when senior staff is unavailable, or exploit system access privileges that should have been restricted.",
+      "A third signal unique to financial institutions is unusual client familiarity - staff who develop personal relationships with clients outside professional boundaries, particularly when those clients are involved in high-value or high-frequency transactions. This social proximity often becomes the cover under which fraud operates.",
+      {
+        type: "heading",
+        text: "Manufacturing",
+      },
+      "In manufacturing environments, behavioural patterns are concentrated in procurement, warehousing, and vendor management. The dominant signal here is vendor protectiveness. A purchase executive who insists on managing all communication with a specific supplier is displaying a pattern that experienced auditors treat as an immediate red flag.",
+      "The second pattern is physical access control. Warehouse staff or store managers who restrict colleague access to specific inventory areas, insist on being present during all stock counts, or consistently volunteer to handle returns and write-offs independently are exhibiting control behaviour that warrants attention.",
+      "A third manufacturing-specific signal is resistance to three-way matching. When procurement staff pushes back against purchase order, goods receipt, and invoice reconciliation processes, the resistance itself is worth examining.",
+      {
+        type: "heading",
+        text: "Service Organisations",
+      },
+      "In consulting firms, IT companies, and professional services, behavioural fraud patterns cluster around billing, subcontracting, and expense management.",
+      "The clearest signal is timesheet and billing opacity. Employees or project managers who are vague about how hours are allocated or consistently bill to ambiguous project codes without clear justification are exhibiting patterns that forensic auditors follow closely.",
+      "The second signal is subcontractor exclusivity. A project lead who repeatedly recommends the same external vendor or subcontractor, particularly one that cannot be independently verified, is displaying a pattern seen frequently in services fraud.",
+      "A third signal is expense pattern rigidity. Employees who submit expense claims at consistent amounts, just within reimbursement limits, across multiple months without variation are not necessarily being careful; they may be structuring claims deliberately to avoid scrutiny.",
+      "The auditor's job is to look past the surface, and ask what the pattern is actually saying.",
+      {
+        type: "heading",
+        text: "Transaction pattern = The Story That Numbers Tell When You Stop Reading Them One at a Time",
+      },
+      "Fraud often hides in the ordinary. Three signals appear consistently across almost every transaction-based fraud investigation. Round-figure transactions, Amounts just below approval threshold limits, and limited payee concentration - a disproportionate volume of payments flowing to one or two vendors, approved by the same individual, with no competitive sourcing on record. Individually, each passes review. Together, they are the pattern.",
+      "A single transaction proves very little. A sequence of them, their timing, their amounts, their relationships to each other, can prove almost everything. This is the core of transaction pattern analysis. It is about stepping back far enough to see what the data is drawing when you look at it as a whole.",
+      "Fraudsters understand this instinctively. Which is why they don't commit fraud in one large, obvious transaction. They distribute it. They time it. They keep individual amounts within approval thresholds. They create enough distance between related entries that no single transaction triggers a flag. The pattern is visible - but only to someone who knows how to look for it.",
+      {
+        type: "heading",
+        text: "Financial Institutions",
+      },
+      "In banking and financial services, transaction pattern analysis is both the most developed and the most complex.",
+      "The most documented pattern is structuring - breaking large amounts into smaller transactions deliberately designed to stay beneath regulatory reporting thresholds. A series of cash deposits just above the threshold limit, which trigger reporting requirements, is not a coincidence. It is a pattern with intent behind it.",
+      "The second pattern is round-trip transactions - funds that leave an account and return through a series of intermediary transfers, often across multiple accounts or entities, creating the appearance of legitimate business activity. Each transfer looks clean. The circuit only becomes visible when transactions are mapped across accounts and time.",
+      "A third pattern is dormant account activation - sudden high-value activity in accounts that have shown little or no movement for extended periods. In fraud investigations, dormant accounts are frequently used as temporary holding points precisely because they attract less routine monitoring.",
+      {
+        type: "heading",
+        text: "Manufacturing",
+      },
+      "In manufacturing, transaction fraud is most concentrated in procurement and inventory, and the patterns reflect the operational structure of the industry.",
+      "The most common pattern is purchase order splitting. A single procurement requirement is divided into multiple smaller orders placed with the same vendor across short time periods - each order staying within individual approval limits while the combined value would have required senior sign-off.",
+      "The second pattern is ghost supplier invoices - invoices submitted by vendors that exist on paper but have never delivered goods. These transactions appear in clusters, often at month-end or quarter-end, and frequently involve round-number amounts that do not reflect actual material costs.",
+      "A third manufacturing-specific pattern is goods receipt manipulation - transactions where delivery quantities recorded in the system do not match physical stock levels, with the discrepancy consistently moving in the same direction over time.",
+      {
+        type: "heading",
+        text: "Service Organisations",
+      },
+      "In service organisations, transaction fraud most commonly appears in billing, expenses, and subcontractor payments, areas where the link between payment and physical deliverable is hardest to verify.",
+      "The clearest pattern is duplicate billing - the same deliverable invoiced twice under different project codes, billing periods, or slightly varied descriptions. In high-volume project environments, these duplicates can remain undetected for months when invoices are reviewed individually rather than compared across the full billing history.",
+      "The second pattern is expense claim clustering - multiple employees submitting claims of identical or near-identical amounts across the same time period, particularly when those amounts sit just within reimbursement policy limits.",
+      "A third pattern is subcontractor payment irregularity - payments to external vendors that do not align with contract milestones, deliverable timelines, or agreed rates. Subcontractor relationships are frequently used to route funds to connected parties, with each payment structured to appear within normal project expenditure.",
+    ],
+  },
+  {
+    label: "04",
+    title: "Expert Talk",
+    heading: "Data Is Everywhere. Pattern Thinking Is Rare.",
+    subheading: "",
+    description:
+      "Pradip Bhale, CFE, is a Law Enforcement Officer with over two decades of experience in investigations and financial crime. He served as Dy SP in Mumbai, Maharashtra. He brings a rare combination of ground-level investigative instinct and certified forensic audit expertise to every case he encounters.",
+    descriptionContent: rt(
+      b("Pradip Bhale, CFE,"),
+      " is a Law Enforcement Officer with over two decades of experience in investigations and financial crime. He served as Dy SP in Mumbai, Maharashtra. He brings a rare combination of ground-level investigative instinct and certified forensic audit expertise to every case he encounters.",
+    ),
+    image: "expert_talk.webp",
+    imageWidth: "470px",
+    icon: "Icon2.webp",
+    bodyLabel: "Pradip Bhale, CFE,",
+    fullContent: [
+      "Pradip Bhale, CFE, is a Law Enforcement Officer with over two decades of experience in investigations and financial crime. He served as Dy SP in Mumbai, Maharashtra. He brings a rare combination of ground-level investigative instinct and certified forensic audit expertise to every case he encounters.",
+      {
+        type: "question",
+        text: "1. How has law enforcement shaped the way you think about financial crime and fraud patterns?",
+      },
+      "20+ years in law enforcement teach you one thing very quickly - facts don't speak for themselves. People do and People lie. Before I ever looked at a balance sheet through a forensic lens, I had already spent years reading rooms, reading behaviour, reading what wasn't being said. That instinct is something a classroom cannot manufacture. When I pursued the CFE, it gave structure to what I had already been doing intuitively - it gave me the language, the framework, and the methodology to translate field observations into findings that hold up under scrutiny. Law enforcement taught me to see. CFE taught me to prove. Together, they create a perspective that neither discipline builds alone.",
+      {
+        type: "question",
+        text: "2. As someone who has worked in field investigations, what does a fraud pattern actually look like on the ground - not in a spreadsheet, but in real life?",
+      },
+      "In the field, fraud rarely announces itself through numbers first. It announces itself through people. A vendor contact who only communicates through one employee. A manager who volunteers to handle approvals when colleagues are unavailable. An executive who becomes visibly uncomfortable when a routine process gets a second pair of eyes. These are the signals that precede the financial trail - sometimes by months. The transactions confirm what the behaviour already told you. What separates experienced investigators from capable ones is this: they have trained themselves to treat human signals as primary evidence. The spreadsheet is where you build the case. The ground is where you find it.",
+      {
+        type: "question",
+        text: "3. What was the moment or case that made you realise forensic audit thinking would make you a sharper investigator?",
+      },
+      "There was a case early in my career, a procurement irregularity everyone around me treated as a paperwork issue. Amounts were within policy. Approvals existed. On paper, nothing was wrong. But something didn't sit right. I kept pulling threads, and what appeared to be an administrative oversight turned out to be a structured scheme running for over two years. The problem was, instinct alone couldn't build a watertight case. I needed a framework to translate what I was seeing into something that would hold up under scrutiny. That is precisely what the CFE gave me. It didn't change what I noticed. It changed what I could do with it. Seniority gives you instinct. Certification gives you the structure to act on it.",
+      {
+        type: "question",
+        text: "4. If you had to teach a room full of aspiring investigators one thing about pattern thinking that no textbook covers - what would it be?",
+      },
+      "In every investigation I have been part of, the most important moment was not when the evidence confirmed the fraud - it was the earlier moment when something felt wrong but could not yet be proven. Most professionals rush past that moment. They look for certainty before they commit to a direction. Pattern thinking requires the opposite - the willingness to sit with \"something is off here\" and follow that feeling methodically, even when you cannot yet articulate why. The instinct that something doesn't fit is not unprofessional. It is the beginning of every investigation that matters. The skill is not in finding the answer. It is in trusting the question long enough to find it.",
+      {
+        type: "question",
+        text: "5. In your experience, what are the most common hidden patterns that repeatedly appear across fraud cases, patterns that seem invisible at first but are obvious in hindsight?",
+      },
+      "After decades of investigations, certain patterns repeat with remarkable consistency. Transactions clustering at month-end or just before an audit cycle. Approval chains where one name appears too frequently across too many high-value decisions. Amounts that land just below thresholds - not once, but repeatedly, across multiple vendors. And perhaps most telling - the same individuals always present at the point where controls are weakest. In hindsight, these signals are obvious. The question investigators must answer honestly is: why weren't they obvious in real time? Almost always, the answer is the same. Someone saw the signal and didn't follow it. Pattern thinking is not about intelligence. It is about discipline - the discipline to treat small anomalies as seriously as large ones, before hindsight makes that decision easy.",
+      {
+        type: "question",
+        text: "6. Fraudsters deliberately break patterns to avoid detection. How do experienced investigators think when the pattern itself has been hidden intentionally?",
+      },
+      "When a fraudster deliberately breaks their own pattern, they inevitably create a new one. The absence of documentation where documentation should exist. Timestamps that don't align. Approval sequences that are technically complete but internally inconsistent. I have learned to treat missing information as evidence - not as a gap. If a process that should generate a paper trail suddenly doesn't, that silence is louder than any transaction. Experienced investigators cross-reference everything, not to find what is there, but to map what should be there and isn't. Deliberate concealment always leaves its own trail. It simply requires someone trained to look for what is missing, not only for what is present.",
+      {
+        type: "question",
+        text: "7. There is a difference between an auditor who checks compliance and one who hunts for hidden patterns. In your view, what separates these two kinds of professionals?",
+      },
+      "The compliance auditor asks: Is this correct? The pattern hunter asks: Why does this exist? That single shift in questioning changes everything. I have worked alongside both types of professionals throughout my career, and the difference is never about knowledge or qualification. It is entirely about mindset. A compliance auditor follows a checklist to its end and signs off when the boxes are ticked. A pattern hunter treats the clean checklist as a reason to look harder, because fraud is specifically designed to pass routine scrutiny. The real separator is comfort with ambiguity. Pattern hunters are willing to sit with an unanswered question and follow it. Compliance auditors are trained to resolve questions quickly and move on. One closes files. The other opens investigations.",
+    ],
+  },
+];
+
 export const magazineIssues = [
+  {
+    id: "august-2026",
+    issueDate: "August 2026",
+    volume: "Vol. 02",
+    category: "Magazine",
+    title: "Uncovering Hidden Patterns-Audit that spots fraudsters",
+    displayDate: "01 August 2026",
+    description:
+      "Uncover the hidden patterns behind fraud, decode complex data, and explore the investigative techniques that drive smarter decisions.",
+    cover: "coming_soon.webp",
+    coverAlt: "AIA Times August 2026 cover",
+    highlights: vol02IssueSections,
+    isAvailable: true,
+  },
   {
     id: "june-2026",
     issueDate: "June 2026",
@@ -494,20 +872,6 @@ export const magazineIssues = [
     coverAlt: "AIA Times June 2026 cover",
     highlights: issueSections,
     isAvailable: true,
-  },
-  {
-    id: "coming-soon",
-    issueDate: "Coming Soon",
-    volume: "Vol. 02",
-    category: "Magazine",
-    title: "Coming Soon",
-    displayDate: "Coming Soon",
-    description:
-      "Future editions with more expert views, events, and industry updates.",
-    cover: "coming_soon.webp",
-    coverAlt: "AIA Times coming soon issue",
-    highlights: [],
-    isAvailable: false,
   },
 ];
 

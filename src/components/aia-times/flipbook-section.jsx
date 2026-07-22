@@ -1,4 +1,5 @@
 import { lazy, Suspense } from "react";
+import { useSearchParams } from "react-router-dom";
 
 // react-pageflip + page-flip are sizeable libs only used on this route, so
 // code-split them (the route itself is already lazy-loaded in App.jsx).
@@ -12,9 +13,12 @@ const FlipBook = lazy(() => import("./flipbook/FlipBook"));
  * instead of taking the full viewport.
  */
 export default function FlipbookSection({ isPopup = false }) {
+  const [searchParams] = useSearchParams();
+  const pdfUrl = searchParams.get("pdf") || "/AIA_Times_Magazine_vol2.pdf";
+
   return (
     <Suspense fallback={null}>
-      <FlipBook pdfUrl="/AIA_Times_Magazine.pdf" isPopup={isPopup} />
+      <FlipBook pdfUrl={pdfUrl} isPopup={isPopup} />
     </Suspense>
   );
 }
