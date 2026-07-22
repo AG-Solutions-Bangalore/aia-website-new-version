@@ -48,26 +48,31 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
       title: "CISA Official Review Manual",
       description:
         "You will get access to 500 pages of ISACA’s official CISA Review Manual covering all exam domains with structured concepts, updated content, and exam-focused explanations to support effective learning, revision, and preparation.",
+      image: "cisa_official_review_manual.webp",
     },
     {
       title: "Question Answer Explanation (QAE) Database",
       description:
         "Practice with 1000+ CISA-style questions through the QAE Database, designed to improve conceptual understanding, analytical thinking, and familiarity with the actual exam pattern & question approach.",
+      image: "qae_database.webp",
     },
     {
       title: "Flash Cards",
       description:
         "Strengthen retention with the interactive Game Centre featuring 7 learning games along with 200+ flash cards designed for quick revision, concept reinforcement, and more engaging CISA exam preparation.",
+      image: "flashcards.webp",
     },
     {
       title: "Exam Registration Fees",
       description:
         "Receive guidance and support for the CISA exam registration process, along with ISACA exam registration fee benefits available through the official learning kit of ISACA.",
+      image: "lms_CIA.webp",
     },
     {
       title: "Mock Exams",
       description:
         "Get access to attempt 3 full-length mock exams covering 900 knowledge points with 150 exam-pattern questions within a 4-hour format to help evaluate preparation, identify gaps, and improve time management.",
+      image: "mock_exam.webp",
     },
   ];
 
@@ -141,9 +146,17 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
               {/* Card Right column (Image Mockup) */}
               <div className="w-full md:w-2/5 flex justify-center">
                 <img
-                  src={`${IMAGE_PATH}/lms_CIA.webp`}
+                  src={
+                    currentFeature.image?.startsWith("http") || currentFeature.image?.startsWith("/")
+                      ? currentFeature.image
+                      : `${IMAGE_PATH}/${currentFeature.image || "lms_CIA.webp"}`
+                  }
                   alt={currentFeature.title}
                   className="max-h-56 object-contain drop-shadow-xl"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    e.currentTarget.src = `${IMAGE_PATH}/lms_CIA.webp`;
+                  }}
                 />
               </div>
             </div>
