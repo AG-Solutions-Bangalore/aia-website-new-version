@@ -38,15 +38,7 @@ export default function IssueDetailsSection({ selectedIssue }) {
               <div>
                 {index % 2 === 0 && (
                   <h2 className="mb-5 text-2xl font-extrabold leading-tight text-[#0b314c] md:text-3xl">
-                    {item.label === "01" ? (
-                      <>
-                        Decoding the Mindset Behind
-                        <br />
-                        Every Financial Crime
-                      </>
-                    ) : (
-                      item.heading
-                    )}
+                    {item.heading}
                   </h2>
                 )}
                 <div className="overflow-hidden rounded-md bg-slate-100 p-3">
@@ -70,12 +62,8 @@ export default function IssueDetailsSection({ selectedIssue }) {
                 )}
               >
                 {index % 2 === 0 && item.subheading && (
-                  <p className={cn("text-lg font-extrabold italic leading-snug text-[#0b314c]", item.label === "03" && "lg:whitespace-nowrap")}>
-                    {item.label === "03" ? (
-                      <>Numbers Don't Lie - But They Do<br />Reveal</>
-                    ) : (
-                      item.subheading
-                    )}
+                  <p className="text-lg font-extrabold italic leading-snug text-[#0b314c]">
+                    {item.subheading}
                   </p>
                 )}
                 <p className="mt-3 text-base leading-7 text-black">
@@ -113,7 +101,7 @@ export default function IssueDetailsSection({ selectedIssue }) {
                       {item.heading}
                     </h2>
                     {item.subheading && (
-                      <p className={cn("mt-1 text-lg font-extrabold leading-snug text-[#0b314c]", (item.label === "03" || item.label === "02") && "whitespace-nowrap")}>
+                      <p className="mt-1 text-lg font-extrabold leading-snug text-[#0b314c]">
                         {item.subheading}
                       </p>
                     )}
@@ -149,17 +137,7 @@ export default function IssueDetailsSection({ selectedIssue }) {
           <DrawerHeader className="flex flex-row items-start justify-between gap-4 bg-[#0F3652] text-left text-white">
             <div>
               <DrawerTitle className="text-xl font-bold text-white sm:text-2xl">
-                {openArticle?.label === "01" ? (
-                  <>
-                    Decoding the Mindset Behind
-                    <br />
-                    Every Financial Crime
-                  </>
-                ) : openArticle?.label === "02" ? (
-                  <>The Toshiba Fraud Story</>
-                ) : (
-                  openArticle?.heading
-                )}
+                {openArticle?.heading}
               </DrawerTitle>
               <DrawerDescription className="mt-2 text-sm font-semibold text-[#F3831C]">
                 {openArticle?.label} {openArticle?.title}
@@ -190,7 +168,7 @@ export default function IssueDetailsSection({ selectedIssue }) {
                 </div>
                 <div>
                   {openArticle.subheading && (
-                    <p className={cn("text-xl font-extrabold italic leading-snug text-[#0b314c]", openArticle.label === "03" && "lg:whitespace-nowrap")}>
+                    <p className="text-xl font-extrabold italic leading-snug text-[#0b314c]">
                       {openArticle.subheading}
                     </p>
                   )}
