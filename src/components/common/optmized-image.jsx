@@ -14,11 +14,20 @@ const OptimizedImage = memo(function OptimizedImage({
   fetchPriority,
   ...rest
 }) {
-  const generatedSrcSet = useMemo(() => {
+  const safeSrc = useMemo(() => {
     if (!src) return "";
+    try {
+      return encodeURI(src);
+    } catch {
+      return src;
+    }
+  }, [src]);
+
+  const generatedSrcSet = useMemo(() => {
+    if (!safeSrc) return "";
 
     try {
-      const url = new URL(src);
+      const url = new URL(safeSrc);
       if (url.hostname === "aia.in.net" && url.pathname.includes("/webapi/")) {
         return "";
       }
@@ -40,16 +49,16 @@ const OptimizedImage = memo(function OptimizedImage({
       }
     };
 
-    return widths.map((w) => `${buildUrl(src, w, quality)} ${w}w`).join(", ");
-  }, [src]);
+    return widths.map((w) => `${buildUrl(safeSrc, w, quality)} ${w}w`).join(", ");
+  }, [safeSrc]);
   const resolvedSrcSet =
     providedSrcSet !== undefined ? providedSrcSet : generatedSrcSet;
 
-  if (!src) return null;
+  if (!safeSrc) return null;
 
   return (
     <img
-      src={src}
+      src={safeSrc}
       srcSet={resolvedSrcSet || undefined}
       sizes={sizes}
       alt={alt}

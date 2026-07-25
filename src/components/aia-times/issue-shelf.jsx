@@ -103,6 +103,12 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                   width={520}
                   height={430}
                   className="h-full w-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    if (item.fallbackImage) {
+                      e.currentTarget.src = `${ASSET_BASE}/${item.fallbackImage}`;
+                    }
+                  }}
                 />
               </div>
             </div>
@@ -153,24 +159,10 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                 {item.label} {item.title}
               </p>
               <h3 className="mt-2.5 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-[#0b314c]">
-                {item.label === "01" ? (
-                  <>
-                    Decoding the Mindset Behind
-                    <br />
-                    Every Financial Crime
-                  </>
-                ) : (
-                  item.heading
-                )}
+                {item.heading}
               </h3>
               {item.subheading && (
-                <p
-                  className={cn(
-                    "mt-1 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-[#0b314c]",
-                    (item.label === "03" || item.label === "02") &&
-                      "whitespace-nowrap",
-                  )}
-                >
+                <p className="mt-1 text-xl sm:text-[22px] md:text-2xl font-extrabold leading-[1.2] text-[#0b314c]">
                   {item.subheading}
                 </p>
               )}
@@ -252,6 +244,12 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                   width={1585}
                   height={2000}
                   className="h-full max-h-[430px] w-full object-contain object-top"
+                  onError={(e) => {
+                    e.currentTarget.onerror = null;
+                    if (selectedIssue.fallbackCover) {
+                      e.currentTarget.src = `${ASSET_BASE}/${selectedIssue.fallbackCover}`;
+                    }
+                  }}
                 />
               </div>
 
@@ -487,15 +485,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
           <DrawerHeader className="flex flex-row items-start justify-between gap-4 bg-[#0F3652] text-left text-white">
             <div>
               <DrawerTitle className="text-xl font-bold text-white sm:text-2xl">
-                {openArticle?.label === "01" ? (
-                  <>
-                    Decoding the Mindset Behind
-                    <br />
-                    Every Financial Crime
-                  </>
-                ) : (
-                  openArticle?.heading
-                )}
+                {openArticle?.heading}
               </DrawerTitle>
               <DrawerDescription className="mt-1.5 text-xs sm:text-sm font-semibold text-[#F3831C]">
                 {openArticle?.label} {openArticle?.title}
@@ -526,6 +516,12 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                       width={900}
                       height={520}
                       className="max-h-[420px] w-full rounded-xl object-contain"
+                      onError={(e) => {
+                        e.currentTarget.onerror = null;
+                        if (openArticle.fallbackImage) {
+                          e.currentTarget.src = `${ASSET_BASE}/${openArticle.fallbackImage}`;
+                        }
+                      }}
                     />
                   </div>
                 </div>
