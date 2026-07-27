@@ -19,12 +19,15 @@ import {
 } from "./aia-times.constants";
 
 function getMagazineDownloadCourse(issue) {
-  return MAGAZINE_COURSE;
+  if (issue?.id === "june-2026") {
+    return MAGAZINE_COURSE;
+  }
+  return `${MAGAZINE_COURSE} Vol 2`;
 }
 
 function getMagazineDownloadData(issue) {
   return {
-    userType: MAGAZINE_COURSE,
+    userType: getMagazineDownloadCourse(issue),
     userCourse: getMagazineDownloadCourse(issue),
     userMessage: `AIA Times magazine PDF request: ${issue.title} (${issue.issueDate})`,
   };
@@ -289,7 +292,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                 ) : (
                   <div className="mt-7">
                     <PdfJoinDialog
-                      course={MAGAZINE_COURSE}
+                      course={getMagazineDownloadCourse(selectedIssue)}
                       buttonlabel="Get Notified"
                       buttonClassName="min-h-11 rounded-md bg-[#f36f21] px-7 py-2.5 text-sm font-semibold text-white hover:bg-[#d85f18] cursor-pointer"
                     />
@@ -376,7 +379,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                       </div>
                     ) : (
                       <PdfJoinDialog
-                        course={MAGAZINE_COURSE}
+                        course={getMagazineDownloadCourse(issue)}
                         buttonlabel="Read Issue"
                         buttonClassName="mt-3 cursor-pointer min-h-8 rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#f36f21] hover:text-white"
                       />
@@ -453,7 +456,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
                   </div>
                 ) : (
                   <PdfJoinDialog
-                    course={MAGAZINE_COURSE}
+                    course={getMagazineDownloadCourse(issue)}
                     buttonlabel="Get Notified"
                     buttonClassName="mt-3 cursor-pointer min-h-8 rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#f36f21] hover:text-white"
                   />
