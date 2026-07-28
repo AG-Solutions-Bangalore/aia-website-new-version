@@ -1,9 +1,6 @@
 import * as pdfjsLib from "pdfjs-dist";
 
-// Vite resolves ?url to the on-disk asset URL, which the Web Worker can load.
-import workerUrl from "pdfjs-dist/build/pdf.worker.min.mjs?url";
-
-pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
+pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.mjs`;
 
 /**
  * Render every page of a PDF into an array of data-URL strings.
