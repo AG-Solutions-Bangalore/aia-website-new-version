@@ -88,9 +88,8 @@ export default function FlipBook({
       try {
         const pdfjs = await import("pdfjs-dist");
         
-        // Use CDN worker URL to bypass local server MIME type blocks (.mjs content-type)
-        // and avoid dynamic asset hash matching issues in production.
-        pdfjs.GlobalWorkerOptions.workerSrc = "https://cdn.jsdelivr.net/npm/pdfjs-dist@6.0.227/build/pdf.worker.min.mjs";
+        // Use CDN worker URL matching the runtime pdfjs version to avoid version mismatches
+        pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
         const loadingTask = pdfjs.getDocument({ url: pdfUrl });
         const pdfDoc = await loadingTask.promise;
