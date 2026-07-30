@@ -63,7 +63,7 @@ export default function Footer() {
                   },
 
                   { name: "CAMS", href: "/cams/" },
-                  // { name: "CISA", href: "/cisa/" },
+                  { name: "CISA", href: "/cisa/" },
                 ].map((course, idx) => (
                   <li key={idx} className="group">
                     <Link
