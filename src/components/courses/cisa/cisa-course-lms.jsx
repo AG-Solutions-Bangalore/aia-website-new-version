@@ -66,7 +66,7 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
       title: "Exam Registration Fees",
       description:
         "Receive guidance and support for the CISA exam registration process, along with ISACA exam registration fee benefits available through the official learning kit of ISACA.",
-      image: "lms_CIA.webp",
+      image: "lms_CISA.webp",
     },
     {
       title: "Mock Exams",
@@ -116,7 +116,7 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
             {/* Left circular number switch */}
             <button
               onClick={prevSlide}
-              className="hidden sm:flex shrink-0 w-12 h-12 md:w-14 md:h-14 items-center justify-center rounded-full border-2 border-[#56C596] hover:bg-[#56C596]/10 text-[#56C596] font-bold text-lg transition-all cursor-pointer"
+              className="hidden sm:flex shrink-0 w-12 h-12 md:w-14 md:h-14 items-center justify-center rounded-full border-2 border-[#0F3652] hover:bg-[#0F3652]/10 text-[#0F3652] font-bold text-lg transition-all cursor-pointer"
               aria-label="Previous slide"
             >
               {prevIndex + 1}
@@ -126,10 +126,10 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
             <div className="w-full max-w-4xl bg-white border border-[#0F3652]/10 rounded-[32px] p-6 sm:p-10 shadow-2xl flex flex-col md:flex-row items-center gap-8 min-h-[360px] transition-all duration-300">
               <div className="flex-1 space-y-4 text-left">
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-[#56C596] text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  <div className="w-10 h-10 bg-[#0F3652] text-white rounded-full flex items-center justify-center font-bold text-lg">
                     {activeKitTab + 1}
                   </div>
-                  <span className="text-[#56C596] font-bold text-sm uppercase tracking-widest">
+                  <span className="text-[#0F3652] font-bold text-sm uppercase tracking-widest">
                     Prep Resource
                   </span>
                 </div>
@@ -164,7 +164,7 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
             {/* Right circular number switch */}
             <button
               onClick={nextSlide}
-              className="hidden sm:flex shrink-0 w-12 h-12 md:w-14 md:h-14 items-center justify-center rounded-full border-2 border-[#EC709B] hover:bg-[#EC709B]/10 text-[#EC709B] font-bold text-lg transition-all cursor-pointer"
+              className="hidden sm:flex shrink-0 w-12 h-12 md:w-14 md:h-14 items-center justify-center rounded-full border-2 border-[#F3831C] hover:bg-[#F3831C]/10 text-[#F3831C] font-bold text-lg transition-all cursor-pointer"
               aria-label="Next slide"
             >
               {nextIndex + 1}

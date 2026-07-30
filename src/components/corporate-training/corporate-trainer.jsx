@@ -196,7 +196,7 @@ const CorporateTrainer = () => {
                 financial advisory.
                 <strong>
                   A Chartered Accountant (CA), Company Secretary (CS), and
-                  globally certified expert holding the CIA, CFE, and CAMS
+                  globally certified expert holding the CIA, CISA, CFE, and CAMS
                   credentials.
                 </strong>
               </p>

@@ -38,7 +38,7 @@ const CisaUnique = () => {
           ),
           title: "ISACA Official Prep Kit",
           description:
-            "Get access to ISACA's official practice questions and study guides. AIA provides the complete ISACA resources kit, including exclusive resources for CISA prep. Everything you need to prepare is in one place.",
+            "Get access to ISACA's official CISA practice exam and study guides. AIA provides the complete ISACA resources kit, including exclusive resources for CISA prep. Everything you need to prepare is in one place.",
           position: "left",
         },
         {

@@ -83,7 +83,7 @@ const Navbar = () => {
         { name: "CIA Curriculum", link: "/cia-curriculum/" },
         { name: "CIA Challenge", link: "/cia-challenge-curriculum/" },
         { name: "CAMS", link: "/cams/" },
-        // { name: "CISA", link: "/cisa/" },
+        { name: "CISA", link: "/cisa/" },
       ],
     },
     {

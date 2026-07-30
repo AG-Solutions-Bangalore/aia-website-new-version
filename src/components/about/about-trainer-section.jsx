@@ -35,7 +35,7 @@ const AboutTrainerSection = ({
                 <span className="font-bold"> over 22 years of experience </span>{" "}
                 across internal audit, risk management, compliance, forensics,
                 and finance . Holding prestigious credentials including{" "}
-                <span className="font-bold"> CA, CS, CIA, CAMS, and CFE</span>,
+                <span className="font-bold"> CA, CS, CIA, CAMS, CISA, and CFE</span>,
                 he brings deep technical expertise and practical insight to his
                 role as a mentor and industry expert.
               </p>

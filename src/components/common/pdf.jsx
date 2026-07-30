@@ -193,7 +193,7 @@ export const TestimonialSlider = ({ reviews, className }) => {
                 <span className="font-bold"> over 22 years of experience </span>{" "}
                 across internal audit, risk management, compliance, forensics,
                 and finance . Holding prestigious credentials including{" "}
-                <span className="font-bold"> CA, CS, CIA, CAMS, and CFE</span>,
+                <span className="font-bold"> CA, CS, CIA, CAMS, CISA, and CFE</span>,
                 he brings deep technical expertise and practical insight to his
                 role as a mentor and industry expert.
               </p>
@@ -241,6 +241,14 @@ export const TestimonialSlider = ({ reviews, className }) => {
                   He has also served as an authorized trainer with the NSE
                   Academy, contributing to the professional development of
                   finance and audit professionals across India.
+                </p>
+              </div>
+
+              <div className="border-2 shadow-lg backdrop-blur-2xl shadow-[#F3831C]/80 border-white rounded-lg p-2 mb-5">
+                <p className="font-bold italic">
+                  He is now an authorized trainer with ISACA, further
+                  strengthening his contribution to the professional development
+                  of audit, risk, and information security professionals.
                 </p>
               </div>
 
