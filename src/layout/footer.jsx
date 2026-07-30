@@ -23,7 +23,6 @@ export default function Footer() {
                 { name: "Blog", href: "/blogs/" },
                 { name: "AIA Times", href: "/aia-times/" },
                 { name: "Alumni Network", href: "/alumni-network/" },
-                { name: "CFE Free Resources", href: "/cfe-free-resources/" },
                 { name: "Corporate Training", href: "/corporate-training/" },
                 { name: "Enroll Now", href: "/enroll-now/" },
                 { name: "Contact Us", href: "/contact/" },
@@ -49,35 +48,63 @@ export default function Footer() {
           </div>
 
           <div className="space-y-6 min-w-0">
-            <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
-              Courses
-              <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
-            </h4>
-            <ul className="space-y-3">
-              {[
-                { name: "CFE Curriculum", href: "/cfe-curriculum/" },
-                { name: "CIA Curriculum", href: "/cia-curriculum/" },
-                {
-                  name: "CIA Challenge Curriculum",
-                  href: "/cia-challenge-curriculum/",
-                },
+            <div>
+              <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
+                Courses
+                <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
+              </h4>
+              <ul className="space-y-3">
+                {[
+                  { name: "CFE Curriculum", href: "/cfe-curriculum/" },
+                  { name: "CIA Curriculum", href: "/cia-curriculum/" },
+                  {
+                    name: "CIA Challenge Curriculum",
+                    href: "/cia-challenge-curriculum/",
+                  },
 
-                { name: "CAMS", href: "/cams/" },
-                { name: "CISA", href: "/cisa/" },
-              ].map((course, idx) => (
-                <li key={idx} className="group">
-                  <Link
-                    to={course.href}
-                    className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
-                  >
-                    <span className="text-[#fa8017] group-hover:translate-x-1 transition-transform duration-300">
-                      ›
-                    </span>
-                    <span>{course.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
+                  { name: "CAMS", href: "/cams/" },
+                  // { name: "CISA", href: "/cisa/" },
+                ].map((course, idx) => (
+                  <li key={idx} className="group">
+                    <Link
+                      to={course.href}
+                      className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
+                    >
+                      <span className="text-[#fa8017] group-hover:translate-x-1 transition-transform duration-300">
+                        ›
+                      </span>
+                      <span>{course.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
+                Free Resources
+                <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
+              </h4>
+              <ul className="space-y-3">
+                {[
+                  { name: "CFE Free Resources", href: "/cfe-free-resources/" },
+                  { name: "CIA Free Resources", href: "/cia-free-resources/" },
+                  { name: "CAMS Free Resources", href: "/cams-free-resources/" },
+                ].map((resource, idx) => (
+                  <li key={idx} className="group">
+                    <Link
+                      to={resource.href}
+                      className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
+                    >
+                      <span className="text-[#fa8017] group-hover:translate-x-1 transition-transform duration-300">
+                        ›
+                      </span>
+                      <span>{resource.name}</span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           <div className="space-y-4 sm:col-span-2 md:col-span-1 min-w-0">
