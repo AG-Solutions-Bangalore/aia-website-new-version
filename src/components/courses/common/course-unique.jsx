@@ -83,11 +83,12 @@ export default function CourseUnique({
       {button && (
         <div className="flex justify-center mt-6 md:mt-8">
           <Button
+            asChild
             className="relative cursor-pointer overflow-hidden group px-4 py-2 md:px-6 md:py-3 text-xs md:text-sm bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300"
             variant="ghost"
-            aria-label="Visit Our YouTube Channel"
+            aria-label="Get in Touch"
           >
-            <Link to="/contact">
+            <Link to="/contact" target="_blank" rel="noopener noreferrer">
               <span className="relative z-10 text-white">
                 <span>Get in Touch</span>
               </span>

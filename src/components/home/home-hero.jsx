@@ -18,27 +18,27 @@ const HOME_HERO_FIRST_SLIDE = {
 const HOME_FALLBACK_SLIDES = [
   {
     id: 1,
-    ...HOME_HERO_FIRST_SLIDE,
-    link: "contact",
-    alt: "cia-cfe-cams-certification",
+    imageUrl: `${HOME_BANNER_BASE}36.webp`,
+    link: null,
+    alt: "Become a Certified Information Systems Auditor",
   },
   {
     id: 2,
+    imageUrl: `${HOME_BANNER_BASE}2.webp`,
+    link: "contact",
+    alt: "cia-cfe-cisa-&-cams-certification",
+  },
+  {
+    id: 3,
     imageUrl: `${HOME_BANNER_BASE}11.webp`,
     link: "cams",
     alt: "cams-passout",
   },
   {
-    id: 3,
+    id: 4,
     imageUrl: `${HOME_BANNER_BASE}10.webp`,
     link: "cams",
     alt: "CAMS Certification",
-  },
-  {
-    id: 4,
-    imageUrl: `${HOME_BANNER_BASE}6.webp`,
-    link: "cfe-curriculum",
-    alt: "CFE-Passouts",
   },
   {
     id: 5,
@@ -48,30 +48,36 @@ const HOME_FALLBACK_SLIDES = [
   },
   {
     id: 6,
-    imageUrl: `${HOME_BANNER_BASE}5.webp`,
-    link: "cia-challenge-curriculum",
-    alt: "CIA-Passouts",
+    imageUrl: `${HOME_BANNER_BASE}6.webp`,
+    link: "cfe-curriculum",
+    alt: "CFE-Passouts",
   },
   {
     id: 7,
+    imageUrl: `${HOME_BANNER_BASE}5.webp`,
+    link: "cia-challenge-curriculum",
+    alt: "CIA-challenge-Passouts",
+  },
+  {
+    id: 8,
     imageUrl: `${HOME_BANNER_BASE}9.webp`,
     link: "cia-challenge-curriculum",
     alt: "CIA Challenge Curriculum",
   },
   {
-    id: 8,
+    id: 9,
     imageUrl: `${HOME_BANNER_BASE}4.webp`,
-    link: "alumni-network",
+    link: "our-passouts",
     alt: "CIA-Passouts",
   },
   {
-    id: 9,
+    id: 10,
     imageUrl: `${HOME_BANNER_BASE}8.webp`,
     link: "cia-curriculum",
     alt: "CIA Curriculum",
   },
   {
-    id: 10,
+    id: 11,
     imageUrl: `${HOME_BANNER_BASE}7.webp`,
     link: "cfe-curriculum",
     alt: "CFE-Passout",
@@ -80,9 +86,9 @@ const HOME_FALLBACK_SLIDES = [
 
 const BANNER_FALLBACKS = {
   home: {
-    image: "2.webp",
-    alt: "cia-cfe-cams-certification",
-    link: "contact",
+    image: "36.webp",
+    alt: "Become a Certified Information Systems Auditor",
+    link: null,
   },
   "about-aia": {
     image: "12.webp",
@@ -95,14 +101,14 @@ const BANNER_FALLBACKS = {
     link: null,
   },
   "cia-curriculum": {
-    image: "15.webp",
-    alt: "cia-curriculum",
-    link: null,
+    image: "28.webp",
+    alt: "Becker now available at AIA",
+    link: "https://aia.in.net/contact",
   },
   "cia-challenge-curriculum": {
-    image: "17.webp",
-    alt: "cia-challenge-curriculum",
-    link: null,
+    image: "29.webp",
+    alt: "Becker now available at AIA",
+    link: "https://pages.razorpay.com/stores/Enroll-Now",
   },
   cams: {
     image: "19.webp",
@@ -111,13 +117,18 @@ const BANNER_FALLBACKS = {
   },
   cisa: {
     image: "35.webp",
-    alt: "cisa-certification",
+    alt: "CISA Curriculum",
+    link: null,
+  },
+  "corporate-training": {
+    image: "22.webp",
+    alt: "corporate-training",
     link: null,
   },
   "cia-free-resources": {
-    image: "24.webp",
-    alt: "CIA Free Resources",
-    link: "contact",
+    image: "32.webp",
+    alt: "Becker Available at AIA",
+    link: "https://aia.in.net/cia-curriculum/",
   },
   "cams-free-resources": {
     image: "25.webp",
@@ -134,30 +145,29 @@ const BANNER_FALLBACKS = {
 const HOME_FALLBACK_ANNOUNCEMENTS = [
   {
     id: 1,
+    title: "CISA Launching Banner",
+    subtext: null,
+    link: null,
+  },
+  {
+    id: 2,
     title: "Have Questions?",
     subtext: "Connect with experts and plan your preparation the smarter way.",
     link: "contact",
   },
   {
-    id: 2,
+    id: 3,
     title: "Begin your CAMS Success journey here",
     subtext:
       "Start your CAMS journey with expert support and proven preparation.",
     link: "cams",
   },
   {
-    id: 3,
+    id: 4,
     title: "Looking for a smarter way to prepare for CAMS?",
     subtext:
       "Switch to focused CAMS prep designed for real professional needs.",
     link: "cams",
-  },
-  {
-    id: 4,
-    title: "Want to build a career in fraud investigation?",
-    subtext:
-      "Explore our CFE Program & join a growing community of professionals.",
-    link: "cfe-curriculum",
   },
   {
     id: 5,
@@ -168,34 +178,41 @@ const HOME_FALLBACK_ANNOUNCEMENTS = [
   },
   {
     id: 6,
+    title: "Want to build a career in fraud investigation?",
+    subtext:
+      "Explore our CFE Program & join a growing community of professionals.",
+    link: "cfe-curriculum",
+  },
+  {
+    id: 7,
     title: "Add the CIA credential to your professional profile",
     subtext:
       "Clear CIA Challenge with AIA's exclusive study material & approach.",
     link: "cia-challenge-curriculum",
   },
   {
-    id: 7,
+    id: 8,
     title: "Struggling with heavy books? Not anymore.",
     subtext:
       "Switch to AIA's premium study resources & make your prep smarter.",
     link: "cia-challenge-curriculum",
   },
   {
-    id: 8,
+    id: 9,
     title: "CIA Passouts",
     subtext: "CIA Passouts",
-    link: "alumni-network",
+    link: "our-passouts",
   },
   {
-    id: 9,
+    id: 10,
     title: "Want to crack the CIA on your first attempt?",
     subtext:
       "Choose the smart way, not the hard way - clear CIA with expert guidance.",
     link: "cia-curriculum",
   },
   {
-    id: 10,
-    title: "Trusted by professionals across 40+ countries worldwide.",
+    id: 11,
+    title: "Trusted by professionals across 36+ countries worldwide.",
     subtext:
       "Join the global CFE network and build a career in fraud examination.",
     link: "cfe-curriculum",
@@ -233,8 +250,6 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   useEffect(() => {
     const controller = new AbortController();
-    let loadTimer;
-    let idleCallbackId;
 
     const loadBanner = async () => {
       try {
@@ -284,31 +299,10 @@ export default function HomeHero({ slug, bottombar = false }) {
       }
     };
 
-    const scheduleBannerLoad = () => {
-      if (hasFallback) {
-        loadTimer = window.setTimeout(() => {
-          if ("requestIdleCallback" in window) {
-            idleCallbackId = window.requestIdleCallback(loadBanner, {
-              timeout: 3000,
-            });
-          } else {
-            loadBanner();
-          }
-        }, 6000);
-        return;
-      }
-
-      loadBanner();
-    };
-
-    scheduleBannerLoad();
+    loadBanner();
 
     return () => {
       controller.abort();
-      window.clearTimeout(loadTimer);
-      if (idleCallbackId && "cancelIdleCallback" in window) {
-        window.cancelIdleCallback(idleCallbackId);
-      }
     };
   }, [hasFallback, slug]);
 
