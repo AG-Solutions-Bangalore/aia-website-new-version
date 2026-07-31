@@ -35,6 +35,8 @@ export default function Footer() {
                 <li key={idx} className="group">
                   <Link
                     to={link.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
                   >
                     <span className="text-[#fa8017] group-hover:translate-x-1 transition-transform duration-300">
@@ -68,6 +70,8 @@ export default function Footer() {
                   <li key={idx} className="group">
                     <Link
                       to={course.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
                     >
                       <span className="text-[#fa8017] group-hover:translate-x-1 transition-transform duration-300">
@@ -94,6 +98,8 @@ export default function Footer() {
                   <li key={idx} className="group">
                     <Link
                       to={resource.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
                     >
                       <span className="text-[#fa8017] group-hover:translate-x-1 transition-transform duration-300">
