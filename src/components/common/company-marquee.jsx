@@ -12,7 +12,7 @@ const CompanyMarquee = ({ companies }) => {
             100% { transform: translateX(-120%); }
           }
           .company-marquee {
-            animation: companyMarquee 280s linear infinite;
+            animation: companyMarquee 600s linear infinite;
           }
         `}
       </style>
