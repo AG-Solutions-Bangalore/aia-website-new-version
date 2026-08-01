@@ -182,7 +182,7 @@ const CISA = () => {
         <CamsConnection
           title="The Right Certification Starts With The Right Choice"
           description="Find the certification that aligns with your background and career stage"
-          buttonColors={["#a8e6f3", "#fee1c6", "#e2ffdc", "#f5dbf5"]}
+          buttonColors={["#a8e6f3", "#fee1c6", "#e2ffdc", "#ffe38f"]}
           images={[
             { image: "hiw_cfe.webp", link: "/cfe-curriculum" },
             { image: "hiw_cia.webp", link: "/cia-curriculum" },
