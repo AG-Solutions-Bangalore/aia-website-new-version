@@ -176,8 +176,9 @@ Each message reflects a different experience. These reflections provide a genuin
             { image: "hiw_cia.webp", link: "/cia-curriculum" },
             { image: "hiw_ciac.webp", link: "/cia-challenge-curriculum" },
             { image: "hiw_cams.webp", link: "/cams" },
+            { image: "hiw_cisa.webp", link: "/cisa" },
           ]}
-          buttonColors={["#fee1c6", "#e2ffdc", "#ffe38f"]}
+          buttonColors={["#fee1c6", "#e2ffdc", "#ffe38f", "#a8e6f3"]}
         />
       </LazySection>
 

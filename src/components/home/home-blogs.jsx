@@ -64,8 +64,7 @@ const HomeBlog = () => {
         <div className="flex flex-col items-center text-center lg:col-span-3 lg:items-start lg:text-left">
           <div className="flex flex-col h-full justify-center">
             <h2 className="mt-4 text-2xl font-bold text-white">
-              Expert articles, exam tips, and real-world insights for CFE, CIA,
-              and CAMS aspirants.
+              Expert articles, exam tips, and real-world insights for CFE, CIA, CAMS, and CISA aspirants
             </h2>
             <Button
               className="rounded-xl mt-6 px-5 text-base relative cursor-pointer overflow-hidden group"

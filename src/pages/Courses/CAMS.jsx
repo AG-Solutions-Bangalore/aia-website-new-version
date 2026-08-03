@@ -169,8 +169,9 @@ const CAMS = () => {
             { image: "hiw_cfe.webp", link: "/cfe-curriculum" },
             { image: "hiw_cia.webp", link: "/cia-curriculum" },
             { image: "hiw_ciac.webp", link: "/cia-challenge-curriculum" },
+            { image: "hiw_cisa.webp", link: "/cisa" },
           ]}
-          buttonColors={["#a8e6f3", "#fee1c6", "#e2ffdc"]}
+          buttonColors={["#a8e6f3", "#fee1c6", "#e2ffdc", "#ffe38f"]}
         />
       </LazySection>
 
