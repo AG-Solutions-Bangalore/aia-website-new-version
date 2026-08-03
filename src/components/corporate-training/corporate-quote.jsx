@@ -219,6 +219,9 @@ export const CorporateQuoteForm = ({
             <option value="Certified Anti Money Laundering Specialist">
               Certified Anti Money Laundering Specialist
             </option>
+            <option value="Certified Information Systems Auditor">
+              Certified Information Systems Auditor
+            </option>
             <option value="CIA Challenge Exam">CIA Challenge Exam</option>
           </select>
           {errors.userCourse && (

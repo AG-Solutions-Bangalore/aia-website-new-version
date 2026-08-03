@@ -185,78 +185,73 @@ const CorporateTrainer = () => {
               </p>
             </div>
 
-            <div className="space-y-2 text-sm sm:text-base leading-relaxed">
-              <p>
-                <span className="font-bold text-2xl sm:text-3xl italic text-justify">
+            <div className="space-y-3 text-sm sm:text-base leading-relaxed">
+              <p className="text-justify">
+                <span className="font-bold text-2xl sm:text-3xl italic">
                   Puneet Garg
                 </span>{" "}
                 is a distinguished professional with
-                <strong> over 22 years of leadership experience</strong> in
+                <strong> over 22 years of leadership experience</strong> across
                 internal audit, risk management, compliance, forensics, and
                 financial advisory.
                 <strong>
+                  {" "}
                   A Chartered Accountant (CA), Company Secretary (CS), and
-                  globally certified expert holding the CIA, CISA, CFE, and CAMS
-                  credentials.
-                </strong>
+                  globally certified professional holding CFE, CIA, CISA, and CAMS
+                  credentials,
+                </strong>{" "}
+                he brings deep technical expertise and strategic insight to the
+                governance and assurance domain.
               </p>
 
               <p className="text-justify">
-                Puneet represents a rare blend of technical depth and strategic
-                insight in the governance and assurance domain.
                 <strong>
-                  {" "}
                   He has worked with leading multinational organizations,
                 </strong>{" "}
-                including Samsung, Hyundai, Panasonic, and Alchemist, while
-                serving as Head of Internal Audit at DCM Shriram Industries Ltd.
+                including Samsung, Hyundai, Panasonic, and Alchemist, and
+                served as Head of Internal Audit at DCM Shriram Industries Ltd.
+                His extensive experience in corporate governance, risk controls,
+                fraud investigation, and assurance has established him as a trusted
+                professional in the audit and compliance landscape.
               </p>
-              <p className="text-justify">
-                His strong foundation in corporate governance, risk controls,
-                and fraud investigation has established him as a trusted
-                authority in the audit and compliance landscape.
-              </p>
+
               <p className="text-justify">
                 As the
                 <strong>
                   {" "}
-                  CEO and Lead Faculty at the Academy of Internal Audit (AIA),
-                </strong>
+                  CEO and Faculty at the Academy of Internal Audit (AIA),
+                </strong>{" "}
                 he has designed and delivered specialized training programs for
-                both public and private sector organizations—including
-                regulatory and investigative bodies
+                professionals across public and private sector organizations,
+                including regulatory and investigative bodies. He has trained over
+                2000 professionals from 40+ countries worldwide with his training
+                approach, focusing on effective control frameworks, risk-based
+                approaches, and global compliance practices that professionals
+                can apply directly in their roles.
               </p>
+
               <p className="text-justify">
                 <strong>
-                  His programs go beyond certification, equipping professionals
-                  with practical forensic insights,
-                </strong>
-                robust control frameworks, and global compliance standards that
-                directly strengthen an organization’s internal audit
-                effectiveness, risk management maturity, and fraud resilience.
-              </p>
-              <p className="text-justify">
-                Puneet’s initiatives to train corporate teams are not limited to
-                helping them earn global credentials but also to ensure they
-                acquire real-world analytical and auditing skills that enable
-                them to demonstrate excellence while performing their
-                professional responsibilities.
-              </p>
-              <strong className="text-justify">
-                He has trained professionals from prestigious institutions such
-                as CBI, NIA, CAG, NFSU, SPG, and Indian security forces, among
-                others.
-              </strong>
-              <p className="text-justify">
+                  He has trained professionals from prestigious institutions such
+                  as CBI, NIA, CAG, NFSU, SPG, and Indian security forces, among
+                  others.
+                </strong>{" "}
                 He has also served as an
-                <strong>authorized trainer with the NSE Academy,</strong>
-                contributing to the professional development of finance and
-                audit professionals across India.
+                <strong> authorized trainer with NSE Academy,</strong>{" "}
+                contributing to the professional development of audit
+                professionals.
               </p>
+
+              <p className="text-justify">
+                <strong>He is now an authorized trainer with ISACA,</strong>{" "}
+                further strengthening his contribution to the professional
+                development of audit, risk, and information security
+                professionals.
+              </p>
+
               <p className="text-justify mb-6">
-                In recognition of his impact on ethical leadership and
-                capability building in the profession,
-                {/* <strong>CEO Insights India featured him </strong> */}
+                In recognition of his contribution to ethical leadership and
+                professional capability building,
                 <a
                   href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
                   target="_blank"
@@ -267,7 +262,7 @@ const CorporateTrainer = () => {
                   CEO Insights India
                 </a>{" "}
                 featured him among the
-                <strong>Top 10 Impactful Business Leaders in India.</strong>
+                <strong> Top 10 Impactful Business Leaders in India.</strong>
               </p>
             </div>
           </div>
