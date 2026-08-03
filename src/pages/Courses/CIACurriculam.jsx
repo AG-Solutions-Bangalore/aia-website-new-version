@@ -166,7 +166,7 @@ const CIACurriculam = () => {
         <CamsConnection
           title="The Right Certification Starts With The Right Choice"
           description="Find the certification that aligns with your background and career stage"
-          buttonColors={["#a8e6f3", "#e2ffdc", "#ffe38f", "#fee1c6"]}
+          buttonColors={["#a8e6f3", "#e2ffdc", "#ffe38f", "#e2d5f8"]}
           images={[
             { image: "hiw_cfe.webp", link: "/cfe-curriculum" },
             { image: "hiw_ciac.webp", link: "/cia-challenge-curriculum" },
