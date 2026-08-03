@@ -54,7 +54,8 @@ const CamsConnection = ({
 
                   <button
                     style={{
-                      backgroundColor: buttonColors[index] || "#fee1c6",
+                      backgroundColor:
+                        item.buttonColor || buttonColors[index] || "#fee1c6",
                     }}
                     onClick={() => navigate(item.link)}
                     className="absolute bottom-[13%] left-[8%] px-4 py-1.5 sm:px-5 sm:py-2 text-xs sm:text-sm font-semibold rounded-full shadow-md transition-all duration-300 hover:opacity-90 cursor-pointer group-hover:scale-105 whitespace-nowrap"
