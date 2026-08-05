@@ -28,6 +28,13 @@ export const whatsNewItems = [
       "Exclusive CIA short study notes launched by AIA for smart and strategic CIA prep.",
     image: "time_cia_short_notes.webp",
   },
+  {
+    title: "CISA Preparation Course",
+    description:
+      "AIA Sets a New Benchmark with the Launch of Its CISA® Prep Course.",
+    image: "aia_times_news.webp",
+  },
+
   // {
   //   title: "CFE 4-Day Residential Program",
   //   description:
