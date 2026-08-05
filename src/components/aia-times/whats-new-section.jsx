@@ -6,8 +6,8 @@ import { ASSET_BASE, whatsNewItems } from "./aia-times.constants";
 export default function WhatsNewSection() {
   return (
     <section className="bg-[#0F3652] py-9 md:py-10">
-      <div className="mx-auto max-w-460 px-4 sm:px-6">
-        <div className="grid gap-8 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-center">
+      <div className="mx-auto max-w-360 px-4 sm:px-6  lg:max-w-7xl lg:px-8">
+        <div className="grid gap-8 lg:grid-cols-[370px_minmax(0,1fr)] lg:items-center">
           <div className="text-white">
             <h2 className="text-3xl font-extrabold leading-tight md:text-4xl">
               What&apos;s New at AIA
