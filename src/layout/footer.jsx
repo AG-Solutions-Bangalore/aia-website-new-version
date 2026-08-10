@@ -19,17 +19,17 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { name: "Home", href: "/" },
-                { name: "About AIA", href: "/about-aia/" },
-                { name: "Blog", href: "/blogs/" },
-                { name: "AIA Times", href: "/aia-times/" },
-                { name: "Alumni Network", href: "/alumni-network/" },
-                { name: "Corporate Training", href: "/corporate-training/" },
-                { name: "Enroll Now", href: "/enroll-now/" },
-                { name: "Contact Us", href: "/contact/" },
-                { name: "Policies", href: "/policies/" },
+                { name: "About AIA", href: "/about-aia" },
+                { name: "Blog", href: "/blogs" },
+                { name: "AIA Times", href: "/aia-times" },
+                { name: "Alumni Network", href: "/alumni-network" },
+                { name: "Corporate Training", href: "/corporate-training" },
+                { name: "Enroll Now", href: "/enroll-now" },
+                { name: "Contact Us", href: "/contact" },
+                { name: "Policies", href: "/policies" },
                 {
                   name: "Terms and Conditions",
-                  href: "/terms-and-conditions/",
+                  href: "/terms-and-conditions",
                 },
               ].map((link, idx) => (
                 <li key={idx} className="group">
@@ -57,15 +57,15 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3">
                 {[
-                  { name: "CFE Curriculum", href: "/cfe-curriculum/" },
-                  { name: "CIA Curriculum", href: "/cia-curriculum/" },
+                  { name: "CFE Curriculum", href: "/cfe-curriculum" },
+                  { name: "CIA Curriculum", href: "/cia-curriculum" },
                   {
                     name: "CIA Challenge Curriculum",
-                    href: "/cia-challenge-curriculum/",
+                    href: "/cia-challenge-curriculum",
                   },
 
-                  { name: "CAMS", href: "/cams/" },
-                  { name: "CISA", href: "/cisa/" },
+                  { name: "CAMS", href: "/cams" },
+                  { name: "CISA", href: "/cisa" },
                 ].map((course, idx) => (
                   <li key={idx} className="group">
                     <Link
@@ -91,9 +91,9 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3">
                 {[
-                  { name: "CFE Free Resources", href: "/cfe-free-resources/" },
-                  { name: "CIA Free Resources", href: "/cia-free-resources/" },
-                  { name: "CAMS Free Resources", href: "/cams-free-resources/" },
+                  { name: "CFE Free Resources", href: "/cfe-free-resources" },
+                  { name: "CIA Free Resources", href: "/cia-free-resources" },
+                  { name: "CAMS Free Resources", href: "/cams-free-resources" },
                 ].map((resource, idx) => (
                   <li key={idx} className="group">
                     <Link

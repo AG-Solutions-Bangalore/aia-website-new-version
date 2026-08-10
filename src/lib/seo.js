@@ -28,5 +28,5 @@ export function normalizeCanonicalPath(path = "/") {
 
 export function buildCanonicalUrl(path = "/") {
   const canonicalPath = normalizeCanonicalPath(path);
-  return canonicalPath === "/" ? `${SITE_URL}/` : `${SITE_URL}${canonicalPath}/`;
+  return canonicalPath === "/" ? `${SITE_URL}/` : `${SITE_URL}${canonicalPath}`;
 }
