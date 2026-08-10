@@ -69,8 +69,9 @@ function isBlogDetailPath(pathname) {
   return parts.length === 2 && parts[0] === "blogs" && parts[1] !== "course";
 }
 
-function withTrailingSlash(pathname) {
-  return pathname.endsWith("/") ? pathname : `${pathname}/`;
+function withoutTrailingSlash(pathname) {
+  if (pathname === "/") return "/";
+  return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
 }
 
 export default function App() {
@@ -93,27 +94,27 @@ export default function App() {
         <Route path="/about-aia" element={<AboutPage />} />
         <Route
           path="/about-us"
-          element={<Navigate to="/about-aia/" replace />}
+          element={<Navigate to="/about-aia" replace />}
         />
         <Route
           path="/about-aia/cia-curriculum"
-          element={<Navigate to="/cia-curriculum/" replace />}
+          element={<Navigate to="/cia-curriculum" replace />}
         />
         <Route
           path="/about-aia/cams"
-          element={<Navigate to="/cams/" replace />}
+          element={<Navigate to="/cams" replace />}
         />
         <Route
           path="/about-aia/cfe-curriculum"
-          element={<Navigate to="/cfe-curriculum/" replace />}
+          element={<Navigate to="/cfe-curriculum" replace />}
         />
         <Route
           path="/about-aia/cia-challenge-curriculum"
-          element={<Navigate to="/cia-challenge-curriculum/" replace />}
+          element={<Navigate to="/cia-challenge-curriculum" replace />}
         />
         <Route
           path="/about-aia/cisa"
-          element={<Navigate to="/cisa/" replace />}
+          element={<Navigate to="/cisa" replace />}
         />
         <Route path="/cfe-curriculum" element={<CFECurriculam />} />
         <Route path="/cia-curriculum" element={<CIACurriculam />} />
@@ -135,11 +136,11 @@ export default function App() {
         <Route path="/filter" element={<Navigate to="/fillter" replace />} />
         <Route
           path="/our-passouts/*"
-          element={<Navigate to="/alumni-network/" replace />}
+          element={<Navigate to="/alumni-network" replace />}
         />
         <Route
           path="/passed-out/*"
-          element={<Navigate to="/alumni-network/" replace />}
+          element={<Navigate to="/alumni-network" replace />}
         />
         <Route path="/enroll-now" element={<Enrool />} />
         <Route path="/contact" element={<Contact />} />
@@ -149,19 +150,19 @@ export default function App() {
         <Route path="/aia-times/flip-book" element={<FlipbookSection />} />
         <Route
           path="/corporate-training/cia-curriculum"
-          element={<Navigate to="/cia-curriculum/" replace />}
+          element={<Navigate to="/cia-curriculum" replace />}
         />
         <Route
           path="/corporate-training/cams"
-          element={<Navigate to="/cams/" replace />}
+          element={<Navigate to="/cams" replace />}
         />
         <Route
           path="/corporate-training/cfe-curriculum"
-          element={<Navigate to="/cfe-curriculum/" replace />}
+          element={<Navigate to="/cfe-curriculum" replace />}
         />
         <Route
           path="/corporate-training/cisa"
-          element={<Navigate to="/cisa/" replace />}
+          element={<Navigate to="/cisa" replace />}
         />
         <Route path="/policies" element={<Policies />} />
         <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
@@ -171,7 +172,7 @@ export default function App() {
           <Route
             key={oldPath}
             path={oldPath}
-            element={<Navigate to={withTrailingSlash(newPath)} replace />}
+            element={<Navigate to={withoutTrailingSlash(newPath)} replace />}
           />
         ))}
       </Routes>

@@ -128,7 +128,7 @@ const BANNER_FALLBACKS = {
   "cia-free-resources": {
     image: "32.webp",
     alt: "Becker Available at AIA",
-    link: "https://aia.in.net/cia-curriculum/",
+    link: "https://aia.in.net/cia-curriculum",
   },
   "cams-free-resources": {
     image: "25.webp",

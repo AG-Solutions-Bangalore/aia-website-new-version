@@ -57,14 +57,14 @@ const PassoutStoriesSlug = () => {
   }
 
   const courseRoutes = {
-    CAMS: "/cams/",
-    CFE: "/cfe-curriculum/",
-    CIA: "/cia-curriculum/",
-    "CIA Part 1": "/cia-curriculum/",
-    "CIA Part 2": "/cia-curriculum/",
-    "CIA Part 3": "/cia-curriculum/",
-    CIAC: "/cia-challenge-curriculum/",
-    CISA: "/cisa/",
+    CAMS: "/cams",
+    CFE: "/cfe-curriculum",
+    CIA: "/cia-curriculum",
+    "CIA Part 1": "/cia-curriculum",
+    "CIA Part 2": "/cia-curriculum",
+    "CIA Part 3": "/cia-curriculum",
+    CIAC: "/cia-challenge-curriculum",
+    CISA: "/cisa",
   };
 
   const {
