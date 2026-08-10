@@ -92,6 +92,11 @@ export default function Meta() {
   const rootUrl = `${baseUrl}/`;
   const canonicalUrl = buildCanonicalUrl(pathname);
 
+  const isProductionHost =
+    typeof window !== "undefined" &&
+    (window.location.hostname === "aia.in.net" || window.location.hostname === "www.aia.in.net");
+  const robotsMeta = isProductionHost ? pageMeta.robots || "index, follow" : "noindex, nofollow";
+
   // Organization Schema
   const orgSchema = {
     "@context": "https://schema.org",
@@ -156,7 +161,7 @@ export default function Meta() {
       <meta name="title" content={pageMeta.title} />
       <meta name="description" content={pageMeta.description} />
       <meta name="keywords" content={pageMeta.keywords || DEFAULT_META.keywords} />
-      <meta name="robots" content="index, follow" />
+      <meta name="robots" content={robotsMeta} />
 
       {/* Canonical */}
       <link rel="canonical" href={canonicalUrl} />
