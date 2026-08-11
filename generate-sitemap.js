@@ -137,7 +137,21 @@ async function generateSitemapXML() {
           .split("/")
           .map((part) => encodeURIComponent(part))
           .join("/");
-        const finalUrl = pathname === "/" ? `${BASE_URL}/` : `${BASE_URL}${encodedPath}`;
+
+        const NON_TRAILING_SLASH_PATHS = new Set([
+          "/cfe-curriculum",
+          "/cia-curriculum",
+          "/cia-challenge-curriculum",
+          "/cams",
+          "/cisa",
+        ]);
+
+        const finalUrl =
+          pathname === "/"
+            ? `${BASE_URL}/`
+            : NON_TRAILING_SLASH_PATHS.has(pathname)
+              ? `${BASE_URL}${encodedPath}`
+              : `${BASE_URL}${encodedPath}/`;
 
         if (urlSet.has(finalUrl)) return;
         urlSet.add(finalUrl);

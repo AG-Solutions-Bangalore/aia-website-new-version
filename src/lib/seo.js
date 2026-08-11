@@ -26,7 +26,21 @@ export function normalizeCanonicalPath(path = "/") {
   return CANONICAL_PATH_ALIASES[canonicalPath] || canonicalPath;
 }
 
+const NON_TRAILING_SLASH_PATHS = new Set([
+  "/cfe-curriculum",
+  "/cia-curriculum",
+  "/cia-challenge-curriculum",
+  "/cams",
+  "/cisa",
+]);
+
 export function buildCanonicalUrl(path = "/") {
   const canonicalPath = normalizeCanonicalPath(path);
-  return canonicalPath === "/" ? `${SITE_URL}/` : `${SITE_URL}${canonicalPath}`;
+  if (canonicalPath === "/") {
+    return `${SITE_URL}/`;
+  }
+  if (NON_TRAILING_SLASH_PATHS.has(canonicalPath)) {
+    return `${SITE_URL}${canonicalPath}`;
+  }
+  return `${SITE_URL}${canonicalPath}/`;
 }

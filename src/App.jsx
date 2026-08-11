@@ -69,9 +69,8 @@ function isBlogDetailPath(pathname) {
   return parts.length === 2 && parts[0] === "blogs" && parts[1] !== "course";
 }
 
-function withoutTrailingSlash(pathname) {
-  if (pathname === "/") return "/";
-  return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+function withTrailingSlash(pathname) {
+  return pathname.endsWith("/") ? pathname : `${pathname}/`;
 }
 
 export default function App() {
@@ -94,7 +93,7 @@ export default function App() {
         <Route path="/about-aia" element={<AboutPage />} />
         <Route
           path="/about-us"
-          element={<Navigate to="/about-aia" replace />}
+          element={<Navigate to="/about-aia/" replace />}
         />
         <Route
           path="/about-aia/cia-curriculum"
@@ -136,11 +135,11 @@ export default function App() {
         <Route path="/filter" element={<Navigate to="/fillter" replace />} />
         <Route
           path="/our-passouts/*"
-          element={<Navigate to="/alumni-network" replace />}
+          element={<Navigate to="/alumni-network/" replace />}
         />
         <Route
           path="/passed-out/*"
-          element={<Navigate to="/alumni-network" replace />}
+          element={<Navigate to="/alumni-network/" replace />}
         />
         <Route path="/enroll-now" element={<Enrool />} />
         <Route path="/contact" element={<Contact />} />
@@ -172,7 +171,7 @@ export default function App() {
           <Route
             key={oldPath}
             path={oldPath}
-            element={<Navigate to={withoutTrailingSlash(newPath)} replace />}
+            element={<Navigate to={withTrailingSlash(newPath)} replace />}
           />
         ))}
       </Routes>

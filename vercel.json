@@ -1,5 +1,5 @@
 {
-  "trailingSlash": false,
+  "trailingSlash": true,
   "cleanUrls": true,
   "redirects": [
     {
@@ -40,27 +40,27 @@
     },
     {
       "source": "/about-us",
-      "destination": "/about-aia",
+      "destination": "/about-aia/",
       "permanent": true
     },
     {
       "source": "/passed-out(/)?",
-      "destination": "/alumni-network",
+      "destination": "/alumni-network/",
       "permanent": true
     },
     {
       "source": "/our-passouts(/)?",
-      "destination": "/alumni-network",
+      "destination": "/alumni-network/",
       "permanent": true
     },
     {
       "source": "/corpo",
-      "destination": "/corporate-training",
+      "destination": "/corporate-training/",
       "permanent": true
     },
     {
       "source": "/enroll",
-      "destination": "/enroll-now",
+      "destination": "/enroll-now/",
       "permanent": true
     },
     {
