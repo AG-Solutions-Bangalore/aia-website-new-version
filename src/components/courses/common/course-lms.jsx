@@ -71,7 +71,7 @@ const CourseLms = ({ courseFeatures, cardTitle, image, description, gridClass })
           cursor-pointer
             "
           >
-            Contact US
+            Contact Us
           </Button>
         </div>
       </section>

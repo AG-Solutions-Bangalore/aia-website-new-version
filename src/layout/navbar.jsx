@@ -111,7 +111,7 @@ const Navbar = () => {
       submenu: [
         { name: "Blog", link: "/blogs/" },
         { name: "AIA Times", link: "/aia-times/" },
-        { name: "Contact US", link: "/contact/" },
+        { name: "Contact Us", link: "/contact/" },
       ],
     },
   ];

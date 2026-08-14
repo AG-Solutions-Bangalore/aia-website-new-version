@@ -330,7 +330,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
 
           <aside className="hidden xl:block rounded-md bg-[#eeeeee] p-4 shadow-none">
             <p className="text-lg font-extrabold italic text-[#f36f21]">
-              All Issue
+              All Issues
             </p>
             <div className="mt-4 space-y-4">
               {magazineIssues.map((issue) => (
@@ -407,7 +407,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
 
       <aside className="xl:hidden mx-4 mt-8 rounded-md bg-[#eeeeee] p-4 shadow-none">
         <p className="text-lg font-extrabold italic text-[#f36f21]">
-          All Issue
+          All Issues
         </p>
         <div className="mt-4 space-y-4">
           {magazineIssues.map((issue) => (

@@ -801,7 +801,7 @@ export const vol02IssueSections = [
   {
     label: "04",
     title: "Expert Talk",
-    heading: "Data Is Everywhere. Pattern Thinking Is Rare.",
+    heading: "Data is Everywhere. Pattern Thinking is Rare.",
     subheading: "",
     description:
       "Pradip Bhale, CFE, is a Law Enforcement Officer with over two decades of experience in investigations and financial crime. He served as Dy SP in Mumbai, Maharashtra. He brings a rare combination of ground-level investigative instinct and certified forensic audit expertise to every case he encounters.",

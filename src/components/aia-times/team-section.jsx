@@ -53,9 +53,9 @@ export default function TeamSection() {
           queries, or assistance.
         </p>
 
-        <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 flex flex-wrap items-start justify-center gap-8 lg:gap-12">
           {team.map((member) => (
-            <article key={member.id} className="text-center">
+            <article key={member.id} className="w-full sm:w-64 max-w-[280px] text-center">
               <OptimizedImage
                 src={member.image}
                 alt={member.alt}
