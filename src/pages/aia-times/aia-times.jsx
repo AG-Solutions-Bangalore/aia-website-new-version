@@ -23,7 +23,7 @@ export default function AiaTimes() {
     magazineIssues[0];
 
   return (
-    <div className="bg-white font-sans text-gray-800">
+    <div className="bg-white font-poppins text-gray-800">
       <AiaTimesBanner />
 
       <FloatingSubscribeButton />

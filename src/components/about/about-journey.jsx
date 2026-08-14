@@ -51,7 +51,7 @@ const processSteps = [
 ];
 const statsCards = [
   {
-    value: 5,
+    value: 6,
     suffix: "+",
     label: "Years of consistent growth",
     icon: "📈",
@@ -63,7 +63,7 @@ const statsCards = [
     icon: "👥",
   },
   {
-    value: 36,
+    value: 40,
     suffix: "+",
     label: "Countries Reached",
     icon: "🌍",
