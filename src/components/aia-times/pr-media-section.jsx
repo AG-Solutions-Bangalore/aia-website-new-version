@@ -18,66 +18,24 @@ export default function PrMediaSection() {
   const prItems = useMemo(() => {
     const imageBase = getImageBase(data, "Pr");
     const noImage = getImageBase(data, "No Image") || SERVER_NO_IMAGE;
-    return (data?.data || []).map((item) => {
-      let title = item.pr_heading;
-      const lowerButton = (item.button_title || "").toLowerCase();
+    const items = Array.isArray(data?.data) ? [...data.data] : [];
 
-      if (lowerButton.includes("apn news")) {
-        title = "APN News Featured Academy of Internal Audit";
-      } else if (lowerButton.includes("yourstory") || lowerButton.includes("your story")) {
-        title = "YourStory Features Puneet Garg’s Views on the Union Budget";
-      } else if (lowerButton.includes("hans india")) {
-        title = "Puneet Garg Shares Expert Insights in The Hans India";
-      }
+    // Ensure newest PR is always first dynamically
+    items.sort((a, b) => (Number(b.id) || 0) - (Number(a.id) || 0));
 
-      return {
-        id: item.id,
-        title,
-        buttonTitle: item.button_title,
-        link: item.pr_link,
-        image: item.pr_l_image ? `${imageBase}${item.pr_l_image}` : noImage,
-        alt: item.pr_image_alt || item.button_title || "AIA media feature",
-      };
-    });
+    return items.map((item) => ({
+      id: item.id,
+      title: item.pr_heading || item.button_title,
+      buttonTitle: item.button_title,
+      link: item.pr_link,
+      image: item.pr_l_image ? `${imageBase}${item.pr_l_image}` : noImage,
+      alt: item.pr_image_alt || item.button_title || "AIA media feature",
+    }));
   }, [data]);
 
-  const featured =
-    prItems.find((item) => item.buttonTitle?.toLowerCase().includes("suger")) ||
-    prItems[0];
-
-  const preferredRightTitles = ["CEO Insights", "Hans India", "BW Education"];
-  const rightItems = preferredRightTitles
-    .map((title) =>
-      prItems.find(
-        (item) =>
-          item.id !== featured?.id &&
-          item.buttonTitle?.toLowerCase().includes(title.toLowerCase()),
-      ),
-    )
-    .filter(Boolean);
-
-  const preferredBottomTitles = ["Yourstory", "Tycoon", "News18"];
-  const bottomPreferredItems = preferredBottomTitles
-    .map((title) =>
-      prItems.find(
-        (item) =>
-          item.id !== featured?.id &&
-          !rightItems.some((rightItem) => rightItem.id === item.id) &&
-          item.buttonTitle?.toLowerCase().includes(title.toLowerCase()),
-      ),
-    )
-    .filter(Boolean);
-
-  const remainingBottomItems = prItems.filter(
-    (item) =>
-      item.id !== featured?.id &&
-      !rightItems.some((rightItem) => rightItem.id === item.id) &&
-      !bottomPreferredItems.some((bottomItem) => bottomItem.id === item.id),
-  );
-  const bottomItems = [...bottomPreferredItems, ...remainingBottomItems].slice(
-    0,
-    6,
-  );
+  const featured = prItems[0];
+  const rightItems = prItems.slice(1, 4);
+  const bottomItems = prItems.slice(4);
 
   if (isLoading) {
     return (
