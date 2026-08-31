@@ -12,6 +12,7 @@ const ContactHero = () => {
     userName: "",
     userEmail: "",
     userMobile: "",
+    userWhatsapp: "",
     userLocation: "",
     userCourse: "",
     referred_from: "",
@@ -78,7 +79,7 @@ const ContactHero = () => {
 
   const handleChange = useCallback((e) => {
     const { name, value } = e.target;
-    if (name === "userMobile" && value && !/^\d*$/.test(value)) return;
+    if ((name === "userMobile" || name === "userWhatsapp") && value && !/^\d*$/.test(value)) return;
     setFormData((prev) => ({ ...prev, [name]: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   }, []);
@@ -113,6 +114,7 @@ const ContactHero = () => {
           userName: formData.userName,
           userEmail: formData.userEmail,
           userMobile: formData.userMobile,
+          userWhatsapp: formData.userWhatsapp,
           userCourse: formData.userCourse,
           userLocation: formData.userLocation,
           referred_from: formData.referred_from,
@@ -130,6 +132,7 @@ const ContactHero = () => {
           userName: "",
           userEmail: "",
           userMobile: "",
+          userWhatsapp: "",
           userLocation: "",
           userCourse: "",
           referred_from: "",
@@ -294,6 +297,21 @@ const ContactHero = () => {
                       </p>
                     )}
                   </div>
+                </div>
+
+                <div className="space-y-2">
+                  <label htmlFor="contact-user-whatsapp" className="block text-sm font-medium text-gray-700">
+                    WhatsApp Number
+                  </label>
+                  <input
+                    id="contact-user-whatsapp"
+                    type="tel"
+                    name="userWhatsapp"
+                    value={formData.userWhatsapp}
+                    onChange={handleChange}
+                    className="w-full px-4 py-2.5 rounded border border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Add your WhatsApp Number for a quick response"
+                  />
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
