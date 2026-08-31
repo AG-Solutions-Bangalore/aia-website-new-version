@@ -72,7 +72,7 @@ const CIAChallenge = () => {
           courseSlug="ciac"
           needPrefix="false"
           title="We Stand by Results"
-          subtitle="Meet our Latest CIA Challenge Achievers of February 2026!"
+          subtitle="Meet our Latest CIA Challenge Achievers"
         />
       </LazySection>
 

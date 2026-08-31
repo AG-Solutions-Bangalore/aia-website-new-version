@@ -10,7 +10,7 @@ import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import "../map.css";
-import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
+import { BASE_URL, IMAGE_PATH, CARTO_BASEMAP_URL } from "@/api/base-url";
 import SectionHeading from "@/components/SectionHeading/SectionHeading";
 
 const MAX_PHOTOS = 6;
@@ -85,17 +85,14 @@ const CourseMap = ({ courseCode }) => {
   //   );
   //   map.setMaxBounds(verticalBounds);
 
-  //   L.tileLayer(
-  //     "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
-  //     {
-  //       // attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-  //       subdomains: "abcd",
-  //       minZoom: 2,
-  //       maxZoom: 20,
-  //       noWrap: false,
-  //       continuousWorld: true,
-  //     },
-  //   ).addTo(map);
+  //   L.tileLayer(CARTO_BASEMAP_URL, {
+  //     attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
+  //     subdomains: "abcd",
+  //     minZoom: 2,
+  //     maxZoom: 20,
+  //     noWrap: false,
+  //     continuousWorld: true,
+  //   }).addTo(map);
 
   //   const cluster = L.markerClusterGroup({
   //     showCoverageOnHover: false,
