@@ -38,6 +38,7 @@ export default function CfeJoinDialog({
   const [formData, setFormData] = useState({
     userName: "",
     userMobile: "",
+    userWhatsapp: "",
     userEmail: "",
     userLocation: "",
     userMessage: "",
@@ -106,8 +107,8 @@ export default function CfeJoinDialog({
   const handleChange = (e) => {
     const { name, value } = e.target;
     let updatedValue = value;
-    if (name === "userMobile") {
-      updatedValue = value.replace(/\D/g, "").slice(0, 10);
+    if (name === "userMobile" || name === "userWhatsapp") {
+      updatedValue = value.replace(/\D/g, "");
     }
     setFormData({ ...formData, [name]: updatedValue });
     setErrors((prevErrors) => {
@@ -147,6 +148,7 @@ export default function CfeJoinDialog({
         setFormData({
           userName: "",
           userMobile: "",
+          userWhatsapp: "",
           userEmail: "",
           userLocation: "",
           userMessage: "",
@@ -246,7 +248,6 @@ export default function CfeJoinDialog({
                   value={formData.userMobile}
                   onChange={handleChange}
                   className={inputStyle}
-                  maxLength={10}
                 />
                 {errors.userMobile && (
                   <p className="text-red-500 text-xs mt-1">
@@ -268,6 +269,18 @@ export default function CfeJoinDialog({
               {errors.userEmail && (
                 <p className="text-red-500 text-xs mt-1">{errors.userEmail}</p>
               )}
+            </div>
+
+            <div>
+              <Label className="text-[#0F3652]">WhatsApp Number</Label>
+              <Input
+                name="userWhatsapp"
+                type="tel"
+                value={formData.userWhatsapp}
+                onChange={handleChange}
+                className={inputStyle}
+                placeholder="Add your WhatsApp Number for a quick response"
+              />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">

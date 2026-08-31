@@ -314,8 +314,8 @@ const PassoutStoriesSlug = () => {
                         </div>
 
                         <div
-                          className="text-sm sm:text-base lg:text-lg 
-                      font-medium text-black text-left break-words"
+                          className="text-sm sm:text-base lg:text-lg
+                      font-medium text-black text-left whitespace-nowrap"
                         >
                           {item.details}
                         </div>
