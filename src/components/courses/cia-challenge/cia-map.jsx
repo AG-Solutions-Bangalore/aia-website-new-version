@@ -10,14 +10,14 @@
 // import Skeleton from "react-loading-skeleton";
 // import "react-loading-skeleton/dist/skeleton.css";
 // import "../map.css";
-// import { BASE_URL } from "@/api/base-url";
-
+// import { BASE_URL, CARTO_BASEMAP_URL } from "@/api/base-url";
+// 
 // const MAX_PHOTOS = 6;
-
+// 
 // const CiaMap = () => {
 //   const [mapData, setMapData] = useState(null);
 //   const [imageUrl, setImageUrl] = useState("");
-
+// 
 //   const {
 //     data: apiData,
 //     isLoading,
@@ -25,33 +25,30 @@
 //   } = useQuery({
 //     queryKey: ["student-map-data"],
 //     queryFn: async () => {
-//       const res = await axios.get(
-//         `${BASE_URL}/api/getPassoutStudentsMapbyCourse/CIAC`,
-//       );
+//       const res = await axios.get(`${BASE_URL}/api/getAllPassoutStudentsMap`);
 //       return res.data;
 //     },
 //   });
-
+// 
 //   useEffect(() => {
 //     if (apiData) {
-//       const studentImageUrlObj = apiData.image_url?.find(
+//       const studentImageUrlObj = apiData.image_url.find(
 //         (item) => item.image_for === "Student",
 //       );
 //       const studentImageUrl = studentImageUrlObj?.image_url || "";
-
 //       setMapData(apiData.data);
 //       setImageUrl(studentImageUrl);
 //     }
 //   }, [apiData]);
-
+// 
 //   useEffect(() => {
 //     if (!mapData || !imageUrl) return;
-
+// 
 //     const container = L.DomUtil.get("map");
 //     if (container && container._leaflet_id) {
 //       container._leaflet_id = null;
 //     }
-
+// 
 //     const makePin = () => {
 //       const svg = `
 //     <svg width="46" height="64" viewBox="0 0 46 64">
@@ -59,7 +56,7 @@
 //       <circle cx="23" cy="23" r="8" fill="#ffffff"/>
 //     </svg>
 //   `;
-
+// 
 //       return L.divIcon({
 //         className: "pin-icon",
 //         html: svg,
@@ -68,7 +65,7 @@
 //         popupAnchor: [0, -48],
 //       });
 //     };
-
+// 
 //     const brandPin = makePin();
 //     const map = L.map("map", {
 //       center: [20, 0],
@@ -87,14 +84,12 @@
 //     map.setMaxBounds(verticalBounds);
 
 //     L.tileLayer(
-//       "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+//       "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}",
 //       {
-//         attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
-//         subdomains: "abcd",
+//         attribution: "Tiles &copy; Esri &mdash; Esri, DeLorme, NAVTEQ",
 //         minZoom: 2,
-//         maxZoom: 20,
+//         maxZoom: 16,
 //         noWrap: false,
-//         continuousWorld: true,
 //       },
 //     ).addTo(map);
 
