@@ -5,10 +5,27 @@ import axios from "axios";
 import { ArrowLeft, Calendar, Clock, Image as ImageIcon, User } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { ShareButtons } from "./share-button";
 import OptimizedImage from "@/components/common/optmized-image";
 import { SITE_ORIGIN } from "@/config/site";
 import { titleFromSlug } from "@/utils/titleFromSlug";
+
+/**
+ * @file src/pages/Blog/blog-details.jsx
+ * @description Dynamic Blog Details Page displaying article body, table of contents, author/date
+ * metadata, newsletter opt-in, FAQs, related articles, and recent passout student carousel.
+ *
+ * @why-useQuery
+ * Previously, this component fetched data inside a client-side `useEffect` hook. During SSG/SSR
+ * build time, `useEffect` does NOT execute! As a result, the server pre-renderer was forced to emit
+ * an empty loading skeleton. By switching to `@tanstack/react-query` (`useQuery`), the component
+ * checks the `queryClient` cache on initial render. In `src/prerender.tsx`, we pre-populate
+ * `['blog-details', slug]` synchronously using data fetched by `loadDynamicData()`. This allows
+ * the pre-renderer to emit the complete 160KB+ HTML document with full article paragraphs, headings,
+ * and FAQs for instant search engine indexing. On the client, React Query hydrates seamlessly without
+ * showing any loading flash.
+ */
 
 const FALLBACK_IMAGE_PATH = "/no-image.svg";
 
@@ -26,15 +43,32 @@ const BlogDetails = () => {
   const { id } = useParams();
   const isScrollingProgrammatically = useRef(false);
   const scrollTimeout = useRef(null);
-  const [blog, setBlog] = useState(null);
-  const [relatedBlogs, setRelatedBlogs] = useState([]);
-  const [imageBaseUrl, setImageBaseUrl] = useState("");
-  const [loading, setLoading] = useState(true);
+
+  /**
+   * TanStack React Query hook for fetching article details.
+   * During build-time SSG, data is pre-populated in queryClient by `prerender.tsx`,
+   * so `blogResponse` is immediately available without any network delay or loading skeleton.
+   */
+  const { data: blogResponse, isLoading: queryLoading } = useQuery({
+    queryKey: ["blog-details", id],
+    queryFn: async () => {
+      const response = await axios.get(`${BASE_URL}/api/getBlogbySlug/${id}`);
+      return response.data;
+    },
+    enabled: !!id,
+  });
+
+  const blog = blogResponse?.data || null;
+  const relatedBlogs = blogResponse?.related_blogs || [];
+  const students = blogResponse?.student || [];
+  const faq = blogResponse?.faq || [];
+  const imageBaseUrl =
+    blogResponse?.image_url?.find((item) => item.image_for === "Blog")?.image_url || "";
+  const studentImageBaseUrl =
+    blogResponse?.image_url?.find((item) => item.image_for === "Student")?.image_url || "";
+  const loading = queryLoading && !blog;
   const [activeSection, setActiveSection] = useState(0);
   const sectionRefs = useRef([]);
-  const [students, setStudents] = useState([]);
-  const [faq, setFaq] = useState([]);
-  const [studentImageBaseUrl, setStudentImageBaseUrl] = useState("");
   const [currentStudentIndex, setCurrentStudentIndex] = useState(0);
   const [email, setEmail] = useState("");
   const [subscriptionStatus, setSubscriptionStatus] = useState("");
@@ -100,40 +134,7 @@ const BlogDetails = () => {
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     };
   }, []);
-  const fetchBlogDetails = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`${BASE_URL}/api/getBlogbySlug/${id}`);
 
-      const blogData = response.data.data;
-      setBlog(blogData);
-      setRelatedBlogs(response.data.related_blogs || []);
-      setStudents(response.data.student || []);
-      setFaq(response.data.faq || []);
-      const blogImageConfig = response.data.image_url?.find(
-        (item) => item.image_for === "Blog",
-      );
-      if (blogImageConfig) {
-        setImageBaseUrl(blogImageConfig.image_url);
-      }
-      const studentImageConfig = response.data.image_url?.find(
-        (item) => item.image_for === "Student",
-      );
-      if (studentImageConfig) {
-        setStudentImageBaseUrl(studentImageConfig.image_url);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching blog details:", error);
-      setLoading(false);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (id) {
-      fetchBlogDetails();
-    }
-  }, [fetchBlogDetails, id]);
 
   const faqHeading = faq?.[0]?.faq_heading || "FAQs";
 

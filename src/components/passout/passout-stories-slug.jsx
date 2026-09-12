@@ -1,3 +1,15 @@
+/**
+ * @file src/components/passout/passout-stories-slug.jsx
+ * @description Dynamic Student Passout Success Story page displaying professional credentials,
+ * company info, designation, impact metrics, and personal story text.
+ *
+ * @ssr-hydration
+ * Uses TanStack React Query (`useQuery`) with key `["passout-stories-slug", slug]`.
+ * During build-time SSG (`src/prerender.tsx`), this key is pre-populated synchronously in
+ * `queryClient.setQueryData()` from `getDynamicStudentStory(slug)`. This guarantees that the pre-rendered
+ * static HTML file contains 100% of the student story markup without displaying a fallback "Loading..." state.
+ */
+
 import { BASE_URL } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -7,6 +19,7 @@ import { Button } from "../ui/button";
 const PassoutStoriesSlug = () => {
   const { slug } = useParams();
 
+  // Retrieves student story data (pre-hydrated during SSG, fetched on client navigation)
   const {
     data: storyData,
     isLoading,

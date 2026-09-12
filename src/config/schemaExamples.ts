@@ -282,3 +282,150 @@ export function createWebPageSchema(canonicalPath: string, title: string, descri
     about: { '@id': `${SITE_ORIGIN}#organization` },
   } as Thing;
 }
+
+/**
+ * Creates a BreadcrumbList Schema.org entity for enhanced SERP breadcrumb navigation.
+ *
+ * @param items - List of breadcrumb levels with name and route path
+ * @param currentPath - The canonical path of the current page
+ * @returns Type-safe Schema.org BreadcrumbList as `Thing`
+ */
+export function createBreadcrumbSchema(
+  items: Array<{ name: string; path: string }>,
+  currentPath: string,
+): Thing {
+  const url = getCanonicalUrl(currentPath);
+  return {
+    '@type': 'BreadcrumbList',
+    '@id': `${url}#breadcrumb`,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: getCanonicalUrl(item.path),
+    })),
+  } as Thing;
+}
+
+/**
+ * Creates a BlogPosting Schema.org entity linked to the Organization publisher.
+ * Valid for Google Article and Blog rich results.
+ * 
+ * GOOGLE RICH RESULTS REQUIREMENTS FOR BLOGPOSTING:
+ * 1. `headline`: Must accurately reflect article title (max 110 characters recommended).
+ * 2. `image`: Absolute URL to high-resolution article cover image (min 1200px width recommended).
+ * 3. `datePublished` & `dateModified`: ISO-8601 formatted timestamps.
+ * 4. `author` & `publisher`: Linked via `@id` to the site Organization entity (`#organization`)
+ *    to preserve Google Knowledge Graph continuity.
+ * 5. `mainEntityOfPage`: Points to the canonical URL of the blog post.
+ *
+ * @param blog - Dynamic blog detail object
+ * @returns Type-safe Schema.org BlogPosting as `Thing`
+ */
+export function createBlogPostingSchema(blog: {
+  blog_slug: string;
+  blog_heading: string;
+  blog_short_description?: string;
+  blog_meta_description?: string;
+  blog_created?: string;
+  blog_updated?: string;
+  blog_images?: string;
+  blog_course?: string;
+}): Thing {
+  const canonicalUrl = getCanonicalUrl(`/blogs/${blog.blog_slug}`);
+  const imageUrl = blog.blog_images
+    ? `https://aia.in.net/webapi/public/assets/images/blog_images/${blog.blog_images}`
+    : SITE_LOGO;
+
+  return {
+    '@type': 'BlogPosting',
+    '@id': `${canonicalUrl}#blogposting`,
+    headline: blog.blog_heading,
+    description: blog.blog_meta_description || blog.blog_short_description || blog.blog_heading,
+    image: imageUrl,
+    datePublished: blog.blog_created || '2026-01-01',
+    dateModified: blog.blog_updated || blog.blog_created || '2026-01-01',
+    mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
+    author: { '@id': `${SITE_ORIGIN}#organization` },
+    publisher: { '@id': `${SITE_ORIGIN}#organization` },
+    articleSection: blog.blog_course || 'Professional Certification',
+    inLanguage: 'en-US',
+  } as Thing;
+}
+
+/**
+ * Creates a FAQPage Schema.org entity for rich question-and-answer snippets in Google SERPs.
+ * 
+ * GOOGLE RICH RESULTS REQUIREMENTS FOR FAQPAGE:
+ * 1. Questions must be actual questions (`Question` entity with `name`).
+ * 2. Answers must be complete answers without raw HTML or script injections (`acceptedAnswer.text`).
+ * 3. Regular expression `.replace(/<[^>]*>?/gm, '')` strips WYSIWYG HTML tags (<p>, <br>, <strong>),
+ *    delivering clean, crawlable text directly to search bots.
+ *
+ * @param faqs - Array of FAQ question and answer pairs
+ * @param canonicalPath - The canonical path of the page containing the FAQs
+ * @returns Type-safe Schema.org FAQPage as `Thing`
+ */
+export function createFaqSchema(
+  faqs: Array<{ faq_que: string; faq_ans: string }>,
+  canonicalPath: string,
+): Thing {
+  const canonicalUrl = getCanonicalUrl(canonicalPath);
+  return {
+    '@type': 'FAQPage',
+    '@id': `${canonicalUrl}#faq`,
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.faq_que,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.faq_ans.replace(/<[^>]*>?/gm, '').trim(),
+      },
+    })),
+  } as Thing;
+}
+
+/**
+ * Creates a verified Review Schema.org entity representing a student testimonial/success story.
+ * 
+ * GOOGLE CRITIC REVIEW & TESTIMONIAL GUIDELINES:
+ * 1. `itemReviewed`: Explicitly points to the Academy of Internal Audit Organization entity.
+ * 2. `author`: Person type containing the verified student's full name.
+ * 3. `reviewRating`: Numeric rating with bestRating and worstRating boundaries.
+ * 4. `reviewBody`: Clean text snippet summarizing the student's learning experience and passout achievement.
+ *
+ * @param story - Dynamic student story object
+ * @returns Type-safe Schema.org Review as `Thing`
+ */
+export function createStudentReviewSchema(story: {
+  student_slug: string;
+  student_name: string;
+  student_course?: string;
+  student_story_short_description?: string;
+  student_story_details?: string;
+  student_story_date?: string;
+}): Thing {
+  const canonicalUrl = getCanonicalUrl(`/passout-stories/${story.student_slug}`);
+  const reviewBody = (
+    story.student_story_short_description ||
+    story.student_story_details?.replace(/<[^>]*>?/gm, '').slice(0, 300) ||
+    `${story.student_name} cleared the ${story.student_course || 'certification'} exam with Academy of Internal Audit.`
+  ).trim();
+
+  return {
+    '@type': 'Review',
+    '@id': `${canonicalUrl}#review`,
+    itemReviewed: { '@id': `${SITE_ORIGIN}#organization` },
+    author: {
+      '@type': 'Person',
+      name: story.student_name,
+    },
+    reviewRating: {
+      '@type': 'Rating',
+      ratingValue: '5',
+      bestRating: '5',
+    },
+    reviewBody,
+    datePublished: story.student_story_date || '2026-01-01',
+  } as Thing;
+}

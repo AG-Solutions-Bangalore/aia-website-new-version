@@ -31,7 +31,21 @@
 
 import type { Thing } from 'schema-dts';
 import { SITE_NAME, SITE_ORIGIN, getCanonicalUrl } from './site';
-import { createCourseSchema, createProductSchema, createSoftwareAppSchema, createWebPageSchema, localBusinessSchema, organizationSchema, RouteSeoEntry, websiteSchema } from './schemaExamples';
+import {
+  createBlogPostingSchema,
+  createBreadcrumbSchema,
+  createCourseSchema,
+  createFaqSchema,
+  createProductSchema,
+  createSoftwareAppSchema,
+  createStudentReviewSchema,
+  createWebPageSchema,
+  localBusinessSchema,
+  organizationSchema,
+  RouteSeoEntry,
+  websiteSchema,
+} from './schemaExamples';
+import { getDynamicBlog, getDynamicStudentStory } from './dynamicData';
 
 export interface MasterSeoStructure {
   title: string;
@@ -395,6 +409,18 @@ function formatSlugToTitle(slug: string): string {
 /**
  * Core route resolver determining the exact SEO metadata and Schema.org graph for any URL.
  * Handles both registered static routes and dynamic parameterized patterns.
+ * 
+ * RESOLUTION PIPELINE:
+ * 1. Normalize Path: Strips query params, trailing slashes, and hash fragments.
+ * 2. Static Route Lookup: Instant O(1) match against pre-compiled `ROUTE_SEO`.
+ * 3. Dynamic Course Blogs (`/blogs/course/:courseName`): Generates course-specific collection metadata
+ *    and breadcrumbs linking Home -> Blogs -> Course.
+ * 4. Dynamic Blog Post (`/blogs/:id`): Reads article details, headings, and FAQs from the build-time
+ *    `dynamicBlogsMap` cache. Generates valid `BlogPosting` and `FAQPage` schemas.
+ * 5. Dynamic Practice Questions (`/cfe-free-resource/:questions_module`): Formats module title and breadcrumbs.
+ * 6. Dynamic Student Stories (`/passout-stories/:slug`): Retrieves student testimonials and produces
+ *    type-safe Schema.org `Review` entities for Google Rich Results.
+ * 7. 404 Fallback: Marks unmatched routes with `noIndex: true` and generic metadata.
  *
  * @param url - Relative route URL or full pathname (e.g. '/cfe-curriculum' or '/blogs/aml-career')
  * @returns Complete `RouteSeoEntry`
@@ -402,35 +428,87 @@ function formatSlugToTitle(slug: string): string {
 export function getSeoForRoute(url: string): RouteSeoEntry {
   const path = url.split('?')[0].split('#')[0].replace(/\/$/, '') || '/';
 
-  // 1. Direct match in ROUTE_SEO
+  // 1. Direct match in ROUTE_SEO table
   if (ROUTE_SEO[path]) {
     return ROUTE_SEO[path];
   }
 
-  // 2. Dynamic pattern match: /blogs/course/:courseName
+  // 2. Dynamic pattern match: /blogs/course/:courseName (e.g., /blogs/course/cfe)
   const courseMatch = path.match(/^\/blogs\/course\/([^/]+)$/);
   if (courseMatch) {
-    const courseTitle = formatSlugToTitle(courseMatch[1]);
-    const title = `${courseTitle} Certification Articles | ${SITE_NAME}`;
-    const description = `Explore ${courseTitle} certification articles, exam tips, syllabus guidance, and career insights from ${SITE_NAME} experts.`;
+    const courseSlug = courseMatch[1];
+    const courseTitle = formatSlugToTitle(courseSlug);
+    const title = `${courseTitle} Certification Articles & Guides | ${SITE_NAME}`;
+    const description = `Explore comprehensive ${courseTitle} certification articles, exam preparation tips, syllabus updates, and career insights from ${SITE_NAME} experts.`;
     return {
       title,
       description,
-      keywords: `${courseTitle} blogs, ${courseTitle} certification articles, ${courseTitle} exam tips`,
+      keywords: `${courseTitle} blogs, ${courseTitle} certification articles, ${courseTitle} exam tips, AIA`,
       canonicalPath: path,
       schemas: [
         organizationSchema,
-        localBusinessSchema,
         websiteSchema,
         createWebPageSchema(path, title, description),
+        createBreadcrumbSchema(
+          [
+            { name: 'Home', path: '/' },
+            { name: 'Blogs', path: '/blogs' },
+            { name: `${courseTitle} Articles`, path },
+          ],
+          path,
+        ),
       ],
     };
   }
 
-  // 3. Dynamic pattern match: /blogs/:id
+  // 3. Dynamic pattern match: /blogs/:id (e.g., /blogs/cfe-module-1)
   const blogMatch = path.match(/^\/blogs\/([^/]+)$/);
   if (blogMatch && blogMatch[1] !== 'course') {
-    const blogTitle = formatSlugToTitle(blogMatch[1]);
+    const slug = blogMatch[1];
+    // Retrieve live article from pre-fetched build-time cache
+    const dynamicBlog = getDynamicBlog(slug);
+
+    if (dynamicBlog && dynamicBlog.data) {
+      const b = dynamicBlog.data;
+      const title = b.blog_meta_title || `${b.blog_heading} | ${SITE_NAME}`;
+      const description =
+        b.blog_meta_description ||
+        b.blog_short_description ||
+        `Read expert insights and exam preparation guide on ${b.blog_heading} by ${SITE_NAME}.`;
+      const keywords =
+        b.blog_meta_keywords ||
+        `${b.blog_heading}, ${b.blog_course || 'Internal Audit'} exam prep, AIA articles`;
+      const schemas: Thing[] = [
+        organizationSchema,
+        websiteSchema,
+        createWebPageSchema(path, title, description),
+        createBreadcrumbSchema(
+          [
+            { name: 'Home', path: '/' },
+            { name: 'Blogs', path: '/blogs' },
+            { name: b.blog_heading, path },
+          ],
+          path,
+        ),
+        createBlogPostingSchema(b),
+      ];
+
+      // If the blog contains FAQs, attach a compliant FAQPage schema
+      if (dynamicBlog.faq && dynamicBlog.faq.length > 0) {
+        schemas.push(createFaqSchema(dynamicBlog.faq, path));
+      }
+
+      return {
+        title,
+        description,
+        keywords,
+        canonicalPath: path,
+        schemas,
+      };
+    }
+
+    // Graceful fallback if not yet loaded in memory
+    const blogTitle = formatSlugToTitle(slug);
     const title = `${blogTitle} | ${SITE_NAME}`;
     const description = `Read expert insights and detailed exam preparation guide on ${blogTitle} by ${SITE_NAME}.`;
     return {
@@ -440,16 +518,21 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
       canonicalPath: path,
       schemas: [
         organizationSchema,
+        websiteSchema,
         createWebPageSchema(path, title, description),
-        {
-          '@type': 'BlogPosting',
-          '@id': `${getCanonicalUrl(path)}#blogposting`,
-          headline: blogTitle,
-          description,
-          mainEntityOfPage: { '@id': `${getCanonicalUrl(path)}#webpage` },
-          publisher: { '@id': `${SITE_ORIGIN}#organization` },
-          author: { '@id': `${SITE_ORIGIN}#organization` },
-        } as Thing,
+        createBreadcrumbSchema(
+          [
+            { name: 'Home', path: '/' },
+            { name: 'Blogs', path: '/blogs' },
+            { name: blogTitle, path },
+          ],
+          path,
+        ),
+        createBlogPostingSchema({
+          blog_slug: slug,
+          blog_heading: blogTitle,
+          blog_short_description: description,
+        }),
       ],
     };
   }
@@ -468,14 +551,56 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
       schemas: [
         organizationSchema,
         createWebPageSchema(path, title, description),
+        createBreadcrumbSchema(
+          [
+            { name: 'Home', path: '/' },
+            { name: 'Free Resources', path: '/cfe-free-resources' },
+            { name: `${modTitle} Questions`, path },
+          ],
+          path,
+        ),
       ],
     };
   }
 
-  // 5. Dynamic pattern match: /passout-stories/:slug
+  // 5. Dynamic pattern match: /passout-stories/:slug (e.g., /passout-stories/sahil-babbar-ciac)
   const passoutMatch = path.match(/^\/passout-stories\/([^/]+)$/);
   if (passoutMatch) {
-    const studentName = formatSlugToTitle(passoutMatch[1]);
+    const slug = passoutMatch[1];
+    // Retrieve student story from pre-fetched build-time cache
+    const dynamicStory = getDynamicStudentStory(slug);
+
+    if (dynamicStory && dynamicStory.data) {
+      const s = dynamicStory.data;
+      const title = `${s.student_name} - ${s.student_course} Success Story | ${SITE_NAME}`;
+      const description =
+        s.student_story_short_description ||
+        `Read how ${s.student_name} cleared the ${s.student_course} certification exam with the Academy of Internal Audit.`;
+      const keywords = `${s.student_name} success story, ${s.student_course} passout, AIA alumni, CIA CFE CAMS results`;
+
+      return {
+        title,
+        description,
+        keywords,
+        canonicalPath: path,
+        schemas: [
+          organizationSchema,
+          createWebPageSchema(path, title, description),
+          createBreadcrumbSchema(
+            [
+              { name: 'Home', path: '/' },
+              { name: 'Alumni Network', path: '/alumni-network' },
+              { name: `${s.student_name} Story`, path },
+            ],
+            path,
+          ),
+          // Type-safe Schema.org Review entity for Google Rich Results
+          createStudentReviewSchema(s),
+        ],
+      };
+    }
+
+    const studentName = formatSlugToTitle(slug);
     const title = `${studentName} | Student Success Story | ${SITE_NAME}`;
     const description = `Read ${studentName}'s success story after clearing CIA, CFE or CAMS exams with ${SITE_NAME}.`;
     return {
@@ -486,11 +611,24 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
       schemas: [
         organizationSchema,
         createWebPageSchema(path, title, description),
+        createBreadcrumbSchema(
+          [
+            { name: 'Home', path: '/' },
+            { name: 'Alumni Network', path: '/alumni-network' },
+            { name: studentName, path },
+          ],
+          path,
+        ),
+        createStudentReviewSchema({
+          student_slug: slug,
+          student_name: studentName,
+          student_story_short_description: description,
+        }),
       ],
     };
   }
 
-  // Fallback 404
+  // 6. Fallback 404 handler for unknown routes
   return {
     title: `${SITE_NAME} | Page Not Found`,
     description: 'The requested page could not be found.',

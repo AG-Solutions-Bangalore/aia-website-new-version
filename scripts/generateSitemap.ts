@@ -66,20 +66,59 @@ function getHtmlFiles(dir: string, baseDir: string = dir): string[] {
   return results;
 }
 
-const routes = getHtmlFiles(distDir);
+/**
+ * Calculates SEO crawling priority and change frequency based on route importance:
+ * - `1.0` (daily): Home page (`/`) - main brand hub.
+ * - `0.9` (weekly): Flagship course landing pages (CFE, CIA, CAMS, CISA, Enroll Now).
+ * - `0.8` (weekly): Dynamic and static blog articles (`/blogs/*`) - high organic search traffic.
+ * - `0.7` (monthly): Student success stories and alumni network (`/passout-stories/*`).
+ * - `0.3` (monthly): Legal, policies, terms & conditions.
+ * - `0.6` (weekly): All other standard pages.
+ */
+function getRoutePriority(route: string): { priority: string; changefreq: string } {
+  if (route === '/') return { priority: '1.0', changefreq: 'daily' };
+  if (
+    [
+      '/cfe-curriculum',
+      '/cia-curriculum',
+      '/cia-challenge-curriculum',
+      '/cams',
+      '/cisa',
+      '/enroll-now',
+    ].includes(route)
+  ) {
+    return { priority: '0.9', changefreq: 'weekly' };
+  }
+  if (route.startsWith('/blogs')) return { priority: '0.8', changefreq: 'weekly' };
+  if (route.startsWith('/passout-stories') || route === '/alumni-network') {
+    return { priority: '0.7', changefreq: 'monthly' };
+  }
+  if (['/policies', '/terms-and-conditions'].includes(route)) {
+    return { priority: '0.3', changefreq: 'monthly' };
+  }
+  return { priority: '0.6', changefreq: 'weekly' };
+}
+
+// Discover all static HTML pages in dist/ and sort deterministically (Home first, then alphabetical)
+const routes = getHtmlFiles(distDir).sort((a, b) => {
+  if (a === '/') return -1;
+  if (b === '/') return 1;
+  return a.localeCompare(b);
+});
 const today = new Date().toISOString().split('T')[0];
 
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes
-  .map(
-    (route) => `  <url>
+  .map((route) => {
+    const { priority, changefreq } = getRoutePriority(route);
+    return `  <url>
     <loc>${SITE_ORIGIN}${route === '/' ? '' : route}</loc>
     <lastmod>${today}</lastmod>
-    <changefreq>${route === '/' ? 'daily' : 'weekly'}</changefreq>
-    <priority>${route === '/' ? '1.0' : '0.8'}</priority>
-  </url>`,
-  )
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+  })
   .join('\n')}
 </urlset>`;
 

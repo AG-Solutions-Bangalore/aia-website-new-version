@@ -79,7 +79,15 @@ const FlipbookSection = lazy(
 const FilterPage = lazy(() => import('@/pages/Filter/FilterPage'));
 
 /**
- * Route wrapper component binding current path to `getSeoForRoute` and rendering `SEOPageLayout`.
+ * Route wrapper component binding the current route path to `getSeoForRoute(currentPath)`
+ * and rendering `<SEOPageLayout>`.
+ *
+ * HOW IT WORKS:
+ * 1. If an explicit `path` prop is provided (e.g., `<PageSEO path="/about-aia">`), it is used directly.
+ * 2. If no path is provided, it falls back to `location.pathname` (essential for parameterized routes
+ *    like `/blogs/:id` or `/passout-stories/:slug` where the actual slug comes from the URL).
+ * 3. Injects the resolved title, meta tags, and structured schemas directly into `<SEOPageLayout>`.
+ * 4. Wraps page children in `<Suspense fallback={null}>` to support React code splitting (`React.lazy`).
  */
 function PageSEO({ path, children }: { path?: string; children: React.ReactNode }) {
   const location = useLocation();
@@ -96,9 +104,20 @@ function withTrailingSlash(pathname: string): string {
   return pathname.endsWith('/') ? pathname : `${pathname}/`;
 }
 
-export default function AppRoutes(): React.JSX.Element {
+export interface AppRoutesProps {
+  /**
+   * Optional QueryClient instance.
+   * During server pre-rendering (`src/prerender.tsx`), a QueryClient populated with
+   * cached blog details and student stories is passed in so pages render immediately.
+   * On the client side in normal browsing, a fresh QueryClient is instantiated automatically.
+   */
+  queryClient?: QueryClient;
+}
+
+export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutesProps = {}): React.JSX.Element {
   const [queryClient] = React.useState(
     () =>
+      initialQueryClient ||
       new QueryClient({
         defaultOptions: {
           queries: {
