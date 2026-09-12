@@ -7,10 +7,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { ShareButtons } from "./share-button";
 import OptimizedImage from "@/components/common/optmized-image";
+import { SITE_ORIGIN } from "@/config/site";
 import { titleFromSlug } from "@/utils/titleFromSlug";
 
 const FALLBACK_IMAGE_PATH = "/no-image.svg";
-const FALLBACK_IMAGE_URL = "https://aia.in.net/no-image.svg";
 
 const getRemoteImageUrl = (baseUrl, imageName, fallback = FALLBACK_IMAGE_PATH) =>
   baseUrl && imageName ? `${baseUrl}${imageName}` : fallback;
@@ -57,49 +57,17 @@ const BlogDetails = () => {
     [faq],
   );
 
-  const blogSlug = blog?.blog_slug || id;
-  const blogCanonical = blogSlug
-    ? buildCanonicalUrl(`/blogs/${blogSlug}`)
-    : buildCanonicalUrl("/blogs");
-  const fallbackBlogTitle = `${titleFromSlug(id)} | AIA Blog`;
-  const blogTitle = blog
-    ? blog.blog_meta_title || blog.blog_heading
-    : fallbackBlogTitle;
-  const blogDescription = blog
-    ? blog.blog_meta_description || blog.blog_short_description
-    : "Read certification insights, exam preparation guidance, and career advice from Academy of Internal Audit.";
-  const blogKeywords = blog ? (blog.blog_meta_keywords || "") : "";
+  const blogSlug = blog?.blog_slug || id || "";
+  const blogCanonical = `${SITE_ORIGIN}/blogs/${blogSlug}`;
+  const fallbackBlogTitle = `${titleFromSlug(id || "")} | AIA Blog`;
+  const blogTitle = blog?.blog_meta_title || blog?.blog_heading || fallbackBlogTitle;
+  const blogDescription = blog?.blog_meta_description || blog?.blog_short_description || "Read certification insights, exam preparation guidance, and career advice from Academy of Internal Audit.";
+  const blogKeywords = blog?.blog_meta_keywords || "";
   const blogImageUrl = getRemoteImageUrl(
     imageBaseUrl,
     blog?.blog_images,
-    FALLBACK_IMAGE_URL,
+    FALLBACK_IMAGE_PATH,
   );
-
-  // Global <Meta /> is skipped on blog detail routes (see App.jsx), so this
-  // page emits its own connected entity graph: Organization + WebSite +
-  // WebPage + BreadcrumbList with the same stable @ids.
-  const pageGraph = buildPageGraph({
-    canonicalUrl: blogCanonical,
-    title: blogTitle,
-    description: plainText(blogDescription).slice(0, 500),
-    crumbs: crumbsFromPath(
-      blogSlug ? `/blogs/${blogSlug}` : "/blogs",
-      buildCanonicalUrl,
-    ),
-  });
-
-  const blogSchema = blog
-    ? buildBlogPosting({
-        headline: blog.blog_heading,
-        description: blog.blog_short_description || blogDescription,
-        image: blogImageUrl,
-        canonicalUrl: blogCanonical,
-        datePublished: blog.created_at || blog.blog_created,
-        dateModified: blog.updated_at || blog.blog_created,
-      })
-    : null;
-
-  const faqSchema = buildFAQPage(faqItems);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -373,11 +341,11 @@ const BlogDetails = () => {
         <meta property="og:image:alt" content={blog?.blog_images_alt || blogTitle} />
         <meta property="og:site_name" content="Academy of Internal Audit" />
         <meta property="og:locale" content="en_US" />
-        {blogSchema?.datePublished && (
-          <meta property="article:published_time" content={blogSchema.datePublished} />
+        {(blog?.created_at || blog?.blog_created) && (
+          <meta property="article:published_time" content={blog.created_at || blog.blog_created} />
         )}
-        {blogSchema?.dateModified && (
-          <meta property="article:modified_time" content={blogSchema.dateModified} />
+        {(blog?.updated_at || blog?.blog_created) && (
+          <meta property="article:modified_time" content={blog.updated_at || blog.blog_created} />
         )}
 
         {/* Twitter */}
