@@ -1,4 +1,29 @@
-const blogRedirects = {
+/**
+ * ============================================================================
+ * @file src/routes/blog-redirects.ts
+ * ============================================================================
+ * 
+ * WHY:
+ * During a historical site migration, legacy WordPress blog URLs (e.g. `/what-is-money-laundering`)
+ * were reorganized under a unified `/blogs/*` directory. Preserving search engine
+ * link equity, backlinks, and existing Google indexes requires immediate 301/permanent
+ * routing to the new canonical URLs.
+ * 
+ * WHAT:
+ * Key-value mapping of legacy URL paths to new canonical blog routes. Consumed
+ * by `AppRoutes.tsx` which renders `<Navigate to={target} replace />` to prevent
+ * 404 errors and preserve pagerank.
+ * 
+ * RESPONSIBILITY:
+ * - Maintain authoritative list of legacy URL redirects.
+ * - Protect incoming organic backlinks and Google search index positions.
+ * 
+ * DEPENDENCIES:
+ * - Consumed by `src/routes/AppRoutes.tsx`.
+ * ============================================================================
+ */
+
+const blogRedirects: Record<string, string> = {
   "/what-is-money-laundering": "/blogs/what-is-money-laundering",
   "/academy-of-internal-audit-national-recognition":
     "/blogs/academy-of-internal-audit-national-recognition",
@@ -87,4 +112,5 @@ const blogRedirects = {
   "/steps-to-become-cfe": "/blogs/steps-to-become-cfe",
   "/schedule-of-classes": "/blogs/schedule-of-classes",
 };
+
 export default blogRedirects;

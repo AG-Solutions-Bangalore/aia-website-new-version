@@ -1,13 +1,5 @@
 import { BASE_URL } from "@/api/base-url";
 import { Helmet } from "react-helmet-async";
-import { buildCanonicalUrl } from "@/lib/seo";
-import {
-  buildBlogPosting,
-  buildFAQPage,
-  buildPageGraph,
-  crumbsFromPath,
-  plainText,
-} from "@/lib/schema";
 import BlogFaq from "@/components/blog/blog-faq";
 import axios from "axios";
 import { ArrowLeft, Calendar, Clock, Image as ImageIcon, User } from "lucide-react";
@@ -393,22 +385,7 @@ const BlogDetails = () => {
         <meta name="twitter:url" content={blogCanonical} />
         <meta name="twitter:title" content={blogTitle} />
         <meta name="twitter:description" content={blogDescription} />
-        <meta name="twitter:image" content={blogImageUrl} />
-
-        {/* Structured Data: single connected graph + BlogPosting + FAQ */}
-        <script type="application/ld+json">
-          {JSON.stringify(pageGraph)}
-        </script>
-        {blogSchema && (
-          <script type="application/ld+json">
-            {JSON.stringify(blogSchema)}
-          </script>
-        )}
-        {faqSchema && (
-          <script type="application/ld+json">
-            {JSON.stringify(faqSchema)}
-          </script>
-        )}
+        {/* Structured data is managed centrally by the SEO engine */}
       </Helmet>
       <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <button

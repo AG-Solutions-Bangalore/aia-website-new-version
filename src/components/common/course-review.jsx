@@ -4,10 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
-import { useLocation } from "react-router-dom";
-import { buildCanonicalUrl } from "@/lib/seo";
-import { buildCourse } from "@/lib/schema";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Link } from "react-router-dom";
@@ -155,20 +151,8 @@ const CourseReview = ({ slug, title, limit = 5 }) => {
   // carries no rating field, and self-published testimonials are classified
   // by Google as self-serving reviews (ineligible for rich results).
   // Unknown slugs render no Course markup rather than anything invalid.
-  const courseSchema = buildCourse({
-    slug,
-    canonicalUrl: buildCanonicalUrl(pathname),
-  });
-
   return (
     <div className="max-w-340 mx-auto px-4">
-      {courseSchema && (
-        <Helmet>
-          <script type="application/ld+json">
-            {JSON.stringify(courseSchema)}
-          </script>
-        </Helmet>
-      )}
       <div
         className={`${
           scrollFinished ? "relative" : "sticky top-20"

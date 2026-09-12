@@ -1,12 +1,12 @@
 User-agent: *
 Allow: /
 
-# Private Pages
+# Private Endpoints
 Disallow: /admin
 Disallow: /dashboard
 Disallow: /login
 Disallow: /auth
 Disallow: /api
 
-# Sitemap
+# Sitemap Reference
 Sitemap: https://aia.in.net/sitemap.xml

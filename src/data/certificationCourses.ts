@@ -1,4 +1,19 @@
-const certificationCourses = [
+export interface CertificationCourse {
+  id: number;
+  title: string;
+  description: string;
+  description2: string;
+  features: string[];
+  cta: string;
+  link: string;
+  bgColor: string;
+  textColor: string;
+  lefttextColor: string;
+  buttonColor: string;
+  smalllefttextColor: string;
+}
+
+const certificationCourses: CertificationCourse[] = [
   {
     id: 1,
     title: "Certified Fraud Examiner",
@@ -114,8 +129,10 @@ const certificationCourses = [
     buttonColor: "#0F3652",
   },
 ];
+
 export default certificationCourses;
-export const CorporatecertificationCourses = [
+
+export const CorporatecertificationCourses: CertificationCourse[] = [
   {
     id: 1,
     title: "Certified Fraud Examiner",
@@ -148,7 +165,6 @@ export const CorporatecertificationCourses = [
       "Develop auditors who identify control gaps & help management close them effectively.",
       "Enhance risk-based audit planning and execution, improving efficiency and decision-making.",
       "Build consistent internal control mechanisms that ensure governance, compliance, and accountability.",
-      // "Position your audit team as trusted advisors who contribute to performance improvement.",
       "Increase organizational credibility by aligning audit practices with global standards and best-in-class methodologies.",
     ],
     cta: "Explore More About CIA",
@@ -167,7 +183,6 @@ export const CorporatecertificationCourses = [
     description2: "How It Transforms Your Team & Organization",
     features: [
       "Strengthen AML and compliance readiness by training teams to spot suspicious activity early.",
-      // "Build a compliance culture where everyone, from frontline staff to leadership, understands their role in keeping your organization safe.",
       "Equip professionals with global AFC insights and investigative skills to respond confidently to regulatory changes.",
       "Reduce exposure to financial and reputational threats that can quietly erode trust and long-term stability.",
       "Streamline compliance processes, minimize penalties, and maintain consistent reporting accuracy.",

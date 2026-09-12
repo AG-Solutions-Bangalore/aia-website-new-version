@@ -87,6 +87,10 @@ RewriteCond %{REQUEST_URI} !/$
 RewriteCond %{REQUEST_URI} !\.[^/]+$
 RewriteRule ^(.+)$ /$1/ [R=301,L]
 
+# Serve pre-rendered HTML if exists
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+RewriteRule ^(.*)$ /$1/index.html [L]
+
 # SPA fallback for routes not prerendered as static directories.
 RewriteCond %{REQUEST_URI} !^/webapi/ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
