@@ -34,7 +34,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import type { Thing } from 'schema-dts';
 import { getCanonicalUrl } from '@/config/site';
-import { type MasterSeoStructure, createCompositeGraph } from '@/config/seoEngine';
+import { type MasterSeoStructure } from '@/config/seoEngine';
+import { createCompositeGraph } from '@/config/schemaExamples';
 
 export interface ModularPageProps {
   seo: MasterSeoStructure;

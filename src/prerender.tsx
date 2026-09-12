@@ -32,7 +32,8 @@
 
 import React from 'react';
 import { getCanonicalUrl } from '@/config/site';
-import { createCompositeGraph, getSeoForRoute, ROUTE_SEO } from '@/config/seoEngine';
+import { getSeoForRoute, ROUTE_SEO } from '@/config/seoEngine';
+import { createCompositeGraph } from './config/schemaExamples';
 
 export interface PrerenderData {
   url: string;

@@ -29,9 +29,9 @@
  * - ./schemaExamples: Rich Results schema factories (`createSoftwareAppSchema`, `createProductSchema`, `createCourseSchema`)
  */
 
-import type { Graph, Thing } from 'schema-dts';
-import { SITE_NAME, SITE_ORIGIN, SITE_LOGO, SITE_PHONE, getCanonicalUrl } from './site';
-import { createSoftwareAppSchema, createProductSchema, createCourseSchema } from './schemaExamples';
+import type { Thing } from 'schema-dts';
+import { SITE_NAME, SITE_ORIGIN, getCanonicalUrl } from './site';
+import { createCourseSchema, createProductSchema, createSoftwareAppSchema, createWebPageSchema, localBusinessSchema, organizationSchema, RouteSeoEntry, websiteSchema } from './schemaExamples';
 
 export interface MasterSeoStructure {
   title: string;
@@ -41,94 +41,6 @@ export interface MasterSeoStructure {
   noIndex?: boolean;
 }
 
-/**
- * Packs multiple Schema.org entities into a single unified JSON-LD graph.
- * Prevents multiple disconnected script tags from confusing search crawlers.
- *
- * @param schemas - Array of Schema.org Thing entities
- * @returns Complete Schema.org Graph object
- */
-export function createCompositeGraph(schemas: Thing[]): Graph {
-  return {
-    '@context': 'https://schema.org',
-    '@graph': schemas,
-  };
-}
-
-export interface RouteSeoEntry extends MasterSeoStructure {
-  schemas: Thing[];
-}
-
-/** Root Organization entity representing Academy of Internal Audit */
-export const organizationSchema: Thing = {
-  '@type': 'Organization',
-  '@id': `${SITE_ORIGIN}#organization`,
-  name: SITE_NAME,
-  alternateName: ['AIA', 'AIA Institute', 'Academy of Internal Audit'],
-  url: SITE_ORIGIN,
-  logo: {
-    '@type': 'ImageObject',
-    url: SITE_LOGO,
-  },
-  sameAs: [
-    'https://www.facebook.com/academyofinternalaudit',
-    'https://twitter.com/AcademyAudit',
-    'https://www.instagram.com/academyofia/',
-    'https://www.linkedin.com/company/academy-of-internal-audit',
-    'https://in.pinterest.com/academyofia/',
-    'https://www.youtube.com/@academyofia',
-  ],
-} as Thing;
-
-/** LocalBusiness entity providing verified physical office address and phone */
-export const localBusinessSchema: Thing = {
-  '@type': 'LocalBusiness',
-  '@id': `${SITE_ORIGIN}#localbusiness`,
-  name: `${SITE_NAME} HQ`,
-  image: `${SITE_ORIGIN}/android-chrome-512x512.png`,
-  telephone: SITE_PHONE,
-  url: SITE_ORIGIN,
-  address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'C826-828, Vipul Plaza, Sector-81',
-    addressLocality: 'Faridabad',
-    addressRegion: 'Delhi - NCR',
-    postalCode: '121002',
-    addressCountry: 'IN',
-  },
-  parentOrganization: { '@id': `${SITE_ORIGIN}#organization` },
-} as Thing;
-
-/** WebSite entity with SearchAction declaration */
-export const websiteSchema: Thing = {
-  '@type': 'WebSite',
-  '@id': `${SITE_ORIGIN}#website`,
-  url: SITE_ORIGIN,
-  name: SITE_NAME,
-  publisher: { '@id': `${SITE_ORIGIN}#organization` },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: {
-      '@type': 'EntryPoint',
-      urlTemplate: `${SITE_ORIGIN}/blogs?s={search_term_string}`,
-    },
-    'query-input': 'required name=search_term_string',
-  },
-} as Thing;
-
-/** Helper creating a WebPage schema node connected to the root WebSite and Organization */
-function createWebPageSchema(canonicalPath: string, title: string, description: string): Thing {
-  const url = getCanonicalUrl(canonicalPath);
-  return {
-    '@type': 'WebPage',
-    '@id': `${url}#webpage`,
-    url,
-    name: title,
-    description,
-    isPartOf: { '@id': `${SITE_ORIGIN}#website` },
-    about: { '@id': `${SITE_ORIGIN}#organization` },
-  } as Thing;
-}
 
 /**
  * Complete catalog of static application routes and their pre-configured SEO payloads.
@@ -508,6 +420,8 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
       canonicalPath: path,
       schemas: [
         organizationSchema,
+        localBusinessSchema,
+        websiteSchema,
         createWebPageSchema(path, title, description),
       ],
     };

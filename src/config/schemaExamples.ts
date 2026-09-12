@@ -27,8 +27,82 @@
  * - ./site: `SITE_NAME`, `SITE_ORIGIN`, `SITE_LOGO`, `getCanonicalUrl`
  */
 
-import type { Thing } from 'schema-dts';
-import { SITE_NAME, SITE_ORIGIN, SITE_LOGO, getCanonicalUrl } from './site';
+import type { Graph, Thing } from 'schema-dts';
+import { SITE_LOGO, SITE_NAME, SITE_ORIGIN, SITE_PHONE, getCanonicalUrl } from './site';
+
+export interface MasterSeoStructure {
+  title: string;
+  description: string;
+  keywords: string;
+  canonicalPath: string;
+  noIndex?: boolean;
+}
+
+
+
+export interface RouteSeoEntry extends MasterSeoStructure {
+  schemas: Thing[];
+}
+
+/** Root Organization entity representing Academy of Internal Audit */
+export const organizationSchema: Thing = {
+  '@type': 'Organization',
+  '@id': `${SITE_ORIGIN}#organization`,
+  name: SITE_NAME,
+  alternateName: ['AIA', 'AIA Institute', 'Academy of Internal Audit'],
+  url: SITE_ORIGIN,
+  logo: {
+    '@type': 'ImageObject',
+    url: SITE_LOGO,
+  },
+  sameAs: [
+    'https://www.facebook.com/academyofinternalaudit',
+    'https://twitter.com/AcademyAudit',
+    'https://www.instagram.com/academyofia/',
+    'https://www.linkedin.com/company/academy-of-internal-audit',
+    'https://in.pinterest.com/academyofia/',
+    'https://www.youtube.com/@academyofia',
+  ],
+} as Thing;
+
+/** LocalBusiness entity providing verified physical office address and phone */
+export const localBusinessSchema: Thing = {
+  '@type': 'LocalBusiness',
+  '@id': `${SITE_ORIGIN}#localbusiness`,
+  name: `${SITE_NAME} HQ`,
+  image: `${SITE_ORIGIN}/android-chrome-512x512.png`,
+  telephone: SITE_PHONE,
+  priceRange: "5000",
+  url: SITE_ORIGIN,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'C826-828, Vipul Plaza, Sector-81',
+    addressLocality: 'Faridabad',
+    addressRegion: 'Delhi - NCR',
+    postalCode: '121002',
+    addressCountry: 'IN',
+  },
+  parentOrganization: { '@id': `${SITE_ORIGIN}#organization` },
+} as Thing;
+
+/** WebSite entity with SearchAction declaration */
+export const websiteSchema: Thing = {
+  '@type': 'WebSite',
+  '@id': `${SITE_ORIGIN}#website`,
+  url: SITE_ORIGIN,
+  name: SITE_NAME,
+  publisher: { '@id': `${SITE_ORIGIN}#organization` },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: {
+      '@type': 'EntryPoint',
+      urlTemplate: `${SITE_ORIGIN}/blogs?s={search_term_string}`,
+    },
+    'query-input': 'required name=search_term_string',
+  },
+} as Thing;
+
+
 
 /**
  * Creates a fully compliant Schema.org Product object with Offer, Shipping, Return Policy,
@@ -67,22 +141,54 @@ export function createProductSchema(product?: {
       price,
       priceCurrency,
       priceValidUntil: '2027-12-31',
+      validFrom: '2026-09-01',
       availability: 'https://schema.org/InStock',
       url: getCanonicalUrl('/enroll-now'),
+
       shippingDetails: {
         '@type': 'OfferShippingDetails',
-        shippingRate: { '@type': 'MonetaryAmount', value: '0', currency: priceCurrency },
-        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'IN' },
+
+        shippingRate: {
+          '@type': 'MonetaryAmount',
+          value: '0',
+          currency: priceCurrency,
+        },
+
+        shippingDestination: {
+          '@type': 'DefinedRegion',
+          addressCountry: 'IN',
+        },
+
+        deliveryTime: {
+          '@type': 'ShippingDeliveryTime',
+
+          handlingTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 0,
+            maxValue: 1,
+            unitCode: 'DAY',
+          },
+
+          transitTime: {
+            '@type': 'QuantitativeValue',
+            minValue: 2,
+            maxValue: 5,
+            unitCode: 'DAY',
+          },
+        },
       },
+
       hasMerchantReturnPolicy: {
         '@type': 'MerchantReturnPolicy',
         applicableCountry: 'IN',
-        returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow',
+        returnPolicyCategory:
+          'https://schema.org/MerchantReturnFiniteReturnWindow',
         merchantReturnDays: 30,
         returnMethod: 'https://schema.org/ReturnByMail',
         returnFees: 'https://schema.org/FreeReturn',
       },
-    },
+    }
+    ,
     aggregateRating: {
       '@type': 'AggregateRating',
       ratingValue: '4.9',
@@ -143,5 +249,36 @@ export function createCourseSchema(course: {
     description: course.description,
     provider: { '@id': `${SITE_ORIGIN}#organization` },
     url: getCanonicalUrl(course.path),
+  } as Thing;
+}
+
+
+/**
+ * Packs multiple Schema.org entities into a single unified JSON-LD graph.
+ * Prevents multiple disconnected script tags from confusing search crawlers.
+ *
+ * @param schemas - Array of Schema.org Thing entities
+ * @returns Complete Schema.org Graph object
+ */
+export function createCompositeGraph(schemas: Thing[]): Graph {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': schemas,
+  };
+}
+
+
+
+/** Helper creating a WebPage schema node connected to the root WebSite and Organization */
+export function createWebPageSchema(canonicalPath: string, title: string, description: string): Thing {
+  const url = getCanonicalUrl(canonicalPath);
+  return {
+    '@type': 'WebPage',
+    '@id': `${url}#webpage`,
+    url,
+    name: title,
+    description,
+    isPartOf: { '@id': `${SITE_ORIGIN}#website` },
+    about: { '@id': `${SITE_ORIGIN}#organization` },
   } as Thing;
 }
