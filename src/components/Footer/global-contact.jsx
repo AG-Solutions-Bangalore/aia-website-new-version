@@ -42,7 +42,7 @@ const ContactCard = ({ country, contacts }) => {
           <div key={number} className="flex items-center justify-between gap-2">
             <div className="group/number flex items-center gap-2">
               <a
-                href={`tel:${tel}`}
+                href={`tel:${tel}`} title={`tel:${tel}`}
                 className="text-[12px] text-gray-300 hover:text-[#fa8017] leading-none whitespace-nowrap"
               >
                 {number}
@@ -70,11 +70,11 @@ const ContactCard = ({ country, contacts }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="min-h-10 min-w-10 bg-[#0068FF]/15 border border-[#0068FF]/30 rounded-md flex items-center justify-center text-[#0068FF] hover:bg-[#0068FF] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0068FF]"
-                  aria-label={`Zalo ${number}`}
+                  aria-label={`Zalo ${number}`} title={`Zalo ${number}`}
                 >
                   <img
                     src={zalo}
-                    alt="Zalo"
+                    alt="Zalo" title="Zalo"
                     className="w-5 h-5 rounded-sm"
                     loading="lazy"
                   />
@@ -85,7 +85,7 @@ const ContactCard = ({ country, contacts }) => {
                 <a
                   href={`tel:${tel}`}
                   className="min-h-10 min-w-10 bg-[#FDBA74]/15 border border-[#FDBA74]/30 rounded-md flex items-center justify-center text-[#FDBA74] hover:bg-[#F3831C] hover:text-white transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FDBA74]"
-                  aria-label={`Call ${number}`}
+                  aria-label={`Call ${number}`} title={`Call ${number}`}
                 >
                   <PhoneIcon />
                 </a>
@@ -97,7 +97,7 @@ const ContactCard = ({ country, contacts }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="min-h-10 min-w-10 bg-[#25D366]/15 border border-[#25D366]/20 rounded-md flex items-center justify-center text-[#25D366] hover:bg-[#128C7E] hover:text-white transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
-                  aria-label={`WhatsApp ${number}`}
+                  aria-label={`WhatsApp ${number}`} title={`WhatsApp ${number}`}
                 >
                   <WhatsAppIcon />
                 </a>

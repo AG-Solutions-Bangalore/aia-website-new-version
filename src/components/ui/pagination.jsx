@@ -35,7 +35,7 @@ const PaginationLink = ({
   size = "icon",
   ...props
 }) => (
-  <a
+  <a title="Academy of Internal Audit"
     aria-current={isActive ? "page" : undefined}
     className={cn(buttonVariants({
       variant: isActive ? "outline" : "ghost",

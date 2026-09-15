@@ -483,7 +483,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                 target={isExternalSlide ? "_blank" : undefined}
                 rel={isExternalSlide ? "noopener noreferrer" : undefined}
                 className="absolute inset-0 z-10"
-                aria-label={activeSlide.alt || "Open banner link"}
+                aria-label={activeSlide.alt || "Open banner link"} title={activeSlide.alt || "Open banner link"}
                 onClick={(event) => {
                   if (suppressClick.current) {
                     event.preventDefault();
@@ -562,7 +562,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                   href={currentHref}
                   target={isExternalCurrent ? "_blank" : undefined}
                   rel={isExternalCurrent ? "noopener noreferrer" : undefined}
-                  aria-label={`Learn more about: ${current.title}`}
+                  aria-label={`Learn more about: ${current.title}`} title={`Learn more about: ${current.title}`}
                   className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
                   min-h-11 text-white bg-[#F3831C] hover:bg-[#D16E27] active:bg-[#AE5B1D]

@@ -6,7 +6,7 @@ const CamsHero = () => {
     <div>
       <img
         src={`${IMAGE_PATH}/banner_images/3.webp`}
-        alt="CAMS Hero Banner"
+        alt="CAMS Hero Banner" title="CAMS Hero Banner"
         className=" inset-0 w-full h-full object-cover"
         loading="lazy"
       />

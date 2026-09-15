@@ -129,7 +129,7 @@ const CamsYoutube = () => {
               {filteredVideos.map((video) => (
                 <a
                   key={video.id}
-                  href={video.youtube_link}
+                  href={video.youtube_link} title={video.youtube_link}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="shrink-0 w-72 group/card cursor-pointer border p-2 rounded-md bg-white"
@@ -138,7 +138,7 @@ const CamsYoutube = () => {
                     <div className="relative overflow-hidden bg-gray-100">
                       <img
                         src={getImageUrl(video.youtube_image)}
-                        alt={video.youtube_image_alt || video.youtube_language}
+                        alt={video.youtube_image_alt || video.youtube_language} title={video.youtube_image_alt || video.youtube_language}
                         className="w-full h-40 object-cover"
                         loading="lazy"
                       />

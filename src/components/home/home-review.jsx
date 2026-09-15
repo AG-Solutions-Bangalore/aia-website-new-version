@@ -3,7 +3,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { AlertCircle, RefreshCcw } from "lucide-react";
 import { useMemo } from "react";
-import { Helmet } from "react-helmet-async";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "swiper/css";
@@ -60,38 +59,6 @@ const HomeReview = () => {
   };
   return (
     <section className="py-12 bg-white">
-      {!isLoading && !isError && testimonials.length > 0 && (
-        <Helmet>
-          <script type="application/ld+json">
-            {JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "Academy of Internal Audit",
-              url: "https://aia.in.net/",
-              aggregateRating: {
-                "@type": "AggregateRating",
-                ratingValue: "5",
-                bestRating: "5",
-                worstRating: "1",
-                reviewCount: testimonials.length.toString(),
-              },
-              review: testimonials.map((t) => ({
-                "@type": "Review",
-                author: { "@type": "Person", name: t.name },
-                reviewBody: t.message,
-                datePublished: new Date(t.update).toISOString().split("T")[0],
-                reviewRating: {
-                  "@type": "Rating",
-                  ratingValue: "5",
-                  bestRating: "5",
-                  worstRating: "1",
-                },
-              })),
-            })}
-          </script>
-        </Helmet>
-      )}
-
       <div className="max-w-340 mx-auto w-full px-4 sm:px-6 lg:px-8">
         <div className="md:hidden">
           <SectionHeading
@@ -134,6 +101,7 @@ const HomeReview = () => {
                   <img
                     src={`${IMAGE_PATH}/g_logo.webp`}
                     alt="Google Logo"
+                    title="Google Logo"
                     className="h-10 w-10 md:w-12 md:h-12"
                     loading="lazy"
                   />
@@ -160,6 +128,7 @@ const HomeReview = () => {
                           <LazyLoadImage
                             src={item.image}
                             alt={item.alt}
+                            title={item.alt || item.name}
                             className="w-14 h-14 min-w-14 min-h-14 rounded-full object-cover border-2 border-[#0F3652] flex-shrink-0"
                             effect="blur"
                           />
@@ -199,7 +168,7 @@ const HomeReview = () => {
 
                           {item?.link && (
                             <a
-                              href={item.link}
+                              href={item.link} title={item.link}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="ml-2 text-[#F3831C] font-medium text-sm hover:underline cursor-pointer"

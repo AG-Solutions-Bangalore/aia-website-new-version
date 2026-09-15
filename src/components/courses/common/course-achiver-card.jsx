@@ -42,7 +42,7 @@ rotate(${isCenter ? 0 : position > 0 ? -2.5 : 2.5}deg)
       <div className="absolute inset-0 p-6">
         <img
           src={testimonial.student_image_url || testimonial.imgSrc}
-          alt={testimonial.student_image_alt || testimonial.student_name}
+          alt={testimonial.student_image_alt || testimonial.student_name} title={testimonial.student_image_alt || testimonial.student_name}
           className="h-full w-full bg-muted object-cover object-top rounded-2xl"
           style={{
             boxShadow: "3px 3px 0px hsl(var(--background))",

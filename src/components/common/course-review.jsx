@@ -4,10 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
-import { Helmet } from "react-helmet-async";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
   const start = i / total;
   const end = (i + 1) / total;
@@ -39,6 +38,7 @@ const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
                 <img
                   src={`${imageUrl}${testimonial.student_image}`}
                   alt={testimonial.student_name}
+                  title={testimonial.student_name}
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     e.target.src = `${IMAGE_PATH}/no_image.jpg`;
@@ -84,6 +84,7 @@ const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
 
 const CourseReview = ({ slug, title, limit = 5 }) => {
   const containerRef = useRef(null);
+  const { pathname } = useLocation();
   const [testimonials, setTestimonials] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
   const [scrollFinished, setScrollFinished] = useState(false);
@@ -146,46 +147,12 @@ const CourseReview = ({ slug, title, limit = 5 }) => {
   if (isError || testimonials.length === 0) {
     return null;
   }
+  // Minimal Course entity WITHOUT ratings/reviews: the testimonials API
+  // carries no rating field, and self-published testimonials are classified
+  // by Google as self-serving reviews (ineligible for rich results).
+  // Unknown slugs render no Course markup rather than anything invalid.
   return (
     <div className="max-w-340 mx-auto px-4">
-      <Helmet>
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Course",
-            name: slug,
-            description: `Professional certification training for ${slug}`,
-            provider: {
-              "@type": "Organization",
-              name: "Academy of Internal Audit",
-              url: "https://aia.in.net/",
-            },
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: "5",
-              bestRating: "5",
-              worstRating: "1",
-              ratingCount: testimonials.length,
-            },
-            // ✅ Nest reviews directly inside Course
-            review: testimonials.map((t) => ({
-              "@type": "Review",
-              author: {
-                "@type": "Person",
-                name: t.student_name,
-              },
-              reviewBody: t.student_testimonial,
-              datePublished: new Date(t.updated_at).toISOString().split("T")[0],
-              reviewRating: {
-                "@type": "Rating",
-                ratingValue: "5",
-                bestRating: "5",
-                worstRating: "1",
-              },
-            })),
-          })}
-        </script>
-      </Helmet>
       <div
         className={`${
           scrollFinished ? "relative" : "sticky top-20"
@@ -204,13 +171,14 @@ const CourseReview = ({ slug, title, limit = 5 }) => {
             <img
               src={`${IMAGE_PATH}/rated.webp`}
               alt="Rated testimonial"
+              title="Rated testimonial"
               className="w-full h-64 md:h-72 lg:h-[62vh] object-contain transform -scale-x-100 mb-0"
               loading="lazy"
             />
 
             <div className="flex justify-center">
               <Link
-                to="https://g.co/kgs/npmpnK1"
+                to="https://g.co/kgs/npmpnK1" title="https://g.co/kgs/npmpnK1"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="

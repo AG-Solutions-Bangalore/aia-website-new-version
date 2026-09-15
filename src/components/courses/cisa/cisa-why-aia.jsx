@@ -52,7 +52,7 @@ const CisaWhyAia = () => {
               w-full sm:w-auto
             "
         >
-          <Link to={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer" className="w-full text-center">
+          <Link to={`${ENROLL_URL}`} title={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer" className="w-full text-center">
             Enroll Now
           </Link>
         </Button>

@@ -134,7 +134,7 @@ const CourseYoutubeLecture = ({
               {filteredVideos.map((video) => (
                 <a
                   key={video.id}
-                  href={video.youtube_link}
+                  href={video.youtube_link} title={video.youtube_link}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="shrink-0 w-72 group/card cursor-pointer border p-2 rounded-md bg-white"
@@ -143,7 +143,7 @@ const CourseYoutubeLecture = ({
                     <div className="relative overflow-hidden bg-gray-100">
                       <img
                         src={getImageUrl(video.youtube_image)}
-                        alt={video.youtube_image_alt || video.youtube_language}
+                        alt={video.youtube_image_alt || video.youtube_language} title={video.youtube_image_alt || video.youtube_language}
                         className="w-full h-auto object-contain"
                         loading="lazy"
                       />
@@ -178,7 +178,7 @@ const CourseYoutubeLecture = ({
           variant="ghost"
           aria-label="Visit Our YouTube Channel"
         >
-          <Link to={"https://www.youtube.com/@academyofia"} target="_blank">
+          <Link to={"https://www.youtube.com/@academyofia"} title={"https://www.youtube.com/@academyofia"} target="_blank">
             <span className="relative z-10 text-white">
               <span>Visit Our YouTube Channel</span>
             </span>

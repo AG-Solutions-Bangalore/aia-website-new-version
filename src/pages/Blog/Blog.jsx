@@ -240,7 +240,7 @@ const Blog = () => {
                             ? `${imageBaseUrl}${blog.blog_images}`
                             : `${IMAGE_PATH}/no_image.jpg`
                         }
-                        alt={blog.blog_heading}
+                        alt={blog.blog_heading} title={blog.blog_heading}
                         className="w-24 h-20 object-contain rounded-sm"
                         onError={(e) => {
                           e.currentTarget.src = `${IMAGE_PATH}/no_image.jpg`;

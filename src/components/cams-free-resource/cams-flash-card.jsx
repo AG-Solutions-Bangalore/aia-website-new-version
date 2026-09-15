@@ -177,6 +177,7 @@ const CAMSFlashCard = () => {
                   {/* <span className="relative z-10 text-8xl">{module.icon}</span> */}
                   <img
                     src={module.icon}
+                    alt={module.title || "CAMS Flashcard Module"} title={module.title || "CAMS Flashcard Module"}
                     className="h-26 w-26 object-contain"
                     loading="lazy"
                   />

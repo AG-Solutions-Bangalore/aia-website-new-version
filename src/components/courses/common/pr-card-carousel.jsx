@@ -96,14 +96,14 @@ export const PrCardCarousel = ({
                 <div className="relative bg-white shadow-lg shadow-gray-200/50 overflow-hidden transition-all duration-300 hover:shadow-xl">
                   <div className="border border-[#0F3652]">
                     <a
-                      href={student.link}
+                      href={student.link} title={student.link}
                       target="_blank"
                       rel="nofollow noreferrer"
                     >
                       <img
                         src={student.src}
                         className="w-full h-48 object-contain"
-                        alt={student.alt}
+                        alt={student.alt} title={student.alt}
                         loading="lazy"
                       />
                     </a>

@@ -99,7 +99,7 @@ const CamsLms = () => {
             <div className="w-full h-full flex items-center justify-center">
               <img
                 src={`${IMAGE_PATH}/LMS.webp`}
-                alt="LMS"
+                alt="LMS" title="LMS"
                 className="w-10 h-10 object-contain"
                 draggable={false}
                 loading="lazy"

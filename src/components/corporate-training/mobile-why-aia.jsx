@@ -145,7 +145,7 @@ const Card = ({ item, index }) => {
             >
               <img
                 src={`${IMAGE_PATH}/corporation_icon_${index + 1}.webp`}
-                alt={item.title}
+                alt={item.title} title={item.title}
                 className="object-contain"
                 style={{
                   width: "26px",
@@ -214,7 +214,7 @@ const AiaLogo = () => (
   >
     <img
       src={`${IMAGE_PATH}/middle_logo.webp`}
-      alt="AIA Logo"
+      alt="AIA Logo" title="AIA Logo"
       className="object-contain"
       style={{ width: "48px", height: "48px" }}
       loading="lazy"

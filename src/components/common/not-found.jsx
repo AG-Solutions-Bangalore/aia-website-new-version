@@ -173,7 +173,7 @@ export default function NotFound() {
                 justifyContent: "center",
               }}
             >
-              <a
+              <a title="Academy of Internal Audit"
                 onMouseEnter={() => setHoverHome(true)}
                 onMouseLeave={() => setHoverHome(false)}
                 style={{
@@ -199,7 +199,7 @@ export default function NotFound() {
                 Return Home
               </a>
 
-              <a
+              <a title="Academy of Internal Audit"
                 onMouseEnter={() => setHoverSupport(true)}
                 onMouseLeave={() => setHoverSupport(false)}
                 style={{

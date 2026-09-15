@@ -247,7 +247,7 @@ export default function ContactReachOut() {
                       </p>
                     ))}
                     {method.links?.map((link, i) => (
-                      <a key={i} href={link.href} className="contact-link">
+                      <a key={i} href={link.href} title={link.href} className="contact-link">
                         {link.text}
                         {link.badge && (
                           <span className="toll-badge">{link.badge}</span>

@@ -7,7 +7,7 @@ const CisaIndiaMap = () => {
         {/* Center-aligned Unified Map Image */}
         <img
           src={`${IMAGE_PATH}/india_map.webp`}
-          alt="India by AIA map and locations"
+          alt="India by AIA map and locations" title="India by AIA map and locations"
           className="w-full h-auto object-contain drop-shadow-md"
           onError={(e) => {
             e.target.src = `${IMAGE_PATH}/map.webp`; // fallback

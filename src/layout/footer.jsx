@@ -34,7 +34,7 @@ export default function Footer() {
               ].map((link, idx) => (
                 <li key={idx} className="group">
                   <Link
-                    to={link.href}
+                    to={link.href} title={link.href}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
@@ -69,7 +69,7 @@ export default function Footer() {
                 ].map((course, idx) => (
                   <li key={idx} className="group">
                     <Link
-                      to={course.href}
+                      to={course.href} title={course.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
@@ -97,7 +97,7 @@ export default function Footer() {
                 ].map((resource, idx) => (
                   <li key={idx} className="group">
                     <Link
-                      to={resource.href}
+                      to={resource.href} title={resource.href}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
@@ -132,7 +132,7 @@ export default function Footer() {
                 Faridabad, Delhi - NCR 121002, India
               </p>
               <a
-                href="tel:+01294174177"
+                href="tel:+01294174177" title="tel:+01294174177"
                 className="inline-flex items-center gap-2 text-sm text-gray-300 hover:text-[#fa8017] transition-colors duration-300"
               >
                 <svg
@@ -155,13 +155,13 @@ export default function Footer() {
                 </svg>
                 <div className="text-sm space-y-2 min-w-0">
                   <a
-                    href="mailto:support@aia.in.net"
+                    href="mailto:support@aia.in.net" title="mailto:support@aia.in.net"
                     className="block text-gray-300 hover:text-[#fa8017] transition-colors duration-300 break-words"
                   >
                     support@aia.in.net
                   </a>
                   <a
-                    href="mailto:contact@aia.in.net"
+                    href="mailto:contact@aia.in.net" title="mailto:contact@aia.in.net"
                     className="block text-gray-300 hover:text-[#fa8017] transition-colors duration-300 break-words"
                   >
                     contact@aia.in.net

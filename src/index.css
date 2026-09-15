@@ -8,14 +8,16 @@ body {
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none;
+  -ms-overflow-style: none !important;
   /* IE and Edge */
-  scrollbar-width: none;
+  scrollbar-width: none !important;
   /* Firefox */
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
   /* Chrome, Safari */
 }
 

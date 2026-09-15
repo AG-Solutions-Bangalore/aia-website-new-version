@@ -47,7 +47,7 @@ const CamsConnection = ({
                 >
                   <img
                     src={`${IMAGE_PATH}/${item.image}`}
-                    alt={`Cams Image ${index + 1}`}
+                    alt={`Cams Image ${index + 1}`} title={`Cams Image ${index + 1}`}
                     className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />

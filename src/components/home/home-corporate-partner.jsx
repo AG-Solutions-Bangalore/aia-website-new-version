@@ -353,7 +353,7 @@ const HomeCorporatePartner = () => {
                   variant="ghost"
                   aria-label="Explore Siga"
                 >
-                  <Link to={"/corporate-training/"}>
+                  <Link to={"/corporate-training/"} title={"/corporate-training/"}>
                     <span className="relative z-10 text-white">Know More</span>
                   </Link>
                 </Button>

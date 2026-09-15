@@ -253,7 +253,7 @@ const CorporateWhy = () => {
               </p>
 
               <a
-                href={item.link}
+                href={item.link} title={item.link}
                 target="_blank"
                 rel="nofollow noopener noreferrer"
                 className="mt-3 inline-block text-xs text-[#0F3652] underline  transition-opacity duration-300"

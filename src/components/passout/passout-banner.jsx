@@ -284,7 +284,7 @@ const PassoutBanner = () => {
                 >
                   <img
                     src={img.src}
-                    alt={img.alt}
+                    alt={img.alt} title={img.alt}
                     className="w-full h-auto object-cover"
                     loading="lazy"
                     onError={(e) => {
@@ -312,7 +312,7 @@ const PassoutBanner = () => {
                 >
                   <img
                     src={img.src}
-                    alt={img.alt}
+                    alt={img.alt} title={img.alt}
                     className="w-full h-auto object-cover"
                     loading="lazy"
                     onError={(e) => {

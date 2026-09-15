@@ -25,7 +25,7 @@ const BannerBlogCard = ({ blog, handleBlogClick, imageBaseUrl }) => {
   };
   return (
     <a
-      href={`/blogs/${blog.blog_slug}/`}
+      href={`/blogs/${blog.blog_slug}/`} title={`/blogs/${blog.blog_slug}/`}
       onClick={(event) => {
         event.preventDefault();
         handleBlogClick(blog.blog_slug);
@@ -43,7 +43,7 @@ const BannerBlogCard = ({ blog, handleBlogClick, imageBaseUrl }) => {
             ) : (
               <img
                 src={imageSrc}
-                alt={blog.blog_images_alt || blog.blog_heading}
+                alt={blog.blog_images_alt || blog.blog_heading} title={blog.blog_images_alt || blog.blog_heading}
                 className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                 onError={handleImageFallback}
                 loading="lazy"

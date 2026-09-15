@@ -4,7 +4,15 @@ import { Button } from "@/components/ui/button";
 import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const CourseLms = ({ courseFeatures, cardTitle, image, description, gridClass }) => {
+const CourseLms = ({
+  courseFeatures,
+  cardTitle,
+  image,
+  description,
+  gridClass,
+  bannerTitle = "FOR MORE INFORMATION",
+  bannerButton,
+}) => {
   const labels = [
     "Dedicated Support Person",
     "Updated Study Curriculum",
@@ -49,30 +57,34 @@ const CourseLms = ({ courseFeatures, cardTitle, image, description, gridClass })
         {/* Image */}
         <img
           src={`${IMAGE_PATH}/${image}`}
-          alt="LMS Image"
+          alt="LMS Image" title="LMS Image"
           className="w-full h-full object-cover"
           loading="lazy"
         />
 
         {/* Information Banner */}
-        <div className="py-6 px-6 flex items-center justify-center">
-          <p className="text-[#123653] tracking-[0.2em] text-sm md:text-base font-medium mr-4">
-            FOR MORE INFORMATION
+        <div className="py-6 px-6 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <p className="text-[#123653] tracking-[0.1em] sm:tracking-[0.2em] text-sm md:text-base font-semibold text-center">
+            {bannerTitle}
           </p>
 
-          <Button
-            onClick={() => window.open("/contact", "_blank")}
-            className="
-              bg-[#F3831C] text-white
-              px-6 py-2.5 rounded-none
-              font-semibold
-              hover:bg-[#F3831C]/90
-              transition-all
-          cursor-pointer
-            "
-          >
-            Contact Us
-          </Button>
+          {bannerButton ? (
+            bannerButton
+          ) : (
+            <Button
+              onClick={() => window.open("/contact", "_blank")}
+              className="
+                bg-[#F3831C] text-white
+                px-6 py-2.5 rounded-none
+                font-semibold
+                hover:bg-[#F3831C]/90
+                transition-all
+            cursor-pointer
+              "
+            >
+              Contact Us
+            </Button>
+          )}
         </div>
       </section>
       <section className="py-12 px-4 bg-white">

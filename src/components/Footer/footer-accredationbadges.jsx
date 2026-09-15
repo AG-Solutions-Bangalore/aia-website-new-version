@@ -42,7 +42,7 @@ const AccreditationBadges = () => {
           <div className="bg-white border border-gray-100 shadow-[0_2px_8px_-2px_rgba(0,0,0,0.06)] rounded-lg sm:rounded-xl p-1.5 sm:p-2 w-full aspect-square sm:aspect-[4/3] lg:aspect-[5/4] max-w-16 sm:max-w-20 lg:max-w-24 mx-auto flex items-center justify-center transition-all duration-500 group-hover:border-[#fa8017] group-hover:shadow-lg group-hover:shadow-orange-500/10">
             <img
               src={img}
-              alt={alt}
+              alt={alt} title={alt}
               className="max-w-full max-h-[85%] object-contain transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
@@ -91,7 +91,7 @@ export const PaymentAccreditation = () => (
         <div className="p-3 flex items-center justify-center hover:border-[#fa8017]/40 transition-all duration-200">
           <img
             src={`${IMAGE_PATH}/payment.webp`}
-            alt="Payment methods"
+            alt="Payment methods" title="Payment methods"
             className="w-full h-20 object-contain"
             loading="lazy"
           />

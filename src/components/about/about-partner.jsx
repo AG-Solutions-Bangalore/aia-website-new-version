@@ -47,7 +47,7 @@ const AboutPartner = () => {
                   <div className="p-1">
                     <img
                       src={`${imageBaseUrl}${efforts[2]?.efforts_image}`}
-                      alt={efforts[2]?.efforts_heading}
+                      alt={efforts[2]?.efforts_heading} title={efforts[2]?.efforts_heading}
                       className="w-full md:h-[340px]  object-contain"
                       loading="lazy"
                     />
@@ -91,7 +91,7 @@ const AboutPartner = () => {
                 <div className="p-1">
                   <img
                     src={`${imageBaseUrl}${efforts[0]?.efforts_image}`}
-                    alt={efforts[0]?.efforts_heading}
+                    alt={efforts[0]?.efforts_heading} title={efforts[0]?.efforts_heading}
                     className="w-full md:h-[340px] object-contain"
                     loading="lazy"
                   />
@@ -107,7 +107,7 @@ const AboutPartner = () => {
                   <div className="p-1">
                     <img
                       src={`${imageBaseUrl}${efforts[1]?.efforts_image}`}
-                      alt={efforts[1]?.efforts_heading}
+                      alt={efforts[1]?.efforts_heading} title={efforts[1]?.efforts_heading}
                       className="w-full md:h-[340px]  object-contain"
                        loading="lazy"
                     />

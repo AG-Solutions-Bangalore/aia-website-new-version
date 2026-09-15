@@ -40,7 +40,7 @@ const TestimonialsColumn2 = (props) => {
                     <div className="h-48 w-full">
                       <img
                         src={image}
-                        alt={alt}
+                        alt={alt} title={alt}
                         decoding="async"
                         className="h-full w-full object-top object-cover"
                         loading="lazy"
@@ -60,7 +60,7 @@ const TestimonialsColumn2 = (props) => {
 
                         <img
                           src={comapany_image}
-                          alt={company_alt}
+                          alt={company_alt} title={company_alt}
                           decoding="async"
                           className="h-8 w-8 object-contain"
                           loading="lazy"

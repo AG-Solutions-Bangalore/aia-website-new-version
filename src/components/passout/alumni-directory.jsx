@@ -1165,7 +1165,7 @@ const AlumniDirectory = () => {
                       {student.companyLogoUrl ? (
                         <img
                           src={student.companyLogoUrl}
-                          alt={student.companyName}
+                          alt={student.companyName} title={student.companyName}
                           className="h-6 w-auto max-w-[80px] object-contain opacity-95 group-hover:scale-105 transition-transform"
                           onError={(e) => {
                             e.target.style.display = "none";
@@ -1193,7 +1193,7 @@ const AlumniDirectory = () => {
                         {student.studentImageUrl ? (
                           <img
                             src={student.studentImageUrl}
-                            alt={student.name}
+                            alt={student.name} title={student.name}
                             className="w-full h-full object-cover"
                             onError={(e) => {
                               e.target.src =
@@ -1274,7 +1274,7 @@ const AlumniDirectory = () => {
                         <TableCell className="px-6 py-4 font-bold text-slate-800 flex items-center gap-3">
                           <img
                             src={student.studentImageUrl}
-                            alt={student.name}
+                            alt={student.name} title={student.name}
                             className="w-8 h-8 rounded-full object-cover border border-gray-200"
                             onError={(e) => {
                               e.target.src =
@@ -1298,7 +1298,7 @@ const AlumniDirectory = () => {
                             {student.companyLogoUrl ? (
                               <img
                                 src={student.companyLogoUrl}
-                                alt={student.companyName}
+                                alt={student.companyName} title={student.companyName}
                                 className="h-5 w-auto object-contain opacity-95"
                                 onError={(e) => {
                                   e.target.style.display = "none";

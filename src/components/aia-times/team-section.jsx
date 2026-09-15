@@ -75,7 +75,7 @@ export default function TeamSection() {
               </p>
               <div className="mt-4 space-y-3 text-left">
                 <a
-                  href={`tel:${member.mobile?.replace(/\s+/g, "")}`}
+                  href={`tel:${member.mobile?.replace(/\s+/g, "")}`} title={`tel:${member.mobile?.replace(/\s+/g, "")}`}
                   className="mx-auto flex min-h-8 w-fit items-center gap-2 text-sm text-black transition-colors hover:text-[#F3831C]"
                 >
                   <span className="inline-flex h-7 min-w-7 items-center justify-center rounded-full bg-[#F3831C] text-white">
@@ -84,7 +84,7 @@ export default function TeamSection() {
                   {member.mobile}
                 </a>
                 <a
-                  href={`mailto:${member.email}`}
+                  href={`mailto:${member.email}`} title={`mailto:${member.email}`}
                   className="mx-auto flex min-h-8 w-fit items-center gap-2 break-all text-sm text-black transition-colors hover:text-[#F3831C]"
                 >
                   <span className="inline-flex h-7 min-w-7 items-center justify-center rounded-full bg-[#F3831C] text-white">

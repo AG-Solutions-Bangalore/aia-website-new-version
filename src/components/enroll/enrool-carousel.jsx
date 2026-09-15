@@ -69,7 +69,7 @@ export const EnroolCardCarousel = ({
                           width={400}
                           height={300}
                           className="w-full h-48 object-cover !rounded-none "
-                          alt={student.alt}
+                          alt={student.alt} title={student.alt}
                           loading="lazy"
                         />
                         {student?.course && (
@@ -96,7 +96,7 @@ export const EnroolCardCarousel = ({
                             <div className="w-12 h-12 flex items-center justify-center overflow-hidden ">
                               <img
                                 src={student.companyLogo}
-                                alt={student.companyLogoAlt}
+                                alt={student.companyLogoAlt} title={student.companyLogoAlt}
                                 className="max-w-full border border-white !rounded-none  max-h-full object-contain"
                                 loading="lazy"
                               />

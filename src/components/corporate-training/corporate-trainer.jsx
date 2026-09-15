@@ -138,7 +138,7 @@ const ProfileMagazineSlider = () => {
             >
               <img
                 src={`${IMAGE_PATH}${slide.image}`}
-                alt={slide.alt}
+                alt={slide.alt} title={slide.alt}
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
@@ -253,7 +253,7 @@ const CorporateTrainer = () => {
                 In recognition of his contribution to ethical leadership and
                 professional capability building,
                 <a
-                  href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
+                  href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html" title="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
                   target="_blank"
                   className="font-bold text-[#F3831C]"
                   rel="noreferrer"

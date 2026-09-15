@@ -111,7 +111,7 @@ const CourseBlog = ({ course, title }) => {
                         <div className="relative ">
                           <img
                             src={imageUrl}
-                            alt={blog.blog_images_alt || blog.blog_heading}
+                            alt={blog.blog_images_alt || blog.blog_heading} title={blog.blog_images_alt || blog.blog_heading}
                             className="h-auto w-full object-contain transition-transform duration-300 lg:group-hover:scale-105 lg:grayscale lg:hover:grayscale-0 "
                             onError={(e) => {
                               e.target.src = noImageUrl;

@@ -5,7 +5,7 @@ const CourseHero = ({ path }) => {
     <div>
       <img
         src={`${IMAGE_PATH}/${path}`}
-        alt="CAMS Hero Banner"
+        alt="CAMS Hero Banner" title="CAMS Hero Banner"
         className=" inset-0 w-full h-full object-cover"
         loading="lazy"
       />

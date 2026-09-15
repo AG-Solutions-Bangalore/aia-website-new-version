@@ -230,8 +230,11 @@ const ContactMap = ({ courseCode }) => {
 
   return (
     <div className="my-10">
-      {" "}
-      <img src={`${IMAGE_PATH}/map.webp`} />{" "}
+      <img
+        src={`${IMAGE_PATH}/map.webp`}
+        alt="Academy of Internal Audit Global Offices and Learning Centers Map" title="Academy of Internal Audit Global Offices and Learning Centers Map"
+        loading="lazy"
+      />
     </div>
   );
   // return <div id="map" style={{ height: "100vh", width: "95.5%" }} className="mx-auto" />;

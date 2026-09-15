@@ -618,6 +618,7 @@ export const TestimonialSlider = ({
                 <img
                   src={review.image}
                   alt={review.alt || `Slide ${originalIndex + 1}`}
+                  title={review.alt || review.name || `Slide ${originalIndex + 1}`}
                   loading="lazy"
                   className="w-full h-full object-cover"
                   onLoad={() => handleImageLoad(review.image)}
@@ -641,6 +642,7 @@ export const TestimonialSlider = ({
                 key={currentIndex}
                 src={activeReview.image}
                 alt={activeReview.alt || `Slide ${currentIndex + 1}`}
+                title={activeReview.alt || activeReview.name || `Slide ${currentIndex + 1}`}
                 custom={direction}
                 variants={imageVariants}
                 initial="enter"
@@ -655,6 +657,7 @@ export const TestimonialSlider = ({
             <img
               src={activeReview.image}
               alt={activeReview.alt || `Slide ${currentIndex + 1}`}
+              title={activeReview.alt || activeReview.name || `Slide ${currentIndex + 1}`}
               className="absolute inset-0 w-full h-full object-contain rounded-lg"
               onLoad={() => handleImageLoad(activeReview.image)}
               loading="lazy"
@@ -671,7 +674,7 @@ export const TestimonialSlider = ({
               target="_blank"
               rel="noopener noreferrer"
               className="absolute inset-0 z-10 flex items-center justify-center group"
-              aria-label="Watch video"
+              aria-label="Watch video" title="Watch video"
             >
               <span className="w-14 h-14 rounded-full bg-black/40 backdrop-blur-sm border border-white/30 flex items-center justify-center group-hover:bg-black/60 transition-all duration-300">
                 <svg className="w-6 h-6 fill-white ml-0.5" viewBox="0 0 24 24">
@@ -701,6 +704,7 @@ export const TestimonialSlider = ({
                 <img
                   src={review.image}
                   alt={review.alt || `Slide ${originalIndex + 1}`}
+                  title={review.alt || review.name || `Slide ${originalIndex + 1}`}
                   loading="lazy"
                   className="w-full h-full object-cover"
                   onLoad={() => handleImageLoad(review.image)}

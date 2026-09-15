@@ -65,7 +65,7 @@ export default function PrMediaSection() {
         <div className="mt-9 grid gap-6 lg:grid-cols-[1.7fr_1fr]">
           <div>
             <a
-              href={featured.link}
+              href={featured.link} title={featured.link}
               target="_blank"
               rel="noopener noreferrer"
               className="group block"
@@ -98,7 +98,7 @@ export default function PrMediaSection() {
             {rightItems.map((item) => (
               <a
                 key={item.id}
-                href={item.link}
+                href={item.link} title={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group grid gap-3 sm:grid-cols-[190px_1fr] sm:items-center"
@@ -134,7 +134,7 @@ export default function PrMediaSection() {
             {bottomItems.map((item) => (
               <a
                 key={item.id}
-                href={item.link}
+                href={item.link} title={item.link}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group grid gap-3 sm:grid-cols-[150px_1fr] sm:items-center w-[280px] sm:w-[360px] md:w-[380px] shrink-0"

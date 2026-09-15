@@ -12,7 +12,7 @@ const AboutTrainerSection = ({
           <div className="relative px-4 shadow-[4px_0_15px_rgba(0,0,0,0.15)]">
             <img
               src={`${IMAGE_PATH}/${path}`}
-              alt="Puneet Garg - Trainer"
+              alt="Puneet Garg - Trainer" title="Puneet Garg - Trainer"
               className="w-full h-full relative z-0 "
               loading="lazy"
             />
@@ -98,7 +98,7 @@ const AboutTrainerSection = ({
                   In recognition of his impact on ethical leadership and
                   capability building in the profession,{" "}
                   <a
-                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
+                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html" title="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
                     target="_blank"
                     className="font-bold text-[#F3831C]" rel="noreferrer"
                   >
@@ -113,7 +113,7 @@ const AboutTrainerSection = ({
               <div className="mt-5">
                 <img
                   src={`${IMAGE_PATH}/${messageimage}`}
-                  alt="Student Testimonials"
+                  alt="Student Testimonials" title="Student Testimonials"
                   className="w-full rounded-lg"
                   loading="lazy"
                 />

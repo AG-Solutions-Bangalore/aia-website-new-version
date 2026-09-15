@@ -59,7 +59,7 @@ const eligibilityContent = `
 <p class="mt-2">
     <span class="font-bold">Note:</span>
     If you're a beginner, this course may not be a good choice for you. But don't worry, you're still eligible for other courses.
-    <a href="/" class="text-blue-600 underline cursor-pointer hover:text-blue-800 transition-colors duration-200">
+    <a href="/" title="/" class="text-blue-600 underline cursor-pointer hover:text-blue-800 transition-colors duration-200">
       Explore other certifications.
     </a>
   </p>
@@ -95,7 +95,7 @@ const CiaCurrCourseCurriculum = () => {
           cursor-pointer
             "
         >
-          <Link to={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} title={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
             Enroll Now
           </Link>
         </Button>

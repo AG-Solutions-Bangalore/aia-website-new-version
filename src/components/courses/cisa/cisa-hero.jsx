@@ -29,7 +29,7 @@ const CisaHero = () => {
               <div className="flex items-center justify-center h-12 w-32 shrink-0">
                 <img
                   src={`${IMAGE_PATH}/new_logo.webp`}
-                  alt="AIA Logo"
+                  alt="AIA Logo" title="AIA Logo"
                   className="max-h-full max-w-full object-contain"
                 />
               </div>
@@ -37,7 +37,7 @@ const CisaHero = () => {
               <div className="flex flex-col items-center justify-center h-12 w-32 shrink-0">
                 <img
                   src={`${IMAGE_PATH}/ISACA.webp`}
-                  alt="ISACA Logo"
+                  alt="ISACA Logo" title="ISACA Logo"
                   className="max-h-[60%] max-w-full object-contain"
                 />
                 <span className="text-[9px] font-extrabold text-gray-400 mt-0.5 uppercase tracking-wider">
@@ -65,7 +65,7 @@ const CisaHero = () => {
               {!imgError ? (
                 <img
                   src={`${IMAGE_PATH}/cisa_hero_banner.webp`}
-                  alt="AIA CISA LMS Devices Mockup"
+                  alt="AIA CISA LMS Devices Mockup" title="AIA CISA LMS Devices Mockup"
                   className={`w-full h-auto object-contain drop-shadow-2xl transition-opacity duration-300 ${imgLoaded ? "opacity-100" : "opacity-0 absolute"}`}
                   onLoad={() => setImgLoaded(true)}
                   onError={() => setImgError(true)}

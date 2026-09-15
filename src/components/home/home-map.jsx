@@ -68,14 +68,23 @@ const HomeMap = ({ courseCode }) => {
     );
     map.setMaxBounds(verticalBounds);
 
-    L.tileLayer(CARTO_BASEMAP_URL, {
+    const tileLayer = L.tileLayer(CARTO_BASEMAP_URL, {
       attribution: "&copy; OpenStreetMap contributors &copy; CARTO",
       subdomains: "abcd",
       minZoom: 2,
       maxZoom: 20,
       noWrap: false,
       continuousWorld: true,
-    }).addTo(map);
+    });
+    const origCreateTile = tileLayer.createTile;
+    tileLayer.createTile = function (coords, done) {
+      const tile = origCreateTile.call(this, coords, done);
+      tile.alt = "World Map Tile";
+      tile.title = "World Map Tile";
+      tile.setAttribute("role", "presentation");
+      return tile;
+    };
+    tileLayer.addTo(map);
 
     const layerGroup = L.layerGroup();
 
@@ -96,6 +105,7 @@ const HomeMap = ({ courseCode }) => {
           <img
             src="${student.imageUrl}"
             alt="${student.name}"
+            title="${student.name}"
             style="width:100%;height:100%;object-fit:cover;display:block;"
             loading="lazy"
           />
@@ -115,7 +125,7 @@ const HomeMap = ({ courseCode }) => {
         <h4>${countryName}</h4>
         <div style="margin-top:8px;">
           <div class="card" style="margin:auto;width:90px;">
-            <img class="thumb" src="${student.imageUrl}" alt="${student.name}" loading="lazy">
+            <img class="thumb" src="${student.imageUrl}" alt="${student.name}" title="${student.name}" loading="lazy">
             <div class="course-name">${student.course}</div>
             <div class="caption">${student.name}</div>
           </div>

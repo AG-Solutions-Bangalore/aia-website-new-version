@@ -174,7 +174,7 @@ const PopUp = ({ slug = "home" }) => {
             {imageUrl && (
               <img
                 src={imageUrl}
-                alt={popupData.popup_image_alt}
+                alt={popupData.popup_image_alt} title={popupData.popup_image_alt}
                 width={1200}
                 height={400}
                 className={`${popupData.popup_heading ? "rounded-b-lg" : "rounded-lg"} w-full h-auto`}

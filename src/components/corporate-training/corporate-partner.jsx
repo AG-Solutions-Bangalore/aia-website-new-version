@@ -17,7 +17,7 @@ const CorporatePartner = () => {
               <div className="rounded-lg p-1">
                 <img
                   src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop"
-                  alt="Quick access dashboard"
+                  alt="Quick access dashboard" title="Quick access dashboard"
                   className="w-full h-auto rounded"
                   loading="lazy"
                 />
@@ -52,7 +52,7 @@ const CorporatePartner = () => {
               <div className="rounded-lg p-1">
                 <img
                   src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=500&fit=crop"
-                  alt="Quick access interface"
+                  alt="Quick access interface" title="Quick access interface"
                   className="w-full h-auto rounded"
                   loading="lazy"
                 />
@@ -67,7 +67,7 @@ const CorporatePartner = () => {
               <div className="rounded-lg p-1">
                 <img
                   src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=500&fit=crop"
-                  alt="Assessment interface"
+                  alt="Assessment interface" title="Assessment interface"
                   className="w-full h-auto rounded"
                   loading="lazy"
                 />

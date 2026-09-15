@@ -27,6 +27,7 @@ export function WhatsappTestimonialsSectionCourse({
       href={testimonial.youtubeLink}
       target="_blank"
       rel="noopener noreferrer"
+      title={testimonial.alt || "Student Testimonial"}
       className="
         relative group shrink-0 overflow-hidden rounded-lg
         aspect-[9/16]
@@ -41,6 +42,7 @@ export function WhatsappTestimonialsSectionCourse({
         <img
           src={testimonial.image}
           alt={testimonial.alt || "Testimonial"}
+          title={testimonial.alt || "Student Testimonial"}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"
         />

@@ -1,3 +1,15 @@
+/**
+ * @file src/components/passout/passout-stories-slug.jsx
+ * @description Dynamic Student Passout Success Story page displaying professional credentials,
+ * company info, designation, impact metrics, and personal story text.
+ *
+ * @ssr-hydration
+ * Uses TanStack React Query (`useQuery`) with key `["passout-stories-slug", slug]`.
+ * During build-time SSG (`src/prerender.tsx`), this key is pre-populated synchronously in
+ * `queryClient.setQueryData()` from `getDynamicStudentStory(slug)`. This guarantees that the pre-rendered
+ * static HTML file contains 100% of the student story markup without displaying a fallback "Loading..." state.
+ */
+
 import { BASE_URL } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -7,6 +19,7 @@ import { Button } from "../ui/button";
 const PassoutStoriesSlug = () => {
   const { slug } = useParams();
 
+  // Retrieves student story data (pre-hydrated during SSG, fetched on client navigation)
   const {
     data: storyData,
     isLoading,
@@ -113,7 +126,7 @@ const PassoutStoriesSlug = () => {
             <div className="pt-4 sm:pt-6 lg:pt-8">
               <div className="flex items-start">
                 <Link
-                  to="/alumni-network/"
+                  to="/alumni-network/" title="/alumni-network/"
                   className="inline-flex items-center gap-2 group transition-colors text-[#0F3652] hover:text-[#0F3652]"
                 >
                   <svg
@@ -141,7 +154,7 @@ const PassoutStoriesSlug = () => {
                   {bannerImageUrl && (
                     <img
                       src={bannerImageUrl}
-                      alt={student_story_banner_image_alt || student_name}
+                      alt={student_story_banner_image_alt || student_name} title={student_story_banner_image_alt || student_name}
                       className="w-full h-auto max-h-[250px] sm:max-h-[350px] md:max-h-[400px] lg:max-h-[500px] object-contain mt-2 sm:mt-3 lg:mt-4"
                       loading="eager"
                     />
@@ -172,6 +185,9 @@ const PassoutStoriesSlug = () => {
                           <img
                             src={companyImageUrl}
                             alt={
+                              company?.student_company_image_alt ||
+                              company?.student_company_name
+                            } title={
                               company?.student_company_image_alt ||
                               company?.student_company_name
                             }
@@ -243,7 +259,7 @@ const PassoutStoriesSlug = () => {
                         </h3>
                         <div className="mt-1 sm:mt-2"></div>
                         <a
-                          href={linkedinUrl}
+                          href={linkedinUrl} title={linkedinUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-block"
@@ -261,7 +277,7 @@ const PassoutStoriesSlug = () => {
                           aria-label="View All Success Stories"
                         >
                           <Link
-                            to={courseRoutes[student_course] || "/"}
+                            to={courseRoutes[student_course] || "/"} title={courseRoutes[student_course] || "/"}
                             className="block w-full"
                           >
                             <span className="relative z-10 text-white text-xs sm:text-sm">

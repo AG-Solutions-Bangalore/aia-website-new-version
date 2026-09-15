@@ -257,7 +257,11 @@ const CourseMap = ({ courseCode }) => {
         style={{ height: "100vh", width: "95.5%" }}
         className="mx-auto"
       /> */}
-      <img src={`${IMAGE_PATH}/map.webp`} loading="lazy" />
+      <img
+        src={`${IMAGE_PATH}/map.webp`}
+        alt="Academy of Internal Audit Global Presence Map" title="Academy of Internal Audit Global Presence Map"
+        loading="lazy"
+      />
     </div>
   );
 };

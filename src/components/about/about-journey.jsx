@@ -172,7 +172,7 @@ const AboutJourney = () => {
           <div className="mt-10">
             <img
               src={`${IMAGE_PATH}/certified.webp`}
-              alt="Our Journey"
+              alt="Our Journey" title="Our Journey"
               loading="lazy"
               className="w-full h-full object-cover"
             />

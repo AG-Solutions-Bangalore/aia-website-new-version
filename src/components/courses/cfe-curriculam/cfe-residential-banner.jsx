@@ -11,7 +11,7 @@ const CfeResidentialBanner = () => {
       <div className="max-w-7xl mx-auto">
         <img
           src={`${IMAGE_PATH}/AIA_LMS.webp`}
-          alt="4-Day CFE Residential Training Program"
+          alt="4-Day CFE Residential Training Program" title="4-Day CFE Residential Training Program"
           className="w-full aspect-[16/7] object-cover"
           loading="lazy"
         />
@@ -26,7 +26,7 @@ const CfeResidentialBanner = () => {
             className="bg-[#F3831C] text-white px-6 py-2.5 text-center flex items-center justify-center rounded-none font-semibold hover:bg-[#F3831C]/90 transition-all cursor-pointer md:w-auto w-[50%] sm:w-auto mx-auto sm:mx-0"
           >
             <a
-              href={CFE_BROCHURE_URL}
+              href={CFE_BROCHURE_URL} title={CFE_BROCHURE_URL}
               download="CFE_Training_detailed_guide.pdf"
               target="_blank"
               rel="noopener noreferrer"

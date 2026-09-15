@@ -93,7 +93,7 @@ const TermsAndConditions = () => {
                 For complete access to course pathways, learner support, and updates.{" "}
                 <a
                   className="font-medium text-orange-600 transition-colors hover:text-orange-700 hover:underline"
-                  href="https://aia.in.net/"
+                  href="https://aia.in.net/" title="https://aia.in.net/"
                 >
                   Click here to explore more about AIA
                 </a>

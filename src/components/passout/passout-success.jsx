@@ -204,7 +204,7 @@ const PassoutSuccess = () => {
                       <div className="relative md:h-54">
                         <img
                           src={story.image}
-                          alt={story.imageAlt}
+                          alt={story.imageAlt} title={story.imageAlt}
                           className="w-full h-auto object-contain rounded-md border-2"
                           style={{ borderColor: courseColor }}
                         />
@@ -234,7 +234,7 @@ const PassoutSuccess = () => {
                               <div className="flex items-center gap-2">
                                 <img
                                   src={story.companyImage}
-                                  alt={story.companyName}
+                                  alt={story.companyName} title={story.companyName}
                                   className="w-8 h-8 object-contain"
                                 />
                               </div>
@@ -242,7 +242,7 @@ const PassoutSuccess = () => {
                           </div>
 
                           <a
-                            href={`/passout-stories/${story.slug}`}
+                            href={`/passout-stories/${story.slug}`} title={`/passout-stories/${story.slug}`}
                             target="_blank"
                             rel="noopener noreferrer"
                             className=" text-white ]/90  font-semibold py-2 px-4 rounded-full inline-flex items-center gap-2 transition-colors text-sm ml-auto"

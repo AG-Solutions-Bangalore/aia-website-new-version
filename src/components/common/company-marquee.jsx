@@ -49,6 +49,7 @@ const CompanyMarquee = ({ companies }) => {
                   <img
                     src={c.src}
                     alt={c.alt}
+                    title={c.alt}
                     className="h-20 w-auto object-contain grayscale hover:grayscale-0 transition-all duration-300"
                     style={{ maxWidth: "240px" }}
                     loading="lazy"

@@ -81,7 +81,7 @@ const CiaCourseLms = ({ image }) => {
           cursor-pointer
             "
         >
-          <Link to={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} title={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
             Enroll Now
           </Link>
         </Button>

@@ -26,7 +26,7 @@ const BlogCard = React.memo(({ blog, imageBaseUrl, onClick }) => {
         <div className="h-full bg-linear-to-r from-[#0F3652]/10 to-[#0F3652]/20 rounded-2xl border-r-6 border-b-6 border-[#F3831C]  ">
           <img
             src={`${imageBaseUrl}${blog.blog_images}`}
-            alt={blog.blog_images_alt || blog.blog_heading}
+            alt={blog.blog_images_alt || blog.blog_heading} title={blog.blog_images_alt || blog.blog_heading}
             className="w-full h-full object-cover  rounded-md border-2 border-[#0F3652] "
             onError={handleImageError}
             loading="lazy"

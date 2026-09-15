@@ -32,7 +32,7 @@ const ServiceCard = React.forwardRef(
                 <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-[#F3831C]">
                   <img
                     src={`${imageUrl}${testimonial.student_image}`}
-                    alt={testimonial.student_name}
+                    alt={testimonial.student_name} title={testimonial.student_name}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.target.src = `${IMAGE_PATH}/no_image.jpg`;
@@ -173,7 +173,7 @@ const EnrollReview = () => {
         <div className="md:sticky md:top-0 md:h-screen md:flex md:items-center md:justify-center">
           <img
             src={`${IMAGE_PATH}/rated.webp`}
-            alt="Rated testimonial"
+            alt="Rated testimonial" title="Rated testimonial"
             className="w-full h-auto max-w-full object-contain transform -scale-x-100"
             style={{ maxHeight: "90vh" }}
              loading="lazy"

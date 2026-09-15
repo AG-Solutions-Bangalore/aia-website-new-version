@@ -186,7 +186,7 @@ const ContactHero = () => {
               <div className="absolute top-[20%] left-[68%] hidden lg:block">
                 <img
                   src={`${IMAGE_PATH}/arrow.webp`}
-                  alt="arrow"
+                  alt="arrow" title="arrow"
                   className="w-[200px] h-auto"
                   loading="lazy"
                 />

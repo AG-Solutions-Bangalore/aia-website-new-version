@@ -139,7 +139,7 @@ const NotificationPopup = () => {
                   {currentMessage.type === "incoming" && (
                     <img
                       src={`${IMAGE_PATH}/aia_dp.webp`}
-                      alt="avatar"
+                      alt="avatar" title="avatar"
                       className="w-7 h-7 rounded-full flex-shrink-0"
                     />
                   )}
@@ -153,7 +153,7 @@ const NotificationPopup = () => {
                   >
                     {currentMessage.link ? (
                       <a
-                        href={currentMessage.link}
+                        href={currentMessage.link} title={currentMessage.link}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="hover:underline"

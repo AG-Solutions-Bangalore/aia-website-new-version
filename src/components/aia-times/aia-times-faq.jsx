@@ -21,6 +21,8 @@ export default function AiaTimesFaq() {
       sort: item.faq_sort,
     })) || [];
 
+
+
   if (isLoading || isError || !faqItems.length) return null;
 
   return <FaqSection faqs={faqItems} />;

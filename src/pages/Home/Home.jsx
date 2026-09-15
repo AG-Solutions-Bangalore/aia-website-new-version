@@ -1,7 +1,7 @@
 import HomeHero from "@/components/home/home-hero";
 import DeferredPopUp from "@/components/common/deferred-popup";
 import LazySection from "@/components/common/lazy-section";
-import { lazy } from "react";
+import { lazy, Suspense } from "react";
 
 const AppQueryProvider = lazy(() => import("@/lib/query-provider"));
 const HomeAbout = lazy(() => import("@/components/home/home-about"));
@@ -27,6 +27,9 @@ const CourseYoutubeLecture = lazy(() =>
 );
 const HomeBlogs = lazy(() => import("@/components/home/home-blogs"));
 const HomeFaq = lazy(() => import("@/components/home/home-faq"));
+const CfeRoadmapDialog = lazy(() =>
+  import("@/components/common/CfeRoadmapDialog")
+);
 
 const homeSectionProps = {
   prerender: false,
@@ -63,6 +66,20 @@ export default function Home() {
         <HomePassout />
       </LazySection>
 
+      <section className="bg-slate-50 border-y border-slate-200 py-10 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0F3652] mb-5 leading-snug">
+            Get Access to the free CFE 60-day roadmap in your inbox.
+          </h2>
+          <Suspense fallback={null}>
+            <CfeRoadmapDialog
+              buttonlabel="Download Now"
+              buttonClassName="bg-[#F3831C] text-white px-8 py-3 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors cursor-pointer text-base"
+            />
+          </Suspense>
+        </div>
+      </section>
+
       <LazySection {...homeSectionProps} minHeight="500px" withQuery QueryProvider={AppQueryProvider}>
         <HomeResults
           title="We Stand by Results - Actual Certificates Earned by AIA Learners"
@@ -81,6 +98,20 @@ export default function Home() {
           description="Heartfelt messages shared by professionals after completing their journey with AIA. Each message reflects a different experience. These reflections provide a genuine view of what preparation looks like in real situations, beyond structured testimonials"
         />
       </LazySection>
+
+      <section className="bg-[#0F3652] py-12 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 leading-snug">
+            Working Full-Time + Preparing For CFE? You need a structured study schedule.
+          </h2>
+          <Suspense fallback={null}>
+            <CfeRoadmapDialog
+              buttonlabel="Download the CFE Roadmap"
+              buttonClassName="bg-[#F3831C] text-white px-8 py-3 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors cursor-pointer text-base"
+            />
+          </Suspense>
+        </div>
+      </section>
 
       <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <HomeReview />

@@ -18,7 +18,7 @@ export default function SourceFallbackImage({ sources, alt, className, onExhaust
   return (
     <img
       src={src}
-      alt={alt}
+      alt={alt} title={alt}
       className={className}
       loading="lazy"
       decoding="async"

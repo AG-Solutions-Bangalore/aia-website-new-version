@@ -88,6 +88,8 @@ export function TestimonialsSectionCourse({
             <Link
               to={
                 "https://www.youtube.com/playlist?list=PLHH4EQbbvYIZSnYeZNB3-zoHdVGS6BvWV"
+              } title={
+                "https://www.youtube.com/playlist?list=PLHH4EQbbvYIZSnYeZNB3-zoHdVGS6BvWV"
               }
               target="_blank"
             >

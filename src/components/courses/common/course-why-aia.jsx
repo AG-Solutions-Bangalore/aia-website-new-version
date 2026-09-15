@@ -55,7 +55,7 @@ const DiamondCard = ({ img, title }) => {
               ) : (
                 <img
                   src={img}
-                  alt={title}
+                  alt={title} title={title}
                   className={`${isLogo ? "w-14 md:w-16 px-1" : "w-11 md:w-13"} object-contain`}
                   loading="lazy"
                 />

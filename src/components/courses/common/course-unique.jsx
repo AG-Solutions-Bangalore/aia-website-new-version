@@ -88,7 +88,7 @@ export default function CourseUnique({
             variant="ghost"
             aria-label="Get in Touch"
           >
-            <Link to="/contact" target="_blank" rel="noopener noreferrer">
+            <Link to="/contact" title="/contact" target="_blank" rel="noopener noreferrer">
               <span className="relative z-10 text-white">
                 <span>Get in Touch</span>
               </span>

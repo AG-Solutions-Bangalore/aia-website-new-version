@@ -33,7 +33,7 @@ const CorporateWhyAia = () => {
                           <div className={styles["work-flow-logo"]}>
                             <img
                               src={`${IMAGE_PATH}/middle_logo.webp`}
-                              alt="Web Design Company"
+                              alt="Web Design Company" title="Web Design Company"
                               loading="lazy"
                             />
                           </div>
@@ -46,14 +46,14 @@ const CorporateWhyAia = () => {
                         <img
                           src={`${IMAGE_PATH}/ovel-1.webp`}
                           className={styles["work-flow-oval"]}
-                          alt="Web Design Company"
+                          alt="Web Design Company" title="Web Design Company"
                           loading="lazy"
                         />
 
                         <span className={styles["work-flow-icon"]}>
                           <img
                             src={`${IMAGE_PATH}/corporation_icon_1.webp`}
-                            alt="Web Design Company"
+                            alt="Web Design Company" title="Web Design Company"
                             loading="lazy"
                           />
                         </span>
@@ -67,13 +67,13 @@ const CorporateWhyAia = () => {
                           <img
                             src={`${IMAGE_PATH}/ovel-${num}.webp`}
                             className={styles["work-flow-oval"]}
-                            alt="Web Design Company"
+                            alt="Web Design Company" title="Web Design Company"
                             loading="lazy"
                           />
                           <span className={styles["work-flow-icon"]}>
                             <img
                               src={`${IMAGE_PATH}/corporation_icon_${num}.webp`}
-                              alt="Web Design Company"
+                              alt="Web Design Company" title="Web Design Company"
                               loading="lazy"
                             />
                           </span>
@@ -100,7 +100,7 @@ const CorporateWhyAia = () => {
                         <img
                           src={`${IMAGE_PATH}/ovel-lin${index + 1}.webp`}
                           className={styles["workflow-icon"]}
-                          alt="Workflow Icon"
+                          alt="Workflow Icon" title="Workflow Icon"
                           loading="lazy"
                         />
                         <div className={styles["workflow-content-number"]}>

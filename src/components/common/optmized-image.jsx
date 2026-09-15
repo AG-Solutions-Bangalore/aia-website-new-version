@@ -3,6 +3,7 @@ import { memo, useMemo } from "react";
 const OptimizedImage = memo(function OptimizedImage({
   src,
   alt = "",
+  title,
   className = "",
   style = {},
   priority = false,
@@ -62,6 +63,7 @@ const OptimizedImage = memo(function OptimizedImage({
       srcSet={resolvedSrcSet || undefined}
       sizes={sizes}
       alt={alt}
+      title={title ?? alt ?? "Academy of Internal Audit"}
       className={className}
       style={style}
       width={width}

@@ -22,7 +22,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
     },
     {
       name: "Just dial",
-      rating: "4.9",
+      rating: "5.0",
       img: `${IMAGE_PATH}/footer-1.webp`,
       alt: "Justdial Reviews",
       bgColor: "bg-[#2D3748]",
@@ -81,7 +81,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
                       <img
                         src={item.img}
                         className="w-14 h-14"
-                        alt={item.alt}
+                        alt={item.alt} title={item.alt}
                         loading="lazy"
                       />
                     </div>
@@ -130,7 +130,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
                         <img
                           src={item.img}
                           className="w-10 h-10 md:w-14 md:h-14"
-                          alt={item.alt}
+                          alt={item.alt} title={item.alt}
                           loading="lazy"
                         />
                       </div>
@@ -182,7 +182,7 @@ shadow-lg`}
                         <img
                           src={item.img}
                           className="w-14 h-14"
-                          alt={item.alt}
+                          alt={item.alt} title={item.alt}
                           loading="lazy"
                         />
                       </div>

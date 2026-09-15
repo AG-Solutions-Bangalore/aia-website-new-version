@@ -135,7 +135,7 @@ export const TestimonialSlider = ({ reviews, className }) => {
                   >
                     <img
                       src={`${IMAGE_PATH}/${review.image}`}
-                      alt={review.alt}
+                      alt={review.alt} title={review.alt}
                       className="w-full h-full"
                     />
 
@@ -258,7 +258,7 @@ export const TestimonialSlider = ({ reviews, className }) => {
                   In recognition of his impact on ethical leadership and
                   capability building in the profession,{" "}
                   <a
-                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
+                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html" title="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
                     target="_blank"
                     className="font-bold text-[#F3831C]"
                     rel="noreferrer"
@@ -274,7 +274,7 @@ export const TestimonialSlider = ({ reviews, className }) => {
               <div className="mt-5">
                 <img
                   src={`${IMAGE_PATH}/message_about.webp`}
-                  alt="Student Testimonials"
+                  alt="Student Testimonials" title="Student Testimonials"
                   className="w-full rounded-lg"
                   loading="lazy"
                 />

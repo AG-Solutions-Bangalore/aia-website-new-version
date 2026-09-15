@@ -25,7 +25,7 @@ const BlogCard = ({ imageBaseUrl = "", blog, handleBlogClick }) => {
   };
   return (
     <a
-      href={`/blogs/${blog.blog_slug}/`}
+      href={`/blogs/${blog.blog_slug}/`} title={`/blogs/${blog.blog_slug}/`}
       onClick={(event) => {
         event.preventDefault();
         handleBlogClick(blog.blog_slug);
@@ -43,7 +43,7 @@ const BlogCard = ({ imageBaseUrl = "", blog, handleBlogClick }) => {
           ) : (
             <img
               src={imageSrc}
-              alt={blog?.blog_images_alt || blog?.blog_heading}
+              alt={blog?.blog_images_alt || blog?.blog_heading} title={blog?.blog_images_alt || blog?.blog_heading}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
               onError={handleImageFallback}
               loading="lazy"

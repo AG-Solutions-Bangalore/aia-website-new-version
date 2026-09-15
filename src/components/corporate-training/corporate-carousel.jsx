@@ -145,7 +145,7 @@ const CorporateCarousel = () => {
                   <div className="relative w-52 h-52 sm:w-56 sm:h-56 md:w-60 md:h-60 border border-[#0F3652] hover:border-[#F3831C] rounded-xl shadow-md overflow-hidden">
                     <img
                       src={img.src}
-                      alt={img.alt}
+                      alt={img.alt} title={img.alt}
                       className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                       loading="lazy"
                     />

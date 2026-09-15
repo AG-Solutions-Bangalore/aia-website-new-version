@@ -1,17 +1,33 @@
 import { BASE_URL } from "@/api/base-url";
 import { Helmet } from "react-helmet-async";
-import { buildCanonicalUrl } from "@/lib/seo";
 import BlogFaq from "@/components/blog/blog-faq";
 import axios from "axios";
 import { ArrowLeft, Calendar, Clock, Image as ImageIcon, User } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 import { ShareButtons } from "./share-button";
 import OptimizedImage from "@/components/common/optmized-image";
+import { SITE_ORIGIN } from "@/config/site";
 import { titleFromSlug } from "@/utils/titleFromSlug";
 
+/**
+ * @file src/pages/Blog/blog-details.jsx
+ * @description Dynamic Blog Details Page displaying article body, table of contents, author/date
+ * metadata, newsletter opt-in, FAQs, related articles, and recent passout student carousel.
+ *
+ * @why-useQuery
+ * Previously, this component fetched data inside a client-side `useEffect` hook. During SSG/SSR
+ * build time, `useEffect` does NOT execute! As a result, the server pre-renderer was forced to emit
+ * an empty loading skeleton. By switching to `@tanstack/react-query` (`useQuery`), the component
+ * checks the `queryClient` cache on initial render. In `src/prerender.tsx`, we pre-populate
+ * `['blog-details', slug]` synchronously using data fetched by `loadDynamicData()`. This allows
+ * the pre-renderer to emit the complete 160KB+ HTML document with full article paragraphs, headings,
+ * and FAQs for instant search engine indexing. On the client, React Query hydrates seamlessly without
+ * showing any loading flash.
+ */
+
 const FALLBACK_IMAGE_PATH = "/no-image.svg";
-const FALLBACK_IMAGE_URL = "https://aia.in.net/no-image.svg";
 
 const getRemoteImageUrl = (baseUrl, imageName, fallback = FALLBACK_IMAGE_PATH) =>
   baseUrl && imageName ? `${baseUrl}${imageName}` : fallback;
@@ -27,15 +43,32 @@ const BlogDetails = () => {
   const { id } = useParams();
   const isScrollingProgrammatically = useRef(false);
   const scrollTimeout = useRef(null);
-  const [blog, setBlog] = useState(null);
-  const [relatedBlogs, setRelatedBlogs] = useState([]);
-  const [imageBaseUrl, setImageBaseUrl] = useState("");
-  const [loading, setLoading] = useState(true);
+
+  /**
+   * TanStack React Query hook for fetching article details.
+   * During build-time SSG, data is pre-populated in queryClient by `prerender.tsx`,
+   * so `blogResponse` is immediately available without any network delay or loading skeleton.
+   */
+  const { data: blogResponse, isLoading: queryLoading } = useQuery({
+    queryKey: ["blog-details", id],
+    queryFn: async () => {
+      const response = await axios.get(`${BASE_URL}/api/getBlogbySlug/${id}`);
+      return response.data;
+    },
+    enabled: !!id,
+  });
+
+  const blog = blogResponse?.data || null;
+  const relatedBlogs = blogResponse?.related_blogs || [];
+  const students = blogResponse?.student || [];
+  const faq = blogResponse?.faq || [];
+  const imageBaseUrl =
+    blogResponse?.image_url?.find((item) => item.image_for === "Blog")?.image_url || "";
+  const studentImageBaseUrl =
+    blogResponse?.image_url?.find((item) => item.image_for === "Student")?.image_url || "";
+  const loading = queryLoading && !blog;
   const [activeSection, setActiveSection] = useState(0);
   const sectionRefs = useRef([]);
-  const [students, setStudents] = useState([]);
-  const [faq, setFaq] = useState([]);
-  const [studentImageBaseUrl, setStudentImageBaseUrl] = useState("");
   const [currentStudentIndex, setCurrentStudentIndex] = useState(0);
   const [email, setEmail] = useState("");
   const [subscriptionStatus, setSubscriptionStatus] = useState("");
@@ -58,68 +91,17 @@ const BlogDetails = () => {
     [faq],
   );
 
-  const blogSlug = blog?.blog_slug || id;
-  const blogCanonical = blogSlug
-    ? buildCanonicalUrl(`/blogs/${blogSlug}`)
-    : buildCanonicalUrl("/blogs");
-  const fallbackBlogTitle = `${titleFromSlug(id)} | AIA Blog`;
-  const blogTitle = blog
-    ? blog.blog_meta_title || blog.blog_heading
-    : fallbackBlogTitle;
-  const blogDescription = blog
-    ? blog.blog_meta_description || blog.blog_short_description
-    : "Read certification insights, exam preparation guidance, and career advice from Academy of Internal Audit.";
-  const blogKeywords = blog ? (blog.blog_meta_keywords || "") : "";
+  const blogSlug = blog?.blog_slug || id || "";
+  const blogCanonical = `${SITE_ORIGIN}/blogs/${blogSlug}`;
+  const fallbackBlogTitle = `${titleFromSlug(id || "")} | AIA Blog`;
+  const blogTitle = blog?.blog_meta_title || blog?.blog_heading || fallbackBlogTitle;
+  const blogDescription = blog?.blog_meta_description || blog?.blog_short_description || "Read certification insights, exam preparation guidance, and career advice from Academy of Internal Audit.";
+  const blogKeywords = blog?.blog_meta_keywords || "";
   const blogImageUrl = getRemoteImageUrl(
     imageBaseUrl,
     blog?.blog_images,
-    FALLBACK_IMAGE_URL,
+    FALLBACK_IMAGE_PATH,
   );
-
-  const formatSchemaDate = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return isNaN(date.getTime()) ? "" : date.toISOString().split("T")[0];
-  };
-
-  const blogSchema = blog ? {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": blogCanonical,
-    },
-    headline: blog.blog_heading,
-    description: blog.blog_short_description,
-    image: blogImageUrl,
-    author: {
-      "@type": "Organization",
-      name: "AIA",
-    },
-    publisher: {
-      "@type": "Organization",
-      name: "Academy of Internal Audit",
-      logo: {
-        "@type": "ImageObject",
-        url: `https://aia.in.net/webapi/public/assets/images/web_images/new_logo.webp`,
-      },
-    },
-    datePublished: formatSchemaDate(blog.created_at) || formatSchemaDate(blog.blog_created),
-    dateModified: formatSchemaDate(blog.updated_at) || formatSchemaDate(blog.blog_created),
-  } : null;
-
-  const faqSchema = faqItems.length > 0 ? {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: faqItems.map((item) => ({
-      "@type": "Question",
-      name: item.question,
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: item.answer,
-      },
-    })),
-  } : null;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -152,40 +134,7 @@ const BlogDetails = () => {
       if (scrollTimeout.current) clearTimeout(scrollTimeout.current);
     };
   }, []);
-  const fetchBlogDetails = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(`${BASE_URL}/api/getBlogbySlug/${id}`);
 
-      const blogData = response.data.data;
-      setBlog(blogData);
-      setRelatedBlogs(response.data.related_blogs || []);
-      setStudents(response.data.student || []);
-      setFaq(response.data.faq || []);
-      const blogImageConfig = response.data.image_url?.find(
-        (item) => item.image_for === "Blog",
-      );
-      if (blogImageConfig) {
-        setImageBaseUrl(blogImageConfig.image_url);
-      }
-      const studentImageConfig = response.data.image_url?.find(
-        (item) => item.image_for === "Student",
-      );
-      if (studentImageConfig) {
-        setStudentImageBaseUrl(studentImageConfig.image_url);
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching blog details:", error);
-      setLoading(false);
-    }
-  }, [id]);
-
-  useEffect(() => {
-    if (id) {
-      fetchBlogDetails();
-    }
-  }, [fetchBlogDetails, id]);
 
   const faqHeading = faq?.[0]?.faq_heading || "FAQs";
 
@@ -381,30 +330,31 @@ const BlogDetails = () => {
         <meta name="title" content={blogTitle} />
         <meta name="description" content={blogDescription} />
         <meta name="keywords" content={blogKeywords} />
+        <meta name="robots" content="index, follow" />
         <link rel="canonical" href={blogCanonical} />
 
         {/* Open Graph */}
+        <meta property="og:type" content="article" />
         <meta property="og:title" content={blogTitle} />
         <meta property="og:description" content={blogDescription} />
         <meta property="og:url" content={blogCanonical} />
         <meta property="og:image" content={blogImageUrl} />
+        <meta property="og:image:alt" content={blog?.blog_images_alt || blogTitle} />
+        <meta property="og:site_name" content="Academy of Internal Audit" />
+        <meta property="og:locale" content="en_US" />
+        {(blog?.created_at || blog?.blog_created) && (
+          <meta property="article:published_time" content={blog.created_at || blog.blog_created} />
+        )}
+        {(blog?.updated_at || blog?.blog_created) && (
+          <meta property="article:modified_time" content={blog.updated_at || blog.blog_created} />
+        )}
 
         {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={blogCanonical} />
         <meta name="twitter:title" content={blogTitle} />
         <meta name="twitter:description" content={blogDescription} />
-        <meta name="twitter:image" content={blogImageUrl} />
-
-        {/* Structured Data */}
-        {blogSchema && (
-          <script type="application/ld+json">
-            {JSON.stringify(blogSchema)}
-          </script>
-        )}
-        {faqSchema && (
-          <script type="application/ld+json">
-            {JSON.stringify(faqSchema)}
-          </script>
-        )}
+        {/* Structured data is managed centrally by the SEO engine */}
       </Helmet>
       <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <button
@@ -483,7 +433,7 @@ const BlogDetails = () => {
                 {blog.blog_images ? (
                   <img
                     src={getRemoteImageUrl(imageBaseUrl, blog.blog_images)}
-                    alt={blog.blog_images_alt || blog.blog_heading}
+                    alt={blog.blog_images_alt || blog.blog_heading} title={blog.blog_images_alt || blog.blog_heading}
                     className="w-full h-full object-contain"
                     onError={handleImageFallback}
                     loading="eager"
@@ -671,6 +621,9 @@ const BlogDetails = () => {
                                   alt={
                                     relatedBlog.blog_images_alt ||
                                     relatedBlog.blog_heading
+                                  } title={
+                                    relatedBlog.blog_images_alt ||
+                                    relatedBlog.blog_heading
                                   }
                                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                                   onError={handleImageFallback}
@@ -723,6 +676,9 @@ const BlogDetails = () => {
                                 <img
                                   src={`${studentImageBaseUrl}${student.student_image}`}
                                   alt={
+                                    student.student_image_alt ||
+                                    student.student_name
+                                  } title={
                                     student.student_image_alt ||
                                     student.student_name
                                   }
@@ -818,6 +774,9 @@ const BlogDetails = () => {
                                   relatedBlog.blog_images,
                                 )}
                                 alt={
+                                  relatedBlog.blog_images_alt ||
+                                  relatedBlog.blog_heading
+                                } title={
                                   relatedBlog.blog_images_alt ||
                                   relatedBlog.blog_heading
                                 }

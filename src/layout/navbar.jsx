@@ -202,6 +202,9 @@ const Navbar = () => {
                   aria-label={
                     link.ariaLabel ||
                     (link.text ? `Contact via ${link.text}` : undefined)
+                  } title={
+                    link.ariaLabel ||
+                    (link.text ? `Contact via ${link.text}` : undefined)
                   }
                 >
                   {link.icon}
@@ -220,7 +223,7 @@ const Navbar = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={social.label}
+                aria-label={social.label} title={social.label}
                 className="inline-flex min-h-10 min-w-10 items-center justify-center text-white hover:text-[#F3831C] transition-colors"
               >
                 <SocialMark>{social.icon}</SocialMark>
@@ -233,7 +236,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <div className="flex-shrink-0">
-              <Link to="/">
+              <Link to="/" title="/">
                 <OptimizedImage
                   src={`${IMAGE_PATH}/new_logo.webp`}
                   alt="Academy of Internal Audit"
@@ -270,7 +273,7 @@ const Navbar = () => {
                       <ChevronDown size={14} aria-hidden="true" />
                     </button>
                   ) : (
-                    <Link
+                    <Link title="Academy of Internal Audit"
                       onMouseEnter={() => prefetchRoute(item.link)}
                       to={item.link}
                       className="
@@ -296,7 +299,7 @@ const Navbar = () => {
                       {item.submenu.map((subItem, subIndex) => (
                         <li key={subIndex}>
                           <Link
-                            to={subItem.link}
+                            to={subItem.link} title={subItem.link}
                             className="
     relative inline-block
      py-2.5
@@ -334,7 +337,7 @@ const Navbar = () => {
 
               <li>
                 <Link
-                  to={ENROLL_URL}
+                  to={ENROLL_URL} title={ENROLL_URL}
                   className="
     group relative overflow-hidden
     bg-[#F3831C] text-[#f7f7f7]
@@ -390,7 +393,7 @@ const Navbar = () => {
               <div className="mb-8">
                 <img
                   src={`${IMAGE_PATH}/new_logo.webp`}
-                  alt="Academy of Internal Audit"
+                  alt="Academy of Internal Audit" title="Academy of Internal Audit"
                   className="h-8 md:h-10 w-auto"
                   fetchPriority="high"
                   decoding="async"
@@ -422,7 +425,7 @@ const Navbar = () => {
                             {item.submenu.map((subItem, subIndex) => (
                               <li key={subIndex}>
                                 <Link
-                                  to={subItem.link}
+                                  to={subItem.link} title={subItem.link}
                                   onClick={handleMobileLinkClick}
                                   className="
     relative inline-block
@@ -456,7 +459,7 @@ const Navbar = () => {
                       </>
                     ) : (
                       <Link
-                        to={item.link}
+                        to={item.link} title={item.link}
                         onClick={handleMobileLinkClick}
                         className="block py-4 text-[#0F3652] font-medium hover:text-[#F3831C] transition-colors"
                       >
@@ -468,7 +471,7 @@ const Navbar = () => {
 
                 <div className="mt-6">
                   <Link
-                    to={ENROLL_URL}
+                    to={ENROLL_URL} title={ENROLL_URL}
                     className="group relative overflow-hidden block w-full bg-[#F3831C] text-[#fefefe] text-center px-6 py-3 rounded-md font-semibold hover:opacity-90 transition-all"
                   >
                     <span className="relative block overflow-hidden">
@@ -484,14 +487,14 @@ const Navbar = () => {
 
                 <div className="mt-8 pt-6 border-t border-gray-200 space-y-3">
                   <a
-                    href="mailto:support@aia.in.net"
+                    href="mailto:support@aia.in.net" title="mailto:support@aia.in.net"
                     className="flex items-center gap-2 text-sm text-[#0F3652] hover:text-[#F3831C]"
                   >
                     <Mail size={16} />
                     support@aia.in.net
                   </a>
                   <a
-                    href="tel:+919311320114"
+                    href="tel:+919311320114" title="tel:+919311320114"
                     className="flex items-center gap-2 text-sm text-[#0F3652] hover:text-[#F3831C]"
                   >
                     <Phone size={16} />

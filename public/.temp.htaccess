@@ -1,0 +1,42 @@
+Options -MultiViews
+
+<IfModule mod_rewrite.c>
+RewriteEngine On
+
+# Keep one host/protocol for all indexed URLs.
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{HTTP_HOST} ^www\.aia\.in\.net$ [NC]
+RewriteRule ^ https://aia.in.net%{REQUEST_URI} [R=301,L]
+
+# Retired page URLs must redirect instead of serving SPA/homepage HTML.
+RewriteRule ^about-us/?$ /about-aia/ [R=301,L]
+RewriteRule ^passed-out/?$ /alumni-network/ [R=301,L]
+RewriteRule ^our-passouts/?$ /alumni-network/ [R=301,L]
+RewriteRule ^corpo/?$ /corporate-training/ [R=301,L]
+RewriteRule ^enroll/?$ /enroll-now/ [R=301,L]
+RewriteRule ^about-aia/cia-curriculum/?$ /cia-curriculum/ [R=301,L]
+RewriteRule ^about-aia/cams/?$ /cams/ [R=301,L]
+RewriteRule ^about-aia/cfe-curriculum/?$ /cfe-curriculum/ [R=301,L]
+RewriteRule ^about-aia/cia-challenge-curriculum/?$ /cia-challenge-curriculum/ [R=301,L]
+RewriteRule ^corporate-training/cia-curriculum/?$ /cia-curriculum/ [R=301,L]
+RewriteRule ^corporate-training/cams/?$ /cams/ [R=301,L]
+RewriteRule ^corporate-training/cfe-curriculum/?$ /cfe-curriculum/ [R=301,L]
+
+
+# The live static host serves directory URLs, so canonical routes need a slash.
+RewriteCond %{REQUEST_URI} !^/webapi/ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !/$
+RewriteCond %{REQUEST_URI} !\.[^/]+$
+RewriteRule ^(.+)$ /$1/ [R=301,L]
+
+# Serve pre-rendered HTML if exists
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
+RewriteRule ^(.*)$ /$1/index.html [L]
+
+# SPA fallback for routes not prerendered as static directories.
+RewriteCond %{REQUEST_URI} !^/webapi/ [NC]
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . /index.html [L]
+</IfModule>

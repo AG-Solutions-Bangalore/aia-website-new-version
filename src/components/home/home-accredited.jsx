@@ -100,7 +100,7 @@ export const Partners = ({ grayscale = false, className = "" }) => {
                 href={item.link}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={item.alt}
+                aria-label={item.alt} title={item.alt}
               >
                 <OptimizedImage
                   src={item.src}
@@ -137,7 +137,7 @@ export const Partners = ({ grayscale = false, className = "" }) => {
                 href={item.link}
                 target="_blank"
                 rel="noreferrer"
-                aria-label={item.alt}
+                aria-label={item.alt} title={item.alt}
                 className="flex w-full items-center justify-center"
               >
                 <OptimizedImage
