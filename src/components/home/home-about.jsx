@@ -11,11 +11,11 @@ const HomeAbout = () => {
         badgeText="Empowering Professionals Through Global Certifications & Structured Approach"
         heading="Excellence in Professional Education"
         description={`
-<strong>The Academy of Internal Audit (AIA) is a leading professional training institute dedicated to helping aspirants succeed in Global certification programs.</strong> Beyond clearing exams, AIA focuses on building real-world competence in learners for audit, risk, and compliance roles.
+<strong>Academy of Internal Audit (AIA) is a leading and trusted learning partner for professionals preparing for global certification focused on Audit, Fraud, AML, Risk, and IT Audit.</strong>
+\n
+We empower learners and working professionals to prepare for globally recognised certifications including CIA, CFE, CAMS and CISA through expert-led training, practical learning and structured exam preparation.
 \n
 Guided by industry experts with hands-on experience, our practical training ensures learners understand concepts & apply them effectively in professional scenarios. Today, AIA has expanded its reach across <strong>40+ countries</strong> within <strong>6 years of its journey</strong>, along with a <strong>99.6% success rate & high learner satisfaction</strong>, guiding professionals toward respected global certifications with confidence and clarity.
-
-
 `}
         customButton={
           <div className="flex flex-wrap gap-4 items-center justify-center md:justify-start">

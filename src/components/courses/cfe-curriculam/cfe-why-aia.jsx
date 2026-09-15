@@ -1,7 +1,7 @@
 import React from "react";
 import CourseWhyAia from "../common/course-why-aia";
 import { ENROLL_URL, IMAGE_PATH } from "@/api/base-url";
-import CfeJoinDialog from "./join-prep";
+import CfeRoadmapDialog from "@/components/common/CfeRoadmapDialog";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -35,7 +35,10 @@ const CfeWhyAia = () => {
       />
 
       <div className="flex justify-center gap-2 mt-8">
-        <CfeJoinDialog course="CFE" buttonlabel="Let's Connect" />
+        <CfeRoadmapDialog
+          buttonlabel="Clear the CFE Exam in 60 Days"
+          buttonClassName="bg-[#F3831C] text-white px-6 py-2.5 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-all cursor-pointer"
+        />
 
         <Button
           className="

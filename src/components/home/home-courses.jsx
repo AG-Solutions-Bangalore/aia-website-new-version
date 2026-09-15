@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeading from "../SectionHeading/SectionHeading";
 import defaultCertificationCourses from "@/data/certificationCourses";
+import CfeRoadmapDialog from "@/components/common/CfeRoadmapDialog";
 
 const ServiceCard = ({ service, i, progress, total }) => {
   const start = i / total;
@@ -173,7 +174,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
               )}
             </div>
 
-            <div className="mt-6">
+            <div className="mt-6 flex flex-col sm:flex-row gap-2">
               <a
                 href={service.link}
                 className="
@@ -209,6 +210,13 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                   />
                 </svg>
               </a>
+
+              {(service.id === 1 || service.link === "cfe-curriculum") && (
+                <CfeRoadmapDialog
+                  buttonlabel="Grab the free CFE Roadmap"
+                  buttonClassName="h-10 px-4 text-sm font-medium bg-[#F3831C] text-white hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors rounded-md w-full justify-center cursor-pointer"
+                />
+              )}
             </div>
           </div>
         ))}
@@ -245,22 +253,32 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                   </p>
                 </div>
                 <div className="mt-10">
-                  <a
-                    href={
-                      ALL_SERVICES[activeCard]?.link || ALL_SERVICES[0].link
-                    }
-                    className="group inline-flex items-center gap-2 h-10 px-4  text-sm font-medium text-white "
-                    aria-label={`Learn more about ${ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}`} title={`Learn more about ${ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}`}
-                    style={{
-                      background: ALL_SERVICES[activeCard]?.buttonColor || "",
-                    }}
-                  >
-                    <span>
-                      {ALL_SERVICES[activeCard]?.cta || ALL_SERVICES[0].cta}
-                    </span>
-                  </a>
+                  <div className="flex flex-wrap items-center gap-3">
+                    <a
+                      href={
+                        ALL_SERVICES[activeCard]?.link || ALL_SERVICES[0].link
+                      }
+                      className="group inline-flex items-center gap-2 h-10 px-4 text-sm font-medium text-white "
+                      aria-label={`Learn more about ${ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}`} title={`Learn more about ${ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}`}
+                      style={{
+                        background: ALL_SERVICES[activeCard]?.buttonColor || "",
+                      }}
+                    >
+                      <span>
+                        {ALL_SERVICES[activeCard]?.cta || ALL_SERVICES[0].cta}
+                      </span>
+                    </a>
 
-                  <div className="hidden lg:flex items-center gap-4">
+                    {(ALL_SERVICES[activeCard]?.id === 1 ||
+                      ALL_SERVICES[activeCard]?.link === "cfe-curriculum") && (
+                      <CfeRoadmapDialog
+                        buttonlabel="Grab the free CFE Roadmap"
+                        buttonClassName="h-10 px-4 text-sm font-medium bg-[#F3831C] text-white hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors rounded-none cursor-pointer inline-flex items-center"
+                      />
+                    )}
+                  </div>
+
+                  <div className="hidden lg:flex items-center gap-4 mt-4">
                     <div className="h-px w-16 bg-[#F3831C]"></div>
                     <p className="text-sm text-[#0F3652]/70">
                       Scroll to explore all courses

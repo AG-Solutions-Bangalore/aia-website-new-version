@@ -60,7 +60,7 @@ const CfeCourseCurriculum = () => {
           // title="dd"
           // subtitle="dd"
           course="CFE"
-          buttonlabel="Know More"
+          buttonlabel="Book your Free Counselling Call"
         />
         <Button
           className="

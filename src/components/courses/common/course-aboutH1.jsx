@@ -17,6 +17,7 @@ const CourseAboutH1 = ({
   formbuttonlabel,
   preheading,
   customButton,
+  customBottomButton,
   children,
 }) => {
   const location = useLocation();
@@ -131,15 +132,19 @@ const CourseAboutH1 = ({
       </div>
 
       {location.pathname != "/" && (
-        <div className="mt-8 md:mt-10 lg:mt-12 px-4">
-          <Suspense fallback={null}>
-            <CfeJoinDialog
-              title={formtitle}
-              subtitle={formsubtitle}
-              course={formcourse}
-              buttonlabel={formbuttonlabel}
-            />
-          </Suspense>
+        <div className="mt-8 md:mt-10 lg:mt-12 px-4 flex justify-center">
+          {customBottomButton ? (
+            customBottomButton
+          ) : (
+            <Suspense fallback={null}>
+              <CfeJoinDialog
+                title={formtitle}
+                subtitle={formsubtitle}
+                course={formcourse}
+                buttonlabel={formbuttonlabel}
+              />
+            </Suspense>
+          )}
         </div>
       )}
     </section>
