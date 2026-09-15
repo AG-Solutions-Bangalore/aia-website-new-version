@@ -102,7 +102,7 @@ export default function Home() {
       <section className="bg-[#0F3652] py-12 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 leading-snug">
-            Working Full-Time + Preparing For CFE? You need a structured study schedule.
+            Working Full-Time + Preparing For CFE?<br /> You need a structured study schedule.
           </h2>
           <Suspense fallback={null}>
             <CfeRoadmapDialog

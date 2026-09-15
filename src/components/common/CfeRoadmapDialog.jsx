@@ -58,7 +58,7 @@ export default function CfeRoadmapDialog({
     const { name, value } = e.target;
     let val = value;
     if (name === "contactNumber") {
-      val = value.replace(/\D/g, "").slice(0, 10);
+      val = value.replace(/[^\d+]/g, "");
     }
     setFormData((prev) => ({ ...prev, [name]: val }));
     setErrors((prev) => {
@@ -83,8 +83,8 @@ export default function CfeRoadmapDialog({
 
     if (!formData.contactNumber.trim()) {
       errs.contactNumber = "Contact number is required";
-    } else if (formData.contactNumber.trim().length < 10) {
-      errs.contactNumber = "Please enter a valid 10-digit contact number";
+    } else if (formData.contactNumber.trim().replace(/\D/g, "").length < 7) {
+      errs.contactNumber = "Please enter a valid contact number";
     }
 
     return errs;
@@ -271,10 +271,9 @@ export default function CfeRoadmapDialog({
                 id="cfe-roadmap-contact"
                 name="contactNumber"
                 type="tel"
-                maxLength={10}
                 value={formData.contactNumber}
                 onChange={handleChange}
-                placeholder="10-digit mobile number"
+                placeholder="Enter your contact number"
                 className={`mt-1 h-9 sm:h-10 text-sm focus:border-[#F3831C] focus-visible:ring-1 focus-visible:ring-[#F3831C] ${
                   errors.contactNumber ? "border-red-500 focus:border-red-500" : "border-slate-300"
                 }`}
