@@ -236,3 +236,33 @@ JSON.parse(document.getElementById('schema-jsonld').textContent)
 Submit any URL to [Google Rich Results Test](https://search.google.com/test/rich-results).
 * Verified: **No duplicate entity warnings**.
 * Verified: **Connected Knowledge Graph** (`Organization` links to `WebSite`, `WebPage`, `Course`, `Review`, and `BlogPosting`).
+* Verified: **0 warnings for datetime & timezone** (`datePublished` and `dateModified` formatted with `+05:30`).
+
+---
+
+## 6. Type Safety (`schema-dts`) & Google Datetime Compliance
+
+### Why We Always Type Schemas with `schema-dts`:
+1. **Zero Runtime Typos:** In Schema.org, case sensitivity and exact property names matter (`BlogPosting` vs `blogposting`, `headline` vs `title`, `itemReviewed` vs `item_reviewed`). Using `schema-dts` (`BlogPosting`, `Review`, `Product`, `Course`, `Organization`, etc.) guarantees compile-time verification.
+2. **Full IDE Autocomplete:** When writing schemas, editors provide instant intellisense with official Schema.org property definitions, reducing development time and eliminating guesswork.
+
+### Resolving Google Rich Results Datetime & Timezone Warnings:
+Google's Structured Data linter enforces ISO-8601 with explicit timezone offsets for `datePublished` and `dateModified` in `BlogPosting` and `Review`.
+
+* ❌ **The Problem:** Passing a plain SQL date string (e.g., `"2026-06-23"` or fallback `"2026-01-01"`) without a time and timezone triggers 4 non-critical warnings:
+  1. `Invalid datetime value for "datePublished"`
+  2. `Datetime property "datePublished" is missing a timezone`
+  3. `Invalid datetime value for "dateModified"`
+  4. `Datetime property "dateModified" is missing a timezone`
+
+* ✅ **The Fix (`formatIsoDateWithTimezone`):**
+  Normalizes all timestamps into a valid ISO-8601 string with timezone offset:
+  ```typescript
+  // Input: "2026-06-23" -> Output: "2026-06-23T00:00:00+05:30"
+  datePublished: formatIsoDateWithTimezone(blog.blog_created),
+  dateModified: formatIsoDateWithTimezone(blog.blog_updated || blog.blog_created),
+  ```
+
+* 🛡️ **Automated CI Gate:**
+  `scripts/validateSchemas.ts` parses all pre-rendered HTML files and validates that every `datePublished` and `dateModified` property contains `'T'` and a timezone offset (`+` or `Z`), preventing broken releases from ever reaching production.
+

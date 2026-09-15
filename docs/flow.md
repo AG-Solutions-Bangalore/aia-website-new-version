@@ -92,6 +92,7 @@ graph TD
    * Parses all 190 HTML files using `node-html-parser`.
    * Asserts that **exactly ONE** JSON-LD script exists per HTML file.
    * Asserts that `@context` is `"https://schema.org"` and `@graph` contains valid, non-empty entities.
+   * Asserts that every `datePublished` and `dateModified` contains a valid ISO-8601 timestamp with an explicit timezone offset (`+05:30` or `Z`), preventing Google Rich Results "missing a timezone" and "Invalid datetime value" warnings.
    * Exits with code `1` if any file fails, stopping broken releases before deployment.
 
 ---
@@ -118,7 +119,8 @@ graph TD
    │  Provides: SITE_ORIGIN, brand constants, getCanonicalUrl()
    ▼
 [src/config/schemaExamples.ts]
-   │  Provides: Type-safe factories (Product, Course, BlogPosting, Review, FAQPage, Breadcrumbs)
+   │  Provides: Strict schema-dts typed factories (Product, Course, BlogPosting, Review, FAQPage, Breadcrumbs)
+   │  Provides: formatIsoDateWithTimezone() for Google-compliant ISO 8601 timestamps (+05:30)
    ▼
 [src/config/dynamicData.ts]
    │  Provides: Build-time API caching & synchronous getters

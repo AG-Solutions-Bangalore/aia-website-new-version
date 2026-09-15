@@ -27,7 +27,7 @@
  * - ./site: `SITE_NAME`, `SITE_ORIGIN`, `SITE_LOGO`, `getCanonicalUrl`
  */
 
-import type { Graph, Thing } from 'schema-dts';
+import type { BlogPosting, Graph, Review, Thing } from 'schema-dts';
 import { SITE_LOGO, SITE_NAME, SITE_ORIGIN, SITE_PHONE, getCanonicalUrl } from './site';
 
 export interface MasterSeoStructure {
@@ -308,18 +308,75 @@ export function createBreadcrumbSchema(
 }
 
 /**
+ * Normalizes any date string (e.g., "2026-06-23", "2026-01-01", or custom formats)
+ * into a strict ISO-8601 string containing explicit timezone information (+05:30 or Z).
+ * 
+ * ============================================================================
+ * WHY THIS IS CRITICAL FOR GOOGLE SEARCH & RICH RESULTS:
+ * ============================================================================
+ * When Google's Rich Results Testing Tool (https://search.google.com/test/rich-results)
+ * parses `BlogPosting`, `Article`, or `Review` schemas, it strictly enforces ISO-8601
+ * with timezone offsets. Passing a plain SQL date (e.g. "2026-06-23" or "2026-01-01")
+ * produces 4 non-critical warnings:
+ * 1. `Invalid datetime value for "datePublished"`
+ * 2. `Datetime property "datePublished" is missing a timezone"`
+ * 3. `Invalid datetime value for "dateModified"`
+ * 4. `Datetime property "dateModified" is missing a timezone"`
+ *
+ * HOW THIS HELPER RESOLVES IT:
+ * 1. Checks if string already has an explicit timezone (e.g. contains 'T' and ('+' or 'Z')).
+ * 2. If given a SQL standard "YYYY-MM-DD" date, appends midnight Indian Standard Time (`T00:00:00+05:30`).
+ * 3. For any other parsable date string, parses via `Date` object and outputs `.toISOString()` (`Z` UTC).
+ * 4. Provides a safe default fallback (`2026-01-01T00:00:00+05:30`) if date is undefined or empty.
+ *
+ * @param dateStr - Raw date string from backend API or fallback
+ * @returns Fully qualified ISO-8601 string with timezone (e.g., "2026-06-23T00:00:00+05:30")
+ */
+export function formatIsoDateWithTimezone(dateStr?: string): string {
+  const DEFAULT_DATE = '2026-01-01T00:00:00+05:30';
+  if (!dateStr || typeof dateStr !== 'string' || !dateStr.trim()) {
+    return DEFAULT_DATE;
+  }
+
+  const trimmed = dateStr.trim();
+
+  // If already formatted with timezone (e.g. 2026-06-23T00:00:00+05:30 or 2026-06-23T00:00:00Z)
+  if (trimmed.includes('T') && (trimmed.includes('+') || trimmed.endsWith('Z'))) {
+    return trimmed;
+  }
+
+  // If format is YYYY-MM-DD (standard SQL date string returned by backend API)
+  if (/^\d{4}-\d{2}-\d{2}$/.test(trimmed)) {
+    return `${trimmed}T00:00:00+05:30`;
+  }
+
+  // Try parsing with standard Date parser and emit full ISO string with UTC timezone
+  const d = new Date(trimmed);
+  if (isNaN(d.getTime())) {
+    return DEFAULT_DATE;
+  }
+
+  return d.toISOString();
+}
+
+/**
  * Creates a BlogPosting Schema.org entity linked to the Organization publisher.
  * Valid for Google Article and Blog rich results.
  * 
+ * ============================================================================
  * GOOGLE RICH RESULTS REQUIREMENTS FOR BLOGPOSTING:
+ * ============================================================================
  * 1. `headline`: Must accurately reflect article title (max 110 characters recommended).
  * 2. `image`: Absolute URL to high-resolution article cover image (min 1200px width recommended).
- * 3. `datePublished` & `dateModified`: ISO-8601 formatted timestamps.
+ * 3. `datePublished` & `dateModified`: Strict ISO-8601 formatted timestamps with timezone
+ *    (e.g., "2026-06-23T00:00:00+05:30"). Managed via `formatIsoDateWithTimezone()`.
  * 4. `author` & `publisher`: Linked via `@id` to the site Organization entity (`#organization`)
  *    to preserve Google Knowledge Graph continuity.
- * 5. `mainEntityOfPage`: Points to the canonical URL of the blog post.
+ * 5. `mainEntityOfPage`: Points to the canonical URL of the blog post (`#webpage`).
+ * 6. `schema-dts` Type Validation: Statically typed as `BlogPosting` to prevent typos
+ *    in property names before compilation.
  *
- * @param blog - Dynamic blog detail object
+ * @param blog - Dynamic blog detail object (from API or build-time pre-fetch cache)
  * @returns Type-safe Schema.org BlogPosting as `Thing`
  */
 export function createBlogPostingSchema(blog: {
@@ -337,20 +394,22 @@ export function createBlogPostingSchema(blog: {
     ? `https://aia.in.net/webapi/public/assets/images/blog_images/${blog.blog_images}`
     : SITE_LOGO;
 
-  return {
+  const schema: BlogPosting = {
     '@type': 'BlogPosting',
     '@id': `${canonicalUrl}#blogposting`,
     headline: blog.blog_heading,
     description: blog.blog_meta_description || blog.blog_short_description || blog.blog_heading,
     image: imageUrl,
-    datePublished: blog.blog_created || '2026-01-01',
-    dateModified: blog.blog_updated || blog.blog_created || '2026-01-01',
+    datePublished: formatIsoDateWithTimezone(blog.blog_created),
+    dateModified: formatIsoDateWithTimezone(blog.blog_updated || blog.blog_created),
     mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
     author: { '@id': `${SITE_ORIGIN}#organization` },
     publisher: { '@id': `${SITE_ORIGIN}#organization` },
     articleSection: blog.blog_course || 'Professional Certification',
     inLanguage: 'en-US',
-  } as Thing;
+  };
+
+  return schema as Thing;
 }
 
 /**
@@ -388,11 +447,16 @@ export function createFaqSchema(
 /**
  * Creates a verified Review Schema.org entity representing a student testimonial/success story.
  * 
+ * ============================================================================
  * GOOGLE CRITIC REVIEW & TESTIMONIAL GUIDELINES:
+ * ============================================================================
  * 1. `itemReviewed`: Explicitly points to the Academy of Internal Audit Organization entity.
  * 2. `author`: Person type containing the verified student's full name.
  * 3. `reviewRating`: Numeric rating with bestRating and worstRating boundaries.
  * 4. `reviewBody`: Clean text snippet summarizing the student's learning experience and passout achievement.
+ * 5. `datePublished`: Strict ISO-8601 formatted timestamp with timezone offset (+05:30)
+ *    via `formatIsoDateWithTimezone()` to avoid Google's "missing a timezone" warning.
+ * 6. `schema-dts` Type Validation: Statically typed as `Review` to ensure compile-time compliance.
  *
  * @param story - Dynamic student story object
  * @returns Type-safe Schema.org Review as `Thing`
@@ -412,7 +476,7 @@ export function createStudentReviewSchema(story: {
     `${story.student_name} cleared the ${story.student_course || 'certification'} exam with Academy of Internal Audit.`
   ).trim();
 
-  return {
+  const schema: Review = {
     '@type': 'Review',
     '@id': `${canonicalUrl}#review`,
     itemReviewed: { '@id': `${SITE_ORIGIN}#organization` },
@@ -426,6 +490,8 @@ export function createStudentReviewSchema(story: {
       bestRating: '5',
     },
     reviewBody,
-    datePublished: story.student_story_date || '2026-01-01',
-  } as Thing;
+    datePublished: formatIsoDateWithTimezone(story.student_story_date),
+  };
+
+  return schema as Thing;
 }

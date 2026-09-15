@@ -88,6 +88,36 @@ for (const file of htmlFiles) {
       hasError = true;
     } else {
       const types = json['@graph'].map((item: { '@type': string }) => item['@type']).join(', ');
+      
+      // ========================================================================
+      // GOOGLE RICH RESULTS DATETIME & TIMEZONE QUALITY GATE:
+      // Google Article / BlogPosting / Review specifications require ISO-8601
+      // timestamps with an explicit timezone offset (e.g., +05:30 or Z).
+      //
+      // FAILURE MODES PREVENTED:
+      // 1. "Invalid datetime value for datePublished / dateModified"
+      // 2. "Datetime property datePublished / dateModified is missing a timezone"
+      //
+      // If a database returns plain SQL date "2026-06-23" or fallback "2026-01-01"
+      // without timezone offset, this CI loop will catch it and block deployment.
+      // ========================================================================
+      for (const item of json['@graph']) {
+        if (item.datePublished) {
+          const hasTz = item.datePublished.includes('T') && (item.datePublished.includes('+') || item.datePublished.endsWith('Z'));
+          if (!hasTz || isNaN(new Date(item.datePublished).getTime())) {
+            console.error(`❌ [${relPath}] FAIL: datePublished "${item.datePublished}" missing timezone or invalid ISO-8601! Expected format: YYYY-MM-DDTHH:mm:ss+05:30`);
+            hasError = true;
+          }
+        }
+        if (item.dateModified) {
+          const hasTz = item.dateModified.includes('T') && (item.dateModified.includes('+') || item.dateModified.endsWith('Z'));
+          if (!hasTz || isNaN(new Date(item.dateModified).getTime())) {
+            console.error(`❌ [${relPath}] FAIL: dateModified "${item.dateModified}" missing timezone or invalid ISO-8601! Expected format: YYYY-MM-DDTHH:mm:ss+05:30`);
+            hasError = true;
+          }
+        }
+      }
+
       console.log(`  ✓ [${relPath}] Valid @graph with ${json['@graph'].length} entities (${types}).`);
     }
   } catch (err) {
