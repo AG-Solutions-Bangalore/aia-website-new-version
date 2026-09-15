@@ -37,9 +37,9 @@ const CisaCourseLms = ({ image = "lms_CIA.webp" }) => {
         "AIA helps you with complete CISA exam registration support, including ISACA account guidance, exam scheduling assistance, and step-by-step support to make the registration process simple, smooth, and stress-free for aspirants.",
     },
     {
-      title: "Exam Distractors",
+      title: "Flashcards & Exam Distractors",
       description:
-        "Practice with 500+ exam-oriented distractors designed to improve analytical thinking, strengthen decision making, and prepare students for tricky CISA Exam scenarios. These will train you to handle the trickiest question types on the actual exam.",
+        "With the AIA CISA Prep Course, you will get access to 400+ Flashcards & 500+ expert-created exam distractors designed to improve analytical thinking, strengthen decision-making, and prepare you for tricky CISA Exam scenarios.",
     },
   ];
 

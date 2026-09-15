@@ -22,7 +22,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
     },
     {
       name: "Just dial",
-      rating: "4.9",
+      rating: "5.0",
       img: `${IMAGE_PATH}/footer-1.webp`,
       alt: "Justdial Reviews",
       bgColor: "bg-[#2D3748]",

@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
   const start = i / total;
   const end = (i + 1) / total;
