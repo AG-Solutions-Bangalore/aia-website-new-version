@@ -217,7 +217,7 @@ const PassoutSuccess = () => {
 
                         <div className="flex flex-row items-center justify-between">
                           <p className="text-xs text-gray-600 mt-1">
-                            {story.role} Works at {story.companyName}
+                            {story.role} at {story.companyName}
                           </p>
                           <p className="text-xs text-gray-500 mt-1">
                             {new Date(story.date).toLocaleDateString("en-GB", {

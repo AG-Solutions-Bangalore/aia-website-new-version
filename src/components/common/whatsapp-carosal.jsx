@@ -746,6 +746,33 @@ const WhatsappCarosal = ({ title, description, course }) => {
   } = useQuery({
     queryKey: ["screenshot-slider", course],
     queryFn: async () => {
+      // `course="all"` API endpoint only returns 25 items (backend limit),
+      // but CIA(10)+CFE(10)+CAMS(10)+CIAC(10) = 40 total.
+      // Merge per-course results so counter shows the real total (40).
+      if (course === "all") {
+        const courses = ["CIA", "CFE", "CAMS", "CIAC"];
+        const responses = await Promise.all(
+          courses.map((c) =>
+            axios.get(`${BASE_URL}/api/getScreenshotSlider/${c}`)
+          )
+        );
+        const merged = [];
+        const seen = new Set();
+        let image_url = null;
+        responses.forEach((res) => {
+          if (!image_url && res.data?.image_url) {
+            image_url = res.data.image_url;
+          }
+          (res.data?.data || []).forEach((item) => {
+            const key = item.id ?? item.student_screenshot_image;
+            if (!seen.has(key)) {
+              seen.add(key);
+              merged.push(item);
+            }
+          });
+        });
+        return { data: merged, image_url: image_url || [] };
+      }
       const res = await axios.get(
         `${BASE_URL}/api/getScreenshotSlider/${course}`
       );
@@ -761,8 +788,7 @@ const WhatsappCarosal = ({ title, description, course }) => {
       certificatesData.image_url?.find((item) => item.image_for === "Student")
         ?.image_url || "";
 
-    return certificatesData.data
-      .map((item, index) => ({
+    return certificatesData.data.map((item, index) => ({
         id: item.id ?? index,
         image: `${studentImageBaseUrl}${item.student_screenshot_image}`,
         imageSrc: `${studentImageBaseUrl}${item.student_screenshot_image}`,
@@ -772,8 +798,7 @@ const WhatsappCarosal = ({ title, description, course }) => {
         alt: item.student_screenshot_image_alt || "",
         quote: item.student_screenshot_image_alt || "",
         youtubeLink: item.student_youtube_link || null,
-      }))
-      .slice(0, 25);
+      }));
   }, [certificatesData]);
 
   if (isLoading) {
