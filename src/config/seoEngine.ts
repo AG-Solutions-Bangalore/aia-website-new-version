@@ -30,7 +30,7 @@
  */
 
 import type { Thing } from 'schema-dts';
-import { SITE_NAME, SITE_ORIGIN, getCanonicalUrl } from './site';
+import { getDynamicBlog, getDynamicStudentStory } from './dynamicData';
 import {
   createBlogPostingSchema,
   createBreadcrumbSchema,
@@ -45,7 +45,7 @@ import {
   RouteSeoEntry,
   websiteSchema,
 } from './schemaExamples';
-import { getDynamicBlog, getDynamicStudentStory } from './dynamicData';
+import { SITE_NAME } from './site';
 
 export interface MasterSeoStructure {
   title: string;

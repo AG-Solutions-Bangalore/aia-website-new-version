@@ -109,6 +109,9 @@ graph TD
    * During client-side navigation (e.g. clicking a blog link), `SEOPageLayout` uses `react-helmet-async` for title, description, and canonical URL updates.
    * An isolated `useEffect` synchronizes the new route's composite `@graph` directly into `document.getElementById('schema-jsonld')`.
    * A cleanup loop actively removes any stray `<script type="application/ld+json">` tags, guaranteeing 0 duplicate schemas in the browser DOM.
+4. **Canonical URL Consistency ("Self-Canonical" Status):**
+   * All internal links (`<a>`, `window.open`, `navigate`) link directly to clean non-trailing slash URLs (e.g., `/blogs/cia-salary`).
+   * This matches `getCanonicalUrl()` character-for-character, achieving **"Self-Canonical ✅"** status in Googlebot and SEO audit extensions (preventing "Canonicalised" warnings).
 
 ---
 
@@ -116,7 +119,7 @@ graph TD
 
 ```
 [src/config/site.ts]
-   │  Provides: SITE_ORIGIN, brand constants, getCanonicalUrl()
+   │  Provides: SITE_ORIGIN, brand constants, getCanonicalUrl() (Clean Non-Trailing Slash)
    ▼
 [src/config/schemaExamples.ts]
    │  Provides: Strict schema-dts typed factories (Product, Course, BlogPosting, Review, FAQPage, Breadcrumbs)

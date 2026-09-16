@@ -28,7 +28,7 @@ const routePrefetch = {
   "/cams": () => import("../pages/Courses/CAMS"),
   "/cfe-free-resources/": () =>
     import("../pages/free-resources/cfe-free-resources"),
-  "/blogs/": () => import("../pages/Blog/Blog"),
+  "/blogs": () => import("../pages/Blog/Blog"),
   "/alumni-network/": () => import("../pages/OurPassout/OurPassout"),
   "/corporate-training/": () =>
     import("../pages/corporate-training/corporate-training"),
@@ -109,7 +109,7 @@ const Navbar = () => {
       title: "Other",
       link: "#",
       submenu: [
-        { name: "Blog", link: "/blogs/" },
+        { name: "Blog", link: "/blogs" },
         { name: "AIA Times", link: "/aia-times/" },
         { name: "Contact Us", link: "/contact/" },
       ],
