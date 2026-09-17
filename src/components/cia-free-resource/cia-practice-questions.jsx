@@ -36,26 +36,34 @@ const CIAPracticeQuestion = () => {
             (q) => q.questions_module === "CIA-1",
           ),
         };
-      case "CIA-3":
+      case "CIA-2":
         return {
           id: 2,
-          title: "SECTION-II: ENGAGEMENT PLANNING",
+          title: "SECTION-II: INTERNAL AUDIT OPERATIONS AND AUDIT PLAN",
+          questions: questionsData.filter(
+            (q) => q.questions_module === "CIA-2",
+          ),
+        };
+      case "CIA-3":
+        return {
+          id: 3,
+          title: "SECTION-III: ENGAGEMENT PLANNING",
           questions: questionsData.filter(
             (q) => q.questions_module === "CIA-3",
           ),
         };
       case "CIA-4":
         return {
-          id: 3,
-          title: "SECTION-III: ENGAGEMENT PERFORMANCE",
+          id: 4,
+          title: "SECTION-IV: ENGAGEMENT PERFORMANCE",
           questions: questionsData.filter(
             (q) => q.questions_module === "CIA-4",
           ),
         };
       case "CIA-5":
         return {
-          id: 4,
-          title: "SECTION-IV: ENGAGEMENT RESULTS AND MONITORING",
+          id: 5,
+          title: "SECTION-V: ENGAGEMENT RESULTS AND MONITORING",
           questions: questionsData.filter(
             (q) => q.questions_module === "CIA-5",
           ),
@@ -71,6 +79,7 @@ const CIAPracticeQuestion = () => {
 
   const modules = [
     getModuleData("CIA-1"),
+    getModuleData("CIA-2"),
     getModuleData("CIA-3"),
     getModuleData("CIA-4"),
     getModuleData("CIA-5"),
