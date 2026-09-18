@@ -7,6 +7,9 @@ import PassoutResult from "@/components/passout/passout-result";
 const PassoutSucess = lazy(
   () => import("@/components/passout/passout-success"),
 );
+const WeeklyAchievers = lazy(
+  () => import("@/components/passout/weekly-achievers"),
+);
 const AllYoutube = lazy(() => import("@/components/common/get-all-youtube"));
 const WhatsappCarosal = lazy(
   () => import("@/components/common/whatsapp-carosal"),
@@ -22,6 +25,7 @@ const HomeAlumniWork = lazy(
 const OurPassout = () => {
   const refs = useRef({
     directory: { current: null },
+    weekly: { current: null },
     success: { current: null },
     youtube: { current: null },
     whatsapp: { current: null },
@@ -71,6 +75,14 @@ const OurPassout = () => {
       <PopUp slug="Passed-Out" />
       <PassoutBanner />
       <PassoutResult />
+
+      <div ref={refs.weekly}>
+        {visible.weekly && (
+          <Suspense fallback={null}>
+            <WeeklyAchievers />
+          </Suspense>
+        )}
+      </div>
 
       <div ref={refs.directory}>
         {visible.directory && (
