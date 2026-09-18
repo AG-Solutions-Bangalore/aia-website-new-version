@@ -172,7 +172,7 @@ const CIAFlashCard = () => {
       />
 
       <div className="mx-auto max-w-5xl cursor-pointer">
-        <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-3 lg:grid-cols-5 md:gap-10">
+        <div className="grid grid-cols-2 gap-6 sm:gap-8 md:grid-cols-3 lg:grid-cols-5 md:gap-10 items-stretch">
           {modules.map((module) => (
             <div
               key={module.id}
@@ -190,26 +190,28 @@ const CIAFlashCard = () => {
                 </button>
               </div>
               <div className="flex flex-col flex-1 items-center w-full">
-                <p className="text-xs font-semibold sm:text-sm text-[#0F3652] min-h-[40px]">
+                <p className="text-xs font-semibold sm:text-sm text-[#0F3652] min-h-[63px] sm:min-h-[66px] leading-5">
                   <span className="mt-1 text-xs font-bold sm:text-sm text-[#F3831C]">
                     {module.number}
                   </span>{" "}
-                  {module.title.split("\n").map((line, i) => (
+                  {module.title.split("\n").map((line, i, arr) => (
                     <span key={i}>
                       {line}
-                      <br />
+                      {i < arr.length - 1 && <br />}
                     </span>
                   ))}{" "}
                 </p>
 
-                <Button
-                  className="mt-auto mb-2 px-4 py-2 text-xs mt-4 bg-[#F3831C] cursor-pointer text-white rounded-lg hover:bg-[#0F3652] hover:text-white transition-colors duration-300"
-                  variant="ghost"
-                  aria-label="Click Here"
-                  onClick={() => setOpenDrawer(module.id)}
-                >
-                  Click Here
-                </Button>
+                <div className="mt-auto pt-4 pb-2">
+                  <Button
+                    className="px-4 py-2 text-xs bg-[#F3831C] cursor-pointer text-white rounded-lg hover:bg-[#0F3652] hover:text-white transition-colors duration-300"
+                    variant="ghost"
+                    aria-label="Click Here"
+                    onClick={() => setOpenDrawer(module.id)}
+                  >
+                    Click Here
+                  </Button>
+                </div>
               </div>
             </div>
           ))}
