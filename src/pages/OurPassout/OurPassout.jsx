@@ -74,15 +74,15 @@ const OurPassout = () => {
       {/* Initial Render */}
       <PopUp slug="Passed-Out" />
       <PassoutBanner />
-      <PassoutResult />
-
-      <div ref={refs.weekly}>
+            <div ref={refs.weekly}>
         {visible.weekly && (
           <Suspense fallback={null}>
             <WeeklyAchievers />
           </Suspense>
         )}
       </div>
+      <PassoutResult />
+
 
       <div ref={refs.directory}>
         {visible.directory && (

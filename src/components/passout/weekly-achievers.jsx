@@ -1,14 +1,14 @@
 import { BASE_URL } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useMemo } from "react";
+import { X } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import { Autoplay, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 import SectionHeading from "../SectionHeading/SectionHeading";
 
 const WEEK_ACHIEVERS_BASE = `${BASE_URL}/assets/images/week_achievers/`;
@@ -28,6 +28,25 @@ const WeeklyAchievers = ({
       return res?.data ?? { data: [], image_url: [] };
     },
   });
+
+  const [selectedIndex, setSelectedIndex] = useState(null);
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setSelectedIndex(null);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [selectedIndex]);
 
   const images = useMemo(() => {
     if (!achieversData?.data?.length) return [];
@@ -73,6 +92,9 @@ const WeeklyAchievers = ({
   }
 
   if (isError || !images.length) return null;
+
+  const selectedImage =
+    selectedIndex !== null ? images[selectedIndex] : null;
 
   return (
     <section className="bg-white py-12 px-6 lg:px-12 md:py-16">
@@ -133,12 +155,11 @@ const WeeklyAchievers = ({
               speed={700}
               slidesPerView={1}
               spaceBetween={16}
-              pagination={{ clickable: true }}
               navigation={{
                 nextEl: ".weekly-achievers-next",
                 prevEl: ".weekly-achievers-prev",
               }}
-              modules={[Autoplay, Navigation, Pagination]}
+              modules={[Autoplay, Navigation]}
               breakpoints={{
                 480: { slidesPerView: 2, spaceBetween: 16 },
                 768: { slidesPerView: 3, spaceBetween: 20 },
@@ -147,7 +168,19 @@ const WeeklyAchievers = ({
             >
               {images.map((img, index) => (
                 <SwiperSlide key={`${img.src}-${index}`}>
-                  <div className="overflow-hidden rounded-xl border border-[#0F3652]/10 bg-white shadow-md transition-all duration-300 hover:border-[#F3831C]/50 hover:shadow-xl">
+                  <div
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`View ${img.alt}`}
+                    onClick={() => setSelectedIndex(index)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        setSelectedIndex(index);
+                      }
+                    }}
+                    className="cursor-zoom-in overflow-hidden rounded-2xl border border-[#0F3652]/10 bg-white shadow-md transition-all duration-300 hover:border-[#F3831C]/50 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F3831C]"
+                  >
                     <div className="aspect-[4/5] w-full overflow-hidden">
                       <img
                         src={img.src}
@@ -166,36 +199,49 @@ const WeeklyAchievers = ({
             </Swiper>
           </div>
         </div>
+
+        {selectedImage && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedImage.alt}
+            className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
+          >
+            <div
+              className="absolute inset-0 bg-black/80"
+              onClick={() => setSelectedIndex(null)}
+            />
+            <button
+              aria-label="Close image"
+              onClick={() => setSelectedIndex(null)}
+              className="absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-[#0F3652] shadow-lg transition-colors hover:bg-[#F3831C] hover:text-white"
+            >
+              <X size={20} />
+            </button>
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              title={selectedImage.alt}
+              className="relative max-h-[85vh] max-w-full rounded-xl object-contain"
+            />
+          </div>
+        )}
       </div>
 
       <style>{`
         .weekly-achievers-carousel .swiper {
           width: 100%;
-          padding-bottom: 44px;
         }
         .weekly-achievers-carousel .swiper-slide {
           height: auto;
         }
-        .weekly-achievers-carousel .swiper-pagination {
-          bottom: 0;
-        }
-        .weekly-achievers-carousel .swiper-pagination-bullet {
-          background: #cbd5e1;
-          opacity: 1;
-          transition: all 0.3s ease;
-        }
-        .weekly-achievers-carousel .swiper-pagination-bullet-active {
-          background: #F3831C;
-          width: 32px;
-          border-radius: 9999px;
-        }
         .carousel-nav-btn {
           position: absolute;
-          top: 42%;
+          top: 50%;
           transform: translateY(-50%);
           z-index: 20;
-          width: 40px;
-          height: 40px;
+          width: 44px;
+          height: 44px;
           border-radius: 50%;
           display: flex;
           align-items: center;
