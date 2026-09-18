@@ -2,7 +2,7 @@ import { BASE_URL } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { X } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { Autoplay, Navigation } from "swiper/modules";
@@ -10,11 +10,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import SectionHeading from "../SectionHeading/SectionHeading";
-import {
-  Dialog,
-  DialogContent,
-  DialogTitle,
-} from "../ui/dialog";
 
 const WEEK_ACHIEVERS_BASE = `${BASE_URL}/assets/images/week_achievers/`;
 
@@ -35,6 +30,23 @@ const WeeklyAchievers = ({
   });
 
   const [selectedIndex, setSelectedIndex] = useState(null);
+
+  useEffect(() => {
+    if (selectedIndex === null) return;
+
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setSelectedIndex(null);
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [selectedIndex]);
 
   const images = useMemo(() => {
     if (!achieversData?.data?.length) return [];
@@ -188,36 +200,32 @@ const WeeklyAchievers = ({
           </div>
         </div>
 
-        <Dialog
-          open={selectedIndex !== null}
-          onOpenChange={(open) => {
-            if (!open) setSelectedIndex(null);
-          }}
-        >
-          <DialogContent className="w-[95%] max-w-2xl border-0 bg-transparent p-0 shadow-none">
-            <DialogTitle className="sr-only">
-              {selectedImage?.alt || "Weekly achiever image"}
-            </DialogTitle>
-            <div className="relative">
-              <button
-                aria-label="Close image"
-                onClick={() => setSelectedIndex(null)}
-                className="absolute -top-11 right-0 flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white text-[#0F3652] shadow-lg transition-colors hover:bg-[#F3831C] hover:text-white"
-              >
-                <X size={18} />
-              </button>
-
-              {selectedImage && (
-                <img
-                  src={selectedImage.src}
-                  alt={selectedImage.alt}
-                  title={selectedImage.alt}
-                  className="max-h-[80vh] w-full rounded-xl object-contain"
-                />
-              )}
-            </div>
-          </DialogContent>
-        </Dialog>
+        {selectedImage && (
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedImage.alt}
+            className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
+          >
+            <div
+              className="absolute inset-0 bg-black/80"
+              onClick={() => setSelectedIndex(null)}
+            />
+            <button
+              aria-label="Close image"
+              onClick={() => setSelectedIndex(null)}
+              className="absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-[#0F3652] shadow-lg transition-colors hover:bg-[#F3831C] hover:text-white"
+            >
+              <X size={20} />
+            </button>
+            <img
+              src={selectedImage.src}
+              alt={selectedImage.alt}
+              title={selectedImage.alt}
+              className="relative max-h-[85vh] max-w-full rounded-xl object-contain"
+            />
+          </div>
+        )}
       </div>
 
       <style>{`
