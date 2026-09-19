@@ -2,26 +2,6 @@ import { BASE_URL } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useEffect, useMemo, useState } from "react";
-import {
-  Award,
-  BookOpen,
-  MessagesSquare,
-  BadgeCheck,
-  Lightbulb,
-} from "lucide-react";
-
-const CARD_ICONS = [
-  Award,
-  MessagesSquare,
-  BadgeCheck,
-  Award,
-  BookOpen,
-  BookOpen,
-  Award,
-  MessagesSquare,
-  BadgeCheck,
-  MessagesSquare,
-];
 
 const getModuleOrder = (name) => {
   const match = String(name || "").match(/(\d+)/);
@@ -89,8 +69,10 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
 
   const renderHeader = () => (
     <div className="text-center max-w-4xl mx-auto px-4">
-      <h2 className="text-3xl md:text-4xl font-medium text-black">{heading}</h2>
-      <p className="mt-4 text-base md:text-lg text-gray-800 leading-relaxed">
+      <h2 className="text-3xl md:text-4xl font-bold text-[#0F3652]">
+        {heading}
+      </h2>
+      <p className="mt-4 text-base md:text-lg text-gray-600 leading-relaxed">
         {subHeading}
       </p>
     </div>
@@ -101,7 +83,7 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
       <div className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
         {renderHeader()}
         <div className="flex justify-center items-center h-40">
-          <div className="text-gray-800">Loading distractors...</div>
+          <div className="text-[#0F3652]">Loading distractors...</div>
         </div>
       </div>
     );
@@ -128,61 +110,51 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
     <div className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
       {renderHeader()}
 
-      {/* Module / Section selector — exact image design */}
-      <div
-        className={`grid gap-6 mt-8 mb-10 grid-cols-1 sm:grid-cols-2 max-w-6xl mx-auto ${
-          moduleNames.length > 3 ? "md:grid-cols-5" : "md:grid-cols-3"
-        }`}
-      >
+      {/* Module / Section selector */}
+      <div className="flex flex-wrap justify-center gap-4 mt-8 mb-10 max-w-5xl mx-auto">
         {moduleNames.map((mod) => {
           const isOpen = mod === effectiveActive;
           return (
-          <div key={mod} className="flex flex-col items-center text-center">
             <button
+              key={mod}
               onClick={() => setActiveModule(mod)}
               aria-pressed={isOpen}
-              data-open={isOpen ? "true" : "false"}
-              className={`w-full max-w-[220px] px-6 py-3 text-white text-base font-normal rounded-2xl transition-colors duration-200 cursor-pointer ${
+              className={`px-8 py-3 rounded-full text-base font-semibold cursor-pointer transition-all duration-300 transform hover:-translate-y-1 active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F3831C] focus-visible:ring-offset-2 ${
                 isOpen
-                  ? "bg-[#EF6C00] ring-2 ring-black/10"
-                  : "bg-[#EF6C00] hover:bg-[#e06500]"
+                  ? "bg-gradient-to-r from-[#F3831C] to-[#d96e00] text-white shadow-[0_8px_20px_rgba(243,131,28,0.4)] hover:shadow-[0_12px_28px_rgba(243,131,28,0.5)]"
+                  : "bg-white text-[#0F3652] border-2 border-[#0F3652]/15 shadow-sm hover:border-[#F3831C] hover:text-[#F3831C] hover:shadow-[0_8px_20px_rgba(243,131,28,0.2)]"
               }`}
             >
               {mod}
             </button>
-            <button
-              onClick={() => setActiveModule(mod)}
-              className="mt-2 text-[15px] text-black hover:text-[#EF6C00] transition-colors cursor-pointer"
-              aria-label={`Open ${mod} distractors`}
-            >
-              Click Here
-            </button>
-          </div>
           );
         })}
       </div>
 
-      {/* Distractor cards grid — exact image design: 5 per row */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-        {activeItems.map((item, idx) => {
-          const Icon = CARD_ICONS[idx % CARD_ICONS.length] || Lightbulb;
-          return (
-            <div
-              key={item.id}
-              className="bg-white border border-gray-200 rounded-xl p-5 shadow-[0_1px_2px_rgba(0,0,0,0.04)] flex flex-col"
-            >
-              <div className="w-10 h-10 rounded-lg bg-[#FAF1F1] flex items-center justify-center mb-4">
-                <Icon className="w-6 h-6 text-[#8B1E2F]" strokeWidth={1.5} />
-              </div>
-              <h3 className="text-[15px] font-bold text-[#8B1E2F] leading-snug mb-2">
-                {item.web_distractors}
-              </h3>
-              <p className="text-[13px] text-gray-600 leading-relaxed whitespace-pre-line">
-                {item.web_distractors_explaination}
-              </p>
+      {/* Distractor cards grid */}
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+        {activeItems.map((item, idx) => (
+          <div
+            key={item.id}
+            className="group relative bg-white rounded-2xl border border-[#0F3652]/10 p-6 pt-5 flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_32px_rgba(15,54,82,0.15)] hover:border-[#F3831C]/60"
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <span className="w-8 h-8 rounded-full bg-[#0F3652]/5 text-[#0F3652] text-sm font-bold flex items-center justify-center flex-shrink-0 transition-colors duration-300 group-hover:bg-[#F3831C] group-hover:text-white">
+                {idx + 1}
+              </span>
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#0F3652]/50 group-hover:text-[#F3831C] transition-colors duration-300">
+                Common mistake
+              </span>
             </div>
-          );
-        })}
+            <h3 className="text-[15px] font-bold text-[#F3831C] leading-snug mb-2 transition-colors duration-300 group-hover:text-[#d96e00]">
+              {item.web_distractors}
+            </h3>
+            <span className="w-8 h-0.5 bg-[#F3831C]/25 rounded-full mb-3 group-hover:w-12 group-hover:bg-[#F3831C] transition-all duration-300" />
+            <p className="text-[13px] text-[#0F3652]/80 leading-relaxed whitespace-pre-line">
+              {item.web_distractors_explaination}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   );

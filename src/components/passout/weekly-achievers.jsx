@@ -5,13 +5,17 @@ import { X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Autoplay, Navigation } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
 import SectionHeading from "../SectionHeading/SectionHeading";
+import { CardCarousel } from "../ui/card-carousel";
 
 const WEEK_ACHIEVERS_BASE = `${BASE_URL}/assets/images/week_achievers/`;
+
+const getWeekNumber = (item) => {
+  const fromAlt = String(item?.weekly_achievers_alt || "").match(/(\d+)/);
+  if (fromAlt) return parseInt(fromAlt[1], 10);
+  const fromImg = String(item?.weekly_achievers_image || "").match(/(\d+)/);
+  return fromImg ? parseInt(fromImg[1], 10) : -1;
+};
 
 const WeeklyAchievers = ({
   title = "Meet AIA’s Weekly Achievers of 2026 - Representing Global Credentials",
@@ -62,7 +66,13 @@ const WeeklyAchievers = ({
       achieversData.image_url?.find((item) => item.image_for === "No Image")
         ?.image_url || `${BASE_URL}/assets/images/no_image.jpg`;
 
-    return achieversData.data.map((item) => ({
+    // Descending order: 37 - 36 - 35 - ... - 1 (newest week first)
+    const sorted = [...achieversData.data].sort(
+      (a, b) => getWeekNumber(b) - getWeekNumber(a),
+    );
+
+    return sorted.map((item) => ({
+      week: getWeekNumber(item),
       src: item.weekly_achievers_image
         ? `${achieversBase}${item.weekly_achievers_image}`
         : noImage,
@@ -72,22 +82,45 @@ const WeeklyAchievers = ({
 
   if (isLoading) {
     return (
-      <section className="bg-white py-12 px-6 lg:px-12 md:py-16">
-        <div className="mx-auto max-w-7xl text-center">
-          <Skeleton height={40} width={420} className="mx-auto" />
-          <Skeleton height={18} width={300} className="mx-auto mt-3" />
-          <div className="mt-8 flex justify-center gap-4 overflow-hidden">
+      <div className="relative w-full  py-8">
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage:
+                "linear-gradient(to right, #888 1px, transparent 1px), linear-gradient(to bottom, #888 1px, transparent 1px)",
+              backgroundSize: "50px 50px",
+            }}
+          ></div>
+          <div
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 70% 30%, #7c3aed 1px, transparent 1.5px), radial-gradient(circle at 30% 70%, #db2777 1px, transparent 1.5px)",
+              backgroundSize: "60px 60px",
+              animation: "moveBackground 20s infinite alternate",
+            }}
+          ></div>
+        </div>
+
+        <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+          <div className="mb-8 text-center gap-4">
+            <div className="relative z-30">
+              <Skeleton height={40} width={400} className="mx-auto" />
+              <Skeleton height={20} width={200} className="mx-auto mt-2" />
+            </div>
+          </div>
+
+          <div className="flex justify-center gap-4">
             {[...Array(4)].map((_, index) => (
-              <Skeleton
-                key={index}
-                height={320}
-                width={250}
-                className="rounded-xl"
-              />
+              <div key={index} className="w-64 h-80">
+                <Skeleton height={320} width={256} />
+                <Skeleton height={20} width={150} className="mt-2" />
+              </div>
             ))}
           </div>
         </div>
-      </section>
+      </div>
     );
   }
 
@@ -97,202 +130,108 @@ const WeeklyAchievers = ({
     selectedIndex !== null ? images[selectedIndex] : null;
 
   return (
-    <section className="bg-white py-12 px-6 lg:px-12 md:py-16">
-      <div className="mx-auto max-w-7xl">
-        <SectionHeading
-          title={title}
-          description={description}
-          align="center"
-        />
-
-        <div className="weekly-achievers-carousel relative mt-8">
-          <button
-            aria-label="Previous achievers"
-            className="weekly-achievers-prev carousel-nav-btn carousel-nav-prev"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="15 18 9 12 15 6" />
-            </svg>
-          </button>
-          <button
-            aria-label="Next achievers"
-            className="weekly-achievers-next carousel-nav-btn carousel-nav-next"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <polyline points="9 18 15 12 9 6" />
-            </svg>
-          </button>
-
-          <div className="mx-auto w-full max-w-6xl">
-            <Swiper
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-                pauseOnMouseEnter: true,
-              }}
-              grabCursor
-              loop={images.length > 4}
-              speed={700}
-              slidesPerView={1}
-              spaceBetween={16}
-              navigation={{
-                nextEl: ".weekly-achievers-next",
-                prevEl: ".weekly-achievers-prev",
-              }}
-              modules={[Autoplay, Navigation]}
-              breakpoints={{
-                480: { slidesPerView: 2, spaceBetween: 16 },
-                768: { slidesPerView: 3, spaceBetween: 20 },
-                1024: { slidesPerView: 4, spaceBetween: 24 },
-              }}
-            >
-              {images.map((img, index) => (
-                <SwiperSlide key={`${img.src}-${index}`}>
-                  <div
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`View ${img.alt}`}
-                    onClick={() => setSelectedIndex(index)}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter" || e.key === " ") {
-                        e.preventDefault();
-                        setSelectedIndex(index);
-                      }
-                    }}
-                    className="cursor-zoom-in overflow-hidden rounded-2xl border border-[#0F3652]/10 bg-white shadow-md transition-all duration-300 hover:border-[#F3831C]/50 hover:shadow-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F3831C]"
-                  >
-                    <div className="aspect-[4/5] w-full overflow-hidden">
-                      <img
-                        src={img.src}
-                        alt={img.alt}
-                        title={img.alt}
-                        className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
-                        loading="lazy"
-                        onError={(e) => {
-                          e.currentTarget.src = `${BASE_URL}/assets/images/no_image.jpg`;
-                        }}
-                      />
-                    </div>
-                  </div>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </div>
-        </div>
-
-        {selectedImage && (
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-label={selectedImage.alt}
-            className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
-          >
-            <div
-              className="absolute inset-0 bg-black/80"
-              onClick={() => setSelectedIndex(null)}
-            />
-            <button
-              aria-label="Close image"
-              onClick={() => setSelectedIndex(null)}
-              className="absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-[#0F3652] shadow-lg transition-colors hover:bg-[#F3831C] hover:text-white"
-            >
-              <X size={20} />
-            </button>
-            <img
-              src={selectedImage.src}
-              alt={selectedImage.alt}
-              title={selectedImage.alt}
-              className="relative max-h-[85vh] max-w-full rounded-xl object-contain"
-            />
-          </div>
-        )}
+    <div className="relative w-full  py-8">
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            backgroundImage:
+              "linear-gradient(to right, #888 1px, transparent 1px), linear-gradient(to bottom, #888 1px, transparent 1px)",
+            backgroundSize: "50px 50px",
+          }}
+        ></div>
       </div>
 
+      <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
+        <SectionHeading title={title} description={description} align="center" />
+        <CardCarousel
+          studentData={images}
+          autoplayDelay={3000}
+          showPagination={true}
+          showNavigation={true}
+          className="showcase-student-carousel relative z-0"
+          onSlideClick={(index) => setSelectedIndex(index)}
+        />
+      </div>
+
+      {selectedImage && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label={selectedImage.alt}
+          className="fixed inset-0 z-[10000] flex items-center justify-center p-4"
+        >
+          <div
+            className="absolute inset-0 bg-black/80"
+            onClick={() => setSelectedIndex(null)}
+          />
+          <button
+            aria-label="Close image"
+            onClick={() => setSelectedIndex(null)}
+            className="absolute top-4 right-4 z-10 flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-white text-[#0F3652] shadow-lg transition-colors hover:bg-[#F3831C] hover:text-white"
+          >
+            <X size={20} />
+          </button>
+          <img
+            src={selectedImage.src}
+            alt={selectedImage.alt}
+            title={selectedImage.alt}
+            className="relative max-h-[85vh] max-w-full rounded-xl object-contain"
+          />
+        </div>
+      )}
+
       <style>{`
-        .weekly-achievers-carousel .swiper {
+        .showcase-student-carousel .swiper {
           width: 100%;
+          padding-bottom: 50px;
         }
-        .weekly-achievers-carousel .swiper-slide {
-          height: auto;
+
+        .showcase-student-carousel .swiper-slide {
+          background-position: center;
+          background-size: cover;
+          width: 300px;
+          transform: translateZ(0);
+          backface-visibility: hidden;
+          perspective: 1000px;
         }
-        .carousel-nav-btn {
-          position: absolute;
-          top: 50%;
-          transform: translateY(-50%);
-          z-index: 20;
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          background: #ffffff;
-          border: 1.5px solid rgba(15, 54, 82, 0.15);
-          color: #0f3652;
-          box-shadow:
-            0 2px 8px rgba(15, 54, 82, 0.08),
-            0 1px 3px rgba(15, 54, 82, 0.06);
-          cursor: pointer;
-          transition:
-            background 0.22s ease,
-            color 0.22s ease,
-            border-color 0.22s ease,
-            box-shadow 0.22s ease,
-            transform 0.22s ease;
-        }
-        .carousel-nav-prev {
-          left: -8px;
-        }
-        .carousel-nav-next {
-          right: -8px;
-        }
-        @media (min-width: 1280px) {
-          .carousel-nav-prev {
-            left: -20px;
-          }
-          .carousel-nav-next {
-            right: -20px;
-          }
-        }
-        .carousel-nav-btn:hover {
-          background: #0f3652;
-          color: #ffffff;
-          border-color: #0f3652;
-          transform: translateY(-50%) scale(1.06);
-        }
-        .carousel-nav-btn:active {
-          transform: translateY(-50%) scale(0.97);
-        }
-        .carousel-nav-btn.swiper-button-disabled {
-          opacity: 0.35;
-          pointer-events: none;
-        }
-        .carousel-nav-btn svg {
+
+        .showcase-student-carousel .swiper-slide img {
           display: block;
-          flex-shrink: 0;
+          width: 100%;
+          height: auto;
+          object-fit: cover;
+          border-radius: 8px;
+          transform: translateZ(0);
+          will-change: transform;
+        }
+
+        .showcase-student-carousel .swiper-3d .swiper-slide-shadow-left,
+        .showcase-student-carousel .swiper-3d .swiper-slide-shadow-right {
+          background-image: none;
+        }
+
+        .showcase-student-carousel .swiper-pagination {
+          display: none !important;
+        }
+
+        /* Animation for the background */
+        @keyframes moveBackground {
+          0% { background-position: 0% 0%; }
+          100% { background-position: 100% 100%; }
+        }
+
+        /* Reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+          .showcase-student-carousel .swiper {
+            transition: none;
+          }
+          .showcase-student-carousel .swiper-slide {
+            animation: none;
+          }
         }
       `}</style>
-    </section>
+    </div>
   );
 };
 
