@@ -11,6 +11,10 @@ const getModuleOrder = (name) => {
 const getDefaultModule = (course) =>
   course === "CFE" ? "Module 1" : "Section 1";
 
+// API text contains embedded newlines mid-sentence — collapse them so each
+// question/answer renders as one clean continuous paragraph.
+const cleanText = (value) => String(value || "").replace(/\s+/g, " ").trim();
+
 const FreeResourceDistractor = ({ course, heading, subHeading }) => {
   const {
     data: distractorData = {},
@@ -80,7 +84,7 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
 
   if (isLoading) {
     return (
-      <div className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full bg-white border-t border-[#0F3652]/15 py-12 px-4 sm:px-6 lg:px-8">
         {renderHeader()}
         <div className="flex justify-center items-center h-40">
           <div className="text-[#0F3652]">Loading distractors...</div>
@@ -91,7 +95,7 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
 
   if (isError || moduleNames.length === 0) {
     return (
-      <div className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full bg-white border-t border-[#0F3652]/15 py-12 px-4 sm:px-6 lg:px-8">
         {renderHeader()}
         <div className="flex justify-center items-center h-40">
           <div className="text-red-500">Failed to load distractors</div>
@@ -107,7 +111,7 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
     : moduleNames[0];
 
   return (
-    <div className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="w-full bg-white border-t border-[#0F3652]/15 py-12 px-4 sm:px-6 lg:px-8">
       {renderHeader()}
 
       {/* Module / Section selector */}
@@ -132,11 +136,11 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
       </div>
 
       {/* Distractor cards grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 items-stretch">
         {activeItems.map((item, idx) => (
           <div
             key={item.id}
-            className="group relative bg-white rounded-2xl border border-[#0F3652]/10 p-6 pt-5 flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_32px_rgba(15,54,82,0.15)] hover:border-[#F3831C]/60"
+            className="group relative bg-white rounded-2xl border border-[#0F3652]/10 p-6 pt-5 w-full h-full flex flex-col cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_32px_rgba(15,54,82,0.15)] hover:border-[#F3831C]/60"
           >
             <div className="flex items-center gap-3 mb-3">
               <span className="w-8 h-8 rounded-full bg-[#0F3652]/5 text-[#0F3652] text-sm font-bold flex items-center justify-center flex-shrink-0 transition-colors duration-300 group-hover:bg-[#F3831C] group-hover:text-white">
@@ -147,11 +151,11 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
               </span>
             </div>
             <h3 className="text-[15px] font-bold text-[#F3831C] leading-snug mb-2 transition-colors duration-300 group-hover:text-[#d96e00]">
-              {item.web_distractors}
+              {cleanText(item.web_distractors)}
             </h3>
             <span className="w-8 h-0.5 bg-[#F3831C]/25 rounded-full mb-3 group-hover:w-12 group-hover:bg-[#F3831C] transition-all duration-300" />
-            <p className="text-[13px] text-[#0F3652]/80 leading-relaxed whitespace-pre-line">
-              {item.web_distractors_explaination}
+            <p className="text-[13px] text-[#0F3652]/80 leading-relaxed">
+              {cleanText(item.web_distractors_explaination)}
             </p>
           </div>
         ))}
