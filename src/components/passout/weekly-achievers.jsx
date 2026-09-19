@@ -18,8 +18,9 @@ const getWeekNumber = (item) => {
 };
 
 const WeeklyAchievers = ({
-  title = "Meet AIA’s Weekly Achievers of 2026 - Representing Global Credentials",
-  description = "Every week, more professionals earn globally recognised certifications with AIA, upgrade their expertise with real-world skills, and take a step towards making an impact worldwide.",
+  title = "Meet AIA’s Weekly Achievers of 2026",
+  description = "Every week, more professionals earn globally recognised certifications with AIA, upgrade their expertise with ",
+  description1 = "real-world skills, and take a step towards making an impact worldwide.",
 }) => {
   const {
     data: achieversData,
@@ -143,7 +144,7 @@ const WeeklyAchievers = ({
       </div>
 
       <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-        <SectionHeading title={title} description={description} align="center" />
+        <SectionHeading title={title} description={description} description1={description1} align="center" />
         <CardCarousel
           studentData={images}
           autoplayDelay={3000}

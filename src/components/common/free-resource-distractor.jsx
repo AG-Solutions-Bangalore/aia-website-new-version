@@ -80,7 +80,7 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
 
   if (isLoading) {
     return (
-      <div className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full bg-white border-t border-[#0F3652]/15 py-12 px-4 sm:px-6 lg:px-8">
         {renderHeader()}
         <div className="flex justify-center items-center h-40">
           <div className="text-[#0F3652]">Loading distractors...</div>
@@ -91,7 +91,7 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
 
   if (isError || moduleNames.length === 0) {
     return (
-      <div className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
+      <div className="w-full bg-white border-t border-[#0F3652]/15 py-12 px-4 sm:px-6 lg:px-8">
         {renderHeader()}
         <div className="flex justify-center items-center h-40">
           <div className="text-red-500">Failed to load distractors</div>
@@ -107,7 +107,7 @@ const FreeResourceDistractor = ({ course, heading, subHeading }) => {
     : moduleNames[0];
 
   return (
-    <div className="w-full bg-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="w-full bg-white border-t border-[#0F3652]/15 py-12 px-4 sm:px-6 lg:px-8">
       {renderHeader()}
 
       {/* Module / Section selector */}
