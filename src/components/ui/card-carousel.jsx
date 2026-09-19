@@ -18,6 +18,7 @@ export const CardCarousel = ({
   showPagination = true,
   showNavigation = true,
   className = "",
+  onSlideClick = null,
 }) => {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
@@ -123,7 +124,23 @@ export const CardCarousel = ({
               >
                 {studentData.map((student, index) => (
                   <SwiperSlide key={index}>
-                    <div className="relative bg-white shadow-lg shadow-gray-200/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-gray-300/50">
+                    <div
+                      className={`relative bg-white shadow-lg shadow-gray-200/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-gray-300/50 ${onSlideClick ? "cursor-zoom-in" : ""}`}
+                      role={onSlideClick ? "button" : undefined}
+                      tabIndex={onSlideClick ? 0 : undefined}
+                      aria-label={onSlideClick ? `View ${student.alt}` : undefined}
+                      onClick={onSlideClick ? () => onSlideClick(index) : undefined}
+                      onKeyDown={
+                        onSlideClick
+                          ? (e) => {
+                              if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                onSlideClick(index);
+                              }
+                            }
+                          : undefined
+                      }
+                    >
                       <div className="border !rounded-none border-[#0F3652]">
                         <OptimizedImage
                           src={student.src}
