@@ -11,6 +11,9 @@ const FreeResourceFlashCard = lazy(() =>
 const FreeResourcePracticeQuestion = lazy(() =>
   import("@/components/cfe-free-resource/free-resource-practice-question")
 );
+const FreeResourceDistractor = lazy(() =>
+  import("@/components/common/free-resource-distractor")
+);
 const CourseAchivers = lazy(() =>
   import("@/components/common/course-achivers")
 );
@@ -26,6 +29,7 @@ const FreeResources = () => {
     youtube: { current: null },
     flash: { current: null },
     practice: { current: null },
+    distractor: { current: null },
     achievers: { current: null },
     alumni: { current: null },
     review: { current: null },
@@ -101,6 +105,18 @@ const FreeResources = () => {
         {visible.practice && (
           <Suspense fallback={null}>
             <FreeResourcePracticeQuestion />
+          </Suspense>
+        )}
+      </div>
+
+      <div ref={refs.distractor}>
+        {visible.distractor && (
+          <Suspense fallback={null}>
+            <FreeResourceDistractor
+              course="CFE"
+              heading="CFE Free Distractor - Module Wise"
+              subHeading="Select any module to access free distractors that help you test your knowledge, identify common mistakes, improve concept clarity, and strengthen your CFE preparation."
+            />
           </Suspense>
         )}
       </div>
