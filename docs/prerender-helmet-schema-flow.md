@@ -122,11 +122,21 @@ const html = rawHtml
 
 #### 3. Deterministic Head & Schema Injection:
 ```typescript
-// Authoritative head elements
+// Authoritative head elements with data-rh="true" to bridge SSG with React Helmet
 const elements = new Set<Record<string, unknown>>([
-  { type: 'meta', props: { name: 'description', content: seo.description } },
-  { type: 'link', props: { rel: 'canonical', href: canonical } },
-  // ... OpenGraph and Twitter tags
+  { type: 'meta', props: { name: 'description', content: seo.description, 'data-rh': 'true' } },
+  { type: 'meta', props: { name: 'keywords', content: seo.keywords, 'data-rh': 'true' } },
+  { type: 'link', props: { rel: 'canonical', href: canonical, 'data-rh': 'true' } },
+  { type: 'meta', props: { name: 'robots', content: seo.noIndex ? 'noindex, nofollow' : 'index, follow', 'data-rh': 'true' } },
+  { type: 'meta', props: { property: 'og:title', content: seo.title, 'data-rh': 'true' } },
+  { type: 'meta', props: { property: 'og:description', content: seo.description, 'data-rh': 'true' } },
+  { type: 'meta', props: { property: 'og:url', content: canonical, 'data-rh': 'true' } },
+  { type: 'meta', props: { property: 'og:type', content: isArticle ? 'article' : 'website', 'data-rh': 'true' } },
+  { type: 'meta', props: { property: 'og:image', content: ogImage, 'data-rh': 'true' } },
+  { type: 'meta', props: { name: 'twitter:card', content: 'summary_large_image', 'data-rh': 'true' } },
+  { type: 'meta', props: { name: 'twitter:title', content: seo.title, 'data-rh': 'true' } },
+  { type: 'meta', props: { name: 'twitter:description', content: seo.description, 'data-rh': 'true' } },
+  { type: 'meta', props: { name: 'twitter:image', content: ogImage, 'data-rh': 'true' } },
 ]);
 
 // Inject single unified @graph script
@@ -145,7 +155,7 @@ if (seo.schemas.length > 0) {
 
 ---
 
-### B. Client-Side Runtime Deduplication ([src/components/SEOPageLayout.tsx](file:///d:/JOB_PROJECTS/igli/src/components/SEOPageLayout.tsx))
+### B. Client-Side Runtime Deduplication & Canonical Sync ([src/components/SEOPageLayout.tsx](file:///d:/JOB_PROJECTS/igli/src/components/SEOPageLayout.tsx))
 
 In the browser, every page component is wrapped in `<SEOPageLayout>`:
 
@@ -160,17 +170,53 @@ export default function SEOPageLayout({
     structuredSchemas.length > 0 ? createCompositeGraph(structuredSchemas) : null;
 
   React.useEffect(() => {
+    // 1. Synchronize Document Title
+    if (seo.title) document.title = seo.title;
+
+    // 2. Synchronize Canonical Link Tag (ensures exact match on client-side route transitions)
+    let canonicalEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (canonicalEl) {
+      canonicalEl.setAttribute('href', finalCanonical);
+    } else {
+      canonicalEl = document.createElement('link');
+      canonicalEl.setAttribute('rel', 'canonical');
+      canonicalEl.setAttribute('href', finalCanonical);
+      document.head.appendChild(canonicalEl);
+    }
+
+    // Deduplicate canonical tags if multiple exist in head
+    const allCanonicals = document.querySelectorAll('link[rel="canonical"]');
+    if (allCanonicals.length > 1) {
+      for (let i = 1; i < allCanonicals.length; i++) {
+        allCanonicals[i].remove();
+      }
+    }
+
+    // 3. Synchronize Meta Description & Keywords
+    let descEl = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (descEl) {
+      descEl.setAttribute('content', seo.description || '');
+    }
+
+    // 4. Synchronize OpenGraph Meta Tags
+    const updateOg = (prop: string, content: string) => {
+      let el = document.querySelector(`meta[property="${prop}"]`) as HTMLMetaElement | null;
+      if (el) el.setAttribute('content', content);
+    };
+    updateOg('og:title', seo.title || '');
+    updateOg('og:description', seo.description || '');
+    updateOg('og:url', finalCanonical);
+
+    // 5. In-place update of existing schema script tag
     if (!pageGraphPayload) return;
     const jsonStr = JSON.stringify(pageGraphPayload);
     const existing = document.getElementById('schema-jsonld') as HTMLScriptElement | null;
 
-    // 1. In-place update of existing script tag
     if (existing) {
       if (existing.textContent !== jsonStr) {
         existing.textContent = jsonStr;
       }
     } else {
-      // 2. Create if not yet present
       const script = document.createElement('script');
       script.id = 'schema-jsonld';
       script.type = 'application/ld+json';
@@ -178,14 +224,14 @@ export default function SEOPageLayout({
       document.head.appendChild(script);
     }
 
-    // 3. Purge any duplicate or stray application/ld+json tags in document.head
+    // Purge any duplicate or stray application/ld+json tags in document.head
     const allLdScripts = document.head.querySelectorAll('script[type="application/ld+json"]');
     if (allLdScripts.length > 1) {
       for (let i = 1; i < allLdScripts.length; i++) {
         allLdScripts[i].remove();
       }
     }
-  }, [pageGraphPayload]);
+  }, [seo, finalCanonical, pageGraphPayload]);
 
   return (
     <>
