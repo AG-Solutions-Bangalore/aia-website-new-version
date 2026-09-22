@@ -53,6 +53,85 @@ export default function SEOPageLayout({
     structuredSchemas.length > 0 ? createCompositeGraph(structuredSchemas) : null;
 
   React.useEffect(() => {
+    // 1. Synchronize Document Title
+    if (seo.title) {
+      document.title = seo.title;
+    }
+
+    // 2. Synchronize Canonical Link Tag (ensures exact match on client-side route change)
+    let canonicalEl = document.querySelector('link[rel="canonical"]') as HTMLLinkElement | null;
+    if (canonicalEl) {
+      canonicalEl.setAttribute('href', finalCanonical);
+    } else {
+      canonicalEl = document.createElement('link');
+      canonicalEl.setAttribute('rel', 'canonical');
+      canonicalEl.setAttribute('href', finalCanonical);
+      document.head.appendChild(canonicalEl);
+    }
+
+    // Deduplicate canonical tags if multiple exist in head
+    const allCanonicals = document.querySelectorAll('link[rel="canonical"]');
+    if (allCanonicals.length > 1) {
+      for (let i = 1; i < allCanonicals.length; i++) {
+        allCanonicals[i].remove();
+      }
+    }
+
+    // 3. Synchronize Meta Description
+    let descEl = document.querySelector('meta[name="description"]') as HTMLMetaElement | null;
+    if (descEl) {
+      descEl.setAttribute('content', seo.description || '');
+    } else if (seo.description) {
+      descEl = document.createElement('meta');
+      descEl.setAttribute('name', 'description');
+      descEl.setAttribute('content', seo.description);
+      document.head.appendChild(descEl);
+    }
+
+    const allDescs = document.querySelectorAll('meta[name="description"]');
+    if (allDescs.length > 1) {
+      for (let i = 1; i < allDescs.length; i++) {
+        allDescs[i].remove();
+      }
+    }
+
+    // 4. Synchronize Meta Keywords
+    if (seo.keywords) {
+      let kwEl = document.querySelector('meta[name="keywords"]') as HTMLMetaElement | null;
+      if (kwEl) {
+        kwEl.setAttribute('content', seo.keywords);
+      } else {
+        kwEl = document.createElement('meta');
+        kwEl.setAttribute('name', 'keywords');
+        kwEl.setAttribute('content', seo.keywords);
+        document.head.appendChild(kwEl);
+      }
+
+      const allKws = document.querySelectorAll('meta[name="keywords"]');
+      if (allKws.length > 1) {
+        for (let i = 1; i < allKws.length; i++) {
+          allKws[i].remove();
+        }
+      }
+    }
+
+    // 5. Synchronize OpenGraph meta tags
+    const updateOg = (prop: string, content: string) => {
+      let el = document.querySelector(`meta[property="${prop}"]`) as HTMLMetaElement | null;
+      if (el) {
+        el.setAttribute('content', content);
+      } else {
+        el = document.createElement('meta');
+        el.setAttribute('property', prop);
+        el.setAttribute('content', content);
+        document.head.appendChild(el);
+      }
+    };
+    updateOg('og:title', seo.title || '');
+    updateOg('og:description', seo.description || '');
+    updateOg('og:url', finalCanonical);
+
+    // 6. Synchronize Schema JSON-LD graph payload
     if (!pageGraphPayload) return;
     const jsonStr = JSON.stringify(pageGraphPayload);
     const existing = document.getElementById('schema-jsonld') as HTMLScriptElement | null;
@@ -76,7 +155,7 @@ export default function SEOPageLayout({
         allLdScripts[i].remove();
       }
     }
-  }, [pageGraphPayload]);
+  }, [seo, finalCanonical, pageGraphPayload]);
 
   return (
     <>

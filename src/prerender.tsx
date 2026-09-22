@@ -187,22 +187,22 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
 
   // 6. Build the authoritative head elements (title, canonical, robots, OpenGraph, Twitter)
   const elements = new Set<Record<string, unknown>>([
-    { type: 'meta', props: { name: 'description', content: seo.description } },
-    { type: 'meta', props: { name: 'keywords', content: seo.keywords } },
-    { type: 'link', props: { rel: 'canonical', href: canonical } },
+    { type: 'meta', props: { name: 'description', content: seo.description, 'data-rh': 'true' } },
+    { type: 'meta', props: { name: 'keywords', content: seo.keywords, 'data-rh': 'true' } },
+    { type: 'link', props: { rel: 'canonical', href: canonical, 'data-rh': 'true' } },
     {
       type: 'meta',
-      props: { name: 'robots', content: seo.noIndex ? 'noindex, nofollow' : 'index, follow' },
+      props: { name: 'robots', content: seo.noIndex ? 'noindex, nofollow' : 'index, follow', 'data-rh': 'true' },
     },
-    { type: 'meta', props: { property: 'og:title', content: seo.title } },
-    { type: 'meta', props: { property: 'og:description', content: seo.description } },
-    { type: 'meta', props: { property: 'og:url', content: canonical } },
-    { type: 'meta', props: { property: 'og:type', content: isArticle ? 'article' : 'website' } },
-    { type: 'meta', props: { property: 'og:image', content: ogImage } },
-    { type: 'meta', props: { name: 'twitter:card', content: 'summary_large_image' } },
-    { type: 'meta', props: { name: 'twitter:title', content: seo.title } },
-    { type: 'meta', props: { name: 'twitter:description', content: seo.description } },
-    { type: 'meta', props: { name: 'twitter:image', content: ogImage } },
+    { type: 'meta', props: { property: 'og:title', content: seo.title, 'data-rh': 'true' } },
+    { type: 'meta', props: { property: 'og:description', content: seo.description, 'data-rh': 'true' } },
+    { type: 'meta', props: { property: 'og:url', content: canonical, 'data-rh': 'true' } },
+    { type: 'meta', props: { property: 'og:type', content: isArticle ? 'article' : 'website', 'data-rh': 'true' } },
+    { type: 'meta', props: { property: 'og:image', content: ogImage, 'data-rh': 'true' } },
+    { type: 'meta', props: { name: 'twitter:card', content: 'summary_large_image', 'data-rh': 'true' } },
+    { type: 'meta', props: { name: 'twitter:title', content: seo.title, 'data-rh': 'true' } },
+    { type: 'meta', props: { name: 'twitter:description', content: seo.description, 'data-rh': 'true' } },
+    { type: 'meta', props: { name: 'twitter:image', content: ogImage, 'data-rh': 'true' } },
   ]);
 
   // 7. Inject single unified Schema.org @graph JSON-LD script tag
