@@ -77,8 +77,39 @@ const BlogDetails = () => {
 
   useEffect(() => {
     if (!blog) return;
-    // We only set the title here as a fallback, but Helmet handles the rest cleanly.
-    document.title = blog.blog_meta_title || blog.blog_heading;
+    const resolvedTitle = blog.blog_meta_title || blog.blog_heading;
+    if (resolvedTitle) {
+      document.title = resolvedTitle;
+      const ogTitle = document.querySelector('meta[property="og:title"]');
+      if (ogTitle) ogTitle.setAttribute("content", resolvedTitle);
+      const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+      if (twitterTitle) twitterTitle.setAttribute("content", resolvedTitle);
+    }
+
+    const desc = blog.blog_meta_description || blog.blog_short_description;
+    if (desc) {
+      let descEl = document.querySelector('meta[name="description"]');
+      if (descEl) {
+        descEl.setAttribute("content", desc);
+      } else {
+        descEl = document.createElement("meta");
+        descEl.setAttribute("name", "description");
+        descEl.setAttribute("content", desc);
+        document.head.appendChild(descEl);
+      }
+
+      const ogDesc = document.querySelector('meta[property="og:description"]');
+      if (ogDesc) ogDesc.setAttribute("content", desc);
+
+      const twitterDesc = document.querySelector('meta[name="twitter:description"]');
+      if (twitterDesc) twitterDesc.setAttribute("content", desc);
+    }
+
+    const keywords = blog.blog_meta_keywords;
+    if (keywords) {
+      const kwEl = document.querySelector('meta[name="keywords"]');
+      if (kwEl) kwEl.setAttribute("content", keywords);
+    }
   }, [blog]);
 
   const faqItems = useMemo(
