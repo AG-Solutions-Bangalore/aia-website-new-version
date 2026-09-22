@@ -91,17 +91,17 @@ igli/
 
 | File Path | Language | Primary Responsibility | Key Dependencies |
 | :--- | :--- | :--- | :--- |
-| [`src/config/site.ts`](file:///d:/JOB_PROJECTS/igli/src/config/site.ts) | TypeScript | Brand constants, contact information, social links, and pure `getCanonicalUrl()` helper. | None (Pure TS) |
+| [`src/config/site.ts`](file:///d:/JOB_PROJECTS/igli/src/config/site.ts) | TypeScript | Brand constants, contact info, `COURSE_ROUTES` set, and selective `getCanonicalUrl()` helper. | None (Pure TS) |
 | [`src/config/dynamicData.ts`](file:///d:/JOB_PROJECTS/igli/src/config/dynamicData.ts) | TypeScript | Build-time API ingestion, in-memory caching, batching (`batchSize = 15`), and synchronous getters. | `@/api/base-url` |
 | [`src/config/schemaExamples.ts`](file:///d:/JOB_PROJECTS/igli/src/config/schemaExamples.ts) | TypeScript | Type-safe Schema.org factory builders (`BlogPosting`, `FAQPage`, `Review`, `Course`, `Product`). | `schema-dts`, `./site` |
 | [`src/config/seoEngine.ts`](file:///d:/JOB_PROJECTS/igli/src/config/seoEngine.ts) | TypeScript | Master static metadata dictionary (`ROUTE_SEO`) and dynamic route resolver (`getSeoForRoute`). | `schema-dts`, `./site`, `./schemaExamples`, `./dynamicData` |
 | [`src/components/SEOPageLayout.tsx`](file:///d:/JOB_PROJECTS/igli/src/components/SEOPageLayout.tsx) | TypeScript / React | Head meta tag management via `<Helmet>` and client-side single-script `#schema-jsonld` DOM deduplication. | `react-helmet-async`, `schema-dts`, `@/config/seoEngine` |
-| [`src/routes/AppRoutes.tsx`](file:///d:/JOB_PROJECTS/igli/src/routes/AppRoutes.tsx) | TypeScript / React | Decoupled route tree binding routes to lazy components wrapped in `<PageSEO>`, with SSR QueryClient injection. | `react-router-dom`, `@tanstack/react-query`, `@/components/SEOPageLayout` |
+| [`src/routes/AppRoutes.tsx`](file:///d:/JOB_PROJECTS/igli/src/routes/AppRoutes.tsx) | TypeScript / React | Decoupled route tree binding routes to lazy components wrapped in `<PageSEO>`, with `TrailingSlashEnforcer` and SSR QueryClient injection. | `react-router-dom`, `@tanstack/react-query`, `@/components/SEOPageLayout` |
 | [`src/routes/blog-redirects.ts`](file:///d:/JOB_PROJECTS/igli/src/routes/blog-redirects.ts) | TypeScript | Permanent 301 legacy URL redirect dictionary protecting incoming search engine backlinks. | None |
 | [`src/prerender.tsx`](file:///d:/JOB_PROJECTS/igli/src/prerender.tsx) | TypeScript / React | Server-side SSG worker using Web Standard `renderToReadableStream`, React Query pre-hydration, and head sanitization. | `react-dom/server`, `react-router`, `react-helmet-async`, `@tanstack/react-query` |
-| [`src/pages/Blog/blog-details.jsx`](file:///d:/JOB_PROJECTS/igli/src/pages/Blog/blog-details.jsx) | JavaScript / React | Dynamic blog post component utilizing `useQuery` for immediate SSR markup emission and seamless client hydration. | `@tanstack/react-query`, `axios`, `react-helmet-async` |
+| [`src/pages/Blog/blog-details.jsx`](file:///d:/JOB_PROJECTS/igli/src/pages/Blog/blog-details.jsx) | JavaScript / React | Dynamic blog post component utilizing `useQuery`, SSR markup emission, and client-side meta/DOM synchronization. | `@tanstack/react-query`, `axios`, `react-helmet-async` |
 | [`src/components/passout/passout-stories-slug.jsx`](file:///d:/JOB_PROJECTS/igli/src/components/passout/passout-stories-slug.jsx) | JavaScript / React | Dynamic student passout story component utilizing `useQuery` for immediate SSR markup emission. | `@tanstack/react-query`, `axios` |
-| [`scripts/generateSitemap.ts`](file:///d:/JOB_PROJECTS/igli/scripts/generateSitemap.ts) | TypeScript / Bun | Recursively discovers all 190 pre-rendered HTML files in `dist/` and writes RFC-compliant `sitemap.xml` & `robots.txt`. | `node:fs`, `node:path`, `../src/config/site` |
+| [`scripts/generateSitemap.ts`](file:///d:/JOB_PROJECTS/igli/scripts/generateSitemap.ts) | TypeScript / Bun | Recursively discovers all 191 pre-rendered HTML files in `dist/` and writes RFC-compliant `sitemap.xml` & `robots.txt`. | `node:fs`, `node:path`, `../src/config/site` |
 | [`scripts/validateSchemas.ts`](file:///d:/JOB_PROJECTS/igli/scripts/validateSchemas.ts) | TypeScript / Bun | CI quality gate parsing all pre-rendered HTML files with `node-html-parser` to ensure 0 duplicates and valid `@graph`. | `node-html-parser`, `node:fs`, `node:path` |
 | [`vite.config.ts`](file:///d:/JOB_PROJECTS/igli/vite.config.ts) | TypeScript | Configures `vitePrerenderPlugin`, React compiler, code splitting chunks, and the Node event loop unref patch. | `vite`, `vite-prerender-plugin`, `@vitejs/plugin-react` |
 
@@ -421,19 +421,37 @@ bun x tsc --noEmit
 # 2. Build for production (compiles assets, runs SSG prerendering, generates sitemap & robots.txt)
 bun run build
 
-# 3. Audit all 190 pre-rendered HTML files for valid Schema.org graphs
+# 3. Audit all 191 pre-rendered HTML files for valid Schema.org graphs
 bun run test:schema
 
 # 4. Preview the static production build locally
 bun run preview
 ```
 
+---
+
+## 10. Canonical URL & Trailing Slash Policy
+
+To maintain 100% index parity with existing Google Search Console records and eliminate canonical mismatch flags:
+
+1. **Course Pages Only (`COURSE_ROUTES` Set):**
+   * `/cfe-curriculum`, `/cia-curriculum`, `/cia-challenge-curriculum`, `/cams`, `/cisa` are indexed **WITHOUT** a trailing slash (e.g., `https://aia.in.net/cfe-curriculum`).
+   * Apache `.htaccess` redirects incoming requests with trailing slash (`/cams/`) to without slash (`/cams`) using a permanent 301.
+   * `TrailingSlashEnforcer` in [AppRoutes.tsx](file:///d:/JOB_PROJECTS/igli/src/routes/AppRoutes.tsx) enforces non-trailing slash in the client SPA.
+2. **All Other Routes (Blogs, Free Resources, Static Pages):**
+   * Indexed **WITH** a trailing slash (e.g., `https://aia.in.net/blogs/`, `https://aia.in.net/blogs/cams-exam-tips/`, `https://aia.in.net/cfe-free-resources/`, `https://aia.in.net/about-aia/`).
+   * Apache `.htaccess` rewrites non-slash folder requests to trailing slash (301).
+   * `TrailingSlashEnforcer` normalizes client navigation to trailing slash.
+3. **Dynamic Client-Side Metadata Synchronization:**
+   * In [blog-details.jsx](file:///d:/JOB_PROJECTS/igli/src/pages/Blog/blog-details.jsx), an effect synchronizes `meta[name="description"]`, `og:description`, `twitter:description`, and `document.title` directly to the live article's `blog_meta_description` / `blog_short_description` as soon as the TanStack Query resolves, ensuring developer mode (`localhost:5173`) and SPA transitions reflect the exact database description.
+
 ### Verification Checklist:
 * [x] **0 TypeScript compilation errors** (`bun x tsc --noEmit`).
-* [x] **190 static HTML files generated** in `dist/` in ~6.9 seconds.
+* [x] **191 static HTML files generated** in `dist/`.
+* [x] **Course URLs omit trailing slash; all other URLs retain trailing slash** across sitemap, canonicals, and router.
 * [x] **Dynamic blog articles contain full HTML content** (~160KB per file, no empty skeletons).
 * [x] **Single `<script id="schema-jsonld">` per page** with unified `@graph`.
-* [x] **190/190 pages pass Google Rich Results & Graph validation** (`bun run test:schema`).
-* [x] **`sitemap.xml` automatically generated** with 190 URLs and priority metadata.
+* [x] **191/191 pages pass Google Rich Results & Graph validation** (`bun run test:schema`).
+* [x] **`sitemap.xml` automatically generated** with 191 URLs and priority metadata.
 * [x] **`robots.txt` referencing production sitemap** at `https://aia.in.net/sitemap.xml`.
 * [x] **Zero automated git commits/pushes performed** (developer retains full manual git control).

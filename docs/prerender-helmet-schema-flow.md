@@ -255,6 +255,11 @@ export default function SEOPageLayout({
 }
 ```
 
+### Dynamic Client-Side Metadata Synchronization (`blog-details.jsx`):
+When running in client-side SPA mode or during Vite development (`bun dev`), dynamic routes fetch article data via TanStack Query. Once the article resolves:
+* `blog-details.jsx` synchronizes `document.querySelector('meta[name="description"]')`, `og:description`, `twitter:description`, and `document.title` to the live article's `blog_meta_description` / `blog_short_description`.
+* This ensures that SEO audit extensions and browser tabs show the exact database description immediately upon loading.
+
 ---
 
 ## 5. Verification: How to Confirm 0 Duplicate Schemas
@@ -265,7 +270,7 @@ You can verify that this architecture is functioning properly using three indepe
 ```bash
 bun run test:schema
 ```
-* Parses all 190 HTML files in `dist/`.
+* Parses all 191 HTML files in `dist/`.
 * Throws an immediate error if `scripts.length !== 1` on any page.
 
 ### 2. Browser Console Verification:

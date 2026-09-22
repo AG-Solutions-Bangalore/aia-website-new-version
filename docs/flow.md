@@ -110,8 +110,12 @@ graph TD
    * An isolated `useEffect` synchronizes the new route's composite `@graph` directly into `document.getElementById('schema-jsonld')`.
    * A cleanup loop actively removes any stray `<script type="application/ld+json">` tags, guaranteeing 0 duplicate schemas in the browser DOM.
 4. **Canonical URL Consistency ("Self-Canonical" Status):**
-   * All internal links (`<a>`, `window.open`, `navigate`) link directly to clean non-trailing slash URLs (e.g., `/blogs/cia-salary`).
-   * This matches `getCanonicalUrl()` character-for-character, achieving **"Self-Canonical ✅"** status in Googlebot and SEO audit extensions (preventing "Canonicalised" warnings).
+   * **Course Pages Only (`COURSE_ROUTES`):** `/cfe-curriculum`, `/cia-curriculum`, `/cia-challenge-curriculum`, `/cams`, `/cisa` are indexed and canonicalized **WITHOUT** a trailing slash (e.g. `https://aia.in.net/cfe-curriculum`).
+   * **All Other Routes:** Blogs (`/blogs/`, `/blogs/:slug/`), Free Resources (`/cfe-free-resources/`), About, Contact, Alumni, etc. are indexed and canonicalized **WITH** a trailing slash (e.g. `https://aia.in.net/blogs/`).
+   * Both Apache `.htaccess` (301 redirect) and `AppRoutes.tsx` (`TrailingSlashEnforcer`) enforce this exact differentiation.
+   * Internal links, navigation menus, and `generateSitemap.ts` match `getCanonicalUrl()` character-for-character, achieving **"Self-Canonical ✅"** status in Googlebot and SEO audit extensions (preventing "Canonicalised" red warnings).
+5. **Dynamic Article Metadata Synchronization:**
+   * In addition to SSR pre-rendering, `blog-details.jsx` synchronizes `document.querySelector('meta[name="description"]')`, `og:description`, `twitter:description`, and `document.title` on the client as soon as live article data resolves from the API, ensuring developer mode and client SPA transitions reflect exact article metadata.
 
 ---
 
@@ -119,7 +123,7 @@ graph TD
 
 ```
 [src/config/site.ts]
-   │  Provides: SITE_ORIGIN, brand constants, getCanonicalUrl() (Clean Non-Trailing Slash)
+   │  Provides: SITE_ORIGIN, brand constants, COURSE_ROUTES set, getCanonicalUrl() (Selective Trailing Slash)
    ▼
 [src/config/schemaExamples.ts]
    │  Provides: Strict schema-dts typed factories (Product, Course, BlogPosting, Review, FAQPage, Breadcrumbs)
