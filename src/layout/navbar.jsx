@@ -21,11 +21,11 @@ const SocialMark = ({ children }) => (
 
 const routePrefetch = {
   "/about-aia/": () => import("../pages/About/About"),
-  "/cfe-curriculum/": () => import("../pages/Courses/CFECurriculam"),
-  "/cia-curriculum/": () => import("../pages/Courses/CIACurriculam"),
-  "/cia-challenge-curriculum/": () => import("../pages/Courses/CIAChallenge"),
-  "/cisa/": () => import("../pages/Courses/CISA"),
-  "/cams/": () => import("../pages/Courses/CAMS"),
+  "/cfe-curriculum": () => import("../pages/Courses/CFECurriculam"),
+  "/cia-curriculum": () => import("../pages/Courses/CIACurriculam"),
+  "/cia-challenge-curriculum": () => import("../pages/Courses/CIAChallenge"),
+  "/cisa": () => import("../pages/Courses/CISA"),
+  "/cams": () => import("../pages/Courses/CAMS"),
   "/cfe-free-resources/": () =>
     import("../pages/free-resources/cfe-free-resources"),
   "/blogs/": () => import("../pages/Blog/Blog"),
@@ -79,11 +79,11 @@ const Navbar = () => {
       title: "Courses",
       link: "#",
       submenu: [
-        { name: "CFE Curriculum", link: "/cfe-curriculum/" },
-        { name: "CIA Curriculum", link: "/cia-curriculum/" },
-        { name: "CIA Challenge", link: "/cia-challenge-curriculum/" },
-        { name: "CAMS", link: "/cams/" },
-        { name: "CISA", link: "/cisa/" },
+        { name: "CFE Curriculum", link: "/cfe-curriculum" },
+        { name: "CIA Curriculum", link: "/cia-curriculum" },
+        { name: "CIA Challenge", link: "/cia-challenge-curriculum" },
+        { name: "CAMS", link: "/cams" },
+        { name: "CISA", link: "/cisa" },
       ],
     },
     {

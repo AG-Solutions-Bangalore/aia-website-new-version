@@ -14,13 +14,13 @@ RewriteRule ^passed-out/?$ /alumni-network/ [R=301,L]
 RewriteRule ^our-passouts/?$ /alumni-network/ [R=301,L]
 RewriteRule ^corpo/?$ /corporate-training/ [R=301,L]
 RewriteRule ^enroll/?$ /enroll-now/ [R=301,L]
-RewriteRule ^about-aia/cia-curriculum/?$ /cia-curriculum/ [R=301,L]
-RewriteRule ^about-aia/cams/?$ /cams/ [R=301,L]
-RewriteRule ^about-aia/cfe-curriculum/?$ /cfe-curriculum/ [R=301,L]
-RewriteRule ^about-aia/cia-challenge-curriculum/?$ /cia-challenge-curriculum/ [R=301,L]
-RewriteRule ^corporate-training/cia-curriculum/?$ /cia-curriculum/ [R=301,L]
-RewriteRule ^corporate-training/cams/?$ /cams/ [R=301,L]
-RewriteRule ^corporate-training/cfe-curriculum/?$ /cfe-curriculum/ [R=301,L]
+RewriteRule ^about-aia/cia-curriculum/?$ /cia-curriculum [R=301,L]
+RewriteRule ^about-aia/cams/?$ /cams [R=301,L]
+RewriteRule ^about-aia/cfe-curriculum/?$ /cfe-curriculum [R=301,L]
+RewriteRule ^about-aia/cia-challenge-curriculum/?$ /cia-challenge-curriculum [R=301,L]
+RewriteRule ^corporate-training/cia-curriculum/?$ /cia-curriculum [R=301,L]
+RewriteRule ^corporate-training/cams/?$ /cams [R=301,L]
+RewriteRule ^corporate-training/cfe-curriculum/?$ /cfe-curriculum [R=301,L]
 
 # 3. Legacy article URLs (Permanent 301 redirects with trailing slash)
 RewriteRule ^what-is-money-laundering/?$ /blogs/what-is-money-laundering/ [R=301,L]
@@ -80,12 +80,16 @@ RewriteRule ^why-we-should-become-cfe/?$ /blogs/benefits-of-becoming-cfe/ [R=301
 RewriteRule ^steps-to-become-cfe/?$ /blogs/steps-to-become-cfe/ [R=301,L]
 RewriteRule ^schedule-of-classes/?$ /blogs/schedule-of-classes/ [R=301,L]
 
-# 4. Enforce trailing slash on all folder routes (matches canonical & Google indexed URLs)
+# 4. Enforce trailing slash on all folder routes EXCEPT course pages (indexed without slash)
 RewriteCond %{REQUEST_URI} !^/webapi/ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/(cfe-curriculum|cia-curriculum|cia-challenge-curriculum|cams|cisa)(/|$) [NC]
 RewriteCond %{REQUEST_URI} !/$
 RewriteCond %{REQUEST_URI} !\.[^/]+$
 RewriteRule ^(.+)$ /$1/ [R=301,L]
+
+# Redirect course pages if accessed with trailing slash to without trailing slash (301)
+RewriteRule ^(cfe-curriculum|cia-curriculum|cia-challenge-curriculum|cams|cisa)/$ /$1 [R=301,L]
 
 # 5. Serve SSG pre-rendered static HTML if folder/index.html exists
 RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f

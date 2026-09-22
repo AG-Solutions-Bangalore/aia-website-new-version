@@ -439,19 +439,19 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://aia.in.net/cams</loc>
+    <lastmod>2026-09-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://aia.in.net/cams-free-resources/</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://aia.in.net/cams/</loc>
-    <lastmod>2026-09-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://aia.in.net/cfe-curriculum/</loc>
+    <loc>https://aia.in.net/cfe-curriculum</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -463,13 +463,13 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://aia.in.net/cia-challenge-curriculum/</loc>
+    <loc>https://aia.in.net/cia-challenge-curriculum</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://aia.in.net/cia-curriculum/</loc>
+    <loc>https://aia.in.net/cia-curriculum</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -481,7 +481,7 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://aia.in.net/cisa/</loc>
+    <loc>https://aia.in.net/cisa</loc>
     <lastmod>2026-09-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>

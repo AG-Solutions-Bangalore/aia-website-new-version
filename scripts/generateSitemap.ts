@@ -37,7 +37,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { SITE_ORIGIN } from '../src/config/site';
+import { SITE_ORIGIN, COURSE_ROUTES } from '../src/config/site';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -60,7 +60,14 @@ function getHtmlFiles(dir: string, baseDir: string = dir): string[] {
     } else if (file === 'index.html') {
       const relative = path.relative(baseDir, filePath);
       const urlPath = relative.replace(/\\/g, '/').replace(/index\.html$/, '');
-      results.push(urlPath === '' ? '/' : `/${urlPath.replace(/^\/+/, '').replace(/\/+$/, '')}/`);
+      const clean = urlPath.replace(/^\/+/, '').replace(/\/+$/, '');
+      if (!clean) {
+        results.push('/');
+      } else if (COURSE_ROUTES.has(clean)) {
+        results.push(`/${clean}`);
+      } else {
+        results.push(`/${clean}/`);
+      }
     }
   }
   return results;

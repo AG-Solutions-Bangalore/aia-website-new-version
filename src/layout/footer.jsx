@@ -57,15 +57,15 @@ export default function Footer() {
               </h4>
               <ul className="space-y-3">
                 {[
-                  { name: "CFE Curriculum", href: "/cfe-curriculum/" },
-                  { name: "CIA Curriculum", href: "/cia-curriculum/" },
+                  { name: "CFE Curriculum", href: "/cfe-curriculum" },
+                  { name: "CIA Curriculum", href: "/cia-curriculum" },
                   {
                     name: "CIA Challenge Curriculum",
-                    href: "/cia-challenge-curriculum/",
+                    href: "/cia-challenge-curriculum",
                   },
 
-                  { name: "CAMS", href: "/cams/" },
-                  { name: "CISA", href: "/cisa/" },
+                  { name: "CAMS", href: "/cams" },
+                  { name: "CISA", href: "/cisa" },
                 ].map((course, idx) => (
                   <li key={idx} className="group">
                     <Link

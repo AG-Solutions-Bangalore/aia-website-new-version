@@ -167,10 +167,10 @@ const CIAChallenge = () => {
           description="Find the certification that aligns with your background and career stage"
           buttonColors={["#a8e6f3", "#fee1c6", "#ffe38f", "#e2d5f8"]}
           images={[
-            { image: "hiw_cfe.webp", link: "/cfe-curriculum/" },
-            { image: "hiw_cia.webp", link: "/cia-curriculum/" },
-            { image: "hiw_cams.webp", link: "/cams/" },
-            { image: "hiw_cisa.webp", link: "/cisa/" },
+            { image: "hiw_cfe.webp", link: "/cfe-curriculum" },
+            { image: "hiw_cia.webp", link: "/cia-curriculum" },
+            { image: "hiw_cams.webp", link: "/cams" },
+            { image: "hiw_cisa.webp", link: "/cisa" },
           ]}
         />
       </LazySection>
