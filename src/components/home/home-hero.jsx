@@ -442,13 +442,13 @@ export default function HomeHero({ slug, bottombar = false }) {
   const slideHref = activeSlide?.link
     ? activeSlide.link.startsWith("http")
       ? activeSlide.link
-      : `/${activeSlide.link.replace(/^\/+/, "")}`
+      : `/${activeSlide.link.replace(/^\/+/, "").replace(/\/+$/, "")}/`
     : undefined;
   const isExternalSlide = Boolean(slideHref?.startsWith("http"));
   const currentHref = current?.link
     ? current.link.startsWith("http")
       ? current.link
-      : `/${current.link.replace(/^\/+/, "")}`
+      : `/${current.link.replace(/^\/+/, "").replace(/\/+$/, "")}/`
     : undefined;
   const isExternalCurrent = Boolean(currentHref?.startsWith("http"));
 

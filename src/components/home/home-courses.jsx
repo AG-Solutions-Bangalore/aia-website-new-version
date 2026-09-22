@@ -211,7 +211,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                 </svg>
               </a>
 
-              {(service.id === 1 || service.link === "cfe-curriculum") && (
+              {(service.id === 1 || service.link?.includes("cfe-curriculum")) && (
                 <CfeRoadmapDialog
                   buttonlabel="Grab the free CFE Roadmap"
                   buttonClassName="h-10 px-4 text-sm font-medium bg-[#F3831C] text-white hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors rounded-md w-full justify-center cursor-pointer"
@@ -270,7 +270,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                     </a>
 
                     {(ALL_SERVICES[activeCard]?.id === 1 ||
-                      ALL_SERVICES[activeCard]?.link === "cfe-curriculum") && (
+                      ALL_SERVICES[activeCard]?.link?.includes("cfe-curriculum")) && (
                       <CfeRoadmapDialog
                         buttonlabel="Grab the free CFE Roadmap"
                         buttonClassName="h-10 px-4 text-sm font-medium bg-[#F3831C] text-white hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors rounded-none cursor-pointer inline-flex items-center"

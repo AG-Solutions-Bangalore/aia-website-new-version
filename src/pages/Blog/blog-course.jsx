@@ -202,7 +202,7 @@ const BlogCourse = () => {
     return COURSE_NAME_MAP[course] || course;
   }, [course]);
   const handleBlogClick = useCallback((slug) => {
-    window.open(`/blogs/${slug}`, "_blank", "noopener,noreferrer");
+    window.open(`/blogs/${slug}/`, "_blank", "noopener,noreferrer");
   }, []);
 
   const handleClearSearch = useCallback(() => {

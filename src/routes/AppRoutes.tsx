@@ -31,7 +31,7 @@
  */
 
 import React, { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/layout/Layout';
 import SEOPageLayout from '@/components/SEOPageLayout';
 import { getSeoForRoute } from '@/config/seoEngine';
@@ -104,6 +104,26 @@ function withTrailingSlash(pathname: string): string {
   return pathname.endsWith('/') ? pathname : `${pathname}/`;
 }
 
+/**
+ * Enforces client-side URL consistency with trailing slashes.
+ * If a user navigates to /cfe-curriculum (without trailing slash),
+ * this component transparently updates the browser URL to /cfe-curriculum/,
+ * matching the canonical tag and preventing any indexing or canonical mismatch issues.
+ */
+function TrailingSlashEnforcer() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const { pathname, search, hash } = location;
+    if (pathname !== '/' && !pathname.endsWith('/')) {
+      navigate(`${pathname}/${search}${hash}`, { replace: true });
+    }
+  }, [location.pathname, location.search, location.hash, navigate]);
+
+  return null;
+}
+
 export interface AppRoutesProps {
   /**
    * Optional QueryClient instance.
@@ -130,15 +150,16 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
+        <TrailingSlashEnforcer />
         <Routes>
           <Route path="/" element={<PageSEO path="/"><Home /></PageSEO>} />
           <Route path="/about-aia" element={<PageSEO path="/about-aia"><AboutPage /></PageSEO>} />
           <Route path="/about-us" element={<Navigate to="/about-aia/" replace />} />
-          <Route path="/about-aia/cia-curriculum" element={<Navigate to="/cia-curriculum" replace />} />
-          <Route path="/about-aia/cams" element={<Navigate to="/cams" replace />} />
-          <Route path="/about-aia/cfe-curriculum" element={<Navigate to="/cfe-curriculum" replace />} />
-          <Route path="/about-aia/cia-challenge-curriculum" element={<Navigate to="/cia-challenge-curriculum" replace />} />
-          <Route path="/about-aia/cisa" element={<Navigate to="/cisa" replace />} />
+          <Route path="/about-aia/cia-curriculum" element={<Navigate to="/cia-curriculum/" replace />} />
+          <Route path="/about-aia/cams" element={<Navigate to="/cams/" replace />} />
+          <Route path="/about-aia/cfe-curriculum" element={<Navigate to="/cfe-curriculum/" replace />} />
+          <Route path="/about-aia/cia-challenge-curriculum" element={<Navigate to="/cia-challenge-curriculum/" replace />} />
+          <Route path="/about-aia/cisa" element={<Navigate to="/cisa/" replace />} />
           <Route path="/cfe-curriculum" element={<PageSEO path="/cfe-curriculum"><CFECurriculam /></PageSEO>} />
           <Route path="/cia-curriculum" element={<PageSEO path="/cia-curriculum"><CIACurriculam /></PageSEO>} />
           <Route path="/cia-challenge-curriculum" element={<PageSEO path="/cia-challenge-curriculum"><CIAChallenge /></PageSEO>} />
@@ -153,7 +174,7 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/blogs/course/:courseName" element={<PageSEO><BlogCourse /></PageSEO>} />
           <Route path="/alumni-network" element={<PageSEO path="/alumni-network"><OurPassout /></PageSEO>} />
           <Route path="/fillter" element={<PageSEO path="/fillter"><FilterPage /></PageSEO>} />
-          <Route path="/filter" element={<Navigate to="/fillter" replace />} />
+          <Route path="/filter" element={<Navigate to="/fillter/" replace />} />
           <Route path="/our-passouts/*" element={<Navigate to="/alumni-network/" replace />} />
           <Route path="/passed-out/*" element={<Navigate to="/alumni-network/" replace />} />
           <Route path="/enroll-now" element={<PageSEO path="/enroll-now"><Enrool /></PageSEO>} />
@@ -162,10 +183,10 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/corporate-training" element={<PageSEO path="/corporate-training"><CorporateTraining /></PageSEO>} />
           <Route path="/aia-times" element={<PageSEO path="/aia-times"><AiaTimes /></PageSEO>} />
           <Route path="/aia-times/flip-book" element={<PageSEO path="/aia-times"><FlipbookSection /></PageSEO>} />
-          <Route path="/corporate-training/cia-curriculum" element={<Navigate to="/cia-curriculum" replace />} />
-          <Route path="/corporate-training/cams" element={<Navigate to="/cams" replace />} />
-          <Route path="/corporate-training/cfe-curriculum" element={<Navigate to="/cfe-curriculum" replace />} />
-          <Route path="/corporate-training/cisa" element={<Navigate to="/cisa" replace />} />
+          <Route path="/corporate-training/cia-curriculum" element={<Navigate to="/cia-curriculum/" replace />} />
+          <Route path="/corporate-training/cams" element={<Navigate to="/cams/" replace />} />
+          <Route path="/corporate-training/cfe-curriculum" element={<Navigate to="/cfe-curriculum/" replace />} />
+          <Route path="/corporate-training/cisa" element={<Navigate to="/cisa/" replace />} />
           <Route path="/policies" element={<PageSEO path="/policies"><Policies /></PageSEO>} />
           <Route path="/terms-and-conditions" element={<PageSEO path="/terms-and-conditions"><TermsAndConditions /></PageSEO>} />
           <Route path="*" element={<PageSEO><NotFound /></PageSEO>} />
