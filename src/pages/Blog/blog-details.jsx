@@ -8,7 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ShareButtons } from "./share-button";
 import OptimizedImage from "@/components/common/optmized-image";
-import { SITE_ORIGIN } from "@/config/site";
+import { SITE_ORIGIN, getCanonicalUrl } from "@/config/site";
 import { titleFromSlug } from "@/utils/titleFromSlug";
 
 /**
@@ -92,7 +92,7 @@ const BlogDetails = () => {
   );
 
   const blogSlug = blog?.blog_slug || id || "";
-  const blogCanonical = `${SITE_ORIGIN}/blogs/${blogSlug}`;
+  const blogCanonical = getCanonicalUrl(`/blogs/${blogSlug}`);
   const fallbackBlogTitle = `${titleFromSlug(id || "")} | AIA Blog`;
   const blogTitle = blog?.blog_meta_title || blog?.blog_heading || fallbackBlogTitle;
   const blogDescription = blog?.blog_meta_description || blog?.blog_short_description || "Read certification insights, exam preparation guidance, and career advice from Academy of Internal Audit.";
@@ -263,12 +263,12 @@ const BlogDetails = () => {
   };
 
   const handleRelatedBlogClick = (slug) => {
-    navigate(`/blogs/${slug}`);
+    navigate(`/blogs/${slug}/`);
     window.scrollTo(0, 0);
   };
 
   const goBack = () => {
-    navigate("/blogs");
+    navigate("/blogs/");
   };
 
   if (loading) {

@@ -25,7 +25,7 @@ const BannerBlogCard = ({ blog, handleBlogClick, imageBaseUrl }) => {
   };
   return (
     <a
-      href={`/blogs/${blog.blog_slug}`} title={`/blogs/${blog.blog_slug}`}
+      href={`/blogs/${blog.blog_slug}/`} title={blog.blog_heading || `/blogs/${blog.blog_slug}/`}
       onClick={(event) => {
         event.preventDefault();
         handleBlogClick(blog.blog_slug);

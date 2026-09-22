@@ -3,6 +3,7 @@ import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
 import OptimizedImage from "@/components/common/optmized-image";
 import { Helmet } from "react-helmet-async";
+import { COURSE_ROUTES } from "@/config/site";
 
 const HOME_BANNER_BASE =
   "https://aia.in.net/webapi/public/assets/images/banner_images/";
@@ -439,17 +440,17 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   const activeSlide = carouselSlides[currentSlide];
   const current = announcements[currentSlide];
-  const slideHref = activeSlide?.link
-    ? activeSlide.link.startsWith("http")
-      ? activeSlide.link
-      : `/${activeSlide.link.replace(/^\/+/, "")}`
-    : undefined;
+  const normalizeRoute = (rawLink) => {
+    if (!rawLink) return undefined;
+    if (rawLink.startsWith("http")) return rawLink;
+    const clean = rawLink.replace(/^\/+/, "").replace(/\/+$/, "");
+    if (!clean) return "/";
+    return COURSE_ROUTES.has(clean) ? `/${clean}` : `/${clean}/`;
+  };
+
+  const slideHref = normalizeRoute(activeSlide?.link);
   const isExternalSlide = Boolean(slideHref?.startsWith("http"));
-  const currentHref = current?.link
-    ? current.link.startsWith("http")
-      ? current.link
-      : `/${current.link.replace(/^\/+/, "")}`
-    : undefined;
+  const currentHref = normalizeRoute(current?.link);
   const isExternalCurrent = Boolean(currentHref?.startsWith("http"));
 
   return (

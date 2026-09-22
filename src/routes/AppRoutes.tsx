@@ -31,10 +31,11 @@
  */
 
 import React, { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/layout/Layout';
 import SEOPageLayout from '@/components/SEOPageLayout';
 import { getSeoForRoute } from '@/config/seoEngine';
+import { COURSE_ROUTES } from '@/config/site';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import blogRedirects from './blog-redirects';
 
@@ -104,6 +105,36 @@ function withTrailingSlash(pathname: string): string {
   return pathname.endsWith('/') ? pathname : `${pathname}/`;
 }
 
+/**
+ * Enforces client-side URL consistency:
+ * - Course pages are kept WITHOUT a trailing slash (e.g. /cfe-curriculum).
+ * - All other routes are kept WITH a trailing slash (e.g. /about-aia/ or /blogs/).
+ */
+function TrailingSlashEnforcer() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const { pathname, search, hash } = location;
+    if (pathname === '/') return;
+
+    const clean = pathname.replace(/^\/+/, '').replace(/\/+$/, '');
+    const isCourse = COURSE_ROUTES.has(clean);
+
+    if (isCourse) {
+      if (pathname.endsWith('/')) {
+        navigate(`/${clean}${search}${hash}`, { replace: true });
+      }
+    } else {
+      if (!pathname.endsWith('/')) {
+        navigate(`${pathname}/${search}${hash}`, { replace: true });
+      }
+    }
+  }, [location.pathname, location.search, location.hash, navigate]);
+
+  return null;
+}
+
 export interface AppRoutesProps {
   /**
    * Optional QueryClient instance.
@@ -130,6 +161,7 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
   return (
     <QueryClientProvider client={queryClient}>
       <Layout>
+        <TrailingSlashEnforcer />
         <Routes>
           <Route path="/" element={<PageSEO path="/"><Home /></PageSEO>} />
           <Route path="/about-aia" element={<PageSEO path="/about-aia"><AboutPage /></PageSEO>} />
@@ -153,7 +185,7 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/blogs/course/:courseName" element={<PageSEO><BlogCourse /></PageSEO>} />
           <Route path="/alumni-network" element={<PageSEO path="/alumni-network"><OurPassout /></PageSEO>} />
           <Route path="/fillter" element={<PageSEO path="/fillter"><FilterPage /></PageSEO>} />
-          <Route path="/filter" element={<Navigate to="/fillter" replace />} />
+          <Route path="/filter" element={<Navigate to="/fillter/" replace />} />
           <Route path="/our-passouts/*" element={<Navigate to="/alumni-network/" replace />} />
           <Route path="/passed-out/*" element={<Navigate to="/alumni-network/" replace />} />
           <Route path="/enroll-now" element={<PageSEO path="/enroll-now"><Enrool /></PageSEO>} />

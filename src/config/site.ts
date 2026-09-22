@@ -32,13 +32,30 @@ export const SITE_PHONE = '+91 93113 20114';
 export const SITE_EMAIL = 'support@aia.in.net';
 
 /**
+ * Course routes that are indexed in Google WITHOUT a trailing slash.
+ * Follows the strict SEO requirement to prevent index drift and canonical mismatches.
+ */
+export const COURSE_ROUTES = new Set([
+  'cfe-curriculum',
+  'cia-curriculum',
+  'cia-challenge-curriculum',
+  'cams',
+  'cisa',
+]);
+
+/**
  * Normalizes any route pathname to an absolute canonical URL.
- * Strips duplicate leading/trailing slashes and handles root path gracefully.
+ * - Course pages are formatted WITHOUT a trailing slash (e.g. 'https://aia.in.net/cfe-curriculum')
+ * - All other pages retain the trailing slash (e.g. 'https://aia.in.net/about-aia/' or 'https://aia.in.net/blogs/')
  *
- * @param pathname - The route path (e.g. '/about-aia' or 'cfe-curriculum/')
- * @returns Fully-qualified canonical URL (e.g. 'https://aia.in.net/about-aia' or 'https://aia.in.net')
+ * @param pathname - The route path (e.g. '/about-aia' or 'cfe-curriculum')
+ * @returns Fully-qualified canonical URL matching Google indexed format
  */
 export function getCanonicalUrl(pathname: string): string {
   const cleanPath = pathname.replace(/^\/+/, '').replace(/\/+$/, '');
-  return cleanPath ? `${SITE_ORIGIN}/${cleanPath}` : SITE_ORIGIN;
+  if (!cleanPath) return `${SITE_ORIGIN}/`;
+  if (COURSE_ROUTES.has(cleanPath)) {
+    return `${SITE_ORIGIN}/${cleanPath}`;
+  }
+  return `${SITE_ORIGIN}/${cleanPath}/`;
 }

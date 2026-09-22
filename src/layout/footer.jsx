@@ -20,7 +20,7 @@ export default function Footer() {
               {[
                 { name: "Home", href: "/" },
                 { name: "About AIA", href: "/about-aia/" },
-                { name: "Blog", href: "/blogs" },
+                { name: "Blog", href: "/blogs/" },
                 { name: "AIA Times", href: "/aia-times/" },
                 { name: "Alumni Network", href: "/alumni-network/" },
                 { name: "Corporate Training", href: "/corporate-training/" },
