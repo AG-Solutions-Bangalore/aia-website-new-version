@@ -60,7 +60,7 @@ function getHtmlFiles(dir: string, baseDir: string = dir): string[] {
     } else if (file === 'index.html') {
       const relative = path.relative(baseDir, filePath);
       const urlPath = relative.replace(/\\/g, '/').replace(/index\.html$/, '');
-      results.push(urlPath === '' ? '/' : `/${urlPath.replace(/\/$/, '')}`);
+      results.push(urlPath === '' ? '/' : `/${urlPath.replace(/^\/+/, '').replace(/\/+$/, '')}/`);
     }
   }
   return results;
@@ -76,7 +76,8 @@ function getHtmlFiles(dir: string, baseDir: string = dir): string[] {
  * - `0.6` (weekly): All other standard pages.
  */
 function getRoutePriority(route: string): { priority: string; changefreq: string } {
-  if (route === '/') return { priority: '1.0', changefreq: 'daily' };
+  const clean = route.replace(/\/+$/, '') || '/';
+  if (clean === '/') return { priority: '1.0', changefreq: 'daily' };
   if (
     [
       '/cfe-curriculum',
@@ -85,15 +86,15 @@ function getRoutePriority(route: string): { priority: string; changefreq: string
       '/cams',
       '/cisa',
       '/enroll-now',
-    ].includes(route)
+    ].includes(clean)
   ) {
     return { priority: '0.9', changefreq: 'weekly' };
   }
-  if (route.startsWith('/blogs')) return { priority: '0.8', changefreq: 'weekly' };
-  if (route.startsWith('/passout-stories') || route === '/alumni-network') {
+  if (clean.startsWith('/blogs')) return { priority: '0.8', changefreq: 'weekly' };
+  if (clean.startsWith('/passout-stories') || clean === '/alumni-network') {
     return { priority: '0.7', changefreq: 'monthly' };
   }
-  if (['/policies', '/terms-and-conditions'].includes(route)) {
+  if (['/policies', '/terms-and-conditions'].includes(clean)) {
     return { priority: '0.3', changefreq: 'monthly' };
   }
   return { priority: '0.6', changefreq: 'weekly' };
@@ -110,16 +111,17 @@ const today = new Date().toISOString().split('T')[0];
 const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${routes
-  .map((route) => {
-    const { priority, changefreq } = getRoutePriority(route);
-    return `  <url>
-    <loc>${SITE_ORIGIN}${route === '/' ? '' : route}</loc>
+    .map((route) => {
+      const { priority, changefreq } = getRoutePriority(route);
+      const loc = route === '/' ? `${SITE_ORIGIN}/` : `${SITE_ORIGIN}${route}`;
+      return `  <url>
+    <loc>${loc}</loc>
     <lastmod>${today}</lastmod>
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`;
-  })
-  .join('\n')}
+    })
+    .join('\n')}
 </urlset>`;
 
 // Write to dist/

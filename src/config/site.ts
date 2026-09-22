@@ -32,13 +32,13 @@ export const SITE_PHONE = '+91 93113 20114';
 export const SITE_EMAIL = 'support@aia.in.net';
 
 /**
- * Normalizes any route pathname to an absolute canonical URL.
- * Strips duplicate leading/trailing slashes and handles root path gracefully.
+ * Normalizes any route pathname to an absolute canonical URL with trailing slash.
+ * Follows the client's SEO requirement to maintain consistency with Google indexed URLs.
  *
  * @param pathname - The route path (e.g. '/about-aia' or 'cfe-curriculum/')
- * @returns Fully-qualified canonical URL (e.g. 'https://aia.in.net/about-aia' or 'https://aia.in.net')
+ * @returns Fully-qualified canonical URL with trailing slash (e.g. 'https://aia.in.net/about-aia/' or 'https://aia.in.net/')
  */
 export function getCanonicalUrl(pathname: string): string {
   const cleanPath = pathname.replace(/^\/+/, '').replace(/\/+$/, '');
-  return cleanPath ? `${SITE_ORIGIN}/${cleanPath}` : SITE_ORIGIN;
+  return cleanPath ? `${SITE_ORIGIN}/${cleanPath}/` : `${SITE_ORIGIN}/`;
 }
