@@ -1,4 +1,9 @@
-Options -MultiViews
+Options -Indexes -MultiViews
+
+<IfModule mod_dir.c>
+    DirectorySlash Off
+    DirectoryIndex index.html
+</IfModule>
 
 <IfModule mod_rewrite.c>
 RewriteEngine On
@@ -18,9 +23,11 @@ RewriteRule ^about-aia/cia-curriculum/?$ /cia-curriculum [R=301,L]
 RewriteRule ^about-aia/cams/?$ /cams [R=301,L]
 RewriteRule ^about-aia/cfe-curriculum/?$ /cfe-curriculum [R=301,L]
 RewriteRule ^about-aia/cia-challenge-curriculum/?$ /cia-challenge-curriculum [R=301,L]
+RewriteRule ^about-aia/cisa/?$ /cisa [R=301,L]
 RewriteRule ^corporate-training/cia-curriculum/?$ /cia-curriculum [R=301,L]
 RewriteRule ^corporate-training/cams/?$ /cams [R=301,L]
 RewriteRule ^corporate-training/cfe-curriculum/?$ /cfe-curriculum [R=301,L]
+RewriteRule ^corporate-training/cisa/?$ /cisa [R=301,L]
 
 # 3. Legacy article URLs (Permanent 301 redirects with trailing slash)
 RewriteRule ^what-is-money-laundering/?$ /blogs/what-is-money-laundering/ [R=301,L]
@@ -92,8 +99,9 @@ RewriteRule ^(.+)$ /$1/ [R=301,L]
 RewriteRule ^(cfe-curriculum|cia-curriculum|cia-challenge-curriculum|cams|cisa)/$ /$1 [R=301,L]
 
 # 5. Serve SSG pre-rendered static HTML if folder/index.html exists
-RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f
-RewriteRule ^(.*)/?$ /$1/index.html [L]
+RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f [OR]
+RewriteCond %{REQUEST_FILENAME}/index.html -f
+RewriteRule ^(.+?)/?$ /$1/index.html [L]
 
 # 6. Fallback for unrendered SPA routes
 RewriteCond %{REQUEST_URI} !^/webapi/ [NC]
