@@ -28,6 +28,8 @@ const routePrefetch = {
   "/cams": () => import("../pages/Courses/CAMS"),
   "/cfe-free-resources/": () =>
     import("../pages/free-resources/cfe-free-resources"),
+  "/cisa-free-resources/": () =>
+    import("../pages/free-resources/cisa-free-resources/cisa-free-resources"),
   "/blogs/": () => import("../pages/Blog/Blog"),
   "/alumni-network/": () => import("../pages/OurPassout/OurPassout"),
   "/corporate-training/": () =>
@@ -93,6 +95,7 @@ const Navbar = () => {
         { name: "CFE", link: "/cfe-free-resources/" },
         { name: "CIA", link: "/cia-free-resources/" },
         { name: "CAMS", link: "/cams-free-resources/" },
+        { name: "CISA", link: "/cisa-free-resources/" },
       ],
     },
     {

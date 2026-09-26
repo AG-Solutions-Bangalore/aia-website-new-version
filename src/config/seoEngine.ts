@@ -312,6 +312,21 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       ),
     ],
   },
+  '/cisa-free-resources': {
+    title: 'Certified Information Systems Auditor Free Resources - AIA',
+    description:
+      'Start your CISA preparation with free expert resources: domain-wise practice questions, flashcards, distractors, and insightful videos from the Academy of Internal Audit.',
+    keywords: 'free CISA resources, CISA practice questions, CISA flashcards, CISA study material, ISACA CISA prep',
+    canonicalPath: '/cisa-free-resources',
+    schemas: [
+      organizationSchema,
+      createWebPageSchema(
+        '/cisa-free-resources',
+        'Certified Information Systems Auditor Free Resources - AIA',
+        'Start your CISA preparation with free expert resources: domain-wise practice questions, flashcards, distractors, and insightful videos from the Academy of Internal Audit.',
+      ),
+    ],
+  },
   '/corporate-training': {
     title: 'Corporate Training Programs of Academy of Internal Audit',
     description:

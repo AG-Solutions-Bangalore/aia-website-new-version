@@ -94,6 +94,7 @@ export default function Footer() {
                   { name: "CFE Free Resources", href: "/cfe-free-resources/" },
                   { name: "CIA Free Resources", href: "/cia-free-resources/" },
                   { name: "CAMS Free Resources", href: "/cams-free-resources/" },
+                  { name: "CISA Free Resources", href: "/cisa-free-resources/" },
                 ].map((resource, idx) => (
                   <li key={idx} className="group">
                     <Link
