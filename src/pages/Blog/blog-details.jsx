@@ -309,7 +309,6 @@ const BlogDetails = () => {
           <title>{blogTitle}</title>
           <meta name="title" content={blogTitle} />
           <meta name="description" content={blogDescription} />
-          <link rel="canonical" href={blogCanonical} />
           <meta property="og:url" content={blogCanonical} />
         </Helmet>
         <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8">
@@ -335,7 +334,6 @@ const BlogDetails = () => {
           <meta name="title" content={blogTitle} />
           <meta name="description" content={blogDescription} />
           <meta name="robots" content="noindex, follow" />
-          <link rel="canonical" href={blogCanonical} />
           <meta property="og:url" content={blogCanonical} />
         </Helmet>
         <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -362,7 +360,6 @@ const BlogDetails = () => {
         <meta name="description" content={blogDescription} />
         <meta name="keywords" content={blogKeywords} />
         <meta name="robots" content="index, follow" />
-        <link rel="canonical" href={blogCanonical} />
 
         {/* Open Graph */}
         <meta property="og:type" content="article" />
