@@ -141,6 +141,11 @@ const BANNER_FALLBACKS = {
     alt: "cfe-free-resources",
     link: "contact",
   },
+  "cisa-free-resources": {
+    image: "35.webp",
+    alt: "CISA Free Resources - Start Your CISA Preparation with Free Expert Resources",
+    link: "contact",
+  },
 };
 
 const HOME_FALLBACK_ANNOUNCEMENTS = [

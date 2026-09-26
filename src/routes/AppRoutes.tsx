@@ -52,6 +52,9 @@ const CAMSFreeResources = lazy(
 const CIAFreeResources = lazy(
   () => import('@/pages/free-resources/cia-free-resources/cia-free-resources'),
 );
+const CISAFreeResources = lazy(
+  () => import('@/pages/free-resources/cisa-free-resources/cisa-free-resources'),
+);
 const Blog = lazy(() => import('@/pages/Blog/Blog'));
 const OurPassout = lazy(() => import('@/pages/OurPassout/OurPassout'));
 const Enrool = lazy(() => import('@/pages/Enroll/Enroll'));
@@ -178,6 +181,7 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/cams" element={<PageSEO path="/cams"><CAMS /></PageSEO>} />
           <Route path="/cia-free-resources" element={<PageSEO path="/cia-free-resources"><CIAFreeResources /></PageSEO>} />
           <Route path="/cams-free-resources" element={<PageSEO path="/cams-free-resources"><CAMSFreeResources /></PageSEO>} />
+          <Route path="/cisa-free-resources" element={<PageSEO path="/cisa-free-resources"><CISAFreeResources /></PageSEO>} />
           <Route path="/cfe-free-resources" element={<PageSEO path="/cfe-free-resources"><FreeResources /></PageSEO>} />
           <Route path="/cfe-free-resource/:questions_module" element={<PageSEO><CfePracticeQuestion /></PageSEO>} />
           <Route path="/blogs" element={<PageSEO path="/blogs"><Blog /></PageSEO>} />
