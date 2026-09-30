@@ -2,6 +2,7 @@ import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { AlertCircle, RefreshCcw } from "lucide-react";
+import { useMemo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "swiper/css";
@@ -11,36 +12,52 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import HomeMap from "../home/home-map";
 import SectionHeading from "../SectionHeading/SectionHeading";
 
-const FreeResourceReview = ({ slug }) => {
+// Note: callers may still pass `slug` — it is intentionally ignored so all
+// free-resources pages show the mixed homepage testimonials.
+const FreeResourceReview = () => {
+  // Mixed testimonials — same homepage API as HomeReview so every
+  // free-resources page shows a mixed set of students (slug kept only
+  // for backward-compat with existing callers, not used for filtering).
   const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["cams-testimonials", slug],
+    queryKey: ["aia-testimonials"],
     queryFn: async () => {
-      const res = await axios.get(
-        `${BASE_URL}/api/getTestimonialbyCourse/${slug}`
-      );
+      const res = await axios.get(`${BASE_URL}/api/getAllTestimonials`);
       return res.data;
     },
   });
-  const studentImageBase =
-    data?.image_url?.find((img) => img.image_for === "Student")?.image_url ||
-    "";
 
-  const noImageUrl =
-    data?.image_url?.find((img) => img.image_for === "No Image")?.image_url ||
-    "";
+  const studentImageBase = useMemo(
+    () =>
+      data?.image_url?.find((img) => img.image_for === "Student")?.image_url ||
+      "",
+    [data?.image_url],
+  );
 
-  const testimonials =
-    data?.data?.map((item) => ({
-      name: item.student_name,
-      course: item.student_course,
-      message: item.student_testimonial,
-      link: item.student_testimonial_link,
-      update: item.updated_at,
-      image: item.student_image
-        ? `${studentImageBase}${item.student_image}`
-        : noImageUrl,
-      alt: item.student_image_alt || item.student_name,
-    })) || [];
+  const noImageUrl = useMemo(
+    () =>
+      data?.image_url?.find((img) => img.image_for === "No Image")?.image_url ||
+      "",
+    [data?.image_url],
+  );
+
+  const testimonials = useMemo(
+    () =>
+      data?.data?.map((item) => ({
+        name: item.student_name,
+        course: item.student_course,
+        message: item.student_testimonial,
+        link: item.student_testimonial_link,
+        update: item.updated_at,
+        image: item.student_image
+          ? `${studentImageBase}${item.student_image}`
+          : noImageUrl,
+        alt: item.student_image_alt || item.student_name,
+      })) || [],
+    [data?.data, studentImageBase, noImageUrl],
+  );
+
+  // Limit to 25 items to reduce DOM size (3300+ elements reported)
+  const displayedTestimonials = useMemo(() => testimonials.slice(0, 25), [testimonials]);
   const truncateText = (text, limit = 430) => {
     if (text.length <= limit) return text;
     return text.slice(0, limit) + "...";
@@ -89,10 +106,12 @@ const FreeResourceReview = ({ slug }) => {
                 <div className="mb-6 flex gap-2">
                   <img
                     src={`${IMAGE_PATH}/g_logo.webp`}
-                    alt="Google Logo" title="Google Logo"
-                    className="w-12 h-12"
+                    alt="Google Logo"
+                    title="Google Logo"
+                    className="h-10 w-10 md:w-12 md:h-12"
+                    loading="lazy"
                   />
-                  <h2 className="text-3xl font-bold text-[#0F3652]">
+                  <h2 className="text-2xl md:text-3xl font-bold text-[#0F3652]">
                     300+ Professional Experiences Shared
                   </h2>
                 </div>
@@ -108,17 +127,16 @@ const FreeResourceReview = ({ slug }) => {
                   loop
                   className="testimonial-swiper"
                 >
-                  {testimonials.map((item, index) => (
+                  {displayedTestimonials.map((item, index) => (
                     <SwiperSlide key={index}>
-                      <div className="bg-white rounded-xl p-6 border border-[#F3831C]/20">
+                      <div className="bg-white rounded-xl p-4 md:p-6 border border-[#F3831C]/20">
                         <div className="flex items-start gap-4 mb-4">
                           <LazyLoadImage
                             src={item.image}
                             alt={item.alt}
-                            className="w-14 h-14 rounded-full object-cover border-2 border-[#0F3652]"
+                            title={item.alt || item.name}
+                            className="w-14 h-14 min-w-14 min-h-14 rounded-full object-cover border-2 border-[#0F3652] flex-shrink-0"
                             effect="blur"
-                            width="56"
-                            height="56"
                           />
 
                           <div>
@@ -152,7 +170,7 @@ const FreeResourceReview = ({ slug }) => {
                           </svg>
                         </div>
 
-                        <p className="text-[#0F3652] pl-2 border-l-2 border-[#F3831C]/50">
+                        <p className="text-[#0F3652] pl-2 border-l-2 border-[#F3831C]/50 text-justify">
                           {truncateText(item.message)}
 
                           {item?.link && (

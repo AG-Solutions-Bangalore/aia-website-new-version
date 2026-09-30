@@ -6,19 +6,58 @@ import axios from "axios";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import CourseAchiverCard from "../courses/common/course-achiver-card";
-const CourseAchivers = ({ slug, title, description, titleClass }) => {
+const CourseAchivers = ({ slug, title, description, titleClass, useMixed = false }) => {
   const [cardSize, setCardSize] = useState(365);
   const [testimonialsList, setTestimonialsList] = useState([]);
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["achivers-passout-students"],
+  // Explicit mixed mode (e.g. CISA free-resources) uses the homepage API
+  // so the section shows a mixed set of students like the homepage.
+  const isMixedRequested =
+    useMixed || !slug || String(slug).toLowerCase() === "all";
+
+  const courseQuery = useQuery({
+    queryKey: ["achivers-passout-students", slug],
     queryFn: async () => {
       const res = await axios.get(
         `${BASE_URL}/api/getPassoutStudentbyCourse/${slug}`
       );
       return res.data;
     },
+    enabled: !isMixedRequested,
   });
+
+  // Homepage (mixed) API — same one used by HomePassout on the homepage.
+  // Used directly when mixed is requested, or as a fallback when the
+  // course-specific API returns no students (or errors) so the section
+  // never goes missing.
+  const needsFallback =
+    !isMixedRequested &&
+    !courseQuery.isLoading &&
+    (courseQuery.isError ||
+      !courseQuery.data?.data ||
+      courseQuery.data.data.length === 0);
+
+  const mixedQuery = useQuery({
+    queryKey: ["home-passout-students"],
+    queryFn: async () => {
+      const res = await axios.get(`${BASE_URL}/api/getAllPassoutStudentsNew`);
+      return res.data;
+    },
+    enabled: isMixedRequested || needsFallback,
+  });
+
+  const data = isMixedRequested
+    ? mixedQuery.data
+    : courseQuery.data?.data?.length
+      ? courseQuery.data
+      : mixedQuery.data;
+
+  const isLoading = isMixedRequested
+    ? mixedQuery.isLoading
+    : courseQuery.isLoading || (needsFallback && mixedQuery.isLoading);
+  const isError = isMixedRequested
+    ? mixedQuery.isError
+    : courseQuery.isError && mixedQuery.isError;
 
   useEffect(() => {
     if (data?.data) {
@@ -35,9 +74,9 @@ const CourseAchivers = ({ slug, title, description, titleClass }) => {
         country_name: student.country_name,
         country_city: student.country_city,
         imgSrc: studentImageUrl + student.student_image,
-        by: `${student.student_name}, ${student.country_name}${
-          student.country_city ? `, ${student.country_city}` : ""
-        }`,
+        by: [student.student_name, student.country_name, student.country_city]
+          .filter(Boolean)
+          .join(", "),
       }));
 
       setTestimonialsList(transformedData);
