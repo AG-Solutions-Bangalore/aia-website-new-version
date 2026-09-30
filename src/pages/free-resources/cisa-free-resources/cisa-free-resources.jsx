@@ -21,9 +21,7 @@ const CourseAchivers = lazy(() =>
 const HomeAlumniWork = lazy(() =>
   import("@/components/home/home-alumini-work")
 );
-const FreeResourceReview = lazy(() =>
-  import("@/components/cfe-free-resource/free-resource-review")
-);
+const HomeReview = lazy(() => import("@/components/home/home-review"));
 
 const CISAFreeResources = () => {
   const refs = useRef({
@@ -123,6 +121,7 @@ const CISAFreeResources = () => {
           <Suspense fallback={null}>
             <CourseAchivers
               slug="cisa"
+              useMixed
               title="From Aspirants to Certified Information Systems Auditors - Our Recent CISA Achievers"
               description="Meet AIA proud achievers who advanced their careers by achieving the globally recognized CISA credential with structured prep and real-world expertise."
             />
@@ -141,7 +140,8 @@ const CISAFreeResources = () => {
       <div ref={refs.review}>
         {visible.review && (
           <Suspense fallback={null}>
-            <FreeResourceReview slug="CISA" />
+            {/* Homepage API (mixed testimonials) — same display as homepage */}
+            <HomeReview />
           </Suspense>
         )}
       </div>
