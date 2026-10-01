@@ -122,8 +122,8 @@ const CISAFreeResources = () => {
             <CourseAchivers
               slug="cisa"
               useMixed
-              title="From Aspirants to Certified Information Systems Auditors - Our Recent CISA Achievers"
-              description="Meet AIA proud achievers who advanced their careers by achieving the globally recognized CISA credential with structured prep and real-world expertise."
+              title="From Aspirants to Global Certified Professionals - Our Recent Achievers"
+              description="Meet AIA's proud achievers who advance their careers by achieving the CFE, CIA & CAMS credentials with structured prep and real-world expertise."
             />
           </Suspense>
         )}
