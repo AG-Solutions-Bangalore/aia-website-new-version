@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import HomeHero from "@/components/home/home-hero";
 import PopUp from "@/components/common/pop-up";
+import CfeRoadmapDialog from "@/components/common/CfeRoadmapDialog";
 const CourseYoutubeLecture = lazy(() =>
   import("@/components/courses/common/course-youtube-lecture")
 );
@@ -108,6 +109,20 @@ const FreeResources = () => {
           </Suspense>
         )}
       </div>
+
+      <section className="bg-slate-50 border-y border-slate-200 py-10 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0F3652] md:text-nowrap mb-5 leading-snug">
+            Become CFE Certified in just 60 Days. Grab the Free CFE Roadmap.
+          </h2>
+          <Suspense fallback={null}>
+            <CfeRoadmapDialog
+              buttonlabel="Download Now"
+              buttonClassName="bg-[#F3831C] text-white px-8 py-3 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors cursor-pointer text-base"
+            />
+          </Suspense>
+        </div>
+      </section>
 
       <div ref={refs.distractor}>
         {visible.distractor && (

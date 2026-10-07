@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeading from "../SectionHeading/SectionHeading";
 import defaultCertificationCourses from "@/data/certificationCourses";
 import CfeRoadmapDialog from "@/components/common/CfeRoadmapDialog";
+import CamsRoadmapDialog from "@/components/common/CamsRoadmapDialog";
 
 const ServiceCard = ({ service, i, progress, total }) => {
   const start = i / total;
@@ -217,6 +218,13 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                   buttonClassName="h-10 px-4 text-sm font-medium bg-[#F3831C] text-white hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors rounded-md w-full justify-center cursor-pointer"
                 />
               )}
+
+              {(service.id === 4 || service.link === "/cams") && (
+                <CamsRoadmapDialog
+                  buttonlabel="Grab the free CAMS Roadmap"
+                  buttonClassName="h-10 px-4 text-sm font-medium bg-[#F3831C] text-white hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors rounded-md w-full justify-center cursor-pointer"
+                />
+              )}
             </div>
           </div>
         ))}
@@ -273,6 +281,14 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                       ALL_SERVICES[activeCard]?.link?.includes("cfe-curriculum")) && (
                       <CfeRoadmapDialog
                         buttonlabel="Grab the free CFE Roadmap"
+                        buttonClassName="h-10 px-4 text-sm font-medium bg-[#F3831C] text-white hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors rounded-none cursor-pointer inline-flex items-center"
+                      />
+                    )}
+
+                    {(ALL_SERVICES[activeCard]?.id === 4 ||
+                      ALL_SERVICES[activeCard]?.link === "/cams") && (
+                      <CamsRoadmapDialog
+                        buttonlabel="Grab the free CAMS Roadmap"
                         buttonClassName="h-10 px-4 text-sm font-medium bg-[#F3831C] text-white hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors rounded-none cursor-pointer inline-flex items-center"
                       />
                     )}

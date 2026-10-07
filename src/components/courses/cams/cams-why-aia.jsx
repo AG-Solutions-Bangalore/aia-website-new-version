@@ -1,7 +1,7 @@
 import React from "react";
 import CourseWhyAia from "../common/course-why-aia";
 import { ENROLL_URL, IMAGE_PATH } from "@/api/base-url";
-import CfeJoinDialog from "../cfe-curriculam/join-prep";
+import CamsRoadmapDialog from "@/components/common/CamsRoadmapDialog";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -35,11 +35,8 @@ const CamsWhyAia = () => {
       />
 
       <div className="flex justify-center gap-2 mt-8">
-        <CfeJoinDialog
-          title="Join AiA CAMS LMS"
-          subtitle="Online Training and Certification Course"
-          course="CAMS"
-          buttonlabel="Let's Connect"
+        <CamsRoadmapDialog
+          buttonlabel="Clear the CAMS Exam in 45 Days"
         />
 
         <Button
