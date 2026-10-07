@@ -1,4 +1,5 @@
 import CourseAboutH1 from "../common/course-aboutH1";
+import CamsRoadmapDialog from "@/components/common/CamsRoadmapDialog";
 
 const CamsAbout = () => {
   return (
@@ -35,6 +36,12 @@ const CamsAbout = () => {
         formsubtitle="Online Training and Certification Course"
         formcourse="CAMS"
         formbuttonlabel="More Info"
+        customBottomButton={
+          <CamsRoadmapDialog
+            buttonlabel="Grab the FREE Roadmap"
+            buttonClassName="bg-[#F3831C] text-white px-6 py-2.5 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-all cursor-pointer"
+          />
+        }
       />
     </>
   );

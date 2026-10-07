@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ENROLL_URL } from "@/api/base-url";
 import { Link } from "react-router-dom";
 import CfeJoinDialog from "../cfe-curriculam/join-prep";
+import CamsRoadmapDialog from "@/components/common/CamsRoadmapDialog";
 
 const CamsCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
   const courseFeatures = [
@@ -54,6 +55,13 @@ const CamsCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
         cardTitle="What’s Included in the AIA CAMS Prep Course ?"
         courseFeatures={courseFeatures}
         image={image}
+        bannerTitle="Become CAMS Certified in 45 Days"
+        bannerButton={
+          <CamsRoadmapDialog
+            buttonlabel="Grab the FREE CAMS Roadmap"
+            buttonClassName="bg-[#F3831C] text-white px-6 py-2.5 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-all cursor-pointer"
+          />
+        }
       />
 
       <div className="flex justify-center gap-2">

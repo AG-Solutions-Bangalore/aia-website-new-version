@@ -71,7 +71,7 @@ const CamsCourseCurriculum = () => {
           title="Join AiA CAMS LMS"
           subtitle="Online Training and Certification Course"
           course="CAMS"
-          buttonlabel="Know More"
+          buttonlabel="Book your Free Counselling Call"
         />
         <Button
           className="
