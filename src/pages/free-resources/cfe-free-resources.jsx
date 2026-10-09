@@ -110,9 +110,9 @@ const FreeResources = () => {
         )}
       </div>
 
-      <section className="bg-slate-50 border-y border-slate-200 py-10 px-4">
+      <section className="bg-[#0F3652] border-y border-slate-200 py-10 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0F3652] md:text-nowrap mb-5 leading-snug">
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white md:text-nowrap mb-5 leading-snug">
             Become CFE Certified in just 60 Days. Grab the Free CFE Roadmap.
           </h2>
           <Suspense fallback={null}>
