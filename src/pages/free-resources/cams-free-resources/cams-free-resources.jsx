@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 import PopUp from "@/components/common/pop-up";
 import HomeHero from "@/components/home/home-hero";
 import CamsRoadmapDialog from "@/components/common/CamsRoadmapDialog";
+import FreeResourceRoadmapCTA from "@/components/common/free-resource-roadmap-cta";
 
 const CourseYoutubeLecture = lazy(() =>
   import("@/components/courses/common/course-youtube-lecture")
@@ -106,19 +107,20 @@ const CAMSFreeResources = () => {
         )}
       </div>
 
-      <section className="bg-[#0F3652] border-y border-slate-200 py-10 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-5 leading-snug">
-            Follow the Free CAMS Step-by-Step Roadmap and clear your CAMS exam in just 45 days!
-          </h2>
-          <Suspense fallback={null}>
-            <CamsRoadmapDialog
-              buttonlabel="Download Now"
-              buttonClassName="bg-[#F3831C] text-white px-8 py-3 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors cursor-pointer text-base"
-            />
-          </Suspense>
-        </div>
-      </section>
+      <FreeResourceRoadmapCTA
+        eyebrow="Free CAMS Roadmap"
+        title="Follow the Free CAMS Step-by-Step Roadmap and clear your CAMS exam in just"
+        highlight="45 days!"
+        description="A practical day-wise study plan with key CAMS topics, revision checkpoints and exam tips — built by AIA experts to keep your preparation on track."
+        watermark="45"
+        trustItems={["Instant delivery on email", "Trusted by CAMS aspirants"]}
+        dialog={
+          <CamsRoadmapDialog
+            buttonlabel="Download Now"
+            buttonClassName="group bg-[#F3831C] text-white px-8 py-3 rounded-xl font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-all cursor-pointer text-base shadow-[0_12px_30px_-8px_rgba(243,131,28,0.7)] hover:-translate-y-0.5 inline-flex items-center gap-2"
+          />
+        }
+      />
 
       <div ref={refs.achievers}>
         {visible.achievers && (
