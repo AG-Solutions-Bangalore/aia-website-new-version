@@ -115,7 +115,7 @@ const FreeResources = () => {
         eyebrow="Free CFE Roadmap"
         title="Become CFE Certified in just"
         highlight="60 days."
-        titleSuffix="Grab the free CFE roadmap."
+        titleSuffix="Grab the Free CFE Roadmap."
         description="A practical day-wise study plan with key CFE topics, revision checkpoints and exam tips — built by AIA experts to keep your preparation on track."
         watermark="60"
         trustItems={["Instant delivery on email", "Trusted by CFE aspirants"]}
