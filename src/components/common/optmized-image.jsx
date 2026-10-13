@@ -16,7 +16,7 @@ const OptimizedImage = memo(function OptimizedImage({
   ...rest
 }) {
   const safeSrc = useMemo(() => {
-    if (!src) return "";
+    if (!src || src === "undefined" || src === "null" || src.includes("undefined")) return "";
     try {
       return encodeURI(src);
     } catch {

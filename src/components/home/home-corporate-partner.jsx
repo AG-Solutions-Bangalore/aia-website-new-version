@@ -273,11 +273,13 @@ const HomeCorporatePartner = () => {
             <h3 className="text-2xl font-bold text-white">
               {effortsData?.data?.[2]?.efforts_heading}
             </h3>
-            <OptimizedImage
-              src={`${imageBaseUrl}${effortsData?.data?.[2]?.efforts_image}`}
-              alt={effortsData?.data?.[2]?.efforts_heading}
-              className="w-full max-h-[340px] object-contain"
-            />
+            {effortsData?.data?.[2]?.efforts_image && imageBaseUrl && (
+              <OptimizedImage
+                src={`${imageBaseUrl}${effortsData.data[2].efforts_image}`}
+                alt={effortsData?.data?.[2]?.efforts_heading}
+                className="w-full max-h-[340px] object-contain"
+              />
+            )}
             <p className="text-white text-justify text-base md:text-lg">
               {effortsData?.data?.[2]?.efforts_description}
             </p>
@@ -290,11 +292,13 @@ const HomeCorporatePartner = () => {
             <h3 className="text-2xl font-bold text-[#0F3652]">
               {effortsData?.data?.[0]?.efforts_heading}
             </h3>
-            <OptimizedImage
-              src={`${imageBaseUrl}${effortsData?.data?.[0]?.efforts_image}`}
-              alt={effortsData?.data?.[0]?.efforts_heading}
-              className="w-full max-h-[340px] object-contain"
-            />
+            {effortsData?.data?.[0]?.efforts_image && imageBaseUrl && (
+              <OptimizedImage
+                src={`${imageBaseUrl}${effortsData.data[0].efforts_image}`}
+                alt={effortsData?.data?.[0]?.efforts_heading}
+                className="w-full max-h-[340px] object-contain"
+              />
+            )}
             <p className="text-[#0F3652] text-justify text-base md:text-lg">
               {effortsData?.data?.[0]?.efforts_description}
             </p>
@@ -307,11 +311,13 @@ const HomeCorporatePartner = () => {
             <h3 className="text-2xl font-bold text-white">
               {effortsData?.data?.[1]?.efforts_heading}
             </h3>
-            <OptimizedImage
-              src={`${imageBaseUrl}${effortsData?.data?.[1]?.efforts_image}`}
-              alt={effortsData?.data?.[1]?.efforts_heading}
-              className="w-full max-h-[340px] object-contain"
-            />
+            {effortsData?.data?.[1]?.efforts_image && imageBaseUrl && (
+              <OptimizedImage
+                src={`${imageBaseUrl}${effortsData.data[1].efforts_image}`}
+                alt={effortsData?.data?.[1]?.efforts_heading}
+                className="w-full max-h-[340px] object-contain"
+              />
+            )}
             <p className="text-white text-justify text-base md:text-lg">
               {effortsData?.data?.[1]?.efforts_description}
             </p>

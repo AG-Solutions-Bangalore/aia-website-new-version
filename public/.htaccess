@@ -8,7 +8,11 @@ Options -Indexes -MultiViews
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# 1. Canonical Host & Protocol (HTTPS + Non-WWW)
+# 1. Block invalid /undefined/ crawl paths immediately (HTTP 404)
+RewriteRule (^|/)undefined(/|$) - [R=404,L]
+
+# 2. Canonical Host & Protocol (HTTPS + Non-WWW) for production
+RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\.aia\.in\.net$ [NC]
 RewriteRule ^ https://aia.in.net%{REQUEST_URI} [R=301,L]
