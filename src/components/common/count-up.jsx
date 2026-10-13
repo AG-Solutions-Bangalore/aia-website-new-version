@@ -1,7 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 
 const CountUp = ({ end, duration = 2000, suffix = "" }) => {
-  const [count, setCount] = useState(0);
+  // NOTE: effects never run during Node SSG — start at the final value so
+  // crawlers (and no-JS clients) see real stats instead of "0".
+  const [count, setCount] = useState(() =>
+    typeof window === "undefined" ? end : 0,
+  );
   const [started, setStarted] = useState(false);
   const ref = useRef(null);
 

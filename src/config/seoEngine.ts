@@ -242,7 +242,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Alumni Filter Directory | Academy of Internal Audit',
     description: 'Search and filter through the Academy of Internal Audit global professional network and alumni directory.',
     keywords: 'AIA alumni directory, filter alumni, CFE directory, CIA directory, CAMS directory',
-    canonicalPath: '/filter',
+    canonicalPath: '/fillter',
     schemas: [
       organizationSchema,
       createWebPageSchema(
@@ -264,6 +264,21 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
         '/aia-times',
         'AIA Times - Magazines, News, and PR Highlights | AIA',
         'Explore AIA Times for the latest Magazines, news, media coverage, PR mentions, expert insights, and key updates from the Academy of Internal Audit.',
+      ),
+    ],
+  },
+  '/aia-times/flip-book': {
+    title: 'AIA Times Flip Book - Interactive Magazine Reader | AIA',
+    description:
+      'Read the AIA Times magazine in an interactive flip book experience with expert insights, news, and updates from the Academy of Internal Audit.',
+    keywords: 'AIA Times flip book, AIA magazine reader, audit magazine online, fraud examination insights',
+    canonicalPath: '/aia-times/flip-book',
+    schemas: [
+      organizationSchema,
+      createWebPageSchema(
+        '/aia-times/flip-book',
+        'AIA Times Flip Book - Interactive Magazine Reader | AIA',
+        'Read the AIA Times magazine in an interactive flip book experience with expert insights, news, and updates from the Academy of Internal Audit.',
       ),
     ],
   },

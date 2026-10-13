@@ -2,6 +2,7 @@ import React, { lazy } from "react";
 
 import DeferredPopUp from "@/components/common/deferred-popup";
 import LazySection from "@/components/common/lazy-section";
+import { ssrLazy } from "@/lib/ssrLazy";
 import HomeHero from "@/components/home/home-hero";
 import CiaCurrAbout from "@/components/courses/cia-curriculam/cia-curr-about";
 import BannerLogos from "@/components/courses/common/banner-logos";
@@ -28,7 +29,7 @@ const WhatsappCarosal = lazy(
 const CiaCurrHighlight = lazy(
   () => import("@/components/courses/cia-curriculam/cia-curr-highlight"),
 );
-const CourseMap = lazy(() => import("@/components/courses/common/course-map"));
+const CourseMap = ssrLazy(() => import("@/components/courses/common/course-map"));
 const CourseReview = lazy(() => import("@/components/common/course-review"));
 const CourseYoutube = lazy(
   () => import("@/components/courses/common/course-youtube"),

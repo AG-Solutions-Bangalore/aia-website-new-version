@@ -3,6 +3,8 @@ import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 import PopUp from "../../components/common/pop-up";
 import ContactHero from "@/components/contact/contact-hero";
 import ContactReachOut from "@/components/contact/contact-reach-out";
+import { isBrowser } from "@/lib/prerender";
+import { ssrLazy } from "@/lib/ssrLazy";
 
 const ContactHighlight = lazy(
   () => import("@/components/contact/contact-highlight"),
@@ -13,7 +15,7 @@ const CourseTopStudent = lazy(
 const HomeAlumniWork = lazy(
   () => import("@/components/home/home-alumini-work"),
 );
-const ContactMap = lazy(() => import("@/components/contact/contact-map"));
+const ContactMap = ssrLazy(() => import("@/components/contact/contact-map"));
 const ContactUnique = lazy(() => import("@/components/contact/contact-unique"));
 const HomeReview = lazy(() => import("@/components/home/home-review"));
 const ContactLocation = lazy(
@@ -31,7 +33,22 @@ const Contact = () => {
     location: { current: null },
   }).current;
 
-  const [visible, setVisible] = useState({});
+  // NOTE: `useEffect` (IntersectionObserver) never runs during Node SSG, so the
+  // initial state below is the final SSR output. Sections start visible at
+  // build time so crawlers receive page content; browsers re-gate on scroll.
+  const [visible, setVisible] = useState(() =>
+    isBrowser
+      ? {}
+      : {
+          highlight: true,
+          students: true,
+          alumni: true,
+          map: true,
+          unique: true,
+          review: true,
+          location: true,
+        },
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(

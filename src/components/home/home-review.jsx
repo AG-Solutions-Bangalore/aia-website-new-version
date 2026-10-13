@@ -2,7 +2,7 @@ import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { AlertCircle, RefreshCcw } from "lucide-react";
-import { useMemo } from "react";
+import { Suspense, useMemo } from "react";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import "swiper/css";
@@ -10,7 +10,11 @@ import "swiper/css/pagination";
 import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SectionHeading from "../SectionHeading/SectionHeading";
-import HomeMap from "./home-map";
+import { ssrLazy } from "@/lib/ssrLazy";
+
+// Leaflet touches `window` at module scope and crashes Node SSR — load it
+// lazily on the client only so the review content still pre-renders.
+const HomeMap = ssrLazy(() => import("./home-map"));
 
 const HomeReview = () => {
   const { data, isLoading, isError, refetch } = useQuery({
@@ -75,7 +79,9 @@ const HomeReview = () => {
         </div>
         <div className="flex flex-col lg:flex-row items-center">
           <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
-            <HomeMap />
+            <Suspense fallback={null}>
+              <HomeMap />
+            </Suspense>
           </div>
 
           <div className="w-full lg:w-1/2 px-4">

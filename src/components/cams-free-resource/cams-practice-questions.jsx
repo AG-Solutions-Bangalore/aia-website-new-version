@@ -79,7 +79,6 @@ const CAMSPracticeQuestion = () => {
   const currentModule =
     modules.find((m) => m.id === activeModule) || modules[0];
   const currentQuestion = currentModule.questions[currentQuestionIndex] || null;
-  console.log(currentModule);
 
   const formatOptions = (question) => {
     const options = [];

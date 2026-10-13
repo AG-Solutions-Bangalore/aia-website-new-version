@@ -119,6 +119,8 @@ export interface DynamicTestimonial {
 let dynamicBlogsMap = new Map<string, DynamicBlogDetailResponse>();
 let dynamicStoriesMap = new Map<string, DynamicStoryResponse>();
 let dynamicTestimonials: DynamicTestimonial[] = [];
+let dynamicBlogSummaries: DynamicBlogSummary[] = [];
+let dynamicImageUrls: Array<{ image_for: string; image_url: string }> = [];
 let dynamicCourseSlugs = new Set<string>();
 let isLoaded = false;
 let loadPromise: Promise<void> | null = null;
@@ -165,6 +167,10 @@ export async function loadDynamicData(): Promise<void> {
       const storyList: DynamicStudentStory[] = storiesRes?.data || [];
       const storyImageUrls = storiesRes?.image_url || [];
       dynamicTestimonials = testimonialsRes?.data || [];
+      // Retain lightweight catalog data so the `/blogs` index page can be
+      // seeded with real article links during SSG (crawler-visible interlinking).
+      dynamicBlogSummaries = blogList;
+      dynamicImageUrls = [...blogImageUrls, ...storyImageUrls];
 
       // Index student stories by slug for O(1) synchronous lookup
       for (const story of storyList) {
@@ -250,6 +256,21 @@ export function getDynamicBlog(slug: string): DynamicBlogDetailResponse | undefi
  */
 export function getDynamicStudentStory(slug: string): DynamicStoryResponse | undefined {
   return dynamicStoriesMap.get(slug);
+}
+
+/**
+ * Returns the lightweight blog catalog (summaries) retained at build time.
+ * Used to seed the `/blogs` index page with crawler-visible article links.
+ */
+export function getAllDynamicBlogSummaries(): DynamicBlogSummary[] {
+  return dynamicBlogSummaries;
+}
+
+/**
+ * Resolves the CDN base URL for a given image category (e.g. 'Blog').
+ */
+export function getDynamicImageBase(imageFor: string): string {
+  return dynamicImageUrls.find((item) => item.image_for === imageFor)?.image_url || '';
 }
 
 /**

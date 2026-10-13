@@ -43,7 +43,9 @@ const reasons = [
 /* ── Intersection-observer hook for stagger-in ── */
 function useReveal() {
   const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
+  // NOTE: effects never run during Node SSG — default to visible so static
+  // HTML never ships `opacity: 0` hidden text (SEO hidden-text flag risk).
+  const [visible, setVisible] = useState(() => typeof window === "undefined");
   useEffect(() => {
     const el = ref.current;
     if (!el) return;

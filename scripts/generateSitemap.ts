@@ -45,6 +45,14 @@ const distDir = path.resolve(__dirname, '../dist');
 const publicDir = path.resolve(__dirname, '../public');
 
 /**
+ * Routes that must never appear in sitemap.xml.
+ * `/filter/` is a client-side redirect alias for `/fillter/` (see AppRoutes).
+ * Advertising redirect aliases in the sitemap wastes crawl budget and triggers
+ * "redirect" warnings in SEO audit tools.
+ */
+const EXCLUDED_ROUTES = new Set<string>(['/filter/']);
+
+/**
  * Recursively scans directory for pre-rendered `index.html` files
  * and maps them to clean relative URL routes.
  */
@@ -108,7 +116,9 @@ function getRoutePriority(route: string): { priority: string; changefreq: string
 }
 
 // Discover all static HTML pages in dist/ and sort deterministically (Home first, then alphabetical)
-const routes = getHtmlFiles(distDir).sort((a, b) => {
+const routes = getHtmlFiles(distDir)
+  .filter((route) => !EXCLUDED_ROUTES.has(route))
+  .sort((a, b) => {
   if (a === '/') return -1;
   if (b === '/') return 1;
   return a.localeCompare(b);

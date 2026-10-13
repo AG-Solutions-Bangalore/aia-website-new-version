@@ -40,8 +40,10 @@ import { getCanonicalUrl, SITE_LOGO } from '@/config/site';
 import { getSeoForRoute, ROUTE_SEO } from '@/config/seoEngine';
 import { createCompositeGraph } from './config/schemaExamples';
 import {
+  getAllDynamicBlogSummaries,
   getAllDynamicRouteUrls,
   getDynamicBlog,
+  getDynamicImageBase,
   getDynamicStudentStory,
   loadDynamicData,
 } from './config/dynamicData';
@@ -216,6 +218,31 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
       },
       children: JSON.stringify(createCompositeGraph(seo.schemas)),
     });
+  }
+
+  /**
+   * 7b. Seed the `/blogs` index page with its article catalog.
+    *
+    * WHY: `Blog.jsx` fetches its listing inside client-side `useEffect`, so the
+    * SSG HTML would contain zero article links and crawlers following links from
+    * `/blogs/` would discover nothing. Injecting the lightweight catalog as an
+    * inline script lets the page render all `<a href="/blogs/:slug">` cards on
+    * the very first SSR pass. `<` is escaped as `\u003c` so embedded HTML can
+    * never prematurely close the script tag.
+    */
+  if (cleanPath === '/blogs') {
+    const catalog = getAllDynamicBlogSummaries();
+    if (catalog.length > 0) {
+      const payload = JSON.stringify({
+        blogs: catalog,
+        imageBase: getDynamicImageBase('Blog'),
+      }).replace(/</g, '\\u003c');
+      elements.add({
+        type: 'script',
+        props: { id: 'ssg-blogs', 'data-rh': 'true' },
+        children: `window.__SSG_BLOGS__=${payload};`,
+      });
+    }
   }
 
   /**

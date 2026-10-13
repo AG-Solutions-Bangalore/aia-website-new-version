@@ -138,7 +138,6 @@ const BlogCourse = () => {
   const [loading, setLoading] = useState(true);
   const [imageBaseUrl, setImageBaseUrl] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  console.log(courseName, "courseName");
   useEffect(() => {
     const fetchBlogs = async () => {
       try {

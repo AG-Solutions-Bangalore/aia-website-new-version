@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import HomeHero from "@/components/home/home-hero";
 import PopUp from "@/components/common/pop-up";
+import { isBrowser } from "@/lib/prerender";
 import CfeRoadmapDialog from "@/components/common/CfeRoadmapDialog";
 import FreeResourceRoadmapCTA from "@/components/common/free-resource-roadmap-cta";
 const CourseYoutubeLecture = lazy(() =>
@@ -37,7 +38,22 @@ const FreeResources = () => {
     review: { current: null },
   }).current;
 
-  const [visible, setVisible] = useState({});
+  // NOTE: `useEffect` (IntersectionObserver) never runs during Node SSG, so the
+  // initial state below is the final SSR output. Sections start visible at
+  // build time so crawlers receive page content; browsers re-gate on scroll.
+  const [visible, setVisible] = useState(() =>
+    isBrowser
+      ? {}
+      : {
+          youtube: true,
+          flash: true,
+          practice: true,
+          distractor: true,
+          achievers: true,
+          alumni: true,
+          review: true,
+        },
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(

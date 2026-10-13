@@ -3,6 +3,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import PopUp from "@/components/common/pop-up";
 import PassoutBanner from "@/components/passout/passout-banner";
 import PassoutResult from "@/components/passout/passout-result";
+import { isBrowser } from "@/lib/prerender";
 
 const PassoutSucess = lazy(
   () => import("@/components/passout/passout-success"),
@@ -33,7 +34,22 @@ const OurPassout = () => {
     alumni: { current: null },
   }).current;
 
-  const [visible, setVisible] = useState({});
+  // NOTE: `useEffect` (IntersectionObserver) never runs during Node SSG, so the
+  // initial state below is the final SSR output. Sections start visible at
+  // build time so crawlers receive page content; browsers re-gate on scroll.
+  const [visible, setVisible] = useState(() =>
+    isBrowser
+      ? {}
+      : {
+          directory: true,
+          weekly: true,
+          success: true,
+          youtube: true,
+          whatsapp: true,
+          review: true,
+          alumni: true,
+        },
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(
