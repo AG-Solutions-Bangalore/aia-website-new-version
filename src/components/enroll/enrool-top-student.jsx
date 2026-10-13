@@ -20,7 +20,6 @@ const EnroolTopStudent = () => {
       return res.data;
     },
   });
-  console.log(EnrolTopData);
 
   const studentData = React.useMemo(() => {
     if (!EnrolTopData?.data) return [];

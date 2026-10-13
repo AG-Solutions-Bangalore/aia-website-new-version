@@ -6,6 +6,10 @@ import PopUp from "@/components/common/pop-up";
 import CourseTopStudent from "@/components/home/home-pr-carousel";
 import SectionHeadingH1 from "@/components/SectionHeading/SectionHeadingH1";
 import { isReactSnapPrerender } from "@/lib/prerender";
+import {
+  getAllDynamicBlogSummaries,
+  getDynamicImageBase,
+} from "@/config/dynamicData";
 import { getCourseColor } from "@/utils/courseColor";
 import axios from "axios";
 import {
@@ -20,9 +24,38 @@ import { useEffect, useState } from "react";
 
 const Blog = () => {
   const isPrerendering = isReactSnapPrerender();
-  const [blogs, setBlogs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [imageBaseUrl, setImageBaseUrl] = useState("");
+  // SSG seed: during build-time prerendering, `loadDynamicData()` has already
+  // populated the catalog, so the SSR pass renders every article card (links,
+  // headings, descriptions) directly into static HTML. In the browser, the same
+  // data arrives via the inline `window.__SSG_BLOGS__` script (keeps hydration
+  // consistent), otherwise the client API fetch takes over as before.
+  const getSeededBlogs = () => {
+    try {
+      const catalog = getAllDynamicBlogSummaries();
+      if (catalog?.length) return catalog;
+    } catch {
+      /* client bundle without a preloaded catalog */
+    }
+    if (typeof window !== "undefined" && window.__SSG_BLOGS__?.blogs?.length) {
+      return window.__SSG_BLOGS__.blogs;
+    }
+    return [];
+  };
+  const getSeededImageBase = () => {
+    try {
+      const base = getDynamicImageBase("Blog");
+      if (base) return base;
+    } catch {
+      /* client bundle without a preloaded catalog */
+    }
+    if (typeof window !== "undefined" && window.__SSG_BLOGS__?.imageBase) {
+      return window.__SSG_BLOGS__.imageBase;
+    }
+    return "";
+  };
+  const [blogs, setBlogs] = useState(getSeededBlogs);
+  const [loading, setLoading] = useState(() => getSeededBlogs().length === 0);
+  const [imageBaseUrl, setImageBaseUrl] = useState(getSeededImageBase);
   const [showAllTrending, setShowAllTrending] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
@@ -289,7 +322,7 @@ const Blog = () => {
                         }}
                       >
                         {trendingBlogs
-                          .slice(0, isPrerendering ? 1 : 4)
+                          .slice(0, isPrerendering ? trendingBlogs.length : 4)
                           .map((blog) => (
                           <div key={blog.id} className="w-full shrink-0 px-2">
                             <BannerBlogCard
@@ -381,7 +414,7 @@ const Blog = () => {
           {uniqueCategories.map((category) => {
             const categoryBlogs = filteredBlogs
               .filter((blog) => blog.blog_course === category)
-              .slice(0, isPrerendering ? 1 : 4);
+              .slice(0, isPrerendering ? filteredBlogs.length : 4);
             if (categoryBlogs.length === 0) return null;
 
             return (

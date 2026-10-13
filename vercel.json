@@ -1,5 +1,4 @@
 {
-  "trailingSlash": true,
   "cleanUrls": true,
   "redirects": [
     {
@@ -106,6 +105,286 @@
     {
       "source": "/corporate-training/cisa",
       "destination": "/cisa",
+      "permanent": true
+    },
+    {
+      "source": "/what-is-money-laundering(/)?",
+      "destination": "/blogs/what-is-money-laundering/",
+      "permanent": true
+    },
+    {
+      "source": "/academy-of-internal-audit-national-recognition(/)?",
+      "destination": "/blogs/academy-of-internal-audit-national-recognition/",
+      "permanent": true
+    },
+    {
+      "source": "/cfe-vs-cams(/)?",
+      "destination": "/blogs/cfe-vs-cams/",
+      "permanent": true
+    },
+    {
+      "source": "/cia-vs-cia-challenge-curriculum(/)?",
+      "destination": "/blogs/cia-vs-cia-challenge-curriculum/",
+      "permanent": true
+    },
+    {
+      "source": "/what-is-fraud(/)?",
+      "destination": "/blogs/what-is-fraud/",
+      "permanent": true
+    },
+    {
+      "source": "/anti-money-laundering-certificate(/)?",
+      "destination": "/blogs/anti-money-laundering-certificate/",
+      "permanent": true
+    },
+    {
+      "source": "/online-vs-offline-cfe-training(/)?",
+      "destination": "/blogs/online-vs-offline-cfe-training/",
+      "permanent": true
+    },
+    {
+      "source": "/cams-exam-format(/)?",
+      "destination": "/blogs/cams-exam-format/",
+      "permanent": true
+    },
+    {
+      "source": "/anti-money-laundering-jobs-salary(/)?",
+      "destination": "/blogs/anti-money-laundering-jobs-salary/",
+      "permanent": true
+    },
+    {
+      "source": "/certified-fraud-examiner-salary(/)?",
+      "destination": "/blogs/certified-fraud-examiner-salary/",
+      "permanent": true
+    },
+    {
+      "source": "/cia-certification(/)?",
+      "destination": "/blogs/cia-certification/",
+      "permanent": true
+    },
+    {
+      "source": "/cfe-module-4(/)?",
+      "destination": "/blogs/cfe-module-4/",
+      "permanent": true
+    },
+    {
+      "source": "/cia-certification-in-qatar(/)?",
+      "destination": "/blogs/cia-certification-in-qatar/",
+      "permanent": true
+    },
+    {
+      "source": "/cams-2025-syllabus-update-key-changes-and-preparation-guide(/)?",
+      "destination": "/blogs/cams-syllabus/",
+      "permanent": true
+    },
+    {
+      "source": "/cia-part-3-syllabus-2025(/)?",
+      "destination": "/blogs/cia-part-3-syllabus/",
+      "permanent": true
+    },
+    {
+      "source": "/cia-part-2-syllabus-2025(/)?",
+      "destination": "/blogs/cia-part-2-syllabus/",
+      "permanent": true
+    },
+    {
+      "source": "/internal-audit-101-everything-you-should-know(/)?",
+      "destination": "/blogs/internal-audit/",
+      "permanent": true
+    },
+    {
+      "source": "/cia-part1-syllabus-2025-update-internal-audit-fundamentals(/)?",
+      "destination": "/blogs/cia-part-1-syllabus/",
+      "permanent": true
+    },
+    {
+      "source": "/cfe-exam-home-test-center(/)?",
+      "destination": "/blogs/cfe-exam-home-test-center/",
+      "permanent": true
+    },
+    {
+      "source": "/cfe-exam-fees-and-retake-policy(/)?",
+      "destination": "/blogs/cfe-exam-fees-and-retake-policy/",
+      "permanent": true
+    },
+    {
+      "source": "/cia-exam-syllabus-2025-update(/)?",
+      "destination": "/blogs/cia-exam-syllabus/",
+      "permanent": true
+    },
+    {
+      "source": "/unlock-your-cfe-exam-success-with-these-proven-strategies(/)?",
+      "destination": "/blogs/cfe-exam-success/",
+      "permanent": true
+    },
+    {
+      "source": "/cia-exam-preparation-tips-for-cracking-exam-in-first-attempt(/)?",
+      "destination": "/blogs/cia-exam-preparation-tips/",
+      "permanent": true
+    },
+    {
+      "source": "/how-cams-certification-prepares-you-for-the-aml-career(/)?",
+      "destination": "/blogs/aml-career/",
+      "permanent": true
+    },
+    {
+      "source": "/curriculum-of-certified-fraud-examiner-module3-investigation(/)?",
+      "destination": "/blogs/cfe-module-3/",
+      "permanent": true
+    },
+    {
+      "source": "/the-impact-of-digital-tools-and-platforms-on-internal-audit-work(/)?",
+      "destination": "/blogs/internal-audit-work/",
+      "permanent": true
+    },
+    {
+      "source": "/how-cams-certification-equips-you-for-global-aml-challenges(/)?",
+      "destination": "/blogs/aml-challenges/",
+      "permanent": true
+    },
+    {
+      "source": "/curriculum-of-certified-fraud-examiner-module-2-law(/)?",
+      "destination": "/blogs/cfe-module-2/",
+      "permanent": true
+    },
+    {
+      "source": "/business-knowledge-for-internal-auditing-cia-part-3-curriculum(/)?",
+      "destination": "/blogs/cia-part-3-curriculum/",
+      "permanent": true
+    },
+    {
+      "source": "/job-opportunities-with-certified-fraud-examiner-certification(/)?",
+      "destination": "/blogs/cfe-job-opportunities/",
+      "permanent": true
+    },
+    {
+      "source": "/cfe-module-1-financial-transactions-and-fraud-schemes(/)?",
+      "destination": "/blogs/cfe-module-1/",
+      "permanent": true
+    },
+    {
+      "source": "/practice-of-internal-auditing-\\(cia-part-2-curriculum\\)(/)?",
+      "destination": "/blogs/cia-part-2-curriculum/",
+      "permanent": true
+    },
+    {
+      "source": "/essentials-of-internal-auditing-\\(cia-part-1-curriculum\\)(/)?",
+      "destination": "/blogs/cia-part-1-curriculum/",
+      "permanent": true
+    },
+    {
+      "source": "/your-guide-to-success-with-a-fraud-analyst-course(/)?",
+      "destination": "/blogs/fraud-analyst-course/",
+      "permanent": true
+    },
+    {
+      "source": "/a-step-by-step-guide-to-the-cia-exam-registration-process(/)?",
+      "destination": "/blogs/cia-exam-registration-process/",
+      "permanent": true
+    },
+    {
+      "source": "/essential-fraud-examiner-skills-to-avoid-and-spot-fraud(/)?",
+      "destination": "/blogs/cfe-fraud-skills/",
+      "permanent": true
+    },
+    {
+      "source": "/a-detailed-guide-on-certified-internal-auditor-functions(/)?",
+      "destination": "/blogs/certified-internal-auditor-functions/",
+      "permanent": true
+    },
+    {
+      "source": "/top-10-cams-exam-tips-to-pass-on-your-first-attempt(/)?",
+      "destination": "/blogs/cams-exam-tips/",
+      "permanent": true
+    },
+    {
+      "source": "/how-to-become-the-best-fraud-investigator(/)?",
+      "destination": "/blogs/fraud-investigator/",
+      "permanent": true
+    },
+    {
+      "source": "/what-are-the-cia-course-eligibility-criteria-in-india(/)?",
+      "destination": "/blogs/cia-course-eligibility-criteria/",
+      "permanent": true
+    },
+    {
+      "source": "/comprehensive-guide-to-understand-and-implement-kyc-compliance(/)?",
+      "destination": "/blogs/kyc-compliance/",
+      "permanent": true
+    },
+    {
+      "source": "/which-certifications-are-related-to-aml-compliance(/)?",
+      "destination": "/blogs/aml-compliance/",
+      "permanent": true
+    },
+    {
+      "source": "/what-is-the-cams-certification-cost-and-the-benefits(/)?",
+      "destination": "/blogs/cams-certification-cost/",
+      "permanent": true
+    },
+    {
+      "source": "/what-is-the-cia-certification-cost-and-duration-in-india(/)?",
+      "destination": "/blogs/cia-certification-cost-duration-india/",
+      "permanent": true
+    },
+    {
+      "source": "/internal-audits-role-in-fraud-prevention-and-detection(/)?",
+      "destination": "/blogs/role-of-internal-audit-fraud/",
+      "permanent": true
+    },
+    {
+      "source": "/understanding-the-role-of-a-certified-fraud-examiner-in-todays-business-landscape(/)?",
+      "destination": "/blogs/certified-fraud-examiner-role/",
+      "permanent": true
+    },
+    {
+      "source": "/what-are-the-practical-steps-in-an-internal-audit(/)?",
+      "destination": "/blogs/steps-of-internal-audit/",
+      "permanent": true
+    },
+    {
+      "source": "/certified-fraud-examiners-everything-you-need-to-know(/)?",
+      "destination": "/blogs/certified-fraud-examiner/",
+      "permanent": true
+    },
+    {
+      "source": "/what-are-the-benefits-of-becoming-cia(/)?",
+      "destination": "/blogs/benefits-of-becoming-cia/",
+      "permanent": true
+    },
+    {
+      "source": "/the-impact-of-cfe-in-corporate-world(/)?",
+      "destination": "/blogs/cfe-in-corporate-world/",
+      "permanent": true
+    },
+    {
+      "source": "/5-key-skills-required-to-pass-cia-exam(/)?",
+      "destination": "/blogs/cia-exam-key-skills/",
+      "permanent": true
+    },
+    {
+      "source": "/cfe-certification-cost-in-india(/)?",
+      "destination": "/blogs/cfe-certification-cost/",
+      "permanent": true
+    },
+    {
+      "source": "/how-to-achieve-cfe-certification-in-less-than-30-days(/)?",
+      "destination": "/blogs/achieve-cfe-certification/",
+      "permanent": true
+    },
+    {
+      "source": "/why-we-should-become-cfe(/)?",
+      "destination": "/blogs/benefits-of-becoming-cfe/",
+      "permanent": true
+    },
+    {
+      "source": "/steps-to-become-cfe(/)?",
+      "destination": "/blogs/steps-to-become-cfe/",
+      "permanent": true
+    },
+    {
+      "source": "/schedule-of-classes(/)?",
+      "destination": "/blogs/schedule-of-classes/",
       "permanent": true
     }
   ],

@@ -113,7 +113,6 @@ const AlumniDirectory = () => {
     queryKey: ["passout-students-year"],
     queryFn: async () => {
       const res = await axios.get(`${BASE_URL}/api/getAllPassoutStudentsYear`);
-      console.log("getAllPassoutStudentsYear API Response:", res.data);
       return res.data;
     },
   });

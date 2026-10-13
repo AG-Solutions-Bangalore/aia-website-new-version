@@ -2,6 +2,7 @@ import React, { lazy } from "react";
 
 import DeferredPopUp from "@/components/common/deferred-popup";
 import LazySection from "@/components/common/lazy-section";
+import { ssrLazy } from "@/lib/ssrLazy";
 import HomeHero from "@/components/home/home-hero";
 import CamsAbout from "@/components/courses/cams/cams-about";
 
@@ -24,7 +25,7 @@ const WhatsappCarosal = lazy(
 const CamsHighlight = lazy(
   () => import("@/components/courses/cams/cams-highlight"),
 );
-const CourseMap = lazy(() => import("@/components/courses/common/course-map"));
+const CourseMap = ssrLazy(() => import("@/components/courses/common/course-map"));
 const CourseReview = lazy(() => import("@/components/common/course-review"));
 const CourseYoutube = lazy(
   () => import("@/components/courses/common/course-youtube"),

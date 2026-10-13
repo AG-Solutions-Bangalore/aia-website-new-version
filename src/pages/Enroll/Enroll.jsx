@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import EnrollHighlight from "@/components/enroll/enroll-highlight";
+import { isBrowser } from "@/lib/prerender";
 
 const EnroolTopStudent = lazy(
   () => import("@/components/enroll/enrool-top-student"),
@@ -23,7 +24,20 @@ const Enrool = () => {
     faq: { current: null },
   }).current;
 
-  const [visible, setVisible] = useState({});
+  // NOTE: `useEffect` (IntersectionObserver) never runs during Node SSG, so the
+  // initial state below is the final SSR output. Sections start visible at
+  // build time so crawlers receive page content; browsers re-gate on scroll.
+  const [visible, setVisible] = useState(() =>
+    isBrowser
+      ? {}
+      : {
+          topStudent: true,
+          alumni: true,
+          youtube: true,
+          review: true,
+          faq: true,
+        },
+  );
 
   useEffect(() => {
     const observer = new IntersectionObserver(

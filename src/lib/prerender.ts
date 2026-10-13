@@ -41,11 +41,12 @@ export function isSSGPrerender(): boolean {
 
 /**
  * Legacy compatibility shim for components previously checking ReactSnap.
- * In the modern SSG pipeline, this returns true during SSR to keep non-critical
- * components deferred, or checks user agent in browser if specified.
+ * Returns true during Node.js build-time pre-rendering (no `window`) so that
+ * SSG output contains real section content instead of skeleton placeholders,
+ * or checks user agent in browser if specified.
  */
 export function isReactSnapPrerender(): boolean {
-  if (!isBrowser) return false;
+  if (!isBrowser) return true;
   return /ReactSnap/i.test(window.navigator?.userAgent || '');
 }
 

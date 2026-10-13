@@ -197,7 +197,7 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/passout-stories/:slug" element={<PageSEO><PassoutStoriesSlug /></PageSEO>} />
           <Route path="/corporate-training" element={<PageSEO path="/corporate-training"><CorporateTraining /></PageSEO>} />
           <Route path="/aia-times" element={<PageSEO path="/aia-times"><AiaTimes /></PageSEO>} />
-          <Route path="/aia-times/flip-book" element={<PageSEO path="/aia-times"><FlipbookSection /></PageSEO>} />
+          <Route path="/aia-times/flip-book" element={<PageSEO path="/aia-times/flip-book"><FlipbookSection /></PageSEO>} />
           <Route path="/corporate-training/cia-curriculum" element={<Navigate to="/cia-curriculum" replace />} />
           <Route path="/corporate-training/cams" element={<Navigate to="/cams" replace />} />
           <Route path="/corporate-training/cfe-curriculum" element={<Navigate to="/cfe-curriculum" replace />} />

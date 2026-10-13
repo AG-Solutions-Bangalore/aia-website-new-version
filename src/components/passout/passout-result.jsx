@@ -100,8 +100,14 @@ const PassoutResult = () => {
     return (
       <div className="relative w-full py-12 sm:py-24 md:py-32">
         <div className="mx-auto max-w-container flex flex-col items-center gap-4 text-center sm:gap-16">
+          <div className="px-4">
+            <SectionHeadingH1
+              title="Meet the AIA-Certified Professionals Worldwide"
+              description="Tap on any certificate to learn about their certification journey, explore their LinkedIn profiles, and connect with professionals who advanced their careers through AIA’s global programs."
+              align="center"
+            />
+          </div>
           <div className="flex flex-col items-center gap-4 px-4 sm:gap-8">
-            <Skeleton height={40} width={400} className="mx-auto" />
             <Skeleton height={20} width={200} className="mx-auto" />
           </div>
           <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
