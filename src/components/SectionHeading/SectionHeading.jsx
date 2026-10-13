@@ -40,8 +40,7 @@ const SectionHeading = ({
           className={`text-xl md:text-4xl font-bold text-[#0F3652] ${isCenter ? "text-center" : "text-left"} ${titleClass}`}
         >
           <span
-            className={` ${preheadingclassName ? preheadingclassName : "text-[#F3831C]"
-              } ${preheadingclassName}`}
+            className={preheadingclassName || "text-[#F3831C]"}
           >
             {preheading}
           </span>{" "}

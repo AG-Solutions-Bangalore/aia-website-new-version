@@ -45,26 +45,28 @@ const AboutPartner = () => {
               <div className="grid max-w-340 mx-auto md:grid-cols-2 gap-8 items-center mt-10">
                 <div className="order-2 md:order-1">
                   <div className="p-1">
-                    <img
-                      src={`${imageBaseUrl}${efforts[2]?.efforts_image}`}
-                      alt={efforts[2]?.efforts_heading} title={efforts[2]?.efforts_heading}
-                      className="w-full md:h-[340px]  object-contain"
-                      loading="lazy"
-                    />
+                    {efforts[2]?.efforts_image && imageBaseUrl && (
+                      <img
+                        src={`${imageBaseUrl}${efforts[2].efforts_image}`}
+                        alt={efforts[2]?.efforts_heading} title={efforts[2]?.efforts_heading}
+                        className="w-full md:h-[340px]  object-contain"
+                        loading="lazy"
+                      />
+                    )}
                   </div>
                 </div>
 
                 <div className="order-1 md:order-2">
                   <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
-                    {efforts[2].efforts_heading}
+                    {efforts[2]?.efforts_heading}
                   </h3>
                   <p className="text-white text-lg hidden md:block text-justify">
-                    {efforts[2].efforts_description}
+                    {efforts[2]?.efforts_description}
                   </p>
                 </div>
                 <div className="order-3 md:hidden">
                   <p className="text-white text-lg text-justify">
-                    {efforts[2].efforts_description}
+                    {efforts[2]?.efforts_description}
                   </p>
                 </div>
               </div>
@@ -75,26 +77,28 @@ const AboutPartner = () => {
             <div className="grid md:grid-cols-2 gap-8 items-center">
               <div className="order-1">
                 <h3 className="text-2xl md:text-3xl font-bold text-[#0F3652] mb-3">
-                  {efforts[0].efforts_heading}
+                  {efforts[0]?.efforts_heading}
                 </h3>
                 <p className="text-[#0F3652] text-lg hidden md:block text-justify">
-                  {efforts[0].efforts_description}
+                  {efforts[0]?.efforts_description}
                 </p>
               </div>
               <div className="order-3 md:hidden">
                 <p className="text-[#0F3652] text-lg text-justify">
-                  {efforts[0].efforts_description}
+                  {efforts[0]?.efforts_description}
                 </p>
               </div>
 
               <div className="order-2">
                 <div className="p-1">
-                  <img
-                    src={`${imageBaseUrl}${efforts[0]?.efforts_image}`}
-                    alt={efforts[0]?.efforts_heading} title={efforts[0]?.efforts_heading}
-                    className="w-full md:h-[340px] object-contain"
-                    loading="lazy"
-                  />
+                  {efforts[0]?.efforts_image && imageBaseUrl && (
+                    <img
+                      src={`${imageBaseUrl}${efforts[0].efforts_image}`}
+                      alt={efforts[0]?.efforts_heading} title={efforts[0]?.efforts_heading}
+                      className="w-full md:h-[340px] object-contain"
+                      loading="lazy"
+                    />
+                  )}
                 </div>
               </div>
             </div>
@@ -105,12 +109,14 @@ const AboutPartner = () => {
               <div className="grid md:grid-cols-2 gap-8 items-center">
                 <div className="order-2 md:order-1">
                   <div className="p-1">
-                    <img
-                      src={`${imageBaseUrl}${efforts[1]?.efforts_image}`}
-                      alt={efforts[1]?.efforts_heading} title={efforts[1]?.efforts_heading}
-                      className="w-full md:h-[340px]  object-contain"
-                       loading="lazy"
-                    />
+                    {efforts[1]?.efforts_image && imageBaseUrl && (
+                      <img
+                        src={`${imageBaseUrl}${efforts[1].efforts_image}`}
+                        alt={efforts[1]?.efforts_heading} title={efforts[1]?.efforts_heading}
+                        className="w-full md:h-[340px]  object-contain"
+                        loading="lazy"
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="order-1 md:order-2">
