@@ -43,16 +43,50 @@ export interface ModularPageProps {
   children: React.ReactNode;
 }
 
+export interface DynamicSeoContextValue {
+  setDynamicSeo: (seo: MasterSeoStructure | null) => void;
+}
+
+export const DynamicSeoContext = React.createContext<DynamicSeoContextValue | null>(null);
+
+export function useDynamicSeo(): DynamicSeoContextValue | null {
+  return React.useContext(DynamicSeoContext);
+}
+
 export default function SEOPageLayout({
-  seo,
+  seo: initialSeo,
   structuredSchemas = [],
   children,
 }: ModularPageProps): React.JSX.Element {
+  const [dynamicSeo, setDynamicSeo] = React.useState<MasterSeoStructure | null>(null);
+
+  // When initial route canonical changes, reset dynamic state so the next page starts clean
+  React.useEffect(() => {
+    setDynamicSeo(null);
+  }, [initialSeo.canonicalPath]);
+
+  const seo = dynamicSeo || initialSeo;
   const finalCanonical = getCanonicalUrl(seo.canonicalPath);
+  const activeSchemas = dynamicSeo?.schemas || structuredSchemas;
   const pageGraphPayload =
-    structuredSchemas.length > 0 ? createCompositeGraph(structuredSchemas) : null;
+    activeSchemas.length > 0 ? createCompositeGraph(activeSchemas) : null;
+
+  const hasHydratedRef = React.useRef(false);
 
   React.useEffect(() => {
+    const isFirstMount = !hasHydratedRef.current;
+    hasHydratedRef.current = true;
+
+    // SSR HYDRATION SAFETY GUARD:
+    // If this is the initial hydration of a fallback SEO, but the DOM
+    // already has server-rendered (SSG) rich metadata and schema, do NOT overwrite it!
+    if (isFirstMount && initialSeo.isFallback && !dynamicSeo) {
+      const existingScript = document.getElementById('schema-jsonld');
+      if (existingScript && existingScript.textContent) {
+        return;
+      }
+    }
+
     // 1. Synchronize Document Title
     if (seo.title) {
       document.title = seo.title;
@@ -158,7 +192,7 @@ export default function SEOPageLayout({
   }, [seo, finalCanonical, pageGraphPayload]);
 
   return (
-    <>
+    <DynamicSeoContext.Provider value={{ setDynamicSeo }}>
       <Helmet>
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />
@@ -174,6 +208,6 @@ export default function SEOPageLayout({
         <meta name="twitter:description" content={seo.description} />
       </Helmet>
       {children}
-    </>
+    </DynamicSeoContext.Provider>
   );
 }
