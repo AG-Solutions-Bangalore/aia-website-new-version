@@ -53,6 +53,8 @@ export interface MasterSeoStructure {
   keywords: string;
   canonicalPath: string;
   noIndex?: boolean;
+  schemas?: Thing[];
+  isFallback?: boolean;
 }
 
 
@@ -437,6 +439,110 @@ function formatSlugToTitle(slug: string): string {
 }
 
 /**
+ * Constructs production-grade SEO metadata and Schema.org graph for a dynamic blog article.
+ * Can be called both during SSG pre-rendering and on client-side React hydration when API data arrives.
+ */
+export function buildDynamicBlogSeo(
+  blog: {
+    blog_slug: string;
+    blog_heading: string;
+    blog_meta_title?: string;
+    blog_meta_description?: string;
+    blog_short_description?: string;
+    blog_meta_keywords?: string;
+    blog_course?: string;
+    blog_created?: string;
+    blog_updated?: string;
+    blog_images?: string;
+  },
+  faq: Array<{ faq_que: string; faq_ans: string }> = [],
+  path?: string,
+): RouteSeoEntry {
+  const b = blog;
+  const canonicalPath = path || `/blogs/${b.blog_slug}/`;
+  const title = b.blog_meta_title || `${b.blog_heading} | ${SITE_NAME}`;
+  const description =
+    b.blog_meta_description ||
+    b.blog_short_description ||
+    `Read expert insights and exam preparation guide on ${b.blog_heading} by ${SITE_NAME}.`;
+  const keywords =
+    b.blog_meta_keywords ||
+    `${b.blog_heading}, ${b.blog_course || 'Internal Audit'} exam prep, AIA articles`;
+  const schemas: Thing[] = [
+    organizationSchema,
+    websiteSchema,
+    createWebPageSchema(canonicalPath, title, description),
+    createBreadcrumbSchema(
+      [
+        { name: 'Home', path: '/' },
+        { name: 'Blogs', path: '/blogs' },
+        { name: b.blog_heading, path: canonicalPath },
+      ],
+      canonicalPath,
+    ),
+    createBlogPostingSchema(b),
+  ];
+
+  if (faq && faq.length > 0) {
+    schemas.push(createFaqSchema(faq, canonicalPath));
+  }
+
+  return {
+    title,
+    description,
+    keywords,
+    canonicalPath,
+    schemas,
+    isFallback: false,
+  };
+}
+
+/**
+ * Constructs production-grade SEO metadata and Schema.org Review graph for a dynamic student passout story.
+ */
+export function buildDynamicStudentStorySeo(
+  story: {
+    student_slug: string;
+    student_name: string;
+    student_course?: string;
+    student_story_short_description?: string;
+    student_testimonial?: string;
+    [key: string]: any;
+  },
+  path?: string,
+): RouteSeoEntry {
+  const s = story;
+  const canonicalPath = path || `/passout-stories/${s.student_slug}/`;
+  const title = `${s.student_name} - ${s.student_course || 'AIA'} Success Story | ${SITE_NAME}`;
+  const description =
+    s.student_story_short_description ||
+    `Read how ${s.student_name} cleared the ${s.student_course || 'certification'} exam with the Academy of Internal Audit.`;
+  const keywords = `${s.student_name} success story, ${s.student_course || 'AIA'} passout, AIA alumni, CIA CFE CAMS results`;
+
+  return {
+    title,
+    description,
+    keywords,
+    canonicalPath,
+    schemas: [
+      organizationSchema,
+      websiteSchema,
+      createWebPageSchema(canonicalPath, title, description),
+      createBreadcrumbSchema(
+        [
+          { name: 'Home', path: '/' },
+          { name: 'Alumni Network', path: '/alumni-network' },
+          { name: `${s.student_name} Story`, path: canonicalPath },
+        ],
+        canonicalPath,
+      ),
+      createStudentReviewSchema(s as any),
+    ],
+    isFallback: false,
+  };
+}
+
+/**
  * Core route resolver determining the exact SEO metadata and Schema.org graph for any URL.
  * Handles both registered static routes and dynamic parameterized patterns.
  * 
@@ -499,42 +605,7 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
     const dynamicBlog = getDynamicBlog(slug);
 
     if (dynamicBlog && dynamicBlog.data) {
-      const b = dynamicBlog.data;
-      const title = b.blog_meta_title || `${b.blog_heading} | ${SITE_NAME}`;
-      const description =
-        b.blog_meta_description ||
-        b.blog_short_description ||
-        `Read expert insights and exam preparation guide on ${b.blog_heading} by ${SITE_NAME}.`;
-      const keywords =
-        b.blog_meta_keywords ||
-        `${b.blog_heading}, ${b.blog_course || 'Internal Audit'} exam prep, AIA articles`;
-      const schemas: Thing[] = [
-        organizationSchema,
-        websiteSchema,
-        createWebPageSchema(path, title, description),
-        createBreadcrumbSchema(
-          [
-            { name: 'Home', path: '/' },
-            { name: 'Blogs', path: '/blogs' },
-            { name: b.blog_heading, path },
-          ],
-          path,
-        ),
-        createBlogPostingSchema(b),
-      ];
-
-      // If the blog contains FAQs, attach a compliant FAQPage schema
-      if (dynamicBlog.faq && dynamicBlog.faq.length > 0) {
-        schemas.push(createFaqSchema(dynamicBlog.faq, path));
-      }
-
-      return {
-        title,
-        description,
-        keywords,
-        canonicalPath: path,
-        schemas,
-      };
+      return buildDynamicBlogSeo(dynamicBlog.data, dynamicBlog.faq || [], path);
     }
 
     // Graceful fallback if not yet loaded in memory
@@ -564,6 +635,7 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
           blog_short_description: description,
         }),
       ],
+      isFallback: true,
     };
   }
 
@@ -601,33 +673,7 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
     const dynamicStory = getDynamicStudentStory(slug);
 
     if (dynamicStory && dynamicStory.data) {
-      const s = dynamicStory.data;
-      const title = `${s.student_name} - ${s.student_course} Success Story | ${SITE_NAME}`;
-      const description =
-        s.student_story_short_description ||
-        `Read how ${s.student_name} cleared the ${s.student_course} certification exam with the Academy of Internal Audit.`;
-      const keywords = `${s.student_name} success story, ${s.student_course} passout, AIA alumni, CIA CFE CAMS results`;
-
-      return {
-        title,
-        description,
-        keywords,
-        canonicalPath: path,
-        schemas: [
-          organizationSchema,
-          createWebPageSchema(path, title, description),
-          createBreadcrumbSchema(
-            [
-              { name: 'Home', path: '/' },
-              { name: 'Alumni Network', path: '/alumni-network' },
-              { name: `${s.student_name} Story`, path },
-            ],
-            path,
-          ),
-          // Type-safe Schema.org Review entity for Google Rich Results
-          createStudentReviewSchema(s),
-        ],
-      };
+      return buildDynamicStudentStorySeo(dynamicStory.data, path);
     }
 
     const studentName = formatSlugToTitle(slug);
@@ -655,6 +701,7 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
           student_story_short_description: description,
         }),
       ],
+      isFallback: true,
     };
   }
 

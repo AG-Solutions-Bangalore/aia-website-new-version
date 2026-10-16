@@ -4,12 +4,14 @@ import BlogFaq from "@/components/blog/blog-faq";
 import axios from "axios";
 import { ArrowLeft, Calendar, Clock, Image as ImageIcon, User } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ShareButtons } from "./share-button";
 import OptimizedImage from "@/components/common/optmized-image";
 import { SITE_ORIGIN, getCanonicalUrl } from "@/config/site";
 import { titleFromSlug } from "@/utils/titleFromSlug";
+import { useDynamicSeo } from "@/components/SEOPageLayout";
+import { buildDynamicBlogSeo } from "@/config/seoEngine";
 
 /**
  * @file src/pages/Blog/blog-details.jsx
@@ -73,44 +75,16 @@ const BlogDetails = () => {
   const [email, setEmail] = useState("");
   const [subscriptionStatus, setSubscriptionStatus] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
-  const navigate = useNavigate();
+  const location = useLocation();
+  const dynamicSeoContext = useDynamicSeo();
 
   useEffect(() => {
     if (!blog) return;
-    const resolvedTitle = blog.blog_meta_title || blog.blog_heading;
-    if (resolvedTitle) {
-      document.title = resolvedTitle;
-      const ogTitle = document.querySelector('meta[property="og:title"]');
-      if (ogTitle) ogTitle.setAttribute("content", resolvedTitle);
-      const twitterTitle = document.querySelector('meta[name="twitter:title"]');
-      if (twitterTitle) twitterTitle.setAttribute("content", resolvedTitle);
+    if (dynamicSeoContext?.setDynamicSeo) {
+      const dynamicSeo = buildDynamicBlogSeo(blog, faq, location.pathname);
+      dynamicSeoContext.setDynamicSeo(dynamicSeo);
     }
-
-    const desc = blog.blog_meta_description || blog.blog_short_description;
-    if (desc) {
-      let descEl = document.querySelector('meta[name="description"]');
-      if (descEl) {
-        descEl.setAttribute("content", desc);
-      } else {
-        descEl = document.createElement("meta");
-        descEl.setAttribute("name", "description");
-        descEl.setAttribute("content", desc);
-        document.head.appendChild(descEl);
-      }
-
-      const ogDesc = document.querySelector('meta[property="og:description"]');
-      if (ogDesc) ogDesc.setAttribute("content", desc);
-
-      const twitterDesc = document.querySelector('meta[name="twitter:description"]');
-      if (twitterDesc) twitterDesc.setAttribute("content", desc);
-    }
-
-    const keywords = blog.blog_meta_keywords;
-    if (keywords) {
-      const kwEl = document.querySelector('meta[name="keywords"]');
-      if (kwEl) kwEl.setAttribute("content", keywords);
-    }
-  }, [blog]);
+  }, [blog, faq, location.pathname, dynamicSeoContext]);
 
   const faqItems = useMemo(
     () =>

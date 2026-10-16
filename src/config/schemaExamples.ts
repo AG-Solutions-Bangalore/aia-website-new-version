@@ -36,9 +36,9 @@ export interface MasterSeoStructure {
   keywords: string;
   canonicalPath: string;
   noIndex?: boolean;
+  schemas?: Thing[];
+  isFallback?: boolean;
 }
-
-
 
 export interface RouteSeoEntry extends MasterSeoStructure {
   schemas: Thing[];

@@ -10,14 +10,19 @@
  * static HTML file contains 100% of the student story markup without displaying a fallback "Loading..." state.
  */
 
+import { useEffect } from "react";
 import { BASE_URL } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
+import { useDynamicSeo } from "@/components/SEOPageLayout";
+import { buildDynamicStudentStorySeo } from "@/config/seoEngine";
 
 const PassoutStoriesSlug = () => {
   const { slug } = useParams();
+  const location = useLocation();
+  const dynamicSeoContext = useDynamicSeo();
 
   // Retrieves student story data (pre-hydrated during SSG, fetched on client navigation)
   const {
@@ -34,6 +39,16 @@ const PassoutStoriesSlug = () => {
     },
     enabled: !!slug,
   });
+
+  const story = storyData?.data;
+
+  useEffect(() => {
+    if (!story) return;
+    if (dynamicSeoContext?.setDynamicSeo) {
+      const dynamicSeo = buildDynamicStudentStorySeo(story, location.pathname);
+      dynamicSeoContext.setDynamicSeo(dynamicSeo);
+    }
+  }, [story, location.pathname, dynamicSeoContext]);
 
   const formatLinkedInUrl = (url) => {
     if (!url) return "#";
