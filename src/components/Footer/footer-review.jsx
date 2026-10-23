@@ -38,7 +38,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
     },
     {
       name: "Trustpilot",
-      rating: "3.8",
+      rating: "4.0",
       img: `${IMAGE_PATH}/footer-2.webp`,
       alt: "Trustpilot Reviews",
       bgColor: "bg-[#2D3748]",
