@@ -11,6 +11,9 @@ RewriteEngine On
 # 1. Block invalid /undefined/ crawl paths immediately (HTTP 404)
 RewriteRule (^|/)undefined(/|$) - [R=404,L]
 
+# 1b. Never serve sitemap.xml with a trailing slash (GSC "Couldn't fetch")
+RewriteRule ^sitemap\.xml/$ /sitemap.xml [R=301,L,NC]
+
 # 2. Canonical Host & Protocol (HTTPS + Non-WWW) for production
 RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
 RewriteCond %{HTTPS} !=on [OR]

@@ -13,6 +13,11 @@
       "permanent": true
     },
     {
+      "source": "/sitemap.xml/",
+      "destination": "/sitemap.xml",
+      "permanent": true
+    },
+    {
       "source": "/cfe-curriculum/",
       "destination": "/cfe-curriculum",
       "permanent": true
