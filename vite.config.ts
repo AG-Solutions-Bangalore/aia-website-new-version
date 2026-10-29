@@ -173,43 +173,40 @@ export default defineConfig({
     target: 'chrome61',
     chunkSizeWarningLimit: 1000,
 
-    rollupOptions: {
+    rolldownOptions: {
       output: {
-        manualChunks(id: string) {
-          if (id.includes('node_modules')) {
-            // Core React and Routing
-            if (
-              id.includes('/node_modules/react/') ||
-              id.includes('/node_modules/react-dom/') ||
-              id.includes('/node_modules/react-router-dom/') ||
-              id.includes('/node_modules/scheduler/')
-            ) {
-              return 'react-vendor';
-            }
-
-            // Data Fetching
-            if (id.includes('axios') || id.includes('@tanstack/react-query')) {
-              return 'data-vendor';
-            }
-
-            // Maps are heavy and specific to certain routes
-            if (id.includes('leaflet') || id.includes('react-leaflet')) {
-              return 'map-vendor';
-            }
-
-            // Carousels are also route-specific
-            if (id.includes('swiper') || id.includes('embla-carousel')) {
-              return 'carousel-vendor';
-            }
-
-            // Flipbook engine — only used on the /aia-times/flip-book route
-            if (
-              id.includes('/node_modules/react-pageflip/') ||
-              id.includes('/node_modules/page-flip/')
-            ) {
-              return 'flipbook-vendor';
-            }
-          }
+        codeSplitting: {
+          // `includeDependenciesRecursively` defaults to true, which made the Swiper group
+          // capture React as a dependency. React then lived in `carousel-vendor`, forcing
+          // the entry to import Swiper and preload ~40KB of unused JS on first load.
+          includeDependenciesRecursively: false,
+          groups: [
+            {
+              name: 'react-vendor',
+              test: /node_modules[\\/](react|react-dom|react-router|react-router-dom|scheduler)[\\/]/,
+              priority: 30,
+            },
+            {
+              name: 'data-vendor',
+              test: /node_modules[\\/](axios|@tanstack)[\\/]/,
+              priority: 20,
+            },
+            {
+              name: 'map-vendor',
+              test: /node_modules[\\/](leaflet|react-leaflet)[\\/]/,
+              priority: 20,
+            },
+            {
+              name: 'carousel-vendor',
+              test: /node_modules[\\/](swiper|embla-carousel)/,
+              priority: 10,
+            },
+            {
+              name: 'flipbook-vendor',
+              test: /node_modules[\\/](react-pageflip|page-flip)[\\/]/,
+              priority: 10,
+            },
+          ],
         },
       },
     },

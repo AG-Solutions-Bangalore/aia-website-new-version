@@ -43,7 +43,9 @@ const LazyToaster = lazy(() =>
   import('sonner').then((module) => ({ default: module.Toaster })),
 );
 
-export default function App(): React.JSX.Element {
+import type { QueryClient } from '@tanstack/react-query';
+
+export default function App({ queryClient }: { queryClient?: QueryClient } = {}): React.JSX.Element {
   const location = useLocation();
   const [loadDeferredWidgets, setLoadDeferredWidgets] = useState<boolean>(false);
 
@@ -64,7 +66,7 @@ export default function App(): React.JSX.Element {
         </Suspense>
       )}
 
-      <AppRoutes />
+      <AppRoutes queryClient={queryClient} />
     </div>
   );
 }

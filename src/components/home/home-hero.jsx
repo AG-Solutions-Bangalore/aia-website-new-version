@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
 import OptimizedImage from "@/components/common/optmized-image";
-import { Helmet } from "react-helmet-async";
+import { getBannerForSlug } from "@/config/bannerData";
 import { COURSE_ROUTES } from "@/config/site";
 
 const HOME_BANNER_BASE =
@@ -241,15 +241,27 @@ const getFallbackSlides = (slug) => {
 
 export default function HomeHero({ slug, bottombar = false }) {
   const hasFallback = Boolean(BANNER_FALLBACKS[slug]);
+  // During SSG this reads the build-time banner snapshot; in the browser it reads the
+  // per-route `window.__SSG_BANNERS__` emitted by prerender, so the first render (and the
+  // LCP image) is identical on the server and client.
+  const [ssgBanner] = useState(() => getBannerForSlug(slug));
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [carouselSlides, setCarouselSlides] = useState(() =>
-    slug === "home" ? HOME_FALLBACK_SLIDES : getFallbackSlides(slug),
+    ssgBanner?.slides?.length
+      ? ssgBanner.slides
+      : slug === "home"
+        ? HOME_FALLBACK_SLIDES
+        : getFallbackSlides(slug),
   );
   const [announcements, setAnnouncements] = useState(
-    slug === "home" ? HOME_FALLBACK_ANNOUNCEMENTS : [],
+    ssgBanner?.announcements?.length
+      ? ssgBanner.announcements
+      : slug === "home"
+        ? HOME_FALLBACK_ANNOUNCEMENTS
+        : [],
   );
-  const [isLoading, setIsLoading] = useState(!hasFallback);
+  const [isLoading, setIsLoading] = useState(!hasFallback && !ssgBanner);
   const [error, setError] = useState(null);
   const touchStartX = useRef(null);
   const suppressClick = useRef(false);
@@ -460,19 +472,6 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   return (
     <>
-      {currentSlide === 0 && activeSlide?.imageUrl && (
-        <Helmet>
-          <link
-            rel="preload"
-            as="image"
-            href={activeSlide.imageUrl}
-            imageSrcSet={activeSlide.srcSet}
-            imageSizes={activeSlide.sizes || "100vw"}
-            fetchPriority="high"
-          />
-        </Helmet>
-      )}
-
       <section className="relative">
         <div
           className="relative overflow-hidden"

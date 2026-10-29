@@ -49,17 +49,21 @@
     });
   </script>
 
-  <!-- Microsoft Clarity Analytics -->
+  <!-- Microsoft Clarity Analytics (Deferred to avoid blocking main thread and 3rd party cookies on initial load) -->
   <script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "z4o0i0ydf7");
+    window.addEventListener("load", function () {
+      setTimeout(function () {
+        (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+        })(window, document, "clarity", "script", "z4o0i0ydf7");
+      }, 10000);
+    });
   </script>
   <!-- End Microsoft Clarity -->
 
-  <!-- Google Ad Code Implement - Async but also delayed slightly -->
+  <!-- Google Ad Code Implement - Async and delayed to avoid initial blocking -->
   <script>
     window.addEventListener("load", function () {
       setTimeout(function () {

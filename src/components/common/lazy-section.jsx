@@ -30,17 +30,11 @@ const LazySection = memo(function LazySection({
   idleTimeout = 1500,
   mountOnInteraction = true,
 }) {
-  const isPrerendering = isReactSnapPrerender();
-  const shouldPrerender = isPrerendering && prerender !== false;
-  // NOTE: `useEffect` never runs during Node SSG, so the initial state below
-  // is the final SSR output. `!isBrowser` forces sections visible at build
-  // time so crawlers receive real content instead of skeleton placeholders.
+  const shouldPrerender = Boolean(priority || prerender !== false);
   const [canObserve, setCanObserve] = useState(
-    priority || shouldPrerender || !deferUntilIdle || !isBrowser,
+    shouldPrerender || !deferUntilIdle,
   );
-  const [isVisible, setIsVisible] = useState(
-    priority || shouldPrerender || !isBrowser,
-  );
+  const [isVisible, setIsVisible] = useState(shouldPrerender);
   const [isPending, startTransition] = useTransition();
   const [reservedHeight, setReservedHeight] = useState(minHeight);
   const ref = useRef(null);
