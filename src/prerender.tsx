@@ -228,21 +228,41 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
   if (bannerSlug && bannerSet) {
     const firstSlide = bannerSet.slides[0];
     if (firstSlide?.imageUrl) {
-      const preloadProps: Record<string, string> = {
-        rel: 'preload',
-        as: 'image',
-        href: firstSlide.imageUrl,
-        fetchpriority: 'high',
-        'data-rh': 'true',
-      };
-      if (firstSlide.srcSet) {
-        preloadProps.imagesrcset = firstSlide.srcSet;
-        preloadProps.imagesizes = firstSlide.sizes || '100vw';
+      if (bannerSlug === 'home') {
+        elements.add({
+          type: 'link',
+          props: {
+            rel: 'preload',
+            as: 'image',
+            href: '/images/hero/home-hero-480.webp',
+            media: '(max-width: 640px)',
+            fetchpriority: 'high',
+            'data-rh': 'true',
+          },
+        });
+        elements.add({
+          type: 'link',
+          props: {
+            rel: 'preload',
+            as: 'image',
+            href: '/images/hero/home-hero-1600.webp',
+            media: '(min-width: 641px)',
+            fetchpriority: 'high',
+            'data-rh': 'true',
+          },
+        });
+      } else {
+        elements.add({
+          type: 'link',
+          props: {
+            rel: 'preload',
+            as: 'image',
+            href: firstSlide.imageUrl,
+            fetchpriority: 'high',
+            'data-rh': 'true',
+          },
+        });
       }
-      elements.add({
-        type: 'link',
-        props: preloadProps,
-      });
     }
 
     const bannerPayload = JSON.stringify({ [bannerSlug]: bannerSet }).replace(/</g, '\\u003c');

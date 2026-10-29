@@ -175,8 +175,10 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/about-aia/cia-challenge-curriculum" element={<Navigate to="/cia-challenge-curriculum" replace />} />
           <Route path="/about-aia/cisa" element={<Navigate to="/cisa" replace />} />
           <Route path="/cfe-curriculum" element={<PageSEO path="/cfe-curriculum"><CFECurriculam /></PageSEO>} />
+          <Route path="/become-cfe-in-just-30-days" element={<Navigate to="/cfe-curriculum" replace />} />
           <Route path="/cia-curriculum" element={<PageSEO path="/cia-curriculum"><CIACurriculam /></PageSEO>} />
           <Route path="/cia-challenge-curriculum" element={<PageSEO path="/cia-challenge-curriculum"><CIAChallenge /></PageSEO>} />
+          <Route path="/cia-challenge-prep-course" element={<Navigate to="/cia-challenge-curriculum" replace />} />
           <Route path="/cisa" element={<PageSEO path="/cisa"><CISA /></PageSEO>} />
           <Route path="/cams" element={<PageSEO path="/cams"><CAMS /></PageSEO>} />
           <Route path="/cia-free-resources" element={<PageSEO path="/cia-free-resources"><CIAFreeResources /></PageSEO>} />

@@ -131,7 +131,7 @@ export async function loadBannerData(): Promise<void> {
               slide.imageUrl = '/images/hero/home-hero-768.webp';
               slide.srcSet =
                 '/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w';
-              slide.sizes = '100vw';
+              slide.sizes = '(max-width: 640px) 180px, 100vw';
               slide.width = 1920;
               slide.height = 858;
             }
@@ -170,6 +170,30 @@ export async function loadBannerData(): Promise<void> {
  * `window.__SSG_BANNERS__` snapshot emitted for that route, guaranteeing hydration matches
  * the SSR markup before the client refresh request completes.
  */
+const HOME_DEFAULT_SET: BannerSet = {
+  slides: [
+    {
+      id: 1,
+      imageUrl: '/images/hero/home-hero-768.webp',
+      srcSet:
+        '/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w',
+      sizes: '(max-width: 640px) 180px, 100vw',
+      width: 1920,
+      height: 858,
+      link: 'contact',
+      alt: 'cia-cfe-cisa-&-cams-certification',
+    },
+  ],
+  announcements: [
+    {
+      id: 1,
+      title: 'Have Questions?',
+      subtext: 'Connect with experts and plan your preparation the smarter way.',
+      link: 'contact',
+    },
+  ],
+};
+
 export function getBannerForSlug(slug: string): BannerSet | null {
   if (typeof window !== 'undefined') {
     const snapshot = (window as unknown as { __SSG_BANNERS__?: Record<string, BannerSet> })
@@ -178,5 +202,5 @@ export function getBannerForSlug(slug: string): BannerSet | null {
     if (fromSnapshot?.slides?.length) return fromSnapshot;
   }
 
-  return bannerCache.get(slug) ?? null;
+  return bannerCache.get(slug) ?? (slug === 'home' ? HOME_DEFAULT_SET : null);
 }

@@ -11,7 +11,7 @@ const HOME_HERO_FIRST_SLIDE = {
   imageUrl: "/images/hero/home-hero-768.webp",
   srcSet:
     "/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w",
-  sizes: "100vw",
+  sizes: "(max-width: 640px) 180px, 100vw",
   width: 1920,
   height: 858,
 };
@@ -22,7 +22,7 @@ const HOME_FALLBACK_SLIDES = [
     imageUrl: "/images/hero/home-hero-768.webp",
     srcSet:
       "/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w",
-    sizes: "100vw",
+    sizes: "(max-width: 640px) 180px, 100vw",
     width: 1920,
     height: 858,
     link: "contact",
@@ -306,7 +306,7 @@ export default function HomeHero({ slug, bottombar = false }) {
             slide.imageUrl = "/images/hero/home-hero-768.webp";
             slide.srcSet =
               "/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w";
-            slide.sizes = "100vw";
+            slide.sizes = "(max-width: 640px) 180px, 100vw";
             slide.width = 1920;
             slide.height = 858;
           }
@@ -512,19 +512,43 @@ export default function HomeHero({ slug, bottombar = false }) {
                   }
                 }}
               >
-                <OptimizedImage
-                  src={activeSlide.imageUrl}
-                  srcSet={activeSlide.srcSet}
-                  alt={activeSlide.alt}
-                  priority={currentSlide === 0}
-                  width={activeSlide.width || 1600}
-                  height={activeSlide.height || 727}
-                  sizes={activeSlide.sizes || "100vw"}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.src = "/no-image.svg";
-                  }}
-                />
+                {slug === "home" && currentSlide === 0 ? (
+                  <picture>
+                    <source
+                      media="(max-width: 640px)"
+                      srcSet="/images/hero/home-hero-480.webp"
+                    />
+                    <source
+                      media="(min-width: 641px)"
+                      srcSet="/images/hero/home-hero-1600.webp"
+                    />
+                    <OptimizedImage
+                      src="/images/hero/home-hero-1600.webp"
+                      alt={activeSlide.alt}
+                      priority={true}
+                      width={1600}
+                      height={727}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.src = "/no-image.svg";
+                      }}
+                    />
+                  </picture>
+                ) : (
+                  <OptimizedImage
+                    src={activeSlide.imageUrl}
+                    srcSet={activeSlide.srcSet}
+                    alt={activeSlide.alt}
+                    priority={currentSlide === 0}
+                    width={activeSlide.width || 1600}
+                    height={activeSlide.height || 727}
+                    sizes={activeSlide.sizes || "100vw"}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.src = "/no-image.svg";
+                    }}
+                  />
+                )}
               </a>
             )}
 
