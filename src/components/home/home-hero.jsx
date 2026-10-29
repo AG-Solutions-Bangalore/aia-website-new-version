@@ -341,7 +341,7 @@ export default function HomeHero({ slug, bottombar = false }) {
   }, [hasFallback, slug]);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setIsAutoPlaying(true), 8000);
+    const timer = window.setTimeout(() => setIsAutoPlaying(true), 15000);
     return () => window.clearTimeout(timer);
   }, []);
 

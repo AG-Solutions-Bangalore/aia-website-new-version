@@ -13,6 +13,7 @@ const OptimizedImage = memo(function OptimizedImage({
   srcSet: providedSrcSet,
   onError,
   fetchPriority,
+  decoding,
   ...rest
 }) {
   const safeSrc = useMemo(() => {
@@ -70,7 +71,7 @@ const OptimizedImage = memo(function OptimizedImage({
       height={height}
       loading={priority ? "eager" : "lazy"}
       fetchPriority={fetchPriority || (priority ? "high" : "low")}
-      decoding="async"
+      decoding={decoding || (priority ? "sync" : "async")}
       onError={onError}
       {...rest}
     />

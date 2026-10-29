@@ -172,6 +172,7 @@ export default defineConfig({
     emptyOutDir: true,
     target: 'chrome61',
     chunkSizeWarningLimit: 1000,
+    modulePreload: false,
 
     rolldownOptions: {
       output: {

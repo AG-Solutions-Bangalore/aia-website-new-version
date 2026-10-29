@@ -39,7 +39,8 @@ import { COURSE_ROUTES } from '@/config/site';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import blogRedirects from './blog-redirects';
 
-const Home = lazy(() => import('@/pages/Home/Home'));
+import Home from '@/pages/Home/Home';
+
 const CAMS = lazy(() => import('@/pages/Courses/CAMS'));
 const CFECurriculam = lazy(() => import('@/pages/Courses/CFECurriculam'));
 const CIAChallenge = lazy(() => import('@/pages/Courses/CIAChallenge'));
@@ -97,9 +98,10 @@ function PageSEO({ path, children }: { path?: string; children: React.ReactNode 
   const location = useLocation();
   const currentPath = path || location.pathname;
   const seo = getSeoForRoute(currentPath);
+  const isHome = currentPath === '/';
   return (
     <SEOPageLayout seo={seo} structuredSchemas={seo.schemas}>
-      <Suspense fallback={null}>{children}</Suspense>
+      {isHome ? children : <Suspense fallback={null}>{children}</Suspense>}
     </SEOPageLayout>
   );
 }

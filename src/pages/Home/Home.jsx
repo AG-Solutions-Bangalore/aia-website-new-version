@@ -48,12 +48,7 @@ export default function Home() {
       <DeferredPopUp slug="home" />
 
       <HomeHero slug="home" bottombar="true" />
-      <LazySection
-        {...homeSectionProps}
-        minHeight="400px"
-        prerender
-        deferUntilIdle={false}
-      >
+      <LazySection {...homeSectionProps} minHeight="400px">
         <HomeAbout />
       </LazySection>
 
@@ -69,19 +64,21 @@ export default function Home() {
         <HomePassout />
       </LazySection>
 
-      <section className="bg-slate-50 border-y border-slate-200 py-10 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0F3652] mb-5 leading-snug">
-            Get Access to the free CFE 60-day roadmap in your inbox.
-          </h2>
-          <Suspense fallback={null}>
-            <CfeRoadmapDialog
-              buttonlabel="Download Now"
-              buttonClassName="bg-[#F3831C] text-white px-8 py-3 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors cursor-pointer text-base"
-            />
-          </Suspense>
-        </div>
-      </section>
+      <LazySection {...homeSectionProps} minHeight="200px">
+        <section className="bg-slate-50 border-y border-slate-200 py-10 px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0F3652] mb-5 leading-snug">
+              Get Access to the free CFE 60-day roadmap in your inbox.
+            </h2>
+            <Suspense fallback={null}>
+              <CfeRoadmapDialog
+                buttonlabel="Download Now"
+                buttonClassName="bg-[#F3831C] text-white px-8 py-3 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors cursor-pointer text-base"
+              />
+            </Suspense>
+          </div>
+        </section>
+      </LazySection>
 
       <LazySection {...homeSectionProps} minHeight="500px" withQuery QueryProvider={AppQueryProvider}>
         <HomeResults
@@ -102,20 +99,21 @@ export default function Home() {
         />
       </LazySection>
 
-
-      <section className="bg-[#0F3652] py-12 px-4 border-t border-white/10">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 leading-snug">
-            Working Full-Time + Preparing For CAMS?<br /> You need a structured study schedule.
-          </h2>
-          <Suspense fallback={null}>
-            <CamsRoadmapDialog
-              buttonlabel="Download the CAMS Roadmap"
-              buttonClassName="bg-[#F3831C] text-white px-8 py-3 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors cursor-pointer text-base"
-            />
-          </Suspense>
-        </div>
-      </section>
+      <LazySection {...homeSectionProps} minHeight="200px">
+        <section className="bg-[#0F3652] py-12 px-4 border-t border-white/10">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-6 leading-snug">
+              Working Full-Time + Preparing For CAMS?<br /> You need a structured study schedule.
+            </h2>
+            <Suspense fallback={null}>
+              <CamsRoadmapDialog
+                buttonlabel="Download the CAMS Roadmap"
+                buttonClassName="bg-[#F3831C] text-white px-8 py-3 rounded-none font-semibold hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors cursor-pointer text-base"
+              />
+            </Suspense>
+          </div>
+        </section>
+      </LazySection>
 
       <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
         <HomeReview />

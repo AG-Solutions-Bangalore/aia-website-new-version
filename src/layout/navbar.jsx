@@ -240,12 +240,24 @@ const Navbar = () => {
           <div className="flex justify-between items-center">
             <div className="flex-shrink-0">
               <Link to="/" title="/">
-                <OptimizedImage
-                  src={`${IMAGE_PATH}/new_logo.webp`}
-                  alt="Academy of Internal Audit"
-                  className="h-8 md:h-10 w-auto"
-                  priority={true}
-                />
+                <picture>
+                  <source
+                    media="(max-width: 768px)"
+                    srcSet="/images/logo-mobile.webp"
+                  />
+                  <source
+                    media="(min-width: 769px)"
+                    srcSet="/images/logo.webp"
+                  />
+                  <OptimizedImage
+                    src="/images/logo.webp"
+                    width={264}
+                    height={40}
+                    alt="Academy of Internal Audit"
+                    className="h-8 md:h-10 w-auto"
+                    priority={true}
+                  />
+                </picture>
               </Link>
             </div>
 
@@ -395,8 +407,11 @@ const Navbar = () => {
 
               <div className="mb-8">
                 <img
-                  src={`${IMAGE_PATH}/new_logo.webp`}
-                  alt="Academy of Internal Audit" title="Academy of Internal Audit"
+                  src="/images/logo-mobile.webp"
+                  width={211}
+                  height={32}
+                  alt="Academy of Internal Audit"
+                  title="Academy of Internal Audit"
                   className="h-8 md:h-10 w-auto"
                   fetchPriority="high"
                   decoding="async"
