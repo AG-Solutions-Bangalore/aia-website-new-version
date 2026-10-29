@@ -19,15 +19,20 @@ const HOME_HERO_FIRST_SLIDE = {
 const HOME_FALLBACK_SLIDES = [
   {
     id: 1,
-    imageUrl: `${HOME_BANNER_BASE}36.webp`,
-    link: null,
-    alt: "Become a Certified Information Systems Auditor",
+    imageUrl: "/images/hero/home-hero-768.webp",
+    srcSet:
+      "/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w",
+    sizes: "100vw",
+    width: 1920,
+    height: 858,
+    link: "contact",
+    alt: "cia-cfe-cisa-&-cams-certification",
   },
   {
     id: 2,
-    imageUrl: `${HOME_BANNER_BASE}2.webp`,
-    link: "contact",
-    alt: "cia-cfe-cisa-&-cams-certification",
+    imageUrl: `${HOME_BANNER_BASE}36.webp`,
+    link: null,
+    alt: "Become a Certified Information Systems Auditor",
   },
   {
     id: 3,
@@ -151,15 +156,15 @@ const BANNER_FALLBACKS = {
 const HOME_FALLBACK_ANNOUNCEMENTS = [
   {
     id: 1,
-    title: "CISA Launching Banner",
-    subtext: null,
-    link: null,
-  },
-  {
-    id: 2,
     title: "Have Questions?",
     subtext: "Connect with experts and plan your preparation the smarter way.",
     link: "contact",
+  },
+  {
+    id: 2,
+    title: "CISA Launching Banner",
+    subtext: null,
+    link: null,
   },
   {
     id: 3,
@@ -290,12 +295,23 @@ export default function HomeHero({ slug, bottombar = false }) {
         );
         const baseImageUrl = bannerImageUrlObj?.image_url || "";
 
-        const slides = data.data.map((banner, index) => ({
-          id: index + 1,
-          imageUrl: `${baseImageUrl}${banner.banner_image}`,
-          link: banner.banner_link,
-          alt: banner.banner_image_alt,
-        }));
+        const slides = data.data.map((banner, index) => {
+          const slide = {
+            id: index + 1,
+            imageUrl: `${baseImageUrl}${banner.banner_image}`,
+            link: banner.banner_link,
+            alt: banner.banner_image_alt,
+          };
+          if (slug === "home" && index === 0) {
+            slide.imageUrl = "/images/hero/home-hero-768.webp";
+            slide.srcSet =
+              "/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w";
+            slide.sizes = "100vw";
+            slide.width = 1920;
+            slide.height = 858;
+          }
+          return slide;
+        });
 
         const announcementsData = data.data.map((banner, index) => ({
           id: index + 1,

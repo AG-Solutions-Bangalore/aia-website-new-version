@@ -28,6 +28,10 @@ export interface BannerSlide {
   imageUrl: string;
   link: string | null;
   alt: string;
+  srcSet?: string;
+  sizes?: string;
+  width?: number;
+  height?: number;
 }
 
 export interface BannerAnnouncement {
@@ -115,12 +119,25 @@ export async function loadBannerData(): Promise<void> {
             payload.image_url.find((item) => item.image_for === 'Banner')?.image_url || '';
           if (!baseImageUrl) return;
 
-          const slides: BannerSlide[] = payload.data.map((banner, index) => ({
-            id: index + 1,
-            imageUrl: `${baseImageUrl}${banner.banner_image}`,
-            link: banner.banner_link ?? null,
-            alt: banner.banner_image_alt || '',
-          }));
+          const slides: BannerSlide[] = payload.data.map((banner, index) => {
+            const slide: BannerSlide = {
+              id: index + 1,
+              imageUrl: `${baseImageUrl}${banner.banner_image}`,
+              link: banner.banner_link ?? null,
+              alt: banner.banner_image_alt || '',
+            };
+
+            if (slug === 'home' && index === 0) {
+              slide.imageUrl = '/images/hero/home-hero-768.webp';
+              slide.srcSet =
+                '/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w';
+              slide.sizes = '100vw';
+              slide.width = 1920;
+              slide.height = 858;
+            }
+
+            return slide;
+          });
 
           const announcements: BannerAnnouncement[] = payload.data.map((banner, index) => ({
             id: index + 1,
