@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
 import OptimizedImage from "@/components/common/optmized-image";
-import { Helmet } from "react-helmet-async";
+import { getBannerForSlug } from "@/config/bannerData";
 import { COURSE_ROUTES } from "@/config/site";
 
 const HOME_BANNER_BASE =
@@ -11,7 +11,7 @@ const HOME_HERO_FIRST_SLIDE = {
   imageUrl: "/images/hero/home-hero-768.webp",
   srcSet:
     "/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w",
-  sizes: "100vw",
+  sizes: "(max-width: 640px) 180px, 100vw",
   width: 1920,
   height: 858,
 };
@@ -19,15 +19,20 @@ const HOME_HERO_FIRST_SLIDE = {
 const HOME_FALLBACK_SLIDES = [
   {
     id: 1,
-    imageUrl: `${HOME_BANNER_BASE}36.webp`,
-    link: null,
-    alt: "Become a Certified Information Systems Auditor",
+    imageUrl: "/images/hero/home-hero-768.webp",
+    srcSet:
+      "/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w",
+    sizes: "(max-width: 640px) 180px, 100vw",
+    width: 1920,
+    height: 858,
+    link: "contact",
+    alt: "cia-cfe-cisa-&-cams-certification",
   },
   {
     id: 2,
-    imageUrl: `${HOME_BANNER_BASE}2.webp`,
-    link: "contact",
-    alt: "cia-cfe-cisa-&-cams-certification",
+    imageUrl: `${HOME_BANNER_BASE}36.webp`,
+    link: null,
+    alt: "Become a Certified Information Systems Auditor",
   },
   {
     id: 3,
@@ -151,15 +156,15 @@ const BANNER_FALLBACKS = {
 const HOME_FALLBACK_ANNOUNCEMENTS = [
   {
     id: 1,
-    title: "CISA Launching Banner",
-    subtext: null,
-    link: null,
-  },
-  {
-    id: 2,
     title: "Have Questions?",
     subtext: "Connect with experts and plan your preparation the smarter way.",
     link: "contact",
+  },
+  {
+    id: 2,
+    title: "CISA Launching Banner",
+    subtext: null,
+    link: null,
   },
   {
     id: 3,
@@ -241,15 +246,27 @@ const getFallbackSlides = (slug) => {
 
 export default function HomeHero({ slug, bottombar = false }) {
   const hasFallback = Boolean(BANNER_FALLBACKS[slug]);
+  // During SSG this reads the build-time banner snapshot; in the browser it reads the
+  // per-route `window.__SSG_BANNERS__` emitted by prerender, so the first render (and the
+  // LCP image) is identical on the server and client.
+  const [ssgBanner] = useState(() => getBannerForSlug(slug));
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [carouselSlides, setCarouselSlides] = useState(() =>
-    slug === "home" ? HOME_FALLBACK_SLIDES : getFallbackSlides(slug),
+    ssgBanner?.slides?.length
+      ? ssgBanner.slides
+      : slug === "home"
+        ? HOME_FALLBACK_SLIDES
+        : getFallbackSlides(slug),
   );
   const [announcements, setAnnouncements] = useState(
-    slug === "home" ? HOME_FALLBACK_ANNOUNCEMENTS : [],
+    ssgBanner?.announcements?.length
+      ? ssgBanner.announcements
+      : slug === "home"
+        ? HOME_FALLBACK_ANNOUNCEMENTS
+        : [],
   );
-  const [isLoading, setIsLoading] = useState(!hasFallback);
+  const [isLoading, setIsLoading] = useState(!hasFallback && !ssgBanner);
   const [error, setError] = useState(null);
   const touchStartX = useRef(null);
   const suppressClick = useRef(false);
@@ -278,12 +295,23 @@ export default function HomeHero({ slug, bottombar = false }) {
         );
         const baseImageUrl = bannerImageUrlObj?.image_url || "";
 
-        const slides = data.data.map((banner, index) => ({
-          id: index + 1,
-          imageUrl: `${baseImageUrl}${banner.banner_image}`,
-          link: banner.banner_link,
-          alt: banner.banner_image_alt,
-        }));
+        const slides = data.data.map((banner, index) => {
+          const slide = {
+            id: index + 1,
+            imageUrl: `${baseImageUrl}${banner.banner_image}`,
+            link: banner.banner_link,
+            alt: banner.banner_image_alt,
+          };
+          if (slug === "home" && index === 0) {
+            slide.imageUrl = "/images/hero/home-hero-768.webp";
+            slide.srcSet =
+              "/images/hero/home-hero-480.webp 480w, /images/hero/home-hero-768.webp 768w, /images/hero/home-hero-1200.webp 1200w, /images/hero/home-hero-1600.webp 1600w";
+            slide.sizes = "(max-width: 640px) 180px, 100vw";
+            slide.width = 1920;
+            slide.height = 858;
+          }
+          return slide;
+        });
 
         const announcementsData = data.data.map((banner, index) => ({
           id: index + 1,
@@ -313,7 +341,7 @@ export default function HomeHero({ slug, bottombar = false }) {
   }, [hasFallback, slug]);
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setIsAutoPlaying(true), 8000);
+    const timer = window.setTimeout(() => setIsAutoPlaying(true), 15000);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -460,19 +488,6 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   return (
     <>
-      {currentSlide === 0 && activeSlide?.imageUrl && (
-        <Helmet>
-          <link
-            rel="preload"
-            as="image"
-            href={activeSlide.imageUrl}
-            imageSrcSet={activeSlide.srcSet}
-            imageSizes={activeSlide.sizes || "100vw"}
-            fetchPriority="high"
-          />
-        </Helmet>
-      )}
-
       <section className="relative">
         <div
           className="relative overflow-hidden"
@@ -497,19 +512,43 @@ export default function HomeHero({ slug, bottombar = false }) {
                   }
                 }}
               >
-                <OptimizedImage
-                  src={activeSlide.imageUrl}
-                  srcSet={activeSlide.srcSet}
-                  alt={activeSlide.alt}
-                  priority={currentSlide === 0}
-                  width={activeSlide.width || 1600}
-                  height={activeSlide.height || 727}
-                  sizes={activeSlide.sizes || "100vw"}
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.target.src = "/no-image.svg";
-                  }}
-                />
+                {slug === "home" && currentSlide === 0 ? (
+                  <picture>
+                    <source
+                      media="(max-width: 640px)"
+                      srcSet="/images/hero/home-hero-480.webp"
+                    />
+                    <source
+                      media="(min-width: 641px)"
+                      srcSet="/images/hero/home-hero-1600.webp"
+                    />
+                    <OptimizedImage
+                      src="/images/hero/home-hero-1600.webp"
+                      alt={activeSlide.alt}
+                      priority={true}
+                      width={1600}
+                      height={727}
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.target.src = "/no-image.svg";
+                      }}
+                    />
+                  </picture>
+                ) : (
+                  <OptimizedImage
+                    src={activeSlide.imageUrl}
+                    srcSet={activeSlide.srcSet}
+                    alt={activeSlide.alt}
+                    priority={currentSlide === 0}
+                    width={activeSlide.width || 1600}
+                    height={activeSlide.height || 727}
+                    sizes={activeSlide.sizes || "100vw"}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.src = "/no-image.svg";
+                    }}
+                  />
+                )}
               </a>
             )}
 

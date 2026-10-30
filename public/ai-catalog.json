@@ -1,0 +1,42 @@
+{
+  "$schema": "https://agenticresourcediscovery.org/spec/schema.json",
+  "name": "Academy of Internal Audit",
+  "description": "Leading global training institute for CIA, CFE, CAMS, and CISA certification preparation.",
+  "url": "https://aia.in.net",
+  "contact": {
+    "email": "support@aia.in.net",
+    "phone": "+91 93113 20114"
+  },
+  "resources": [
+    {
+      "name": "CIA Curriculum",
+      "type": "documentation",
+      "url": "https://aia.in.net/cia-curriculum",
+      "description": "Comprehensive CIA course curriculum, syllabus, and exam preparation."
+    },
+    {
+      "name": "CFE Curriculum",
+      "type": "documentation",
+      "url": "https://aia.in.net/cfe-curriculum",
+      "description": "Certified Fraud Examiner training modules, question banks, and notes."
+    },
+    {
+      "name": "CAMS Course",
+      "type": "documentation",
+      "url": "https://aia.in.net/cams",
+      "description": "Anti-money laundering specialist certification training program."
+    },
+    {
+      "name": "CISA Course",
+      "type": "documentation",
+      "url": "https://aia.in.net/cisa",
+      "description": "Certified Information Systems Auditor curriculum and exam preparation."
+    },
+    {
+      "name": "CIA Challenge Curriculum",
+      "type": "documentation",
+      "url": "https://aia.in.net/cia-challenge-curriculum",
+      "description": "Fast-track CIA Challenge exam preparation syllabus for qualified professionals."
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+# Academy of Internal Audit (AIA)
+
+> Academy of Internal Audit (AIA) is a premier global training institute offering comprehensive preparation programs for CIA, CFE, CISA, and CAMS professional certifications.
+
+## Core Certification Programs
+- [CIA Curriculum](https://aia.in.net/cia-curriculum): Complete Certified Internal Auditor exam preparation course, syllabus, study materials, and mock exams.
+- [CIA Challenge Curriculum](https://aia.in.net/cia-challenge-curriculum): Fast-track CIA challenge exam preparation program for qualified accounting and audit professionals.
+- [CFE Curriculum](https://aia.in.net/cfe-curriculum): Certified Fraud Examiner certification program covering financial transactions, fraud investigation, and law.
+- [CAMS Course](https://aia.in.net/cams): Certified Anti-Money Laundering Specialist training, compliance frameworks, and practice question banks.
+- [CISA Course](https://aia.in.net/cisa): Certified Information Systems Auditor training covering IT audit, governance, cybersecurity, and systems control.
+
+## Free Resources & Study Materials
+- [CFE Free Resources](https://aia.in.net/cfe-free-resources/): Practice questions, flashcards, and syllabus outlines for CFE candidates.
+- [CIA Free Resources](https://aia.in.net/cia-free-resources/): CIA practice questions, mock tests, and exam preparation tips.
+- [CAMS Free Resources](https://aia.in.net/cams-free-resources/): Anti-money laundering exam practice materials and study guides.
+- [CISA Free Resources](https://aia.in.net/cisa-free-resources/): Information systems audit practice questions and topic summaries.
+
+## Institutional & Alumni
+- [About AIA](https://aia.in.net/about-aia/): Our mission, faculty background, 99.6% pass rates, and training methodology.
+- [Alumni Network](https://aia.in.net/alumni-network/): Directory of certified internal auditors and fraud examiners across 40+ countries.
+- [Corporate Training](https://aia.in.net/corporate-training/): Bespoke enterprise training programs for internal audit and risk departments.
+- [Blogs & Articles](https://aia.in.net/blogs/): In-depth expert articles on internal audit standards, fraud deterrence, and compliance.
+- [Contact Support](https://aia.in.net/contact/): Admissions counseling, course guidance, and customer service.

@@ -47,6 +47,11 @@ import {
   getDynamicStudentStory,
   loadDynamicData,
 } from './config/dynamicData';
+import {
+  BANNER_ROUTE_SLUGS,
+  getBannerForSlug,
+  loadBannerData,
+} from './config/bannerData';
 
 export interface PrerenderData {
   url: string;
@@ -94,8 +99,9 @@ async function renderToStringAsync(element: React.ReactNode): Promise<string> {
  * @returns Pre-rendered HTML, structured head elements, and discovered links
  */
 export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
-  // 1. Ensure all dynamic data (blogs, student stories, testimonials) is loaded into memory before rendering
-  await loadDynamicData();
+  // 1. Ensure all dynamic data (blogs, student stories, testimonials) and hero banners
+  //    are loaded into memory before rendering.
+  await Promise.all([loadDynamicData(), loadBannerData()]);
 
   const url = data.url || '/';
   const cleanPath = url.split('?')[0].split('#')[0].replace(/\/$/, '') || '/';
@@ -153,7 +159,7 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
     import('react-router'),
     import('react-helmet-async'),
   ]);
-  const { default: AppRoutes } = await import('@/routes/AppRoutes');
+  const { default: App } = await import('@/App');
 
   const helmetContext: Record<string, unknown> = {};
 
@@ -165,7 +171,7 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
       React.createElement(
         StaticRouter,
         { location: url },
-        React.createElement(AppRoutes, { queryClient }),
+        React.createElement(App, { queryClient }),
       ),
     ),
   );
@@ -206,6 +212,66 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
     { type: 'meta', props: { name: 'twitter:description', content: seo.description, 'data-rh': 'true' } },
     { type: 'meta', props: { name: 'twitter:image', content: ogImage, 'data-rh': 'true' } },
   ]);
+
+  /**
+   * 6b. Emit the real first hero banner into <head>.
+   *
+   * WHY: `HomeHero` fetches `/api/getBanner/:slug` inside `useEffect`, so without this the
+   * LCP image is only discovered after hydration + an API round-trip. Preloading the exact
+   * first-slide URL (from the same build-time snapshot the SSR markup renders) lets the
+   * browser start the image request during head parsing. The inline snapshot also keeps the
+   * first client render identical to the static HTML, so hydration does not swap the <img>
+   * and create a late LCP candidate.
+   */
+  const bannerSlug = BANNER_ROUTE_SLUGS[cleanPath];
+  const bannerSet = bannerSlug ? getBannerForSlug(bannerSlug) : null;
+  if (bannerSlug && bannerSet) {
+    const firstSlide = bannerSet.slides[0];
+    if (firstSlide?.imageUrl) {
+      if (bannerSlug === 'home') {
+        elements.add({
+          type: 'link',
+          props: {
+            rel: 'preload',
+            as: 'image',
+            href: '/images/hero/home-hero-480.webp',
+            media: '(max-width: 640px)',
+            fetchpriority: 'high',
+            'data-rh': 'true',
+          },
+        });
+        elements.add({
+          type: 'link',
+          props: {
+            rel: 'preload',
+            as: 'image',
+            href: '/images/hero/home-hero-1600.webp',
+            media: '(min-width: 641px)',
+            fetchpriority: 'high',
+            'data-rh': 'true',
+          },
+        });
+      } else {
+        elements.add({
+          type: 'link',
+          props: {
+            rel: 'preload',
+            as: 'image',
+            href: firstSlide.imageUrl,
+            fetchpriority: 'high',
+            'data-rh': 'true',
+          },
+        });
+      }
+    }
+
+    const bannerPayload = JSON.stringify({ [bannerSlug]: bannerSet }).replace(/</g, '\\u003c');
+    elements.add({
+      type: 'script',
+      props: { id: 'ssg-banners', 'data-rh': 'true' },
+      children: `window.__SSG_BANNERS__=${bannerPayload};`,
+    });
+  }
 
   // 7. Inject single unified Schema.org @graph JSON-LD script tag
   if (seo.schemas.length > 0) {

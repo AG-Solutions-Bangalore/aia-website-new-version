@@ -39,7 +39,8 @@ import { COURSE_ROUTES } from '@/config/site';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import blogRedirects from './blog-redirects';
 
-const Home = lazy(() => import('@/pages/Home/Home'));
+import Home from '@/pages/Home/Home';
+
 const CAMS = lazy(() => import('@/pages/Courses/CAMS'));
 const CFECurriculam = lazy(() => import('@/pages/Courses/CFECurriculam'));
 const CIAChallenge = lazy(() => import('@/pages/Courses/CIAChallenge'));
@@ -97,9 +98,10 @@ function PageSEO({ path, children }: { path?: string; children: React.ReactNode 
   const location = useLocation();
   const currentPath = path || location.pathname;
   const seo = getSeoForRoute(currentPath);
+  const isHome = currentPath === '/';
   return (
     <SEOPageLayout seo={seo} structuredSchemas={seo.schemas}>
-      <Suspense fallback={null}>{children}</Suspense>
+      {isHome ? children : <Suspense fallback={null}>{children}</Suspense>}
     </SEOPageLayout>
   );
 }
@@ -175,8 +177,10 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/about-aia/cia-challenge-curriculum" element={<Navigate to="/cia-challenge-curriculum" replace />} />
           <Route path="/about-aia/cisa" element={<Navigate to="/cisa" replace />} />
           <Route path="/cfe-curriculum" element={<PageSEO path="/cfe-curriculum"><CFECurriculam /></PageSEO>} />
+          <Route path="/become-cfe-in-just-30-days" element={<Navigate to="/cfe-curriculum" replace />} />
           <Route path="/cia-curriculum" element={<PageSEO path="/cia-curriculum"><CIACurriculam /></PageSEO>} />
           <Route path="/cia-challenge-curriculum" element={<PageSEO path="/cia-challenge-curriculum"><CIAChallenge /></PageSEO>} />
+          <Route path="/cia-challenge-prep-course" element={<Navigate to="/cia-challenge-curriculum" replace />} />
           <Route path="/cisa" element={<PageSEO path="/cisa"><CISA /></PageSEO>} />
           <Route path="/cams" element={<PageSEO path="/cams"><CAMS /></PageSEO>} />
           <Route path="/cia-free-resources" element={<PageSEO path="/cia-free-resources"><CIAFreeResources /></PageSEO>} />
