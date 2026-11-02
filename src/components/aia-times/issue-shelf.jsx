@@ -19,6 +19,9 @@ import {
 } from "./aia-times.constants";
 
 function getMagazineDownloadCourse(issue) {
+  if (issue?.id === "november-2026") {
+    return "AIA Times Magazine Vol 3";
+  }
   if (issue?.id === "june-2026") {
     return MAGAZINE_COURSE;
   }
@@ -71,10 +74,12 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
 
   const openEMagazine = (issueId) => {
     onSelectIssue(issueId);
-    const pdfUrl =
-      issueId === "august-2026" || issueId === "coming-soon"
-        ? "/AIA_Times_Magazine_vol2.pdf"
-        : "/AIA_Times_Magazine.pdf";
+    let pdfUrl = "/AIA_Times_Magazine.pdf";
+    if (issueId === "november-2026") {
+      pdfUrl = "/AIA_Times_Magazine_vol3.pdf";
+    } else if (issueId === "august-2026" || issueId === "coming-soon") {
+      pdfUrl = "/AIA_Times_Magazine_vol2.pdf";
+    }
     window.open(
       `/aia-times/flip-book?pdf=${encodeURIComponent(pdfUrl)}`,
       "_blank",
