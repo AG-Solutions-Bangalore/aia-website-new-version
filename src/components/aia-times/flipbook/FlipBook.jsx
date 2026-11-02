@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
+import { BASE_URL } from "@/api/base-url";
 
 import FlipBookPage from "./FlipBookPage";
 import FlipBookControls from "./FlipBookControls";
@@ -91,8 +92,21 @@ export default function FlipBook({
         // Use CDN worker URL matching the runtime pdfjs version to avoid version mismatches
         pdfjs.GlobalWorkerOptions.workerSrc = `https://cdn.jsdelivr.net/npm/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
-        const loadingTask = pdfjs.getDocument({ url: pdfUrl });
-        const pdfDoc = await loadingTask.promise;
+        let loadingTask = pdfjs.getDocument({ url: pdfUrl });
+        let pdfDoc;
+        try {
+          pdfDoc = await loadingTask.promise;
+        } catch (firstErr) {
+          const filename = pdfUrl.split("/").pop();
+          if (filename && !pdfUrl.startsWith("http")) {
+            const serverFallbackUrl = `${BASE_URL}/assets/pdf/${filename}`;
+            console.warn(`Primary PDF failed (${firstErr.message}), trying server base URL:`, serverFallbackUrl);
+            loadingTask = pdfjs.getDocument({ url: serverFallbackUrl });
+            pdfDoc = await loadingTask.promise;
+          } else {
+            throw firstErr;
+          }
+        }
         if (active) {
           setPdf(pdfDoc);
           setTotalPages(pdfDoc.numPages);

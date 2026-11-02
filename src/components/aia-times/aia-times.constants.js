@@ -855,7 +855,425 @@ export const vol02IssueSections = [
   },
 ];
 
+export const vol03IssueSections = [
+  {
+    label: "01",
+    title: "Cover Story",
+    heading: "The Anatomy of Deception",
+    subheading: "How Fraud Is Built, Hidden, and Found",
+    description: "The call came from a supplier who had never been paid. According to the company’s ledger, he had been paid in full, eleven times over eighteen months. The money had left the account every time. It just had never reached him.",
+    descriptionContent: rt(b("The call came from a supplier who had never been paid. "), "According to the company’s ledger, he had been paid in full, eleven times over eighteen months. The money had left the account every time. It just had never reached him."),
+    image: "vol3_cover_story.webp",
+    fallbackImage: "cover_story.webp",
+    imageWidth: "470px",
+    icon: "Icon1.webp",
+    bodyLabel: "",
+    fullContent: [
+      "The call came from a supplier who had never been paid.",
+      "According to the company’s ledger, he had been paid in full, eleven times over eighteen months. The money had left the account every time. It just had never reached him.",
+      "What follows is an illustrative composite, not a single real case. It is assembled from patterns that investigators meet again and again. Call the person at its centre Rakul, a senior accounts payable manager with eleven years at the company. He was trusted, punctual and the first to volunteer at year-end. By every visible measure, he was exactly the colleague an organisation hopes to have.",
+      "His fraud did not begin with the first false payment. It began years earlier, in a place no audit program tests: a private problem.",
+      {
+        type: "heading",
+        text: "Stage 1: Motive"
+      },
+      "No fraud starts with a plan. It starts with pressure, usually private and usually hidden. A debt that grows quietly. A lifestyle that has outrun a salary. Then comes the step that matters most: the person finds a reason why it is acceptable. I’ll put it back. They owe me. Nobody is hurt.",
+      "Motive cannot be audited, but its traces can be read. The ACFE’s 2026 study of 2,402 real cases found that 84% of fraudsters showed at least one behavioural red flag before they were caught. Living beyond one’s means was the most common, seen in almost 40% of cases, and it has topped that list in every edition since 2008. Those who showed a flag caused median losses 33% higher than those who did not.",
+      "Rakul showed two of them. Nobody was looking.",
+      {
+        type: "heading",
+        text: "Stage 2: Opportunity"
+      },
+      "Motive alone is not enough. For fraud to happen, there must be an opportunity, and sometimes the organisation unknowingly provides it. Rakul’s role gave him two important powers. He could change a supplier’s bank details, and he could release payments to that same supplier. There was no independent check between the two steps.",
+      "Nothing about this arrangement was deliberately hidden. Rakul knew the system, people trusted his judgement, and nobody had questioned whether one person should control both stages.",
+      "This is how a routine process can become a serious vulnerability. A control may exist on paper, but if the same person can change information and move money without independent review, the control may offer little protection.",
+      {
+        type: "insight",
+        text: "Case File Note: Motive is explored further in “Inside the Fraudster’s Head”, pg. 22–23."
+      },
+      {
+        type: "heading",
+        text: "Stage 3: Method"
+      },
+      "Then comes the act itself, and it is usually unremarkable. Rakul took a genuine supplier that had been inactive for months. He changed its registered bank account to one he controlled. Whenever a legitimate invoice arrived, he routed the payment there.",
+      "There were no hacked systems and no forged signatures at the moment of payment. It looked like routine vendor maintenance.",
+      "That is what makes many workplace frauds difficult to spot. Investigators may find no dramatic system breach or obviously fabricated invoice. Instead, the warning sign sits in a seemingly ordinary change to supplier information and a transaction that looks reasonable when viewed in isolation.",
+      "In this case, the question was whether the bank details were legitimate, who had changed them, and whether that change had been independently verified. Following the money matters, but so does tracing the decisions and changes that allowed it to move.",
+      {
+        type: "heading",
+        text: "Stage 4: Concealment"
+      },
+      "The act is only half a fraud. The other half is the effort to keep it from being seen.",
+      "Rakul printed a vendor letter on a letterhead he had copied, requesting the change of bank details, and filed it in the vendor folder. Should anyone ask, the paperwork existed. At every month-end, he made sure he was the one preparing the vendor reconciliation, so the one person who could have spotted the problem was the one person writing the report on it.",
+      "This is what concealment looks like in practice. Almost every fraud comes with some form of cover-up, and a forged or altered paper trail remains the favourite, even in a digital age.",
+      "Time is the fraudster’s real asset. Every month the scheme stays hidden, it grows more comfortable and more costly. The goal is to stay unquestioned long enough.",
+      {
+        type: "heading",
+        text: "Stage 5: Detection"
+      },
+      "Rakul was not caught by an audit. He was caught by a phone call.",
+      "This is how most frauds surface. The honest supplier, wondering why a payment never arrived, asked a simple question, and one question was enough to unravel eighteen months of work.",
+      "Detection method matters enormously. The ACFE found that fraud can be uncovered up to four times faster through active detection than through passive means. Active detection means a deliberate check such as surveillance, monitoring, or reconciliation. Passive detection means being told, stumbling across it, or being notified by the police.",
+      "Data analytics, exception reports, independent reconciliations and accessible reporting channels can all help surface these issues earlier. But the information must reach someone willing and able to act on it.",
+      {
+        type: "insight",
+        text: "Control Gap: Ask of any process: can one person initiate, approve, and release? If the answer is yes, you have found an opportunity."
+      },
+      {
+        type: "heading",
+        text: "Stage 6: Consequences"
+      },
+      "The loss is only the first line of the bill.",
+      "Few organisations recover everything that was taken. The money is spent, moved, or untraceable, and the legal route is slow and expensive. Many organisations also choose to handle fraud quietly, preferring an internal dismissal to a public case, because they fear the publicity.",
+      "Then come the costs that never appear in the stolen amount. Regulators and auditors ask difficult questions. Morale drops. Suppliers start to wonder how well they are being treated. The team that trusted Rakul has to rethink what trust means. And the organisation builds, after the fact, the controls it could have installed before.",
+      {
+        type: "heading",
+        text: "What This Means for the Auditor"
+      },
+      "Look back at Rakul’s case. The motive was visible in behaviour. The opportunity was visible in a process map. The method was visible in a vendor master change log, the concealment in a document that did not match its own sequence, and the detection in a supplier’s complaint that should have been a control.",
+      "Every stage left evidence. None of it was hidden. It was just never put together.",
+      {
+        type: "heading",
+        text: "Closing Insight"
+      },
+      {
+        type: "insight",
+        text: "Fraud is built in stages. It is only ever found when someone reads those stages together. A transaction tells you what happened. The anatomy tells you why it was possible. The auditor’s job is to study the second, so the first never gets the chance."
+      },
+      "To see these six stages applied to a real, fully documented case, turn to Case File 01 on page 34."
+    ]
+  },
+  {
+    label: "02",
+    title: "Case Study",
+    heading: "Inside the $20 Million Fraud Allegations",
+    subheading: "CASE FILE 01: Telekom Malaysia",
+    description: "How Alleged Manipulation of Transactions, Supplier Records, Payroll, and Digital Identity Reveals Important Lessons for Auditors.",
+    descriptionContent: rt(b("How Alleged Manipulation "), "of Transactions, Supplier Records, Payroll, and Digital Identity Reveals Important Lessons for Auditors."),
+    image: "vol3_case_study.webp",
+    fallbackImage: "case_study.webp",
+    imageWidth: "470px",
+    icon: "Icon4.webp",
+    bodyLabel: "Case Overview:",
+    fullContent: [
+      "How Alleged Manipulation of Transactions, Supplier Records, Payroll, and Digital Identity Reveals Important Lessons for Auditors.",
+      {
+        type: "heading",
+        text: "Case at a Glance"
+      },
+      {
+        type: "insight",
+        text: rt(b("Organisation: "), "Telekom Malaysia Berhad and its U.S. subsidiary, Telekom Malaysia (USA) Inc. | ", b("Public announcement: "), "19 May 2026 | ", b("Period covered: "), "July 2020–February 2026 | ", b("Amount involved: "), "More than US$20 million allegedly diverted | ", b("Central Themes: "), "Corporate fraud, procurement, payroll, fabricated records, and AI-assisted impersonation")
+      },
+      {
+        type: "heading",
+        text: "The Photograph That Didn't Match the Date"
+      },
+      "In January 2026, according to the U.S. Department of Justice (DOJ), the defendants sought reimbursement for expenses associated with a supposed work trip to Las Vegas in December 2025. The DOJ alleges that no such trip had taken place.",
+      "When the parent company requested photographs, the defendants allegedly arranged a later trip to Las Vegas and photographed scenes with Christmas trees to make the images appear as though they had been taken in December.",
+      "The detail is striking, but the underlying issue is serious: supporting evidence can appear convincing without proving that the activity it represents actually occurred.",
+      {
+        type: "heading",
+        text: "The Setting"
+      },
+      "A subsidiary sits far from head office. The parent in Malaysia relied on reports, approvals, and paperwork from the US team, and the three managers held senior positions there from July 2020 to February 2026.",
+      "At a distance, trust travels by document: a signature, an invoice, an HR record, a photograph. As the DOJ describes it, each alleged scheme aimed at one of those documents.",
+      "This is why the case is useful to study. Many organisations run on the same arrangement: a head office, a remote unit and a stream of paperwork between them. The question for an auditor is simple. If the paperwork were wrong, which control would notice?",
+      "The case is particularly relevant to audit and fraud investigation professionals because the alleged schemes touched several business functions. Rather than relying on one type of transaction, the alleged conduct involved commercial contracts, procurement, human resources, and employee expenses.",
+      {
+        type: "heading",
+        text: "Four Alleged Schemes, One Investigation"
+      },
+      "1. Broadband-Capacity Sales: Selling network capacity without the required parent-company authorisation and diverting proceeds.",
+      "2. Supplier Impersonation: Misrepresenting equipment costs and directing funds to a company resembling a genuine supplier.",
+      "3. Payroll Diversion: Diverting salaries belonging to former employees or interns, including through impersonation.",
+      "4. Fabricated Expenses: Seeking reimbursement for a business trip that did not take place and later creating photographs to support the claim.",
+      "Each alleged scheme involved a different business process, but the underlying concern was similar: information presented to the organisation did not accurately reflect the activity behind the transaction.",
+      {
+        type: "disclaimer",
+        text: "Source: U.S. Department of Justice, 19 May 2026."
+      },
+      {
+        type: "heading",
+        text: "How the Alleged Schemes Worked"
+      },
+      {
+        type: "heading",
+        text: "Scheme 1: Unauthorised Broadband-Capacity Sales"
+      },
+      "Telekom Malaysia (USA) Inc. primarily sells access to broadband infrastructure to technology companies in the United States. According to the DOJ, the parent company relied on the subsidiary’s management for information about U.S. deals and approved major contracts on that basis.",
+      "Prosecutors allege that the defendants arranged sales involving broadband capacity without the parent company’s authorisation, used different contract versions to represent the transactions differently and directed proceeds from certain sales through a sham entity.",
+      "From an audit perspective, this allegation highlights the importance of reconciling commercial agreements with actual quantities sold, customer contracts, billing records and revenue received.",
+      {
+        type: "insight",
+        text: "The Audit Lesson: Approval should be supported by independent verification of the underlying transaction, including quantities, pricing, contractual terms and the destination of funds."
+      },
+      {
+        type: "heading",
+        text: "Scheme 2: Supplier Impersonation and Payment Diversion"
+      },
+      "The DOJ also alleges that the defendants impersonated a legitimate supplier and diverted a payment intended for that supplier.",
+      "In the example described by prosecutors, the subsidiary purchased cable for approximately US$500,000, but the parent company was allegedly told that the purchase had cost approximately US$2.9 million. The DOJ alleges that approximately US$2.9 million was diverted to a bank account belonging to a sham entity with a name resembling that of the genuine supplier.",
+      "The important investigative issue is the gap between what the company was told, what it actually purchased, and where the money went.",
+      "An auditor examining a similar risk would compare supplier invoices with purchase orders, delivery records, contract prices, and payments. Supplier identity should be independently verified, particularly when bank details change, or a new entity appears in the payment chain.",
+      {
+        type: "insight",
+        text: "The Audit Lesson: A familiar supplier name and complete-looking documentation are not enough. Verify the legal entity, commercial terms, delivery evidence and bank-account ownership independently."
+      },
+      {
+        type: "heading",
+        text: "Scheme 3: Salary Diversion and AI-Assisted Impersonation"
+      },
+      "Payroll controls depend on accurate employee records, authorised changes and reliable communication between HR and finance.",
+      "According to the DOJ, the subsidiary's records did not reflect a particular employee's departure in 2020. Prosecutors allege that the employee's monthly salary continued to be paid into an account controlled by the defendants from August 2020 through May 2025.",
+      "When the departure was finally recorded in 2025, HR in Malaysia requested an exit interview. The DOJ alleges that another individual impersonated the former employee and that, during a subsequent video call, an AI program was used to make the impersonator's appearance resemble the former employee.",
+      "This part of the case brings an emerging risk into focus: identity verification cannot depend entirely on a familiar face appearing on a video call.",
+      "AI-assisted impersonation also reinforces the need for layered verification. A video call may provide useful information, but it should not be treated as conclusive proof of identity when the request involves sensitive employee or financial records.",
+      {
+        type: "insight",
+        text: "The Audit Lesson: Connect HR records with payroll data, independently verify changes, and use more than one reliable method to confirm identity."
+      },
+      {
+        type: "heading",
+        text: "Scheme 4: Fabricated Expense Reimbursements"
+      },
+      "The fourth allegation concerned reimbursements for work expenses that had not genuinely occurred.",
+      "The DOJ states that the defendants sought reimbursement for a supposed work trip to Las Vegas in December 2025. When photographs were requested as supporting evidence, prosecutors allege that a later trip was organised to create photographs that appeared consistent with the claimed travel period.",
+      "This example illustrates why the presence of supporting documents does not automatically establish that an expense is genuine. Photographs, receipts and claim forms must be considered alongside other evidence.",
+      "An auditor reviewing travel expenses might compare the claim with travel authorisations, booking records, payment evidence, meeting schedules and the timing of supporting material. Where inconsistencies arise, the appropriate response is further verification.",
+      {
+        type: "insight",
+        text: "The Audit Lesson: Evidence should be corroborated. A document may support a claim, but the wider timeline and independent records must also make sense."
+      },
+      {
+        type: "heading",
+        text: "Detection, Response and Professional Lessons"
+      },
+      {
+        type: "heading",
+        text: "What Auditors and Investigators Can Learn"
+      },
+      "1. Connect Information Across Departments: Procurement, finance, HR and operations may each hold only part of the relevant information. Comparing records across functions can reveal inconsistencies that individual reviews may miss.",
+      "2. Verify Changes Independently: Changes to supplier bank details, employee status, contract quantities and payment instructions should be checked through authorised, independent channels.",
+      "3. Examine the Full Transaction Trail: Investigators should establish who initiated a transaction, who approved it, what supporting evidence existed, and where the money ultimately went.",
+      "4. Test the Evidence, Not Just its Presence: A signed document, photograph or completed form does not automatically prove that the underlying activity occurred. Dates, sources, and supporting records should be consistent.",
+      "5. Strengthen Identity Verification: As impersonation techniques evolve, organisations should use layered identity checks for sensitive HR and financial processes rather than relying solely on video calls or familiar contact details.",
+      "6. Encourage Reporting and Follow-Through: Employees should know how to raise concerns, and reports should be assessed promptly and objectively. An investigation should also examine whether weaknesses elsewhere could create similar risks.",
+      {
+        type: "heading",
+        text: "The Bigger Lesson"
+      },
+      "This case illustrates how alleged fraud can exploit the spaces between business processes. The risk becomes clearer when records are checked against independent evidence and against one another.",
+      "For auditors, the objective is not to assume wrongdoing whenever an inconsistency appears. It is to ask the right questions, verify the facts, preserve relevant evidence, and escalate concerns through appropriate procedures.",
+      {
+        type: "heading",
+        text: "Closing Insight"
+      },
+      {
+        type: "insight",
+        text: "Effective fraud prevention depends on more than having controls in place. It requires controls that are independently verified, information that is connected across functions, and professionals who are willing to investigate when the evidence does not add up."
+      },
+      {
+        type: "disclaimer",
+        text: rt(bi("Disclaimer: This case study is presented solely for educational purposes to identify governance failures, audit gaps, and financial risk lessons drawn from documented fraud patterns. All details are sourced from the U.S. Attorney's Office, Southern District of New York, press release."))
+      }
+    ]
+  },
+  {
+    label: "03",
+    title: "Learning Topic",
+    heading: "Phishing – When Deception Lands in Your Inbox",
+    subheading: "",
+    description: "One email. One convincing story. One click that could expose an entire organisation. Discover how modern social engineering exploits routine workflows, and how layered defence keeps systems secure.",
+    descriptionContent: rt(b("One email. One convincing story. "), "One click that could expose an entire organisation. Discover how modern social engineering exploits routine workflows, and how layered defence keeps systems secure."),
+    image: "vol3_learning_topic.webp",
+    fallbackImage: "learning_topic.webp",
+    imageWidth: "470px",
+    icon: "Icon3.webp",
+    bodyLabel: "",
+    fullContent: [
+      "One email. One convincing story. One click that could expose an entire organisation.",
+      "An email arrives on a busy morning from your bank, asking you to verify your account, or a supplier shares an updated invoice. Or your manager requests a confidential file before an important meeting.",
+      "Everything looks familiar. The sender’s name seems right. You have dozens of tasks waiting, so you act without giving it much thought.",
+      "But Wait! What if the sender is an impostor?",
+      "Welcome to phishing, a form of social engineering in which attackers disguise themselves as trusted people or organisations to trick recipients into revealing sensitive information, clicking malicious links, opening harmful attachments, or authorising fraudulent actions.",
+      "The objective may be to steal login credentials, gain access to business systems, obtain financial information, or set the stage for a larger fraud. And the most convincing phishing attempts do not always look suspicious. They look like ordinary work.",
+      "We often picture phishing as an email with suspicious links and promises that we have won a lottery. Those messages still exist. But modern phishing can be far more convincing. It can imitate familiar people, fit naturally into ongoing conversations, and exploit the way organisations actually work.",
+      {
+        type: "heading",
+        text: "How Does a Phishing Attack Actually Work?"
+      },
+      "Most phishing attacks follow a simple pattern, even when the technology behind them is complicated.",
+      "Step 1: Earn your trust. The attacker creates a believable identity or situation. They may imitate a colleague or sometimes use information gathered from public profiles, company websites, or earlier communications to make the message feel personal.",
+      "Step 2: Give you a reason to act. The message creates a sense of urgency, curiosity, fear, or routine. You might be told that your account will be suspended or a senior leader is waiting for your response. The goal is to make acting feel easier than stopping to verify.",
+      "Step 3: Get you to do something. You might be asked to open a file, enter login details, scan a QR code, reply with information, or approve an authentication request. The action may look completely ordinary.",
+      "Step 4: Turn that action into an opportunity. Depending on the attack, the attacker may obtain credentials, access a mailbox, steal a session token, gather sensitive information, or influence a business transaction.",
+      "Step 5: Use the access or trust gained. This is where the impact can grow. An attacker with access to one mailbox may impersonate its owner, contact suppliers, search for financial information, or send further messages to colleagues.",
+      {
+        type: "heading",
+        text: "Let’s Burst the Biggest Myth!"
+      },
+      "Some of the most dangerous assumptions about phishing are the ones that sound reasonable. “If I clicked the link, my account is already compromised.”",
+      "Not necessarily. Clicking a link does not automatically mean an attacker has gained access to your account or device. The result depends on what happened next, what the page contained, and whether any security weakness was exploited.",
+      "Opening a page and closing it without entering information is different from submitting a password to a fake login page. Approving an unexpected sign-in request or downloading and running a malicious file creates different risks.",
+      {
+        type: "heading",
+        text: "Let Us Dig Deeper into This Myth"
+      },
+      "Suppose an employee clicks a link in an email that appears to come from the organisation’s IT team. The page asks them to sign in. They enter their username and password, and the page displays an error. They close the browser and carry on working.",
+      "From the employee’s point of view, nothing happened. From the attacker’s point of view, the credentials may already have been captured.",
+      "In some attacks, the attacker goes further. A technique known as adversary-in-the-middle (AitM) phishing allows an attacker to position themselves between a user and a legitimate sign-in service. If the attack succeeds, the attacker may capture not only login details but also a session token.",
+      "In simple terms, a session token can act like proof that a user has already signed in. Stealing it may allow an attacker to misuse an authenticated session, even when the organisation uses multi-factor authentication (MFA).",
+      "And once an account is compromised, the attack may become harder to recognise. The lesson? Investigating phishing means asking what happened after the message was opened, not stopping at the fact that someone clicked.",
+      "Did the user enter credentials? Was an unexpected sign-in approved? Did a new session appear? Were messages sent from the account? Was sensitive information accessed? Did any payment or approval follow?",
+      {
+        type: "heading",
+        text: "Modern Ways of Phishing"
+      },
+      "For two decades, that action was a link. A phishing email without a link had nothing to deliver, so it was not worth sending. Hence the working rule most of us learned: no link, no phishing; no click, no compromise, but what if there is no link at all?",
+      "There are modern ways of Phishing also; here you can be asked to scan a QR code, call a number, share a one-time password, or approve a sign-in request. The method may change, but the intention remains the same - Deception. Let’s look at how this works across different channels.",
+      {
+        type: "heading",
+        text: "01. Smishing = SMS + Phishing"
+      },
+      "You receive a text message: “Delivery alert: Your parcel is on hold because your address is incomplete. Update your details within two hours to avoid return.”",
+      "This is smishing, a form of phishing carried out through SMS or other text messages. Attackers may pretend to be banks, delivery companies, government services, or familiar contacts. Their aim could be to steal personal details, capture login credentials, or trick you into making a payment.",
+      {
+        type: "heading",
+        text: "02. Quishing: QR Code + Phishing"
+      },
+      "Imagine receiving an email that appears to come from your company’s IT team. It asks you to scan a QR code to keep your Microsoft 365 account active or access an important company document.",
+      "The email looks genuine, and the request seems routine. You scan the code, a sign-in page opens, and you enter your work credentials.",
+      "This is quishing - phishing that uses QR codes to direct people to fraudulent websites or other harmful destinations. Unlike a normal link, a QR code does not make its destination easy to see at first glance.",
+      "In a workplace, attackers may use QR codes to imitate IT notifications, document-sharing requests, or account verification messages. If an employee enters their work credentials on a fake page, the attacker may attempt to access company email, files, or other business information.",
+      {
+        type: "heading",
+        text: "03. Vishing = Voice Call + Phishing"
+      },
+      "Your phone rings. “Hello, I’m calling from your bank’s security team. We have detected a suspicious transaction on your account. I need to verify a few details to protect your money.”",
+      "The caller sounds professional. They know your name and may even mention a recent transaction. Then comes the pressure: act immediately, share a one-time password, or follow instructions on your phone.",
+      "This is vishing, or voice phishing. Attackers use phone calls or voice messages to persuade people to reveal confidential information, transfer money, or provide access to accounts and systems.",
+      {
+        type: "heading",
+        text: "The Defence System: Stop the Message, Protect the Account, Respond Quickly"
+      },
+      "Imagine a phishing email reaches an employee’s inbox. The email filter misses it. The employee clicks the link and enters their login details. What happens next?",
+      "Does the attacker gain access without being noticed? Can the organisation detect the unusual sign-in? Can the employee report the incident quickly? And can the security team stop the attack before it spreads?",
+      "These questions explain why phishing defence needs more than a single security tool or an annual training session. It needs layers of protection, with each layer reducing the chance that one mistake becomes a serious incident.",
+      {
+        type: "heading",
+        text: "Layer 1: Stop Suspicious Messages Before They Reach People"
+      },
+      "The first line of defence is the organisation’s email security system. Its job is to identify suspicious messages, block known threats and make dangerous content harder to access.",
+      "Email filters can check links, scan attachments, flag suspicious sender names and examine messages for signs of fraud. Some systems can also check links again when a user clicks them, because a website that looked curious when the email arrived may become dangerous later.",
+      "Organisations can also use email authentication methods such as SPF, DKIM and DMARC. In simple terms, these help receiving systems check whether an email is authorised to use a particular sending domain and whether it shows signs of tampering. When configured properly, they can reduce certain types of sender impersonation.",
+      {
+        type: "heading",
+        text: "Layer 2: Make Sure One Click Does Not Open Every Door"
+      },
+      "Even the best email filters can miss a threat. That makes account security the next important layer.",
+      "Organisations should use Multi-Factor Authentication (MFA), which requires an additional step beyond a password when signing in. Where possible, they should consider phishing-resistant options such as passkeys or security keys, which are designed to prevent credentials from being used on fake websites.",
+      "Access should be limited to what people need for their roles, so that one compromised account does not automatically provide access to everything.",
+      "MFA is valuable, but not all forms offer the same level of protection against every phishing technique. Some attacks can trick users into approving a sign-in or capture an active login session.",
+      "The goal is simply to make it harder for a stolen password or compromised account to become a route into the wider organisation.",
+      {
+        type: "heading",
+        text: "Layer 3: Make Reporting and Response Easy"
+      },
+      "Suppose an employee realises they have clicked a suspicious link or shared their credentials. They should not have to search through policy documents to find out what to do.",
+      "A simple phishing-reporting button, clear instructions, and a supportive reporting culture can help employees raise concerns quickly. The security team should be able to investigate the message, remove it from other inboxes where possible, check for suspicious account activity, and take steps to contain any compromise.",
+      "Importantly, reporting should not depend on a suspicious message containing a link or attachment. An employee who receives a fraudulent payment request or a suspicious message asking them to call a number should still be able to report it.",
+      "Speed matters because the earlier an organisation knows about an attempted attack, the sooner it can investigate and limit the damage.",
+      {
+        type: "heading",
+        text: "Train People and Strengthen the Systems Around Them"
+      },
+      "Technology can block many threats, but it cannot make every decision for an employee. Effective training should use situations people may actually face: an unexpected refund message, a QR code requesting a login, a call claiming to be from the bank, or an urgent request from the CEO.",
+      "Training also needs to stay current, and regular refreshers and lessons drawn from real incidents can keep the guidance relevant.",
+      "Alongside training, IT teams use security tools to watch for suspicious activity across the organisation’s network and systems.",
+      "Two more points make training work:\n• Reward reporting: Someone who is scolded for clicking will hide the next click. The hidden click is the one that becomes a breach.\n• Train the IT team too: Run practice drills where an alert fires and the team must investigate, block, and sign users out within minutes.",
+      "An Intrusion Detection System (IDS) monitors activity and alerts the security team when it identifies signs of a possible attack. An Intrusion Prevention System (IPS) can take action to block certain suspicious traffic. Depending on how they are configured, these tools may help detect or stop activity linked to malicious connections, malware, or attempts to access systems without permission.",
+      {
+        type: "insight",
+        text: "Staff need one habit that works every time: verify through a second channel that you started yourself, using a number or address you already trust."
+      }
+    ]
+  },
+  {
+    label: "04",
+    title: "Expert Talk",
+    heading: "Why Fraud Survives Good Controls: The Gaps Organisations Still Miss",
+    subheading: "",
+    description: "Lalitha Satheesh, M.Com., CA, CS, CFE, CIA, CISA, CRMA, is a Managing Director at Accenture with over 25 years of experience in audit, internal controls, fraud risk, compliance, governance, and risk management. A proud AIA achiever, she shares her insights in this edition of AIA Times on why fraud persists despite established controls and how organisations can strengthen fraud risk management and prevention.",
+    descriptionContent: rt(b("Lalitha Satheesh, M.Com., CA, CS, CFE, CIA, CISA, CRMA,"), " is a Managing Director at Accenture with over 25 years of experience in audit, internal controls, fraud risk, compliance, governance, and risk management. A proud AIA achiever, she shares her insights in this edition of AIA Times on why fraud persists despite established controls and how organisations can strengthen fraud risk management and prevention."),
+    image: "vol3_expert_talk.webp",
+    fallbackImage: "expert_talk.webp",
+    imageWidth: "470px",
+    icon: "Icon2.webp",
+    bodyLabel: "Lalitha Satheesh,",
+    fullContent: [
+      "Lalitha Satheesh, M.Com., CA, CS, CFE, CIA, CISA, CRMA, is a Managing Director at Accenture with over 25 years of experience in audit, internal controls, fraud risk, compliance, governance, and risk management. A proud AIA achiever, she shares her insights in this edition of AIA Times on why fraud persists despite established controls and how organisations can strengthen fraud risk management and prevention.",
+      {
+        type: "question",
+        text: "1. From your experience, what is the difference between a control that is well-designed on paper and one that actually works in day-to-day operations?"
+      },
+      "A control can be well-designed but poorly executed. It can also be performed consistently yet fail to address the underlying risk because the design itself is inadequate.",
+      "Effective controls require three things:\n• Right design: Does the control adequately address the risk?\n• Reliable execution: Is it performed consistently as intended?\n• Demonstrable outcomes: Does it prevent, detect, or correct what it is supposed to?",
+      "An organisation may have a well-defined approval process, but if employees bypass it to save time or managers approve things without looking at the details, the control is not really serving its purpose. A control should not just look good in a policy document. It should work consistently, even when there is pressure to meet deadlines or achieve business targets. It is also important to check whether people understand why the control exists, rather than simply treating it as another step in the process.",
+      {
+        type: "question",
+        text: "2. What are some warning signs that an organisation's control environment may be creating a false sense of security?"
+      },
+      "One warning sign is when people start assuming that everything is fine merely because policies are in place or audit reports look good. These are positive signs, of course, but they do not automatically mean that fraud cannot happen.",
+      "I would pay attention to recurring exceptions, the same people controlling too many steps in a process, or audit findings that recur without being properly resolved. Another concern is when employees are reluctant to question a decision because a higher-up has already approved it.",
+      "Sometimes, the problem is not that controls are missing, but that people have become too comfortable with the way things are done. Organisations need to keep asking questions and address weaknesses instead of assuming that existing processes are working perfectly. Finally, when the underlying governance is weak , reporting can show all green and the control incidents may never get the attention its needed, therefore awareness on what are the key metrics and transparency on how is it reported is crucial to avoid false sense of security.",
+      {
+        type: "question",
+        text: "3. Many processes rely on employees following procedures correctly. How can organisations reduce their dependence on individual judgement without unnecessarily complicating processes?"
+      },
+      "The goal is not to eliminate human judgement, but to reduce redundant discretion and make the right action the easiest action.",
+      "Organisations can achieve this through clear accountability, role-based access, segregation of duties and risk-based approvals. Technology can strengthen these controls by automatically flagging unusual transactions, supplier changes and recurring exceptions.",
+      "The principle is simple: simplify routine decisions, automate predictable controls and reserve human judgement for higher-risk exceptions. Good controls should make processes safer, not slower.",
+      {
+        type: "question",
+        text: "4. Can high policy compliance or a clean audit report sometimes create misplaced confidence? How should organisations interpret these signals?"
+      },
+      "Yes, absolutely. A clean audit report is encouraging, but it should not be treated as a guarantee that there is no fraud. Every audit has a defined scope, and there may be areas or transactions that were not examined in detail.",
+      "Similarly, employees may be following the existing policies correctly, but that does not necessarily mean those policies are addressing every relevant risk. This is why professional scepticism is so important.",
+      "Organisations should look at what was tested, whether earlier issues were genuinely resolved, and whether new risks have emerged since the last review. It is critical to constantly review the organisation risk management process to ensure new and emerging risk are assessed and impacted in to policies and procedures.",
+      "I endorse leaders regularly questioning whether existing controls remain fit for purpose and identifying any unusual activity that may require closer scrutiny.",
+      {
+        type: "question",
+        text: "5. When an investigation uncovers fraud, how can organisations distinguish between an isolated act of misconduct and a deeper weakness in the process or control environment?"
+      },
+      "I would examine fraud through the lens of the Fraud Triangle: Pressure, Opportunity and Rationalisation. While personal motives may explain why someone committed fraud, weaknesses in the control environment often explain how they succeeded.",
+      "The investigation must therefore go beyond individual misconduct to assess control design, access rights, approval mechanisms, segregation of duties and historical exceptions.",
+      "The critical distinction is whether the individual exploited an isolated lapse or a systemic vulnerability that others could exploit.",
+      "Accountability addresses the individual; root-cause analysis and control remediation address the organisation.",
+      {
+        type: "insight",
+        text: "My guiding principle is simple: Investigate the person, but fix the opportunity. Otherwise, we may close the case without closing the risk."
+      }
+    ]
+  }
+];
+
 export const magazineIssues = [
+  {
+    id: "november-2026",
+    issueDate: "November 2026",
+    volume: "Vol. 03",
+    category: "Magazine",
+    title: "Fraud Files – The Anatomy of Deception",
+    displayDate: "01 November 2026",
+    description:
+      "Explore the mechanics of deception, phishing defence in depth, lessons from the US$20M Telekom Malaysia case, and expert insights from Accenture Managing Director Lalitha Satheesh.",
+    cover: "aia_times_magazine_cover_page_3.webp",
+    fallbackCover: "coming_soon.webp",
+    coverAlt: "AIA Times November 2026 Volume 3 cover",
+    highlights: vol03IssueSections,
+    isAvailable: true,
+  },
   {
     id: "august-2026",
     issueDate: "August 2026",
