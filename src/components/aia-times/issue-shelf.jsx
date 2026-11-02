@@ -93,7 +93,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
     onSelectIssue(issueId);
     let pdfUrl = "/AIA_Times_Magazine.pdf";
     if (issueId === "november-2026") {
-      pdfUrl = "/AIA_Times_Magazine_vol3.pdf";
+      pdfUrl = "/AIA_Times_Volume_3_Nov_2026.pdf";
     } else if (issueId === "august-2026" || issueId === "coming-soon") {
       pdfUrl = "/AIA_Times_Magazine_vol2.pdf";
     }
