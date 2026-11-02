@@ -861,8 +861,12 @@ export const vol03IssueSections = [
     title: "Cover Story",
     heading: "The Anatomy of Deception",
     subheading: "How Fraud Is Built, Hidden, and Found",
-    description: "The call came from a supplier who had never been paid. According to the company’s ledger, he had been paid in full, eleven times over eighteen months. The money had left the account every time. It just had never reached him.",
-    descriptionContent: rt(b("The call came from a supplier who had never been paid. "), "According to the company’s ledger, he had been paid in full, eleven times over eighteen months. The money had left the account every time. It just had never reached him."),
+    description:
+      "The call came from a supplier who had never been paid. According to the company’s ledger, he had been paid in full, eleven times over eighteen months. The money had left the account every time. It just had never reached him. What follows is an illustrative composite, not a single real case. It is assembled from patterns that investigators meet again and again. Call the person at its centre Rakul, a senior accounts payable manager with eleven years at the company. He was trusted, punctual and the first to volunteer at year-end. By every visible measure, he was exactly the colleague an organisation hopes to have. His fraud did not begin with the first false payment. It began years earlier, in a place no audit program tests: a private problem.",
+    descriptionContent: rt(
+      b("The call came from a supplier who had never been paid. "),
+      "According to the company’s ledger, he had been paid in full, eleven times over eighteen months. The money had left the account every time. It just had never reached him. What follows is an illustrative composite, not a single real case. It is assembled from patterns that investigators meet again and again. Call the person at its centre Rakul, a senior accounts payable manager with eleven years at the company. He was trusted, punctual and the first to volunteer at year-end. By every visible measure, he was exactly the colleague an organisation hopes to have. His fraud did not begin with the first false payment. It began years earlier, in a place no audit program tests: a private problem.",
+    ),
     image: "vol3_cover_story.webp",
     fallbackImage: "cover_story.webp",
     imageWidth: "470px",
@@ -948,8 +952,12 @@ export const vol03IssueSections = [
     title: "Case Study",
     heading: "Inside the $20 Million Fraud Allegations",
     subheading: "CASE FILE 01: Telekom Malaysia",
-    description: "How Alleged Manipulation of Transactions, Supplier Records, Payroll, and Digital Identity Reveals Important Lessons for Auditors.",
-    descriptionContent: rt(b("How Alleged Manipulation "), "of Transactions, Supplier Records, Payroll, and Digital Identity Reveals Important Lessons for Auditors."),
+    description:
+      "How Alleged Manipulation of Transactions, Supplier Records, Payroll, and Digital Identity Reveals Important Lessons for Auditors. In January 2026, according to the U.S. Department of Justice (DOJ), the defendants sought reimbursement for expenses associated with a supposed work trip to Las Vegas in December 2025. The DOJ alleges that no such trip had taken place. When the parent company requested photographs, the defendants allegedly arranged a later trip to Las Vegas and photographed scenes with Christmas trees to make the images appear as though they had been taken in December. The detail is striking, but the underlying issue is serious: supporting evidence can appear convincing without proving that the activity it represents actually occurred.",
+    descriptionContent: rt(
+      b("How Alleged Manipulation "),
+      "of Transactions, Supplier Records, Payroll, and Digital Identity Reveals Important Lessons for Auditors. In January 2026, according to the U.S. Department of Justice (DOJ), the defendants sought reimbursement for expenses associated with a supposed work trip to Las Vegas in December 2025. The DOJ alleges that no such trip had taken place. When the parent company requested photographs, the defendants allegedly arranged a later trip to Las Vegas and photographed scenes with Christmas trees to make the images appear as though they had been taken in December. The detail is striking, but the underlying issue is serious: supporting evidence can appear convincing without proving that the activity it represents actually occurred.",
+    ),
     image: "vol3_case_study.webp",
     fallbackImage: "case_study.webp",
     imageWidth: "470px",
@@ -1084,8 +1092,12 @@ export const vol03IssueSections = [
     title: "Learning Topic",
     heading: "Phishing – When Deception Lands in Your Inbox",
     subheading: "",
-    description: "One email. One convincing story. One click that could expose an entire organisation. Discover how modern social engineering exploits routine workflows, and how layered defence keeps systems secure.",
-    descriptionContent: rt(b("One email. One convincing story. "), "One click that could expose an entire organisation. Discover how modern social engineering exploits routine workflows, and how layered defence keeps systems secure."),
+    description:
+      "One email. One convincing story. One click that could expose an entire organisation. An email arrives on a busy morning from your bank, asking you to verify your account, or a supplier shares an updated invoice. Or your manager requests a confidential file before an important meeting. Everything looks familiar. The sender’s name seems right. You have dozens of tasks waiting, so you act without giving it much thought. But Wait! What if the sender is an impostor? Welcome to phishing, a form of social engineering in which attackers disguise themselves as trusted people or organisations to trick recipients into revealing sensitive information, clicking malicious links, opening harmful attachments, or authorising fraudulent actions.",
+    descriptionContent: rt(
+      b("One email. One convincing story. "),
+      "One click that could expose an entire organisation. An email arrives on a busy morning from your bank, asking you to verify your account, or a supplier shares an updated invoice. Or your manager requests a confidential file before an important meeting. Everything looks familiar. The sender’s name seems right. You have dozens of tasks waiting, so you act without giving it much thought. But Wait! What if the sender is an impostor? Welcome to phishing, a form of social engineering in which attackers disguise themselves as trusted people or organisations to trick recipients into revealing sensitive information, clicking malicious links, opening harmful attachments, or authorising fraudulent actions.",
+    ),
     image: "vol3_learning_topic.webp",
     fallbackImage: "learning_topic.webp",
     imageWidth: "470px",
@@ -1202,10 +1214,14 @@ export const vol03IssueSections = [
   {
     label: "04",
     title: "Expert Talk",
-    heading: "Why Fraud Survives Good Controls: The Gaps Organisations Still Miss",
-    subheading: "",
-    description: "Lalitha Satheesh, M.Com., CA, CS, CFE, CIA, CISA, CRMA, is a Managing Director at Accenture with over 25 years of experience in audit, internal controls, fraud risk, compliance, governance, and risk management. A proud AIA achiever, she shares her insights in this edition of AIA Times on why fraud persists despite established controls and how organisations can strengthen fraud risk management and prevention.",
-    descriptionContent: rt(b("Lalitha Satheesh, M.Com., CA, CS, CFE, CIA, CISA, CRMA,"), " is a Managing Director at Accenture with over 25 years of experience in audit, internal controls, fraud risk, compliance, governance, and risk management. A proud AIA achiever, she shares her insights in this edition of AIA Times on why fraud persists despite established controls and how organisations can strengthen fraud risk management and prevention."),
+    heading: "Why Fraud Survives Good Controls:",
+    subheading: "The Gaps Organisations Still Miss",
+    description:
+      "Lalitha Satheesh, M.Com., CA, CS, CFE, CIA, CISA, CRMA, is a Managing Director at Accenture with over 25 years of experience in audit, internal controls, fraud risk, compliance, governance, and risk management. A proud AIA achiever, she shares her insights in this edition of AIA Times on why fraud persists despite established controls and how organisations can strengthen fraud risk management and prevention. A control can be well-designed but poorly executed. It can also be performed consistently yet fail to address the underlying risk because the design itself is inadequate. Effective controls require three things: right design, reliable execution, and demonstrable outcomes.",
+    descriptionContent: rt(
+      b("Lalitha Satheesh, M.Com., CA, CS, CFE, CIA, CISA, CRMA,"),
+      " is a Managing Director at Accenture with over 25 years of experience in audit, internal controls, fraud risk, compliance, governance, and risk management. A proud AIA achiever, she shares her insights in this edition of AIA Times on why fraud persists despite established controls and how organisations can strengthen fraud risk management and prevention. A control can be well-designed but poorly executed. It can also be performed consistently yet fail to address the underlying risk because the design itself is inadequate. Effective controls require three things: right design, reliable execution, and demonstrable outcomes.",
+    ),
     image: "vol3_expert_talk.webp",
     fallbackImage: "expert_talk.webp",
     imageWidth: "470px",

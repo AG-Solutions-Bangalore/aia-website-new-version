@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/drawer";
 import { cn } from "@/lib/utils";
 import { BookOpen, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 import ArticleContentBlock from "./article-content-block";
 import {
@@ -51,12 +51,29 @@ function getCardDescription(article) {
 
 export default function IssueShelf({ selectedIssue, onSelectIssue }) {
   const [openArticleId, setOpenArticleId] = useState(null);
+  const [allIssuesPage, setAllIssuesPage] = useState(0);
+
+  const issuesPerPage = 2;
+  const issuePages = useMemo(() => {
+    const pages = [];
+    for (let i = 0; i < magazineIssues.length; i += issuesPerPage) {
+      pages.push(magazineIssues.slice(i, i + issuesPerPage));
+    }
+    return pages;
+  }, []);
+
   const articles = selectedIssue?.highlights || [];
   const openArticle =
     articles.find((article) => article.title === openArticleId) || null;
 
   useEffect(() => {
     setOpenArticleId(null);
+    const issueIndex = magazineIssues.findIndex(
+      (issue) => issue.id === selectedIssue?.id,
+    );
+    if (issueIndex !== -1) {
+      setAllIssuesPage(Math.floor(issueIndex / issuesPerPage));
+    }
   }, [selectedIssue?.id]);
 
   const closeArticle = () => {
@@ -76,7 +93,7 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
     onSelectIssue(issueId);
     let pdfUrl = "/AIA_Times_Magazine.pdf";
     if (issueId === "november-2026") {
-      pdfUrl = "/AIA_Times_Magazine_vol3.pdf";
+      pdfUrl = "/AIA_Times_Volume_3_Nov_2026.pdf";
     } else if (issueId === "august-2026" || issueId === "coming-soon") {
       pdfUrl = "/AIA_Times_Magazine_vol2.pdf";
     }
@@ -337,69 +354,83 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
             <p className="text-lg font-extrabold italic text-[#f36f21]">
               All Issues
             </p>
-            <div className="mt-4 space-y-4">
-              {magazineIssues.map((issue) => (
-                <article
-                  key={issue.id}
-                  className={cn(
-                    "grid gap-4 rounded-md bg-white p-3 shadow-sm transition-shadow sm:grid-cols-[110px_1fr]",
-                  )}
-                >
-                  <div
-                    className={cn(
-                      "flex items-center justify-center overflow-hidden bg-slate-100",
-                      !issue.isAvailable && "bg-[#0F3652]",
-                    )}
-                  >
-                    <OptimizedImage
-                      src={`${ASSET_BASE}/${issue.cover}`}
-                      alt={issue.coverAlt}
-                      width={180}
-                      height={140}
-                      className={cn(
-                        "h-full w-full object-contain object-top",
-                        !issue.isAvailable && "h-20 w-auto object-contain",
-                      )}
-                    />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-xs font-extrabold italic text-black">
-                      {issue.issueDate}
-                    </p>
-                    <p className="text-[11px] font-bold text-black">
-                      {issue.volume}
-                    </p>
-                    <h3 className="mt-2 text-sm font-extrabold leading-tight text-black">
-                      {issue.title}
-                    </h3>
-                    {issue.isAvailable ? (
-                      <div className="mt-3 flex flex-wrap gap-2">
-                        <button
-                          type="button"
-                          onClick={() => readIssue(issue.id)}
-                          className="inline-flex cursor-pointer min-h-8 items-center justify-center rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-[11px] font-semibold text-black transition-colors hover:bg-[#f36f21] hover:text-white"
+            <div className="relative mt-4 overflow-hidden">
+              <div
+                className="flex transition-transform duration-300 ease-in-out"
+                style={{ transform: `translateX(-${allIssuesPage * 100}%)` }}
+              >
+                {issuePages.map((pageIssues, pageIdx) => (
+                  <div key={pageIdx} className="w-full flex-shrink-0 space-y-4">
+                    {pageIssues.map((issue) => (
+                      <article
+                        key={issue.id}
+                        className={cn(
+                          "grid gap-4 rounded-md bg-white p-3 shadow-sm transition-shadow sm:grid-cols-[110px_1fr]",
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            "flex items-center justify-center overflow-hidden bg-slate-100",
+                            !issue.isAvailable && "bg-[#0F3652]",
+                          )}
                         >
-                          Read Issue
-                        </button>
-                      </div>
-                    ) : (
-                      <PdfJoinDialog
-                        course={getMagazineDownloadCourse(issue)}
-                        buttonlabel="Read Issue"
-                        buttonClassName="mt-3 cursor-pointer min-h-8 rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#f36f21] hover:text-white"
-                      />
-                    )}
+                          <OptimizedImage
+                            src={`${ASSET_BASE}/${issue.cover}`}
+                            alt={issue.coverAlt}
+                            width={180}
+                            height={140}
+                            className={cn(
+                              "h-full w-full object-contain object-top",
+                              !issue.isAvailable && "h-20 w-auto object-contain",
+                            )}
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="text-xs font-extrabold italic text-black">
+                            {issue.issueDate}
+                          </p>
+                          <p className="text-[11px] font-bold text-black">
+                            {issue.volume}
+                          </p>
+                          <h3 className="mt-2 text-sm font-extrabold leading-tight text-black">
+                            {issue.title}
+                          </h3>
+                          {issue.isAvailable ? (
+                            <div className="mt-3 flex flex-wrap gap-2">
+                              <button
+                                type="button"
+                                onClick={() => readIssue(issue.id)}
+                                className="inline-flex cursor-pointer min-h-8 items-center justify-center rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-[11px] font-semibold text-black transition-colors hover:bg-[#f36f21] hover:text-white"
+                              >
+                                Read Issue
+                              </button>
+                            </div>
+                          ) : (
+                            <PdfJoinDialog
+                              course={getMagazineDownloadCourse(issue)}
+                              buttonlabel="Read Issue"
+                              buttonClassName="mt-3 cursor-pointer min-h-8 rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#f36f21] hover:text-white"
+                            />
+                          )}
+                        </div>
+                      </article>
+                    ))}
                   </div>
-                </article>
-              ))}
+                ))}
+              </div>
             </div>
             <div className="mt-4 flex justify-center gap-2">
-              {magazineIssues.map((issue) => (
-                <span
-                  key={issue.id}
+              {issuePages.map((_, pageIdx) => (
+                <button
+                  key={pageIdx}
+                  type="button"
+                  aria-label={`Go to page ${pageIdx + 1}`}
+                  onClick={() => setAllIssuesPage(pageIdx)}
                   className={cn(
-                    "h-3 w-3 rounded-full",
-                    issue.id === selectedIssue.id ? "bg-[#f36f21]" : "bg-white",
+                    "h-3 w-3 rounded-full cursor-pointer transition-colors duration-200",
+                    allIssuesPage === pageIdx
+                      ? "bg-[#f36f21]"
+                      : "bg-white hover:bg-slate-300",
                   )}
                 />
               ))}
@@ -414,69 +445,83 @@ export default function IssueShelf({ selectedIssue, onSelectIssue }) {
         <p className="text-lg font-extrabold italic text-[#f36f21]">
           All Issues
         </p>
-        <div className="mt-4 space-y-4">
-          {magazineIssues.map((issue) => (
-            <article
-              key={issue.id}
-              className={cn(
-                "grid gap-4 rounded-md bg-white p-3 shadow-sm transition-shadow sm:grid-cols-[110px_1fr]",
-              )}
-            >
-              <div
-                className={cn(
-                  "flex items-center justify-center overflow-hidden bg-slate-100",
-                  !issue.isAvailable && "bg-[#0F3652]",
-                )}
-              >
-                <OptimizedImage
-                  src={`${ASSET_BASE}/${issue.cover}`}
-                  alt={issue.coverAlt}
-                  width={180}
-                  height={140}
-                  className={cn(
-                    "h-full w-full object-contain object-top",
-                    !issue.isAvailable && "h-20 w-auto object-contain",
-                  )}
-                />
-              </div>
-              <div className="min-w-0">
-                <p className="text-xs font-extrabold italic text-black">
-                  {issue.issueDate}
-                </p>
-                <p className="text-[11px] font-bold text-black">
-                  {issue.volume}
-                </p>
-                <h3 className="mt-2 text-sm font-extrabold leading-tight text-black">
-                  {issue.title}
-                </h3>
-                {issue.isAvailable ? (
-                  <div className="mt-3 flex flex-wrap gap-2">
-                    <button
-                      type="button"
-                      onClick={() => readIssue(issue.id)}
-                      className="inline-flex cursor-pointer min-h-8 items-center justify-center rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-[11px] font-semibold text-black transition-colors hover:bg-[#f36f21] hover:text-white"
+        <div className="relative mt-4 overflow-hidden">
+          <div
+            className="flex transition-transform duration-300 ease-in-out"
+            style={{ transform: `translateX(-${allIssuesPage * 100}%)` }}
+          >
+            {issuePages.map((pageIssues, pageIdx) => (
+              <div key={pageIdx} className="w-full flex-shrink-0 space-y-4">
+                {pageIssues.map((issue) => (
+                  <article
+                    key={issue.id}
+                    className={cn(
+                      "grid gap-4 rounded-md bg-white p-3 shadow-sm transition-shadow sm:grid-cols-[110px_1fr]",
+                    )}
+                  >
+                    <div
+                      className={cn(
+                        "flex items-center justify-center overflow-hidden bg-slate-100",
+                        !issue.isAvailable && "bg-[#0F3652]",
+                      )}
                     >
-                      Read Issue
-                    </button>
-                  </div>
-                ) : (
-                  <PdfJoinDialog
-                    course={getMagazineDownloadCourse(issue)}
-                    buttonlabel="Get Notified"
-                    buttonClassName="mt-3 cursor-pointer min-h-8 rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#f36f21] hover:text-white"
-                  />
-                )}
+                      <OptimizedImage
+                        src={`${ASSET_BASE}/${issue.cover}`}
+                        alt={issue.coverAlt}
+                        width={180}
+                        height={140}
+                        className={cn(
+                          "h-full w-full object-contain object-top",
+                          !issue.isAvailable && "h-20 w-auto object-contain",
+                        )}
+                      />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-extrabold italic text-black">
+                        {issue.issueDate}
+                      </p>
+                      <p className="text-[11px] font-bold text-black">
+                        {issue.volume}
+                      </p>
+                      <h3 className="mt-2 text-sm font-extrabold leading-tight text-black">
+                        {issue.title}
+                      </h3>
+                      {issue.isAvailable ? (
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          <button
+                            type="button"
+                            onClick={() => readIssue(issue.id)}
+                            className="inline-flex cursor-pointer min-h-8 items-center justify-center rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-[11px] font-semibold text-black transition-colors hover:bg-[#f36f21] hover:text-white"
+                          >
+                            Read Issue
+                          </button>
+                        </div>
+                      ) : (
+                        <PdfJoinDialog
+                          course={getMagazineDownloadCourse(issue)}
+                          buttonlabel="Get Notified"
+                          buttonClassName="mt-3 cursor-pointer min-h-8 rounded-sm border border-[#f36f21] bg-white px-3 py-1.5 text-xs font-semibold text-black hover:bg-[#f36f21] hover:text-white"
+                        />
+                      )}
+                    </div>
+                  </article>
+                ))}
               </div>
-            </article>
-          ))}
+            ))}
+          </div>
         </div>
         <div className="mt-4 flex justify-center gap-2">
-          {magazineIssues.map((issue) => (
-            <span
-              key={issue.id}
+          {issuePages.map((_, pageIdx) => (
+            <button
+              key={pageIdx}
+              type="button"
+              aria-label={`Go to page ${pageIdx + 1}`}
+              onClick={() => setAllIssuesPage(pageIdx)}
               className={cn(
-                "h-3 w-3 rounded-full",
-                issue.id === selectedIssue.id ? "bg-[#f36f21]" : "bg-white",
+                "h-3 w-3 rounded-full cursor-pointer transition-colors duration-200",
+                allIssuesPage === pageIdx
+                  ? "bg-[#f36f21]"
+                  : "bg-white hover:bg-slate-300",
               )}
             />
           ))}

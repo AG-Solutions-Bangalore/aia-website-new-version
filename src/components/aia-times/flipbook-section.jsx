@@ -14,7 +14,7 @@ const FlipBook = lazy(() => import("./flipbook/FlipBook"));
  */
 export default function FlipbookSection({ isPopup = false }) {
   const [searchParams] = useSearchParams();
-  const pdfUrl = searchParams.get("pdf") || "/AIA_Times_Magazine_vol3.pdf";
+  const pdfUrl = searchParams.get("pdf") || "/AIA_Times_Volume_3_Nov_2026.pdf";
 
   return (
     <Suspense fallback={null}>
