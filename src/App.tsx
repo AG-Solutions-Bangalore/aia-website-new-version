@@ -47,7 +47,13 @@ import type { QueryClient } from '@tanstack/react-query';
 
 export default function App({ queryClient }: { queryClient?: QueryClient } = {}): React.JSX.Element {
   const location = useLocation();
+  const [loadEarlyWidgets, setLoadEarlyWidgets] = useState<boolean>(false);
   const [loadDeferredWidgets, setLoadDeferredWidgets] = useState<boolean>(false);
+
+  useEffect(() => {
+    const load = () => setLoadEarlyWidgets(true);
+    return scheduleIdle(load, { delay: 0, timeout: 500 });
+  }, []);
 
   useEffect(() => {
     const load = () => setLoadDeferredWidgets(true);
@@ -57,10 +63,14 @@ export default function App({ queryClient }: { queryClient?: QueryClient } = {})
   return (
     <div className="font-sans text-gray-800 min-h-screen flex flex-col relative">
       <ScrollToTop />
-      {loadDeferredWidgets && (
+      {loadEarlyWidgets && (
         <Suspense fallback={null}>
           <GoogleAnalytics />
           {!location.pathname.startsWith('/blogs/') && <NotificationPopup />}
+        </Suspense>
+      )}
+      {loadDeferredWidgets && (
+        <Suspense fallback={null}>
           <FloatingContact />
           <LazyToaster position="top-right" richColors />
         </Suspense>

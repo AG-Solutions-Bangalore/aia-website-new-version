@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://aia.in.net/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -20,7 +20,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/aia-times/flip-book/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -152,7 +152,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/blogs/cfe-certification-cost/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -344,31 +344,31 @@
   </url>
   <url>
     <loc>https://aia.in.net/blogs/course/cams/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://aia.in.net/blogs/course/cfe/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://aia.in.net/blogs/course/cia/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://aia.in.net/blogs/course/cisa/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://aia.in.net/blogs/course/other/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -434,7 +434,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/blogs/steps-to-become-cfe/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -530,13 +530,13 @@
   </url>
   <url>
     <loc>https://aia.in.net/fillter/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/aagam-sheth-cams/</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -656,7 +656,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/debasish-kundu-cams/</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -710,7 +710,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/inaamz-saheed-cams/</loc>
-    <lastmod>2026-08-05</lastmod>
+    <lastmod>2026-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -758,7 +758,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/kuldeep-patwal-cfe/</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -776,7 +776,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/linata-joshi-cfe/</loc>
-    <lastmod>2026-09-02</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -848,7 +848,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/mohammed-nufail-anversha-cfe/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -871,6 +871,12 @@
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://aia.in.net/passout-stories/navrinder-pal-singh-cams/</loc>
+    <lastmod>2026-11-06</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://aia.in.net/passout-stories/neeraj-pradhan-cfe/</loc>
     <lastmod>2026-06-21</lastmod>
     <changefreq>monthly</changefreq>
@@ -885,6 +891,12 @@
   <url>
     <loc>https://aia.in.net/passout-stories/nitesh-kumar-pandey-cfe/</loc>
     <lastmod>2026-10-07</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://aia.in.net/passout-stories/nitin-sharma-cfe/</loc>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -950,7 +962,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/rajesh-sinha-cams/</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -968,7 +980,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/ramya-priya-cams/</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1004,7 +1016,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/rutuja-ambre-cfe/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1046,7 +1058,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/sethulekshmy-sreedharan-cams/</loc>
-    <lastmod>2026-10-07</lastmod>
+    <lastmod>2026-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1058,13 +1070,13 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/sharon-james-ciac/</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-11-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/shikha-khandelwal-cfe/</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-11-03</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1130,7 +1142,7 @@
   </url>
   <url>
     <loc>https://aia.in.net/passout-stories/tarun-rana-cfe/</loc>
-    <lastmod>2026-07-19</lastmod>
+    <lastmod>2026-11-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -1184,13 +1196,13 @@
   </url>
   <url>
     <loc>https://aia.in.net/policies/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://aia.in.net/terms-and-conditions/</loc>
-    <lastmod>2026-11-02</lastmod>
+    <lastmod>2026-11-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
