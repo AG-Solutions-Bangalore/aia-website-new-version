@@ -1,23 +1,21 @@
-import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
+import { IMAGE_PATH } from "@/api/base-url";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import axios from "axios";
+import { prefetchPopup } from "@/lib/popup-cache";
 import { X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
+
+const IMAGE_OPEN_FALLBACK_MS = 1200;
 
 const PopUp = ({ slug = "home" }) => {
   const [open, setOpen] = useState(false);
   const [popupData, setPopupData] = useState(null);
-  const [imageBaseUrl, setImageBaseUrl] = useState("");
   const [dontShowAgain, setDontShowAgain] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [imageLoaded, setImageLoaded] = useState(false);
   const [imageUrl, setImageUrl] = useState("");
-  const [showPopupAfterLoad, setShowPopupAfterLoad] = useState(false);
   const storageKey = `popup_hidden_${slug}`;
 
   useEffect(() => {
@@ -27,106 +25,92 @@ const PopUp = ({ slug = "home" }) => {
     }
   }, []);
 
-  const fetchPopupData = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `${BASE_URL}/api/getPopupbySlug/${slug}`,
-      );
+  useEffect(() => {
+    let cancelled = false;
 
-      if (response.data?.data) {
-        setPopupData(response.data.data);
+    prefetchPopup(slug)
+      .then((response) => {
+        if (cancelled) return;
 
-        const popupImageConfig = response.data.image_url?.find(
+        const data = response?.data;
+        if (!data || data.popup_required !== "Yes") return;
+        if (sessionStorage.getItem(storageKey) === "true") return;
+
+        const popupImageConfig = response?.image_url?.find(
           (item) => item.image_for === "Popup",
         );
-        if (popupImageConfig) {
-          setImageBaseUrl(popupImageConfig.image_url);
-        }
-      }
-      setLoading(false);
-    } catch (error) {
-      console.error("Error fetching popup data:", error);
-      setLoading(false);
-    }
-  }, [slug]);
+        const imageBaseUrl = popupImageConfig?.image_url || "";
+        const url = data.popup_image
+          ? `${imageBaseUrl}${data.popup_image}`
+          : `${IMAGE_PATH}/no_image.jpg`;
+
+        setPopupData(data);
+        setImageUrl(url);
+      })
+      .catch((error) => {
+        console.error("Error fetching popup data:", error);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [slug, storageKey]);
 
   useEffect(() => {
-    fetchPopupData();
-  }, [fetchPopupData]);
-  useEffect(() => {
-    if (!popupData || popupData.popup_required !== "Yes") {
-      return;
-    }
+    if (!popupData || !imageUrl) return;
+    if (sessionStorage.getItem(storageKey) === "true") return;
 
-    const url = popupData.popup_image
-      ? `${imageBaseUrl}${popupData.popup_image}`
-      : `${IMAGE_PATH}/no_image.jpg`;
+    let cancelled = false;
+    let fallbackTimer;
 
-    setImageUrl(url);
-  }, [popupData, imageBaseUrl]);
-
-  useEffect(() => {
-    if (imageUrl && !imageLoaded) {
-      const img = new Image();
-      img.src = imageUrl;
-
-      img.onload = () => {
-        setImageLoaded(true);
-
-        if (!loading && popupData?.popup_required === "Yes") {
-          const popupHidden = sessionStorage.getItem(storageKey);
-          if (popupHidden !== "true") {
-            setOpen(true);
-          }
-        }
-      };
-
-      img.onerror = () => {
-        const fallbackImg = new Image();
-        fallbackImg.src = `${IMAGE_PATH}/no_image.jpg`;
-        fallbackImg.onload = () => {
-          setImageUrl(`${IMAGE_PATH}/no_image.jpg`);
-          setImageLoaded(true);
-
-          const popupHidden = sessionStorage.getItem(storageKey);
-          if (popupHidden !== "true") {
-            setShowPopupAfterLoad(true);
-          }
-        };
-      };
-    }
-  }, [imageLoaded, imageUrl, loading, popupData, storageKey]);
-
-  useEffect(() => {
-    if (showPopupAfterLoad) {
+    const openPopup = () => {
+      if (cancelled) return;
+      window.clearTimeout(fallbackTimer);
       setOpen(true);
-    }
-  }, [showPopupAfterLoad]);
+    };
 
-  const handleClose = () => {
+    const img = new Image();
+    img.onload = openPopup;
+    img.onerror = () => {
+      if (cancelled) return;
+      setImageUrl(`${IMAGE_PATH}/no_image.jpg`);
+      openPopup();
+    };
+    img.src = imageUrl;
+
+    // Do not let a slow/broken image block the popup indefinitely.
+    fallbackTimer = window.setTimeout(openPopup, IMAGE_OPEN_FALLBACK_MS);
+
+    return () => {
+      cancelled = true;
+      window.clearTimeout(fallbackTimer);
+      img.onload = null;
+      img.onerror = null;
+    };
+  }, [popupData, imageUrl, storageKey]);
+
+  const handleClose = useCallback(() => {
     if (dontShowAgain) {
       sessionStorage.setItem(storageKey, "true");
     }
     setOpen(false);
-  };
+  }, [dontShowAgain, storageKey]);
 
-  const handleOpenChange = (isOpen) => {
-    if (!isOpen) {
-      if (dontShowAgain) {
+  const handleOpenChange = useCallback(
+    (isOpen) => {
+      if (!isOpen && dontShowAgain) {
         sessionStorage.setItem(storageKey, "true");
       }
-    }
-    setOpen(isOpen);
-  };
+      setOpen(isOpen);
+    },
+    [dontShowAgain, storageKey],
+  );
 
-  if (loading || !popupData || popupData.popup_required !== "Yes") {
+  if (!popupData || popupData.popup_required !== "Yes") {
     return null;
   }
 
-  const popupHidden = sessionStorage.getItem(storageKey);
-
-  if (popupHidden === "true") {
+  if (sessionStorage.getItem(storageKey) === "true") {
     return null;
   }
 
