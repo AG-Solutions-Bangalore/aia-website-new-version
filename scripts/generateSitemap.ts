@@ -44,7 +44,7 @@ const buildDate = new Date().toISOString().split('T')[0];
  * Routes that must never appear in sitemap.xml.
  * `/filter/` is a client-side redirect alias for `/fillter/` (see AppRoutes).
  */
-const EXCLUDED_ROUTES = new Set<string>(['/filter']);
+const EXCLUDED_ROUTES = new Set<string>(['/filter', '/thank-you']);
 
 /**
  * Legacy API page URLs that redirect to a different canonical route.

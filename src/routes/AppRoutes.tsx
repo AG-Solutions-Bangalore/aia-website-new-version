@@ -78,6 +78,7 @@ const PassoutStoriesSlug = lazy(
   () => import('@/components/passout/passout-stories-slug'),
 );
 const NotFound = lazy(() => import('@/components/common/not-found'));
+const ThankYou = lazy(() => import('@/pages/ThankYou/ThankYou'));
 const FlipbookSection = lazy(
   () => import('@/components/aia-times/flipbook-section'),
 );
@@ -198,6 +199,7 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/passed-out/*" element={<Navigate to="/alumni-network/" replace />} />
           <Route path="/enroll-now" element={<PageSEO path="/enroll-now"><Enrool /></PageSEO>} />
           <Route path="/contact" element={<PageSEO path="/contact"><Contact /></PageSEO>} />
+          <Route path="/thank-you" element={<PageSEO path="/thank-you"><ThankYou /></PageSEO>} />
           <Route path="/passout-stories/:slug" element={<PageSEO><PassoutStoriesSlug /></PageSEO>} />
           <Route path="/corporate-training" element={<PageSEO path="/corporate-training"><CorporateTraining /></PageSEO>} />
           <Route path="/aia-times" element={<PageSEO path="/aia-times"><AiaTimes /></PageSEO>} />

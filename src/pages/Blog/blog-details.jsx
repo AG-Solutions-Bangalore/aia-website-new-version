@@ -1,9 +1,10 @@
 import { BASE_URL } from "@/api/base-url";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import { Helmet } from "react-helmet-async";
 import BlogFaq from "@/components/blog/blog-faq";
 import axios from "axios";
 import { ArrowLeft, Calendar, Clock, Image as ImageIcon, User } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ShareButtons } from "./share-button";
@@ -76,6 +77,7 @@ const BlogDetails = () => {
   const [subscriptionStatus, setSubscriptionStatus] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const dynamicSeoContext = useDynamicSeo();
 
   useEffect(() => {
@@ -170,11 +172,12 @@ const BlogDetails = () => {
         },
       );
 
-      if (response.data.code === 200) {
+      if (isConfirmedFormSuccess(response)) {
         setSubscriptionStatus(
           response.data.msg || "Successfully subscribed! Thank you.",
         );
         setEmail("");
+        redirectToThankYou(navigate);
       } else {
         setSubscriptionStatus(
           response.data.message || "Subscription failed. Please try again.",

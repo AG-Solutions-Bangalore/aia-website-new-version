@@ -3,9 +3,12 @@ import axios from "axios";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import SectionHeading from "../SectionHeading/SectionHeading";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import { BASE_URL } from "@/api/base-url";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogSubscribeSection() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
   const [subscriptionStatus, setSubscriptionStatus] = useState("");
@@ -36,13 +39,14 @@ export default function BlogSubscribeSection() {
         }
       );
 
-      if (response.data.code == 200) {
+      if (isConfirmedFormSuccess(response)) {
         setSubscriptionStatus(
           response.data.msg || "Successfully subscribed! Thank you."
         );
         setStatusType("success");
 
         setEmail("");
+        redirectToThankYou(navigate);
       } else {
         setSubscriptionStatus(response.data.msg || "Subscription failed.");
         setStatusType("error");

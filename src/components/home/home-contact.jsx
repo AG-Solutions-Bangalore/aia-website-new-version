@@ -1,13 +1,16 @@
 import { BASE_URL } from "@/api/base-url";
 import { Button } from "@/components/ui/button";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TextCaptcha from "../custom-captcha/text-captcha";
 
 let referralCache = null;
 let referralFetchPromise = null;
 
 const HomeContact = () => {
+  const navigate = useNavigate();
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [captchaFailed, setCaptchaFailed] = useState(false);
   const [captchaRequired, setCaptchaRequired] = useState(false);
@@ -134,7 +137,7 @@ const HomeContact = () => {
         { headers: { "Content-Type": "application/json" } },
       );
 
-      if (response.status === 200 || response.status === 201) {
+      if (isConfirmedFormSuccess(response)) {
         setSubmitSuccess(true);
         setFormData({
           ...formData,
@@ -149,6 +152,7 @@ const HomeContact = () => {
         setCaptchaFailed(false);
         setCaptchaRequired(false);
         setTimeout(() => setSubmitSuccess(false), 5000);
+        redirectToThankYou(navigate);
       }
     } catch (error) {
       setSubmitError(

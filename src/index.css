@@ -286,6 +286,32 @@ body {
   animation: slide-down 0.5s ease-out;
 }
 
+@keyframes thank-you-ring-breathe {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+
+  50% {
+    transform: scale(1.045);
+    opacity: 0.35;
+  }
+}
+
+.thank-you-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: thank-you-ring-breathe 2.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .thank-you-ring {
+    animation: none;
+    opacity: 0.7;
+  }
+}
+
 * {
   scrollbar-width: thick;
   scrollbar-color: #f3831c #ffffff;

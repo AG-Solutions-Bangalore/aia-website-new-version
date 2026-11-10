@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { BASE_URL } from "@/api/base-url";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import { X } from "lucide-react";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
@@ -143,7 +144,7 @@ export default function CfeJoinDialog({
         formData,
         { headers: { "Content-Type": "application/json" } },
       );
-      if (res.data.code == "200") {
+      if (isConfirmedFormSuccess(res)) {
         toast.success(res.data.msg || "Enquiry submitted successfully!");
         setFormData({
           userName: "",
@@ -159,6 +160,7 @@ export default function CfeJoinDialog({
           utm_medium: "",
           utm_campaign: "",
         });
+        redirectToThankYou(navigate);
       } else {
         toast.error(res.data.msg || "Something went wrong. Please try again.");
       }

@@ -1,13 +1,16 @@
 import { BASE_URL } from "@/api/base-url";
 import TextCaptcha from "@/components/custom-captcha/text-captcha";
 import { Button } from "@/components/ui/button";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 import { MAGAZINE_COURSE } from "./aia-times.constants";
 
 export default function AiaTimesContactSection() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
     userMobile: "",
@@ -65,7 +68,7 @@ export default function AiaTimesContactSection() {
         { headers: { "Content-Type": "application/json" } },
       );
 
-      if (response.data?.code == "200") {
+      if (isConfirmedFormSuccess(response)) {
         toast.success(response.data.msg || "Message sent successfully.");
         setFormData({
           userName: "",
@@ -74,6 +77,7 @@ export default function AiaTimesContactSection() {
           userMessage: "",
         });
         setCaptchaVerified(false);
+        redirectToThankYou(navigate);
       } else {
         toast.error(response.data?.msg || "Something went wrong.");
       }

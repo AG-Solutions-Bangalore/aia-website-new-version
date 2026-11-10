@@ -392,6 +392,22 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       ),
     ],
   },
+  '/thank-you': {
+    title: 'Thank You for Choosing AIA | Your Journey Starts Here',
+    description:
+      'Thank you for contacting Academy of Internal Audit. Our team will connect with you shortly to assist with your CFE, CIA, CAMS, CISA certifications enquiries.',
+    keywords: 'thank you AIA, Academy of Internal Audit, CFE, CIA, CAMS, CISA certification enquiries',
+    canonicalPath: '/thank-you',
+    noIndex: true,
+    schemas: [
+      organizationSchema,
+      createWebPageSchema(
+        '/thank-you',
+        'Thank You for Choosing AIA | Your Journey Starts Here',
+        'Thank you for contacting Academy of Internal Audit. Our team will connect with you shortly to assist with your CFE, CIA, CAMS, CISA certifications enquiries.',
+      ),
+    ],
+  },
   '/policies': {
     title: 'Policies | Academy of Internal Audit (AIA)',
     description: 'Read AIA policies including privacy policy, refund policy, and terms related to courses, payments, and student services.',
