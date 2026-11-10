@@ -14,7 +14,7 @@ import {
 import { FaXTwitter } from "react-icons/fa6";
 
 const SocialMark = ({ children }) => (
-  <span className="inline-flex h-10 min-w-10 items-center justify-center text-[11px] font-bold leading-none">
+  <span className="inline-flex items-center justify-center text-[11px] font-bold leading-none">
     {children}
   </span>
 );
@@ -42,30 +42,52 @@ const Navbar = () => {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const links = [
     {
-      icon: <Mail size={16} />,
+      icon: (
+        <Mail
+          size={10}
+          className="h-2.5 w-2.5 min-[340px]:h-3 min-[340px]:w-3 md:h-4 md:w-4"
+        />
+      ),
       text: "support@aia.in.net",
       href: "mailto:support@aia.in.net",
-      color: "text-[#F3831C]",
-      underline: true,
       ariaLabel: "Email support@aia.in.net",
     },
     {
-      icon: <FaWhatsapp size={18} />,
-      text: "",
-      href: "https://wa.me/+919311320114",
-      ariaLabel: "WhatsApp",
-      color: "text-[#F3831C]",
-      underline: false,
-    },
-    {
-      icon: <Phone size={16} />,
+      icon: (
+        <Phone
+          size={10}
+          className="h-2.5 w-2.5 min-[340px]:h-3 min-[340px]:w-3 md:h-4 md:w-4"
+        />
+      ),
       text: "+91 93113 20114",
       href: "tel:+919311320114",
-      color: "text-[#F3831C]",
       ariaLabel: "Call +91 93113 20114",
-      underline: true,
     },
   ];
+  const whatsappLink = {
+    icon: (
+      <FaWhatsapp
+        size={10}
+        className="h-2.5 w-2.5 min-[340px]:h-3 min-[340px]:w-3 md:h-[18px] md:w-[18px]"
+      />
+    ),
+    href: "https://wa.me/+919311320114",
+    ariaLabel: "WhatsApp",
+  };
+  const contactLinkClass =
+    "relative flex min-h-6 items-center gap-0.5 whitespace-nowrap text-[#F3831C] transition-colors duration-300 after:absolute after:bottom-0 after:left-0 after:h-[1px] after:w-full after:origin-right after:scale-x-0 after:bg-current after:transition-transform after:duration-500 after:content-[''] after:ease-out hover:after:origin-left hover:after:scale-x-100 min-[340px]:gap-1 md:min-h-10 md:gap-2";
+  const renderContactLink = (link, key) => (
+    <a
+      key={key}
+      href={link.href}
+      className={contactLinkClass}
+      aria-label={link.ariaLabel}
+      title={link.ariaLabel}
+    >
+      {link.icon}
+      <span>{link.text}</span>
+    </a>
+  );
   const menuItems = [
     {
       title: "Home",
@@ -170,56 +192,22 @@ const Navbar = () => {
   };
   return (
     <div className="w-full sticky top-0 z-9999">
-      <div className="flex justify-center md:justify-between bg-[#0F3652]">
-        <div className="hidden md:block text-white py-2.5">
-          <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-            <div className="flex items-center gap-6 text-sm">
-              {links.map((link, index) => (
-                <a
-                  key={index}
-                  href={link.href}
-                  className={`
-            flex min-h-10 items-center gap-2 relative ${link.color}
-            ${
-              link.underline
-                ? `
-              transition-colors duration-300
-              after:content-['']
-              after:absolute
-              after:left-0
-              after:bottom-0
-              after:h-[1px]
-              after:w-full
-              after:bg-current
-              after:scale-x-0
-              after:origin-right
-              after:transition-transform
-              after:duration-500
-              after:ease-out
-              hover:after:scale-x-100
-              hover:after:origin-left
-            `
-                : ""
-            }
-          `}
-                  aria-label={
-                    link.ariaLabel ||
-                    (link.text ? `Contact via ${link.text}` : undefined)
-                  } title={
-                    link.ariaLabel ||
-                    (link.text ? `Contact via ${link.text}` : undefined)
-                  }
-                >
-                  {link.icon}
-                  {link.text && <span>{link.text}</span>}
-                </a>
-              ))}
-            </div>
-          </div>
+      <div className="flex flex-nowrap items-center justify-between gap-1.5 bg-[#0F3652] px-2 py-1 md:gap-3 md:px-4 md:py-0">
+        <div className="flex min-w-0 flex-nowrap items-center gap-1.5 text-[9px] leading-none tracking-tight text-white min-[340px]:gap-2 min-[340px]:text-[10px] md:gap-6 md:py-2.5 md:text-sm md:leading-normal md:tracking-normal">
+          {renderContactLink(links[0], "email")}
+          <a
+            href={whatsappLink.href}
+            className="relative hidden min-h-6 items-center text-[#F3831C] min-[380px]:flex md:min-h-10"
+            aria-label={whatsappLink.ariaLabel}
+            title={whatsappLink.ariaLabel}
+          >
+            {whatsappLink.icon}
+          </a>
+          {renderContactLink(links[1], "phone")}
         </div>
 
-        <div className="text-white py-2.5 overflow-hidden">
-          <div className="px-4 flex justify-center items-center md:gap-4">
+        <div className="flex shrink-0 items-center text-white md:gap-4 md:py-2.5">
+          <div className="flex items-center gap-0 md:gap-2">
             {socialLinks.map((social, index) => (
               <a
                 key={index}
@@ -227,7 +215,7 @@ const Navbar = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={social.label} title={social.label}
-                className="inline-flex min-h-10 min-w-10 items-center justify-center text-white hover:text-[#F3831C] transition-colors"
+                className="inline-flex h-4 w-4 items-center justify-center text-white hover:text-[#F3831C] transition-colors min-[340px]:h-5 min-[340px]:w-5 min-[380px]:h-6 min-[380px]:w-6 md:h-10 md:w-10"
               >
                 <SocialMark>{social.icon}</SocialMark>
               </a>
