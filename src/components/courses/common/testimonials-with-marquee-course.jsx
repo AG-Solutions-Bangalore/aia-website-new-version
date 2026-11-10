@@ -68,6 +68,7 @@ export function TestimonialsSectionCourse({
                   target="_blank"
                   size={size}
                   border={border}
+                  tabIndex={-1}
                 />
               ))}
             </div>

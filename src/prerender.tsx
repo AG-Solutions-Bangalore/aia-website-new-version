@@ -35,7 +35,7 @@
  */
 
 import React from 'react';
-import { QueryClient } from '@tanstack/react-query';
+import { QueryClient, dehydrate } from '@tanstack/react-query';
 import { getCanonicalUrl, SITE_LOGO } from '@/config/site';
 import { getSeoForRoute, ROUTE_SEO } from '@/config/seoEngine';
 import { createCompositeGraph } from './config/schemaExamples';
@@ -43,7 +43,11 @@ import {
   getAllDynamicBlogSummaries,
   getAllDynamicRouteUrls,
   getDynamicBlog,
+  getDynamicHomeBlogs,
+  getDynamicHomeCertificates,
+  getDynamicHomeFaq,
   getDynamicImageBase,
+  getDynamicPassoutStudentsYear,
   getDynamicStudentStory,
   loadDynamicData,
 } from './config/dynamicData';
@@ -126,6 +130,29 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
     },
   });
 
+  // Seed the alumni directory so `/fillter` emits the complete directory
+  // markup instead of a loading skeleton during SSG.
+  if (cleanPath === '/fillter') {
+    const passoutYearData = getDynamicPassoutStudentsYear();
+    if (passoutYearData) {
+      queryClient.setQueryData(['passout-students-year'], passoutYearData);
+    }
+  }
+
+  // Seed the home widgets that render during SSG so their server markup and
+  // first client render match, and so the crawler sees FAQs and blog links.
+  if (cleanPath === '/') {
+    const homeBlogs = getDynamicHomeBlogs();
+    const homeFaq = getDynamicHomeFaq();
+    const homeCertificates = getDynamicHomeCertificates();
+
+    if (homeBlogs) queryClient.setQueryData(['aia-blog'], homeBlogs);
+    if (homeFaq) queryClient.setQueryData(['aia-faq'], homeFaq);
+    if (homeCertificates) {
+      queryClient.setQueryData(['course-results-common'], homeCertificates);
+    }
+  }
+
   let ogImage = SITE_LOGO;
 
   // Pre-populate blog query cache for /blogs/:slug
@@ -192,6 +219,12 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
     .replace(/<link[^>]*>/gi, '');
 
   const isArticle = url.startsWith('/blogs/') && !url.includes('/course/');
+
+  // Serialize the page-specific query cache so the client hydrates with the
+  // same data the SSG markup was rendered from. Without this, server-rendered
+  // FAQ/blog/certificate markup would be replaced by loading skeletons.
+  const dehydratedState = dehydrate(queryClient);
+  const queryStatePayload = JSON.stringify(dehydratedState).replace(/</g, '\\u003c');
 
   // 6. Build the authoritative head elements (title, canonical, robots, OpenGraph, Twitter)
   const elements = new Set<Record<string, unknown>>([
@@ -272,6 +305,12 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
       children: `window.__SSG_BANNERS__=${bannerPayload};`,
     });
   }
+
+  elements.add({
+    type: 'script',
+    props: { id: 'ssg-query-state', 'data-rh': 'true' },
+    children: `window.__REACT_QUERY_STATE__=${queryStatePayload};`,
+  });
 
   // 7. Inject single unified Schema.org @graph JSON-LD script tag
   if (seo.schemas.length > 0) {

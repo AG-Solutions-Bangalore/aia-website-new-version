@@ -170,9 +170,9 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    target: 'chrome61',
+    target: 'baseline-widely-available',
     chunkSizeWarningLimit: 1000,
-    modulePreload: false,
+    modulePreload: { polyfill: false },
 
     rolldownOptions: {
       output: {

@@ -500,12 +500,16 @@ export default function HomeHero({ slug, bottombar = false }) {
             {activeSlide && (
               <a
                 key={activeSlide.id}
-                href={slideHref}
+                href={slideHref || "#"}
                 target={isExternalSlide ? "_blank" : undefined}
                 rel={isExternalSlide ? "noopener noreferrer" : undefined}
                 className="absolute inset-0 z-10"
                 aria-label={activeSlide.alt || "Open banner link"} title={activeSlide.alt || "Open banner link"}
                 onClick={(event) => {
+                  if (!slideHref) {
+                    event.preventDefault();
+                  }
+
                   if (suppressClick.current) {
                     event.preventDefault();
                     suppressClick.current = false;
@@ -604,10 +608,13 @@ export default function HomeHero({ slug, bottombar = false }) {
                 </div>
 
                 <a
-                  href={currentHref}
+                  href={currentHref || "#"}
                   target={isExternalCurrent ? "_blank" : undefined}
                   rel={isExternalCurrent ? "noopener noreferrer" : undefined}
-                  aria-label={`Learn more about: ${current.title}`} title={`Learn more about: ${current.title}`}
+                  onClick={(event) => {
+                    if (!currentHref) event.preventDefault();
+                  }}
+                  aria-label={`Know more about: ${current.title}`} title={`Know more about: ${current.title}`}
                   className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
                   min-h-11 text-white bg-[#F3831C] hover:bg-[#D16E27] active:bg-[#AE5B1D]
@@ -631,7 +638,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                       key={index}
                       onClick={() => goToSlide(index)}
                       aria-label={`Go to slide ${index + 1}`}
-                      className="min-h-6 w-4 sm:w-6 shrink flex items-center justify-center overflow-hidden"
+                      className="min-h-6 min-w-6 w-6 h-6 shrink flex items-center justify-center overflow-hidden"
                       aria-current={index === currentSlide ? "true" : undefined}
                     >
                       <span
@@ -674,6 +681,14 @@ export default function HomeHero({ slug, bottombar = false }) {
           </div>
         )}
       </section>
+
+      {slug === "home" && (
+        <div className="bg-[#0F3652] px-4 py-3">
+          <h1 className="mx-auto max-w-5xl text-center text-sm font-bold leading-snug text-white sm:text-lg md:text-xl">
+            CIA, CFE, CAMS &amp; CISA Certification Training
+          </h1>
+        </div>
+      )}
     </>
   );
 }

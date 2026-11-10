@@ -1,5 +1,22 @@
 Options -Indexes -MultiViews
 
+# ----------------------------------------------------------------------
+# | MIME Types (Apache mod_mime for cPanel / LiteSpeed / Apache)       |
+# ----------------------------------------------------------------------
+<IfModule mod_mime.c>
+    AddType application/javascript .js .mjs
+    AddType text/javascript .js .mjs
+    AddType text/css .css
+    AddType image/svg+xml .svg
+    AddType application/json .json .ld+json
+    AddType font/woff2 .woff2
+    AddType font/woff .woff
+    AddType font/ttf .ttf
+    AddType image/webp .webp
+    AddType image/avif .avif
+    AddType application/manifest+json .webmanifest
+</IfModule>
+
 <IfModule mod_dir.c>
     DirectorySlash Off
     DirectoryIndex index.html
@@ -119,21 +136,25 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.html [L]
 </IfModule>
 
-# 7. Static asset caching
-# Hashed Vite bundles are content-addressed, so they can be cached for a year.
+# 7. Static asset caching & Security Headers for cPanel
 <IfModule mod_headers.c>
+    # Prevent MIME sniffing and clickjacking on cPanel
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+
+    # Hashed Vite bundles are content-addressed, so they can be cached for a year.
     <FilesMatch "\.(js|mjs|css|woff2|woff|ttf|otf|eot)$">
         Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
 
-    # Banners/logos may be replaced with the same filename; keep a bounded TTL.
+    # Static images and modern formats
     <FilesMatch "\.(webp|avif|png|jpe?g|gif|svg|ico)$">
-        Header set Cache-Control "public, max-age=2592000, stale-while-revalidate=604800"
+        Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
 
-    # Always revalidate HTML/documents after a deploy (prevents Nginx proxy cache from serving stale HTML)
+    # Always revalidate HTML/documents after a deploy (prevents proxy cache from serving stale HTML)
     <FilesMatch "\.(html|json|xml|webmanifest)$">
-        Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0, s-maxage=0"
+        Header set Cache-Control "public, no-cache, max-age=0, must-revalidate"
         Header set Pragma "no-cache"
         Header set Expires "0"
         Header set X-Accel-Expires "0"
@@ -148,16 +169,16 @@ RewriteRule . /index.html [L]
     ExpiresByType text/javascript "access plus 1 year"
     ExpiresByType font/woff2 "access plus 1 year"
     ExpiresByType font/woff "access plus 1 year"
-    ExpiresByType image/webp "access plus 30 days"
-    ExpiresByType image/avif "access plus 30 days"
-    ExpiresByType image/png "access plus 30 days"
-    ExpiresByType image/jpeg "access plus 30 days"
-    ExpiresByType image/svg+xml "access plus 30 days"
-    ExpiresByType image/x-icon "access plus 30 days"
+    ExpiresByType image/webp "access plus 1 year"
+    ExpiresByType image/avif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType image/x-icon "access plus 1 year"
     ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
 
 # 8. Gzip Compression for all text assets
 <IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json application/xml application/rss+xml image/svg+xml
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json application/ld+json application/manifest+json application/xml application/rss+xml image/svg+xml font/woff font/woff2
 </IfModule>

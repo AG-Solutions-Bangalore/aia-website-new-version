@@ -81,7 +81,7 @@ const normalizeCountryName = (countryName) => {
 const getRegionKey = (group, name) =>
   `${group}:${normalizeString(name).toLowerCase()}`;
 
-const AlumniDirectory = () => {
+const AlumniDirectory = ({ headingLevel = 2 }) => {
   // --- State for Filters ---
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCourses, setSelectedCourses] = useState([]);
@@ -741,6 +741,8 @@ const AlumniDirectory = () => {
     return text;
   };
 
+  const HeadingTag = `h${headingLevel}`;
+
   return (
     <section className="bg-slate-50/50 py-12 md:py-16">
       {/* 1. HERO SECTION */}
@@ -749,9 +751,9 @@ const AlumniDirectory = () => {
           <div className="absolute inset-0 opacity-10 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&q=80&w=1000')] bg-cover bg-center mix-blend-overlay"></div>
 
           <div className="relative z-10 w-full max-w-5xl mx-auto">
-            <h2 className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
+            <HeadingTag className="text-3xl font-extrabold tracking-tight text-white sm:text-4xl md:text-5xl">
               AIA Global Professional Network
-            </h2>
+            </HeadingTag>
             <p className="mt-4 text-sm sm:text-base md:text-lg text-slate-200">
               Explore and connect with our global community of certified
               professionals across multiple industries.

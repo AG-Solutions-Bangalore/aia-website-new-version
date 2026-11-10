@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import OptimizedImage from "@/components/common/optmized-image";
 import { cn } from "@/lib/utils";
 
 export function TestimonialCardCourse({
@@ -9,6 +9,7 @@ export function TestimonialCardCourse({
   target,
   size,
   border,
+  tabIndex,
 }) {
   const Card = href ? "a" : "div";
 
@@ -19,11 +20,13 @@ export function TestimonialCardCourse({
             href,
             target: target || "_blank",
             rel: "noopener noreferrer",
+            tabIndex,
           }
         : {})}
       className={cn(
         "flex flex-col rounded-lg relative group overflow-hidden",
         border ? "border-2 border-[#F3831C]" : "border-none",
+        className
       )}
       style={{
         height: size?.height || "165px",
@@ -31,13 +34,19 @@ export function TestimonialCardCourse({
       }}
     >
       <div className="h-full w-full flex items-center justify-center overflow-hidden relative">
-        <Avatar className="h-full w-full rounded-md">
-          <AvatarImage
-            src={author?.avatar}
+        {author?.avatar ? (
+          <OptimizedImage
+            src={author.avatar}
             alt={alt || "Certificate Image"}
+            title={alt || "Certificate Image"}
             className="w-full h-full object-contain rounded-md"
+            imageKind="story"
+            sizes="(min-width: 768px) 290px, 100vw"
+            width={290}
+            height={165}
+            loading="lazy"
           />
-        </Avatar>
+        ) : null}
       </div>
     </Card>
   );

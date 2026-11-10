@@ -85,9 +85,8 @@ export function TestimonialsSectionColor({
                   href={testimonial.youtubeLink}
                   target="_blank"
                   course={testimonial.course}
-                  // cardWidth={image?.width}
-                  // cardHeight={image?.height}
                   className={imageclassName}
+                  tabIndex={-1}
                 />
               ))}
             </div>

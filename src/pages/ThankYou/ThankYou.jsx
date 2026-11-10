@@ -61,7 +61,11 @@ const ThankYou = () => {
   }, [leaveThankYouPage, secondsLeft, source]);
 
   if (!source) {
-    return <section className="min-h-[50vh] bg-white" aria-hidden="true" />;
+    return (
+      <section className="min-h-[50vh] bg-white">
+        <h1 className="sr-only">Thank You for Contacting Academy of Internal Audit</h1>
+      </section>
+    );
   }
 
   return (

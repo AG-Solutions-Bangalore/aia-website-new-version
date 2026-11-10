@@ -42,6 +42,13 @@ const handleImageFallback = (event) => {
   image.src = FALLBACK_IMAGE_PATH;
 };
 
+// Article bodies occasionally contain their own <h1>. The page title is the
+// single H1 for the document, so demote body headings to H2 at render time.
+const demoteBodyHeadings = (html) =>
+  String(html || "")
+    .replace(/<h1(\s|>)/gi, "<h2$1")
+    .replace(/<\/h1>/gi, "</h2>");
+
 const BlogDetails = () => {
   const { id } = useParams();
   const isScrollingProgrammatically = useRef(false);
@@ -543,7 +550,7 @@ const BlogDetails = () => {
             {blog.web_blog_subs?.length > 0 ? (
               <div className="space-y-12">
                 {blog.web_blog_subs.map((sub, index) => {
-                  const allowedTags = ["h1", "h2", "h3", "h4", "h5", "h6", "p"];
+                  const allowedTags = ["h2", "h3", "h4", "h5", "h6", "p"];
 
                   const tag = sub.blog_sub_heading_tag?.toLowerCase();
                   const HeadingTag = allowedTags.includes(tag) ? tag : "h2";
@@ -577,7 +584,7 @@ const BlogDetails = () => {
                         <div
                           className="ck-content"
                           dangerouslySetInnerHTML={{
-                            __html: sub.blog_sub_description,
+                            __html: demoteBodyHeadings(sub.blog_sub_description),
                           }}
                         />
                       </div>

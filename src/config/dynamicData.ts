@@ -38,6 +38,25 @@ export interface DynamicBlogSummary {
   blog_trending?: string;
 }
 
+export interface DynamicPassoutStudentsYearResponse {
+  data?: Array<Record<string, any>>;
+  image_url?: Array<{ image_for: string; image_url: string }>;
+}
+
+export interface DynamicHomeBlogsResponse {
+  data?: DynamicBlogSummary[];
+  image_url?: Array<{ image_for: string; image_url: string }>;
+}
+
+export interface DynamicHomeFaqResponse {
+  data?: DynamicFaqItem[];
+}
+
+export interface DynamicCertificatesResponse {
+  data?: Array<Record<string, any>>;
+  image_url?: Array<{ image_for: string; image_url: string }>;
+}
+
 export interface DynamicFaqItem {
   id?: number;
   faq_heading?: string;
@@ -121,6 +140,10 @@ let dynamicStoriesMap = new Map<string, DynamicStoryResponse>();
 let dynamicTestimonials: DynamicTestimonial[] = [];
 let dynamicBlogSummaries: DynamicBlogSummary[] = [];
 let dynamicImageUrls: Array<{ image_for: string; image_url: string }> = [];
+let dynamicPassoutStudentsYear: DynamicPassoutStudentsYearResponse | null = null;
+let dynamicHomeBlogs: DynamicHomeBlogsResponse | null = null;
+let dynamicHomeFaq: DynamicHomeFaqResponse | null = null;
+let dynamicHomeCertificates: DynamicCertificatesResponse | null = null;
 let dynamicCourseSlugs = new Set<string>();
 let isLoaded = false;
 let loadPromise: Promise<void> | null = null;
@@ -146,8 +169,16 @@ export async function loadDynamicData(): Promise<void> {
     try {
       console.log('🔄 [SSG] Pre-fetching dynamic blogs, student stories, and testimonials from API...');
 
-      // 1. Fetch Blogs catalog, Stories catalog, and Testimonials in parallel
-      const [blogsRes, storiesRes, testimonialsRes] = await Promise.all([
+      // 1. Fetch Blogs catalog, Stories catalog, Testimonials, and home widgets in parallel
+      const [
+        blogsRes,
+        storiesRes,
+        testimonialsRes,
+        passoutYearRes,
+        homeBlogsRes,
+        homeFaqRes,
+        homeCertificatesRes,
+      ] = await Promise.all([
         fetch(`${BASE_URL}/api/getAllBlogs`).then((r) => r.json()).catch((err) => {
           console.warn('⚠️ [SSG] Failed to fetch getAllBlogs:', err);
           return { data: [], image_url: [] };
@@ -160,6 +191,22 @@ export async function loadDynamicData(): Promise<void> {
           console.warn('⚠️ [SSG] Failed to fetch getAllTestimonials:', err);
           return { data: [] };
         }),
+        fetch(`${BASE_URL}/api/getAllPassoutStudentsYear`).then((r) => r.json()).catch((err) => {
+          console.warn('⚠️ [SSG] Failed to fetch getAllPassoutStudentsYear:', err);
+          return { data: [], image_url: [] };
+        }),
+        fetch(`${BASE_URL}/api/getFrontBlogs`).then((r) => r.json()).catch((err) => {
+          console.warn('⚠️ [SSG] Failed to fetch getFrontBlogs:', err);
+          return { data: [], image_url: [] };
+        }),
+        fetch(`${BASE_URL}/api/getFAQbySlug/home`).then((r) => r.json()).catch((err) => {
+          console.warn('⚠️ [SSG] Failed to fetch home FAQ:', err);
+          return { data: [] };
+        }),
+        fetch(`${BASE_URL}/api/getAllCertificate`).then((r) => r.json()).catch((err) => {
+          console.warn('⚠️ [SSG] Failed to fetch getAllCertificate:', err);
+          return { data: [], image_url: [] };
+        }),
       ]);
 
       const blogList: DynamicBlogSummary[] = blogsRes?.data || [];
@@ -167,6 +214,10 @@ export async function loadDynamicData(): Promise<void> {
       const storyList: DynamicStudentStory[] = storiesRes?.data || [];
       const storyImageUrls = storiesRes?.image_url || [];
       dynamicTestimonials = testimonialsRes?.data || [];
+      dynamicPassoutStudentsYear = passoutYearRes || null;
+      dynamicHomeBlogs = homeBlogsRes || null;
+      dynamicHomeFaq = homeFaqRes || null;
+      dynamicHomeCertificates = homeCertificatesRes || null;
       // Retain lightweight catalog data so the `/blogs` index page can be
       // seeded with real article links during SSG (crawler-visible interlinking).
       dynamicBlogSummaries = blogList;
@@ -280,6 +331,26 @@ export function getDynamicImageBase(imageFor: string): string {
  */
 export function getAllDynamicTestimonials(): DynamicTestimonial[] {
   return dynamicTestimonials;
+}
+
+/**
+ * Returns the passout-student directory data used by `/fillter` and
+ * `/alumni-network`, so their React Query cache can be seeded during SSG.
+ */
+export function getDynamicPassoutStudentsYear(): DynamicPassoutStudentsYearResponse | null {
+  return dynamicPassoutStudentsYear;
+}
+
+export function getDynamicHomeBlogs(): DynamicHomeBlogsResponse | null {
+  return dynamicHomeBlogs;
+}
+
+export function getDynamicHomeFaq(): DynamicHomeFaqResponse | null {
+  return dynamicHomeFaq;
+}
+
+export function getDynamicHomeCertificates(): DynamicCertificatesResponse | null {
+  return dynamicHomeCertificates;
 }
 
 /**

@@ -1,6 +1,6 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 
-import PopUp from "../../components/common/pop-up";
+import DeferredPopUp from "../../components/common/deferred-popup";
 import ContactHero from "@/components/contact/contact-hero";
 import ContactReachOut from "@/components/contact/contact-reach-out";
 import { isBrowser } from "@/lib/prerender";
@@ -87,7 +87,7 @@ const Contact = () => {
   return (
     <div>
       {/* Initial render */}
-      <PopUp slug="Contact" />
+      <DeferredPopUp slug="Contact" />
       <ContactHero />
       <ContactReachOut />
 

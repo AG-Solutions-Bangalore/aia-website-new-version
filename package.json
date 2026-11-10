@@ -5,9 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && bun scripts/generateSitemap.ts",
+    "build": "vite build && bun scripts/optimizeImages.ts && bun scripts/generateSitemap.ts",
     "test:schema": "bun scripts/validateSchemas.ts",
     "test:sitemap": "bun scripts/validateSchemas.ts --sitemap-only",
+    "audit:ssg": "bun scripts/auditSeoHtml.mjs",
+    "optimize:images": "bun scripts/optimizeImages.ts",
     "preview": "vite preview --port 4173 --strictPort --host 0.0.0.0",
     "lint": "eslint ."
   },
@@ -83,6 +85,7 @@
     "eslint-plugin-react-refresh": "^0.4.26",
     "globals": "^16.5.0",
     "node-html-parser": "^9.0.4",
+    "sharp": "^0.35.5",
     "vite": "^8.0.0",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-pwa": "^1.3.0",

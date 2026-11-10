@@ -30,14 +30,30 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { QueryClient, hydrate } from '@tanstack/react-query';
 import App from './App';
 import './index.css';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
+
+const ssgState = (window as unknown as { __REACT_QUERY_STATE__?: unknown })
+  .__REACT_QUERY_STATE__;
+
+if (ssgState) {
+  hydrate(queryClient, ssgState as Parameters<typeof hydrate>[1]);
+}
 
 const app = (
   <React.StrictMode>
     <HelmetProvider>
       <BrowserRouter>
-        <App />
+        <App queryClient={queryClient} />
       </BrowserRouter>
     </HelmetProvider>
   </React.StrictMode>

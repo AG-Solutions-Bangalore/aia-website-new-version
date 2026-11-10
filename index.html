@@ -22,10 +22,8 @@
   <!-- Optimized Resource Hints -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://aia.in.net" />
 
   <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
   <link rel="dns-prefetch" href="https://www.google-analytics.com" />
   <!-- Initialize the tag queue immediately (no network) so conversion and
        page-view events can be queued before the tag scripts finish loading. -->
@@ -38,86 +36,118 @@
       };
   </script>
 
-  <!-- Early Third-Party Loading:
-       Tags start after DOM parsing on the first idle slot instead of waiting
-       for window.load plus a fixed 10-14s timeout. They are fully independent
-       of any popup/UI lifecycle, while idle scheduling keeps them off the
-       critical rendering path. -->
+  <!-- Deferred Third-Party Loading:
+       GTM, gtag, Facebook (via GTM), and Clarity start only after window.load
+       plus an idle slot. This keeps their main-thread work out of the LCP/TBT
+       window. The dataLayer queue still records events fired before load. -->
   <script>
     (function () {
+      var thirdPartyStarted = false;
+      var thirdPartyQueue = [];
+
       var schedule = function (fn, delay, timeout) {
         var run = function () {
           if ("requestIdleCallback" in window) {
-            window.requestIdleCallback(fn, { timeout: timeout });
+            window.requestIdleCallback(fn, { timeout: timeout || 1500 });
           } else {
             window.setTimeout(fn, 0);
           }
         };
 
-        var start = function () {
-          window.setTimeout(run, delay);
+        window.setTimeout(run, delay || 0);
+      };
+
+      var runWhenLoaded = function (fn, delay, timeout) {
+        var queued = function () {
+          schedule(fn, delay, timeout);
         };
 
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", start, { once: true });
-        } else {
-          start();
+        if (thirdPartyStarted) {
+          queued();
+          return;
+        }
+
+        thirdPartyQueue.push(queued);
+      };
+
+      var startThirdParty = function () {
+        if (thirdPartyStarted) return;
+        thirdPartyStarted = true;
+
+        var queue = thirdPartyQueue;
+        thirdPartyQueue = [];
+        for (var i = 0; i < queue.length; i++) {
+          queue[i]();
         }
       };
 
-      // Google Ads / gtag conversion loader. Exposed globally so the React
-      // analytics component reuses the same in-flight request instead of
-      // starting a second one after hydration.
+      var onLoaded = function () {
+        schedule(startThirdParty, 0, 1000);
+      };
+
+      if (document.readyState === "complete") {
+        onLoaded();
+      } else {
+        window.addEventListener("load", onLoaded, { once: true });
+      }
+
+      // Google Ads / gtag conversion loader. The promise is created at call
+      // time so the React analytics component can reuse it, but the actual
+      // network request starts only after the deferred gate opens.
       var loadGtag = function () {
         if (window.__AIA_GTAG_PROMISE__) return window.__AIA_GTAG_PROMISE__;
         if (window.__GA_LOADED__) return Promise.resolve();
 
-        window.__AIA_GTAG_PROMISE__ = fetch(
-          "https://aia.in.net/webapi/public/api/getGTag",
-          { headers: { Accept: "application/json" } }
-        )
-          .then(function (response) {
-            if (!response.ok) {
-              throw new Error("GTag request failed");
-            }
-            return response.json();
-          })
-          .then(function (payload) {
-            var gtagHtml = payload && payload.data && payload.data.gtag;
-            if (!gtagHtml) return;
+        window.__AIA_GTAG_PROMISE__ = new Promise(function (resolve) {
+          runWhenLoaded(function () {
+            fetch("https://aia.in.net/webapi/public/api/getGTag", {
+              headers: { Accept: "application/json" },
+            })
+              .then(function (response) {
+                if (!response.ok) {
+                  throw new Error("GTag request failed");
+                }
+                return response.json();
+              })
+              .then(function (payload) {
+                var gtagHtml = payload && payload.data && payload.data.gtag;
+                if (!gtagHtml) return;
 
-            var container = document.createElement("div");
-            container.innerHTML = gtagHtml;
+                var container = document.createElement("div");
+                container.innerHTML = gtagHtml;
 
-            var scripts = container.querySelectorAll("script");
-            for (var i = 0; i < scripts.length; i++) {
-              var oldScript = scripts[i];
-              var newScript = document.createElement("script");
+                var scripts = container.querySelectorAll("script");
+                for (var i = 0; i < scripts.length; i++) {
+                  var oldScript = scripts[i];
+                  var newScript = document.createElement("script");
 
-              if (oldScript.src) {
-                newScript.src = oldScript.src;
-                newScript.async = true;
-              } else {
-                newScript.text = oldScript.textContent;
-              }
+                  if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                    newScript.async = true;
+                  } else {
+                    newScript.text = oldScript.textContent;
+                  }
 
-              document.head.appendChild(newScript);
-            }
+                  document.head.appendChild(newScript);
+                }
 
-            window.__GA_LOADED__ = true;
-          })
-          .catch(function () {
-            window.__AIA_GTAG_PROMISE__ = null;
-          });
+                window.__GA_LOADED__ = true;
+              })
+              .catch(function () {
+                window.__AIA_GTAG_PROMISE__ = null;
+              })
+              .then(resolve);
+          }, 0, 1000);
+        });
 
         return window.__AIA_GTAG_PROMISE__;
       };
 
       window.__AIA_LOAD_GTAG__ = loadGtag;
-      schedule(loadGtag, 0, 500);
+      loadGtag();
 
       // Google Tag Manager
-      schedule(function () {
+      runWhenLoaded(function () {
         (function (w, d, s, l, i) {
           w[l] = w[l] || [];
           w[l].push({
@@ -131,33 +161,25 @@
           j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
           f.parentNode.insertBefore(j, f);
         })(window, document, "script", "dataLayer", "GTM-KJ7WJLKJ");
-      }, 0, 500);
+      }, 0, 1000);
 
-      // Microsoft Clarity
-      schedule(function () {
-        (function (c, l, a, r, i, t, y) {
-          c[a] =
-            c[a] ||
-            function () {
-              (c[a].q = c[a].q || []).push(arguments);
-            };
-          t = l.createElement(r);
-          t.async = 1;
-          t.src = "https://www.clarity.ms/tag/" + i;
-          y = l.getElementsByTagName(r)[0];
-          y.parentNode.insertBefore(t, y);
-        })(window, document, "clarity", "script", "z4o0i0ydf7");
-      }, 1500, 1500);
-
-      // Google Ad Code
-      schedule(function () {
-        var script = document.createElement("script");
-        script.async = true;
-        script.src =
-          "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX";
-        script.crossOrigin = "anonymous";
-        document.head.appendChild(script);
-      }, 4000, 2000);
+      // Microsoft Clarity: give the page a short settling window after load.
+      runWhenLoaded(function () {
+        schedule(function () {
+          (function (c, l, a, r, i, t, y) {
+            c[a] =
+              c[a] ||
+              function () {
+                (c[a].q = c[a].q || []).push(arguments);
+              };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+          })(window, document, "clarity", "script", "z4o0i0ydf7");
+        }, 1500, 1500);
+      }, 0, 1000);
     })();
   </script>
 

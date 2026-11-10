@@ -14,7 +14,7 @@ const CourseCurriculum = ({
     <div className="py-6 px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
         <div className="bg-[#0F3652] text-white text-center py-3 px-4 rounded-lg">
-          <h1 className="text-lg sm:text-xl font-bold">{title}</h1>
+          <h2 className="text-lg sm:text-xl font-bold">{title}</h2>
         </div>
       </div>
       {description && (

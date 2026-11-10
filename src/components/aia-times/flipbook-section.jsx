@@ -17,8 +17,18 @@ export default function FlipbookSection({ isPopup = false }) {
   const pdfUrl = searchParams.get("pdf") || "/AIA_Times_Volume_3_Nov_2026.pdf";
 
   return (
-    <Suspense fallback={null}>
-      <FlipBook pdfUrl={pdfUrl} isPopup={isPopup} />
-    </Suspense>
+    <>
+      {!isPopup && (
+        <div className="bg-[#0F3652] px-4 py-3">
+          <h1 className="mx-auto max-w-5xl text-center text-sm font-bold leading-snug text-white sm:text-lg md:text-xl">
+            AIA Times E-Magazine
+          </h1>
+        </div>
+      )}
+
+      <Suspense fallback={null}>
+        <FlipBook pdfUrl={pdfUrl} isPopup={isPopup} />
+      </Suspense>
+    </>
   );
 }

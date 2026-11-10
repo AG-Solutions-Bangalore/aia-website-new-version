@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
+import OptimizedImage from "@/components/common/optmized-image";
 import { cn } from "@/lib/utils";
 
 export function TestimonialCardColor({
@@ -8,6 +8,7 @@ export function TestimonialCardColor({
   className,
   target,
   course,
+  tabIndex,
 }) {
   const Card = href ? "a" : "div";
   const getCourseName = (course) => {
@@ -42,6 +43,7 @@ export function TestimonialCardColor({
           href,
           target: target || "_blank",
           rel: "noopener noreferrer",
+          tabIndex,
         }
         : {})}
       className={cn(
@@ -50,7 +52,6 @@ export function TestimonialCardColor({
         "overflow-hidden",
         className
       )}
-    // style={{ width: cardWidth, height: cardHeight }}
     >
       <div
         className={`absolute top-0 right-0 z-30 backdrop-blur-sm px-3 py-1 rounded-md text-xs font-semibold ${getCourseStyles(
@@ -60,14 +61,19 @@ export function TestimonialCardColor({
         {getCourseName(course)}
       </div>
       <div className="h-full w-full flex items-center justify-center overflow-hidden relative">
-        <Avatar className="h-full w-full rounded-md">
-          <AvatarImage
-            src={author?.avatar}
+        {author?.avatar ? (
+          <OptimizedImage
+            src={author.avatar}
             alt={alt || "Certificate Image"}
+            title={alt || "Certificate Image"}
             className="w-full h-full object-contain rounded-md"
+            imageKind="story"
+            sizes="(min-width: 768px) 340px, 280px"
+            width={340}
+            height={220}
             loading="lazy"
           />
-        </Avatar>
+        ) : null}
       </div>
     </Card>
   );

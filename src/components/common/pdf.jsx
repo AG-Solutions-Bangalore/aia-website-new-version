@@ -4,6 +4,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PdfJoinDialog from "./PdfForm";
+import OptimizedImage from "./optmized-image";
+import { optimizedImageSrc, optimizedImageSrcSet } from "@/lib/imageVariants";
 
 const STATIC_REVIEWS = [
   { id: 1, image: "/pdf/1.webp", alt: "Brochure image" },
@@ -32,11 +34,15 @@ const STATIC_REVIEWS = [
   { id: 24, image: "/pdf/24.webp", alt: "Brochure image" },
 ];
 
+const pdfImageUrl = (image) =>
+  `${IMAGE_PATH}${image.startsWith("/") ? image : `/${image}`}`;
+
 export const TestimonialSlider = ({ reviews, className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState("right");
 
   const activeReview = reviews[currentIndex];
+  const activeImageUrl = activeReview ? pdfImageUrl(activeReview.image) : "";
 
   const goTo = useCallback((newIndex, dir) => {
     setDirection(dir);
@@ -104,8 +110,14 @@ export const TestimonialSlider = ({ reviews, className }) => {
           <AnimatePresence initial={false} custom={direction}>
             <motion.img
               key={currentIndex}
-              src={`${IMAGE_PATH}${activeReview.image}`}
+              src={optimizedImageSrc(activeImageUrl, 800, "pdf")}
+              srcSet={optimizedImageSrcSet(activeImageUrl, "webp", "pdf") || undefined}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              data-original-src={activeImageUrl}
               alt={activeReview.alt}
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
               custom={direction}
               variants={imageVariants}
               initial="enter"
@@ -133,10 +145,16 @@ export const TestimonialSlider = ({ reviews, className }) => {
                         : "ring-transparent opacity-50 hover:opacity-80 scale-100",
                     )}
                   >
-                    <img
-                      src={`${IMAGE_PATH}/${review.image}`}
-                      alt={review.alt} title={review.alt}
+                    <OptimizedImage
+                      src={pdfImageUrl(review.image)}
+                      alt={review.alt}
+                      title={review.alt}
                       className="w-full h-full"
+                      imageKind="pdf"
+                      width={112}
+                      height={144}
+                      sizes="112px"
+                      loading="lazy"
                     />
 
                     {currentIndex === idx && (
@@ -272,11 +290,13 @@ export const TestimonialSlider = ({ reviews, className }) => {
                 </p>
               </div>
               <div className="mt-5">
-                <img
+                <OptimizedImage
                   src={`${IMAGE_PATH}/message_about.webp`}
-                  alt="Student Testimonials" title="Student Testimonials"
+                  alt="Student Testimonials"
+                  title="Student Testimonials"
                   className="w-full rounded-lg"
                   loading="lazy"
+                  sizes="(min-width: 768px) 50vw, 100vw"
                 />
               </div>
             </div>

@@ -2,7 +2,7 @@ import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
 import BannerBlogCard from "@/components/blog/banner-blog-card";
 import BlogCard from "@/components/blog/blog-card";
 import BlogSubscribeSection from "@/components/blog/blog-subscription";
-import PopUp from "@/components/common/pop-up";
+import DeferredPopUp from "@/components/common/deferred-popup";
 import CourseTopStudent from "@/components/home/home-pr-carousel";
 import SectionHeadingH1 from "@/components/SectionHeading/SectionHeadingH1";
 import { isReactSnapPrerender } from "@/lib/prerender";
@@ -214,7 +214,7 @@ const Blog = () => {
 
   return (
     <>
-      {!isPrerendering && <PopUp slug="Blogs" />}
+      {!isPrerendering && <DeferredPopUp slug="Blogs" />}
 
       <section className="py-16 bg-white">
         <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8">

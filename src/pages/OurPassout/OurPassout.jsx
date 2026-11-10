@@ -1,6 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
-import PopUp from "@/components/common/pop-up";
+import DeferredPopUp from "@/components/common/deferred-popup";
 import PassoutBanner from "@/components/passout/passout-banner";
 import PassoutResult from "@/components/passout/passout-result";
 import { isBrowser } from "@/lib/prerender";
@@ -88,7 +88,7 @@ const OurPassout = () => {
   return (
     <div>
       {/* Initial Render */}
-      <PopUp slug="Passed-Out" />
+      <DeferredPopUp slug="Passed-Out" />
       <PassoutBanner />
             <div ref={refs.weekly}>
         {visible.weekly && (

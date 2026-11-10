@@ -212,6 +212,16 @@ const BlogCourse = () => {
     return (
       <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="mb-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b-2 border-[#F3831C]">
+              <div>
+                <h1 className="text-3xl md:text-4xl font-bold text-[#0F3652] mb-2">
+                  {displayCategoryName}
+                </h1>
+              </div>
+            </div>
+          </div>
+
           <LoadingSkeleton />
         </div>
       </section>

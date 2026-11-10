@@ -98,6 +98,7 @@ const NotificationPopup = () => {
         {" "}
         <button
           onClick={handleClose}
+          aria-label="Close notification"
           className="absolute top-2.5 right-2.5 text-[#F3831C] cursor-pointer hover:text-gray-600 transition-all duration-200 z-10 bg-white/80 backdrop-blur-sm rounded-full p-1 hover:scale-110 shadow-sm"
         >
           <X size={16} />
