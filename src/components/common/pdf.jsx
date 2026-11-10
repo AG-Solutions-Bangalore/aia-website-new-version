@@ -5,7 +5,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PdfJoinDialog from "./PdfForm";
 import OptimizedImage from "./optmized-image";
-import { optimizedImageSrc, optimizedImageSrcSet } from "@/lib/imageVariants";
 
 const STATIC_REVIEWS = [
   { id: 1, image: "/pdf/1.webp", alt: "Brochure image" },
@@ -110,8 +109,7 @@ export const TestimonialSlider = ({ reviews, className }) => {
           <AnimatePresence initial={false} custom={direction}>
             <motion.img
               key={currentIndex}
-              src={optimizedImageSrc(activeImageUrl, 800, "pdf")}
-              srcSet={optimizedImageSrcSet(activeImageUrl, "webp", "pdf") || undefined}
+              src={activeImageUrl}
               sizes="(min-width: 1024px) 50vw, 100vw"
               data-original-src={activeImageUrl}
               alt={activeReview.alt}
