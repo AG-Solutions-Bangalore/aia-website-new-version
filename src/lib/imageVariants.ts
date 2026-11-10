@@ -38,6 +38,12 @@ function isProduction(): boolean {
 }
 
 export function isOptimizableRemoteImage(src: string): boolean {
+  if (!src) return false;
+  // Exclude student story, certificate, and testimonial images:
+  // User explicitly requested real server images for these, avoiding local /optimized/story/ URLs.
+  if (/student_images|student_company_images/i.test(src)) {
+    return false;
+  }
   return /^https?:\/\/aia\.in\.net\/webapi\/.+\/images\//i.test(src);
 }
 
@@ -91,6 +97,7 @@ export function optimizedImageSrc(
   fallbackWidth = 960,
   kindOverride?: ImageKind,
 ): string {
+  if (kindOverride === "story") return src;
   if (!isProduction() || !isOptimizableRemoteImage(src)) return src;
 
   return optimizedImagePath(src, fallbackWidth, "webp", kindOverride);
@@ -102,9 +109,11 @@ export function optimizedImageSrcSet(
   kindOverride?: ImageKind,
   widths?: number[],
 ): string {
+  if (kindOverride === "story") return "";
   if (!isProduction() || !isOptimizableRemoteImage(src)) return "";
 
   const kind = kindOverride || detectImageKind(src);
+  if (kind === "story") return "";
   const targetWidths = widths || IMAGE_KIND_WIDTHS[kind];
 
   return targetWidths
@@ -116,6 +125,7 @@ export function preferredImageWidth(kind: ImageKind): number {
   if (kind === "banner") return 1280;
   if (kind === "pdf") return 640;
   if (kind === "blog") return 720;
+  if (kind === "story") return 320;
   if (kind === "badge") return 128;
-  return 640;
+  return 320;
 }

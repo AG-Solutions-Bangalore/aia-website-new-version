@@ -79,7 +79,7 @@ export default function Home() {
         </section>
       </LazySection>
 
-      <LazySection {...homeSectionProps} prerender minHeight="500px">
+      <LazySection {...homeSectionProps} minHeight="500px">
         <HomeResults
           title="We Stand by Results - Actual Certificates Earned by AIA Learners"
           description="Actual certificates earned by professionals across CFE, CIA, and CAMS after structured preparation with AIA."

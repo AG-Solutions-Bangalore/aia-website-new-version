@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-10T07:25:17.801Z",
+  "generatedAt": "2026-11-10T09:17:22.095Z",
   "pages": 203,
   "failures": 0,
   "details": [],
@@ -1257,10 +1257,10 @@
       "canonical": true,
       "jsonLdCount": 1,
       "h1Count": 1,
-      "h2Count": 5,
+      "h2Count": 4,
       "h3Count": 11,
       "internalLinks": 29,
-      "images": 37,
+      "images": 7,
       "missingAlt": 0,
       "missingHref": 0
     },

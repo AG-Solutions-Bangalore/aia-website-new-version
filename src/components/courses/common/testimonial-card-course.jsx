@@ -1,4 +1,3 @@
-import OptimizedImage from "@/components/common/optmized-image";
 import { cn } from "@/lib/utils";
 
 export function TestimonialCardCourse({
@@ -35,16 +34,20 @@ export function TestimonialCardCourse({
     >
       <div className="h-full w-full flex items-center justify-center overflow-hidden relative">
         {author?.avatar ? (
-          <OptimizedImage
+          <img
             src={author.avatar}
-            alt={alt || "Certificate Image"}
-            title={alt || "Certificate Image"}
+            alt={alt || "Student Testimonial"}
+            title={alt || "Student Testimonial"}
             className="w-full h-full object-contain rounded-md"
-            imageKind="story"
-            sizes="(min-width: 768px) 290px, 100vw"
             width={290}
             height={165}
             loading="lazy"
+            decoding="async"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src =
+                "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
+            }}
           />
         ) : null}
       </div>

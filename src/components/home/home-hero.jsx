@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
-import OptimizedImage from "@/components/common/optmized-image";
 import { getBannerForSlug } from "@/config/bannerData";
 import { COURSE_ROUTES } from "@/config/site";
+import { HOME_HERO_480_BASE64 } from "./hero-480-base64";
 
 const HOME_BANNER_BASE =
   "https://aia.in.net/webapi/public/assets/images/banner_images/";
@@ -272,6 +272,8 @@ export default function HomeHero({ slug, bottombar = false }) {
   const suppressClick = useRef(false);
 
   useEffect(() => {
+    if (ssgBanner?.slides?.length) return;
+
     const controller = new AbortController();
 
     const loadBanner = async () => {
@@ -520,36 +522,38 @@ export default function HomeHero({ slug, bottombar = false }) {
                   <picture>
                     <source
                       media="(max-width: 640px)"
-                      srcSet="/images/hero/home-hero-480.webp"
+                      srcSet={HOME_HERO_480_BASE64}
                     />
                     <source
                       media="(min-width: 641px)"
                       srcSet="/images/hero/home-hero-1600.webp"
                     />
-                    <OptimizedImage
-                      src="/images/hero/home-hero-1600.webp"
+                    <img
+                      src={HOME_HERO_480_BASE64}
                       alt={activeSlide.alt}
-                      priority={true}
+                      title={activeSlide.alt || "AIA Training Institute"}
                       width={1600}
                       height={727}
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.src = "/no-image.svg";
-                      }}
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="sync"
                     />
                   </picture>
                 ) : (
-                  <OptimizedImage
+                  <img
                     src={activeSlide.imageUrl}
-                    srcSet={activeSlide.srcSet}
                     alt={activeSlide.alt}
-                    priority={currentSlide === 0}
+                    title={activeSlide.alt || "AIA Training Institute"}
+                    loading={currentSlide === 0 ? "eager" : "lazy"}
+                    fetchPriority={currentSlide === 0 ? "high" : "low"}
+                    decoding="async"
                     width={activeSlide.width || 1600}
                     height={activeSlide.height || 727}
-                    sizes={activeSlide.sizes || "100vw"}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.target.src = "/no-image.svg";
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = "/no-image.svg";
                     }}
                   />
                 )}

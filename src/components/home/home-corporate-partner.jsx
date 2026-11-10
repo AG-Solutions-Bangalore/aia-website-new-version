@@ -216,7 +216,6 @@ import axios from "axios";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import SectionHeading from "../SectionHeading/SectionHeading";
-import OptimizedImage from "../common/optmized-image";
 
 const HomeCorporatePartner = () => {
   const location = useLocation();
@@ -274,9 +273,12 @@ const HomeCorporatePartner = () => {
               {effortsData?.data?.[2]?.efforts_heading}
             </h3>
             {effortsData?.data?.[2]?.efforts_image && imageBaseUrl && (
-              <OptimizedImage
+              <img
                 src={`${imageBaseUrl}${effortsData.data[2].efforts_image}`}
                 alt={effortsData?.data?.[2]?.efforts_heading}
+                title={effortsData?.data?.[2]?.efforts_heading}
+                loading="lazy"
+                decoding="async"
                 className="w-full max-h-[340px] object-contain"
               />
             )}
@@ -293,9 +295,12 @@ const HomeCorporatePartner = () => {
               {effortsData?.data?.[0]?.efforts_heading}
             </h3>
             {effortsData?.data?.[0]?.efforts_image && imageBaseUrl && (
-              <OptimizedImage
+              <img
                 src={`${imageBaseUrl}${effortsData.data[0].efforts_image}`}
                 alt={effortsData?.data?.[0]?.efforts_heading}
+                title={effortsData?.data?.[0]?.efforts_heading}
+                loading="lazy"
+                decoding="async"
                 className="w-full max-h-[340px] object-contain"
               />
             )}
@@ -312,9 +317,12 @@ const HomeCorporatePartner = () => {
               {effortsData?.data?.[1]?.efforts_heading}
             </h3>
             {effortsData?.data?.[1]?.efforts_image && imageBaseUrl && (
-              <OptimizedImage
+              <img
                 src={`${imageBaseUrl}${effortsData.data[1].efforts_image}`}
                 alt={effortsData?.data?.[1]?.efforts_heading}
+                title={effortsData?.data?.[1]?.efforts_heading}
+                loading="lazy"
+                decoding="async"
                 className="w-full max-h-[340px] object-contain"
               />
             )}

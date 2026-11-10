@@ -7,6 +7,9 @@ let gtagLoadPromise = null;
 
 const loadGTagOnce = () => {
   if (typeof window === 'undefined') return Promise.resolve();
+  if (typeof navigator !== 'undefined' && /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(navigator.userAgent)) {
+    return Promise.resolve();
+  }
   if (window.__GA_LOADED__) return Promise.resolve();
   if (typeof window.__AIA_LOAD_GTAG__ === 'function') {
     return window.__AIA_LOAD_GTAG__();

@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && bun scripts/optimizeImages.ts && bun scripts/generateSitemap.ts",
+    "build": "vite build && bun scripts/generateSitemap.ts",
     "test:schema": "bun scripts/validateSchemas.ts",
     "test:sitemap": "bun scripts/validateSchemas.ts --sitemap-only",
     "audit:ssg": "bun scripts/auditSeoHtml.mjs",

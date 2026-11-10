@@ -9,7 +9,7 @@ import { prefetchPopup } from "@/lib/popup-cache";
 import { X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
-const IMAGE_OPEN_FALLBACK_MS = 1200;
+const IMAGE_OPEN_FALLBACK_MS = 600;
 
 const PopUp = ({ slug = "home" }) => {
   const [open, setOpen] = useState(false);

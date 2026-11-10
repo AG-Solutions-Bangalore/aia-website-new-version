@@ -81,7 +81,8 @@ const HomeContact = () => {
         });
     };
 
-    loadReferral();
+    const timer = setTimeout(loadReferral, 2500);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleChange = (e) => {

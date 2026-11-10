@@ -5,7 +5,6 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { BASE_URL } from "@/api/base-url";
-import OptimizedImage from "../common/optmized-image";
 
 const HomeBlog = () => {
   const carouselRef = React.useRef(null);
@@ -19,10 +18,11 @@ const HomeBlog = () => {
 
   const blogs = data?.data || [];
   const blogImageBaseUrl =
-    data?.image_url?.find((item) => item.image_for === "Blog")?.image_url || "";
+    data?.image_url?.find((item) => item.image_for === "Blog")?.image_url ||
+    "https://aia.in.net/webapi/public/assets/images/blog_images/";
   const noImageUrl =
     data?.image_url?.find((item) => item.image_for === "No Image")?.image_url ||
-    "";
+    "/no-image.svg";
 
   if (isLoading) {
     return (
@@ -107,12 +107,18 @@ const HomeBlog = () => {
                     >
                       <div className="overflow-hidden rounded-lg border border-[#F3831C]/20 bg-white shadow-sm">
                         <div className="relative ">
-                          <OptimizedImage
+                          <img
                             src={imageUrl}
                             alt={blog.blog_images_alt || blog.blog_heading}
+                            title={blog.blog_images_alt || blog.blog_heading}
+                            width={360}
+                            height={202}
+                            loading="lazy"
+                            decoding="async"
                             className="h-auto w-full object-contain transition-transform duration-300 lg:group-hover:scale-105 lg:grayscale lg:hover:grayscale-0 "
                             onError={(e) => {
-                              e.target.src = noImageUrl;
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = noImageUrl || "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
                             }}
                           />
                           <div className="absolute bottom-2 right-2 rounded-md bg-[#F3831C] px-2 py-1 text-xs font-semibold text-white">

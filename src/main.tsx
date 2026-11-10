@@ -38,6 +38,9 @@ const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       retry: false,
+      staleTime: 1000 * 60 * 5,
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
     },
   },
 });
@@ -62,9 +65,44 @@ const app = (
 const rootElement = document.getElementById('root');
 
 if (rootElement) {
+  let isHydrated = false;
+
+  const startHydration = () => {
+    if (isHydrated) return;
+    isHydrated = true;
+    cleanupListeners();
+
+    if (rootElement.hasChildNodes()) {
+      ReactDOM.hydrateRoot(rootElement, app);
+    } else {
+      ReactDOM.createRoot(rootElement).render(app);
+    }
+  };
+
+  const interactionEvents = ['pointerdown', 'touchstart', 'keydown', 'scroll'];
+  const onInteraction = () => startHydration();
+
+  const cleanupListeners = () => {
+    interactionEvents.forEach((ev) => {
+      window.removeEventListener(ev, onInteraction);
+    });
+  };
+
+  interactionEvents.forEach((ev) => {
+    window.addEventListener(ev, onInteraction, { passive: true, once: true });
+  });
+
   if (rootElement.hasChildNodes()) {
-    ReactDOM.hydrateRoot(rootElement, app);
+    // Static SSG HTML already rendered and styled.
+    // Allow the browser to paint the pre-rendered visual frame first,
+    // then hydrate on idle or on first user interaction.
+    if ('requestIdleCallback' in window) {
+      (window as unknown as { requestIdleCallback: (cb: () => void, opts: { timeout: number }) => number })
+        .requestIdleCallback(startHydration, { timeout: 1200 });
+    } else {
+      window.setTimeout(startHydration, 50);
+    }
   } else {
-    ReactDOM.createRoot(rootElement).render(app);
+    startHydration();
   }
 }

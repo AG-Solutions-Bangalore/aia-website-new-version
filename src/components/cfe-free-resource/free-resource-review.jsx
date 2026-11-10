@@ -143,6 +143,14 @@ const FreeResourceReview = () => {
                             title={item.alt || item.name}
                             className="w-14 h-14 min-w-14 min-h-14 rounded-full object-cover border-2 border-[#0F3652] flex-shrink-0"
                             effect="blur"
+                            onError={(e) => {
+                              if (e?.currentTarget) {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src =
+                                  noImageUrl ||
+                                  "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
+                              }
+                            }}
                           />
 
                           <div>
