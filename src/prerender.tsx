@@ -46,6 +46,7 @@ import {
   getDynamicHomeBlogs,
   getDynamicHomeCertificates,
   getDynamicHomeFaq,
+  getDynamicFaqBySlug,
   getDynamicImageBase,
   getDynamicPassoutStudentsYear,
   getDynamicStudentStory,
@@ -150,6 +151,31 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
     if (homeFaq) queryClient.setQueryData(['aia-faq'], homeFaq);
     if (homeCertificates) {
       queryClient.setQueryData(['course-results-common'], homeCertificates);
+    }
+  } else if (cleanPath === '/cfe-curriculum') {
+    const cfeFaq = getDynamicFaqBySlug('cfe-curriculum');
+    if (cfeFaq && cfeFaq.length > 0) {
+      queryClient.setQueryData(['aia-faq-cfe'], { data: cfeFaq });
+    }
+  } else if (cleanPath === '/cams') {
+    const camsFaq = getDynamicFaqBySlug('cams');
+    if (camsFaq && camsFaq.length > 0) {
+      queryClient.setQueryData(['aia-faq'], { data: camsFaq });
+    }
+  } else if (cleanPath === '/cia-challenge-curriculum') {
+    const ciacFaq = getDynamicFaqBySlug('cia-challenge-curriculum');
+    if (ciacFaq && ciacFaq.length > 0) {
+      queryClient.setQueryData(['aia-faq-ciac'], { data: ciacFaq });
+    }
+  } else if (cleanPath === '/cia-curriculum') {
+    const ciaFaq = getDynamicFaqBySlug('cia-curriculum');
+    if (ciaFaq && ciaFaq.length > 0) {
+      queryClient.setQueryData(['aia-faq-cia-curr'], { data: ciaFaq });
+    }
+  } else if (cleanPath === '/cisa') {
+    const cisaFaq = getDynamicFaqBySlug('cisa');
+    if (cisaFaq && cisaFaq.length > 0) {
+      queryClient.setQueryData(['aia-faq-cisa'], { data: cisaFaq });
     }
   }
 

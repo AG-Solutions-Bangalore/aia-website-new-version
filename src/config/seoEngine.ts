@@ -30,14 +30,12 @@
  */
 
 import type { Thing } from 'schema-dts';
-import { getDynamicBlog, getDynamicStudentStory } from './dynamicData';
+import { getDynamicBlog, getDynamicFaqBySlug, getDynamicStudentStory } from './dynamicData';
 import {
   createBlogPostingSchema,
   createBreadcrumbSchema,
   createCourseSchema,
   createFaqSchema,
-  createProductSchema,
-  createSoftwareAppSchema,
   createStudentReviewSchema,
   createWebPageSchema,
   localBusinessSchema,
@@ -66,7 +64,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Academy of Internal Audit | Best Training Institute For Top Certification Courses - AIA',
     description:
       'Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses.',
-    keywords: 'CIA training, CFE certification, CAMS course, Internal Audit institute, Academy of Internal Audit',
+    keywords:
+      'CIA Training Center, CIA Training Institute, CAMS Training Center, CAMS Training Institute, CFE Training Center, CFE Training Institute, CIA Challenge Training Center, CIA Challenge Training Institute, CISA Training Center, CISA Training Institute, Best Training Institute For CIA, Best Training Institute For CFE, Best Training Institute For CAMS, Global Certification Courses, Internal Audit Training Center',
     canonicalPath: '/',
     schemas: [
       organizationSchema,
@@ -77,8 +76,6 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
         'Academy of Internal Audit | Best Training Institute For Top Certification Courses - AIA',
         'Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses.',
       ),
-      createSoftwareAppSchema(),
-      createProductSchema(),
     ],
   },
   '/about-aia': {
@@ -100,7 +97,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Certified Fraud Examiner Course | CFE Certification Course',
     description:
       'Get Certification in Certified Fraud Examiner Course with AIA Institute to become a skilled Certified Fraud Investigator and unlock fraud prevention mystery.',
-    keywords: 'CFE course, Certified Fraud Examiner, fraud detection training, CFE exam prep',
+    keywords:
+      'CFE Course, CFE Certification, Certified Fraud Examiner, CFE Prep Course, CFE Training, CFE Coaching, CFE Classes, CFE Study Material, CFE Mock Test, CFE Exam Syllabus, CFE Exam Preparation',
     canonicalPath: '/cfe-curriculum',
     schemas: [
       organizationSchema,
@@ -120,7 +118,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Certified Internal Auditor Course | CIA Certification Course',
     description:
       'Elevate your auditing career with AIA Institute which help you to ace your Certified Internal Auditor Course (CIA) and get your Internal Audit Certification.',
-    keywords: 'CIA course, Certified Internal Auditor, internal audit training, CIA exam preparation',
+    keywords:
+      'CIA Course, CIA Certification, Certified Internal Auditor, CIA Prep Course, CIA Training, CIA Coaching, CIA Classes, CIA Study Material, CIA Mock Test, CIA Exam Syllabus, CIA Exam Preparation',
     canonicalPath: '/cia-curriculum',
     schemas: [
       organizationSchema,
@@ -140,7 +139,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'CIA Challenge Exam Prep | Clear in One Attempt with AIA Guidance',
     description:
       "Short on time? AIA's CIA Challenge Prep helps busy auditors fast-track their certification with flexible notes, expert-recorded lectures, and 1:1 live support. Enroll today!",
-    keywords: 'CIA Challenge exam, CIA fast track, CIA challenge prep, internal auditor certification',
+    keywords:
+      'CIA Challenge Course, CIA Challenge Certification, Certified Internal Auditor Challenge, CIA Challenge Prep Course, CIA Challenge Training, CIA Challenge Coaching, CIA Challenge Classes, CIA Challenge Study Material, CIA Challenge Mock Test, CIA Challenge Exam Syllabus, CIA Challenge Exam Preparation',
     canonicalPath: '/cia-challenge-curriculum',
     schemas: [
       organizationSchema,
@@ -160,7 +160,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Certified Anti Money Laundering Specialist | CAMS Course',
     description:
       "Prepare to excel in CAMS Certification Exam with AIA's CAMS Study Guide and CAMS Practice Questions provided for Certified Anti Money Laundering Specialist.",
-    keywords: 'CAMS course, Anti-money laundering certification, CAMS exam prep, CAMS specialist',
+    keywords:
+      'CAMS COURSE, CAMS Certification, Certified Anti Money Laundering Specialist, CAMS Prep Course, CAMS Training, CAMS Coaching, CAMS Classes, CAMS Study Material, CAMS Mock Test, CAMS Exam Syllabus, CAMS Exam Preparation',
     canonicalPath: '/cams',
     schemas: [
       organizationSchema,
@@ -180,7 +181,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Certified Information Systems Auditor | CISA Course',
     description:
       "Prepare to excel in CISA Certification Exam with AIA's CISA Prep Course. Get access to official ISACA study resource kits, recorded video lectures, and doubt sessions.",
-    keywords: 'CISA course, Certified Information Systems Auditor, CISA exam prep, CISA certification training, ISACA CISA',
+    keywords:
+      'CISA Course, CISA Certification, Certified Information Systems Auditor, CISA Prep Course, CISA Training, CISA Coaching, CISA Classes, CISA Study Material, CISA Mock Test, CISA Exam Syllabus, CISA Exam Preparation',
     canonicalPath: '/cisa',
     schemas: [
       organizationSchema,
@@ -373,7 +375,6 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
         'Enroll Now | Academy of Internal Audit',
         'Enroll with Academy of Internal Audit for CIA, CFE, CAMS, and other global certification training programs led by expert faculty.',
       ),
-      createProductSchema(),
     ],
   },
   '/contact': {
@@ -558,6 +559,15 @@ export function buildDynamicStudentStorySeo(
   };
 }
 
+const ROUTE_FAQ_MAP: Record<string, string> = {
+  '/': 'home',
+  '/cfe-curriculum': 'cfe-curriculum',
+  '/cams': 'cams',
+  '/cia-challenge-curriculum': 'cia-challenge-curriculum',
+  '/cia-curriculum': 'cia-curriculum',
+  '/cisa': 'cisa',
+};
+
 /**
  * Core route resolver determining the exact SEO metadata and Schema.org graph for any URL.
  * Handles both registered static routes and dynamic parameterized patterns.
@@ -582,7 +592,22 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
 
   // 1. Direct match in ROUTE_SEO table
   if (ROUTE_SEO[path]) {
-    return ROUTE_SEO[path];
+    const baseEntry = ROUTE_SEO[path];
+    const schemas = [...(baseEntry.schemas || [])];
+
+    // Automatically inject verified FAQPage schema if available for this route
+    const faqSlug = ROUTE_FAQ_MAP[path];
+    if (faqSlug) {
+      const faqs = getDynamicFaqBySlug(faqSlug);
+      if (faqs && faqs.length > 0 && !schemas.some((s) => (s as any)['@type'] === 'FAQPage')) {
+        schemas.push(createFaqSchema(faqs, path));
+      }
+    }
+
+    return {
+      ...baseEntry,
+      schemas,
+    };
   }
 
   // 2. Dynamic pattern match: /blogs/course/:courseName (e.g., /blogs/course/cfe)
