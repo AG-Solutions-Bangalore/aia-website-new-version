@@ -11,6 +11,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SectionHeading from "../SectionHeading/SectionHeading";
 import { ssrLazy } from "@/lib/ssrLazy";
+import { getLinkTitle } from "@/utils/seoTitles";
 
 // Leaflet touches `window` at module scope and crashes Node SSR — load it
 // lazily on the client only so the review content still pre-renders.
@@ -168,7 +169,8 @@ const AboutReview = () => {
 
                           {item?.link && (
                             <a
-                              href={item.link} title={item.link}
+                              href={item.link}
+                              title={getLinkTitle(item.link, { defaultTitle: "Academy of Internal Audit Student Review" })}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="ml-2 text-[#F3831C] font-medium text-sm hover:underline cursor-pointer"

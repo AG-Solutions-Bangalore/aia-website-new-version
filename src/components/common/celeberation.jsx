@@ -28,6 +28,7 @@ const OfficeCeleberation = ({ title, description }) => {
         avatar: imageUrl,
       },
       alt: `Office Celebration ${index + 1}`,
+      title: `Academy of Internal Audit Office Celebration ${index + 1}`,
     }));
   }, [certificatesData]);
 

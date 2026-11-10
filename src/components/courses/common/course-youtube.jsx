@@ -6,6 +6,7 @@ import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { TestimonialsSectionCourse } from "./testimonials-with-marquee-course";
+import { getImageTitle, getLinkTitle } from "@/utils/seoTitles";
 const CourseYoutube = ({ courseSlug, title, description }) => {
   const {
     data: certificatesData,
@@ -28,16 +29,41 @@ const CourseYoutube = ({ courseSlug, title, description }) => {
       certificatesData.image_url?.find((item) => item.image_for === "Student")
         ?.image_url || "";
 
-    return certificatesData.data.map((item) => ({
-      author: {
-        name: item.student_name,
-        avatar: `${studentImageBaseUrl}${item.student_youtube_image}`,
-      },
-      alt: item.student_youtube_image_alt || "Student Testimonial",
-      youtubeLink: item.student_youtube_link,
-      course: item.student_course,
-    }));
-  }, [certificatesData]);
+    const pageContext =
+      courseSlug === "cfe"
+        ? "cfe-curriculum"
+        : courseSlug === "cia"
+        ? "cia-curriculum"
+        : courseSlug === "ciac"
+        ? "cia-challenge-curriculum"
+        : "";
+
+    return certificatesData.data.map((item) => {
+      const imgTitle = getImageTitle(
+        item.student_youtube_image,
+        item.student_name
+          ? `${item.student_name} – Student Video Testimonial`
+          : item.student_youtube_image_alt
+      );
+      const ytLinkTitle = getLinkTitle(item.student_youtube_link, {
+        page: pageContext,
+        studentName: item.student_name,
+        defaultTitle: "Academy of Internal Audit – YouTube Video",
+      });
+
+      return {
+        author: {
+          name: item.student_name,
+          avatar: `${studentImageBaseUrl}${item.student_youtube_image}`,
+        },
+        alt: item.student_youtube_image_alt || "Student Testimonial",
+        title: imgTitle,
+        linkTitle: ytLinkTitle,
+        youtubeLink: item.student_youtube_link,
+        course: item.student_course,
+      };
+    });
+  }, [certificatesData, courseSlug]);
 
   if (isLoadingPassout) {
     return (

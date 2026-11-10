@@ -135,7 +135,7 @@ Each message reflects a different experience. These reflections provide a genuin
       </LazySection>
 
       <LazySection minHeight={500}>
-        <Pdf />
+        <Pdf brochureTitle="Academy of Internal Audit – Course Brochure" />
       </LazySection>
 
       <LazySection minHeight={420}>

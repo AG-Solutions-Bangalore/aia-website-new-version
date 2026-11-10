@@ -149,6 +149,31 @@ export default function SEOPageLayout({
       }
     }
 
+    // 4b. Synchronize Author and Publisher
+    if (seo.author) {
+      let authorEl = document.querySelector('meta[name="author"]') as HTMLMetaElement | null;
+      if (authorEl) {
+        authorEl.setAttribute('content', seo.author);
+      } else {
+        authorEl = document.createElement('meta');
+        authorEl.setAttribute('name', 'author');
+        authorEl.setAttribute('content', seo.author);
+        document.head.appendChild(authorEl);
+      }
+    }
+
+    if (seo.publisher) {
+      let pubEl = document.querySelector('meta[name="publisher"]') as HTMLMetaElement | null;
+      if (pubEl) {
+        pubEl.setAttribute('content', seo.publisher);
+      } else {
+        pubEl = document.createElement('meta');
+        pubEl.setAttribute('name', 'publisher');
+        pubEl.setAttribute('content', seo.publisher);
+        document.head.appendChild(pubEl);
+      }
+    }
+
     // 5. Synchronize OpenGraph meta tags
     const updateOg = (prop: string, content: string) => {
       let el = document.querySelector(`meta[property="${prop}"]`) as HTMLMetaElement | null;
@@ -197,6 +222,8 @@ export default function SEOPageLayout({
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />
         <meta name="keywords" content={seo.keywords} />
+        {seo.author && <meta name="author" content={seo.author} />}
+        {seo.publisher && <meta name="publisher" content={seo.publisher} />}
         <link rel="canonical" href={finalCanonical} />
         <meta name="robots" content={seo.noIndex ? 'noindex, nofollow' : 'index, follow'} />
         <meta property="og:title" content={seo.title} />

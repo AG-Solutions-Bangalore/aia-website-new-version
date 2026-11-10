@@ -3,6 +3,7 @@ import { ChevronDown, Mail, Menu, Phone, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import OptimizedImage from "@/components/common/optmized-image";
+import { getLinkTitle } from "@/utils/seoTitles";
 import {
   FaFacebookF,
   FaInstagram,
@@ -146,31 +147,37 @@ const Navbar = () => {
       icon: <FaFacebookF size={16} />,
       url: "https://www.facebook.com/@academyofinternalaudit",
       label: "Facebook",
+      title: "Academy of Internal Audit – Facebook Page",
     },
     {
       icon: <FaXTwitter size={16} />,
       url: "https://twitter.com/AcademyAudit",
       label: "Twitter",
+      title: "Academy of Internal Audit – Twitter Profile",
     },
     {
       icon: <FaInstagram size={16} />,
       url: "https://www.instagram.com/academyofia/",
       label: "Instagram",
+      title: "Academy of Internal Audit – Instagram Profile",
     },
     {
       icon: <FaLinkedinIn size={16} />,
       url: "https://www.linkedin.com/company/academy-of-internal-audit",
       label: "LinkedIn",
+      title: "Academy of Internal Audit – LinkedIn Company Page",
     },
     {
       icon: <FaPinterestP size={16} />,
       url: "https://in.pinterest.com/academyofia/",
       label: "Pinterest",
+      title: "Pinterest",
     },
     {
       icon: <FaYoutube size={16} />,
       url: "https://www.youtube.com/@academyofia",
       label: "YouTube",
+      title: "Academy of Internal Audit – YouTube Channel",
     },
   ];
 
@@ -199,7 +206,7 @@ const Navbar = () => {
             href={whatsappLink.href}
             className="relative hidden min-h-6 items-center text-[#F3831C] min-[380px]:flex md:min-h-10"
             aria-label={whatsappLink.ariaLabel}
-            title={whatsappLink.ariaLabel}
+            title="Contact Academy of Internal Audit on WhatsApp"
           >
             {whatsappLink.icon}
           </a>
@@ -214,7 +221,8 @@ const Navbar = () => {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={social.label} title={social.label}
+                aria-label={social.label}
+                title={social.title || social.label}
                 className="inline-flex h-4 w-4 items-center justify-center text-white hover:text-[#F3831C] transition-colors min-[340px]:h-5 min-[340px]:w-5 min-[380px]:h-6 min-[380px]:w-6 md:h-10 md:w-10"
               >
                 <SocialMark>{social.icon}</SocialMark>
@@ -227,7 +235,7 @@ const Navbar = () => {
         <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <div className="flex-shrink-0">
-              <Link to="/" title="/">
+              <Link to="/" title="Academy of Internal Audit – Home">
                 <picture>
                   <source
                     media="(max-width: 768px)"
@@ -276,7 +284,8 @@ const Navbar = () => {
                       <ChevronDown size={14} aria-hidden="true" />
                     </button>
                   ) : (
-                    <Link title="Academy of Internal Audit"
+                    <Link
+                      title={getLinkTitle(item.link)}
                       onMouseEnter={() => prefetchRoute(item.link)}
                       to={item.link}
                       className="
@@ -302,7 +311,8 @@ const Navbar = () => {
                       {item.submenu.map((subItem, subIndex) => (
                         <li key={subIndex}>
                           <Link
-                            to={subItem.link} title={subItem.link}
+                            to={subItem.link}
+                            title={getLinkTitle(subItem.link)}
                             className="
     relative inline-block
      py-2.5
@@ -340,7 +350,8 @@ const Navbar = () => {
 
               <li>
                 <Link
-                  to={ENROLL_URL} title={ENROLL_URL}
+                  to={ENROLL_URL}
+                  title="Enroll Now – AIA Certification Courses"
                   className="
     group relative overflow-hidden
     bg-[#F3831C] text-[#f7f7f7]
@@ -431,7 +442,8 @@ const Navbar = () => {
                             {item.submenu.map((subItem, subIndex) => (
                               <li key={subIndex}>
                                 <Link
-                                  to={subItem.link} title={subItem.link}
+                                  to={subItem.link}
+                                  title={getLinkTitle(subItem.link)}
                                   onClick={handleMobileLinkClick}
                                   className="
     relative inline-block
@@ -465,7 +477,8 @@ const Navbar = () => {
                       </>
                     ) : (
                       <Link
-                        to={item.link} title={item.link}
+                        to={item.link}
+                        title={getLinkTitle(item.link)}
                         onClick={handleMobileLinkClick}
                         className="block py-4 text-[#0F3652] font-medium hover:text-[#F3831C] transition-colors"
                       >
@@ -477,7 +490,8 @@ const Navbar = () => {
 
                 <div className="mt-6">
                   <Link
-                    to={ENROLL_URL} title={ENROLL_URL}
+                    to={ENROLL_URL}
+                    title="Enroll Now – AIA Certification Courses"
                     className="group relative overflow-hidden block w-full bg-[#F3831C] text-[#fefefe] text-center px-6 py-3 rounded-md font-semibold hover:opacity-90 transition-all"
                   >
                     <span className="relative block overflow-hidden">

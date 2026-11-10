@@ -127,7 +127,7 @@ const CIAChallenge = () => {
       </LazySection>
 
       <LazySection minHeight={500}>
-        <Pdf />
+        <Pdf brochureTitle="Academy of Internal Audit – CIA Challenge Course Brochure" />
       </LazySection>
 
 

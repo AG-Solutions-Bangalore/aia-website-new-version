@@ -89,9 +89,8 @@ export function TestimonialsSectionCourse({
             <Link
               to={
                 "https://www.youtube.com/playlist?list=PLHH4EQbbvYIZSnYeZNB3-zoHdVGS6BvWV"
-              } title={
-                "https://www.youtube.com/playlist?list=PLHH4EQbbvYIZSnYeZNB3-zoHdVGS6BvWV"
               }
+              title="Academy of Internal Audit – YouTube Video Playlist"
               target="_blank"
             >
               <span className="relative z-10 text-white">

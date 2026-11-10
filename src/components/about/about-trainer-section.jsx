@@ -98,9 +98,11 @@ const AboutTrainerSection = ({
                   In recognition of his impact on ethical leadership and
                   capability building in the profession,{" "}
                   <a
-                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html" title="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
+                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
+                    title="Puneet Garg – CEO Insights Leadership Profile"
                     target="_blank"
-                    className="font-bold text-[#F3831C]" rel="noreferrer"
+                    className="font-bold text-[#F3831C]"
+                    rel="noreferrer"
                   >
                     CEO Insights India
                   </a>{" "}

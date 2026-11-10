@@ -51,7 +51,7 @@ const AboutPage = () => {
       </LazySection>
 
       <LazySection minHeight={500}>
-        <Pdf />
+        <Pdf brochureTitle="Academy of Internal Audit Brochure" />
       </LazySection>
 
       <LazySection minHeight={500}>

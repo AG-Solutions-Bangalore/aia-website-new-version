@@ -4,6 +4,8 @@ export function TestimonialCardColor({
   author,
   href,
   alt,
+  title,
+  linkTitle,
   className,
   target,
   course,
@@ -43,6 +45,7 @@ export function TestimonialCardColor({
           target: target || "_blank",
           rel: "noopener noreferrer",
           tabIndex,
+          title: linkTitle || title || alt || "Certificate",
         }
         : {})}
       className={cn(
@@ -64,7 +67,7 @@ export function TestimonialCardColor({
           <img
             src={author.avatar}
             alt={alt || "Certificate Image"}
-            title={alt || "Certificate Image"}
+            title={title || alt || "Certificate Image"}
             className="w-full h-full object-contain rounded-md"
             width={340}
             height={220}

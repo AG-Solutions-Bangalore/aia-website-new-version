@@ -256,6 +256,8 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
   const elements = new Set<Record<string, unknown>>([
     { type: 'meta', props: { name: 'description', content: seo.description, 'data-rh': 'true' } },
     { type: 'meta', props: { name: 'keywords', content: seo.keywords, 'data-rh': 'true' } },
+    ...(seo.author ? [{ type: 'meta', props: { name: 'author', content: seo.author, 'data-rh': 'true' } }] : []),
+    ...(seo.publisher ? [{ type: 'meta', props: { name: 'publisher', content: seo.publisher, 'data-rh': 'true' } }] : []),
     { type: 'link', props: { rel: 'canonical', href: canonical, 'data-rh': 'true' } },
     {
       type: 'meta',

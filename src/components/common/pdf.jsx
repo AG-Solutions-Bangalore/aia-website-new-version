@@ -1,7 +1,7 @@
 import { IMAGE_PATH } from "@/api/base-url";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PdfJoinDialog from "./PdfForm";
 import OptimizedImage from "./optmized-image";
@@ -113,6 +113,7 @@ export const TestimonialSlider = ({ reviews, className }) => {
               sizes="(min-width: 1024px) 50vw, 100vw"
               data-original-src={activeImageUrl}
               alt={activeReview.alt}
+              title={activeReview.title || activeReview.alt}
               loading="lazy"
               decoding="async"
               fetchPriority="low"
@@ -146,7 +147,7 @@ export const TestimonialSlider = ({ reviews, className }) => {
                     <OptimizedImage
                       src={pdfImageUrl(review.image)}
                       alt={review.alt}
-                      title={review.alt}
+                      title={review.title || review.alt}
                       className="w-full h-full"
                       imageKind="pdf"
                       width={112}
@@ -274,7 +275,8 @@ export const TestimonialSlider = ({ reviews, className }) => {
                   In recognition of his impact on ethical leadership and
                   capability building in the profession,{" "}
                   <a
-                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html" title="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
+                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
+                    title="Puneet Garg – CEO Insights Leadership Profile"
                     target="_blank"
                     className="font-bold text-[#F3831C]"
                     rel="noreferrer"
@@ -305,11 +307,18 @@ export const TestimonialSlider = ({ reviews, className }) => {
   );
 };
 
-const Pdf = () => {
+const Pdf = ({ brochureTitle = "Academy of Internal Audit Brochure" }) => {
+  const reviews = React.useMemo(() => {
+    return STATIC_REVIEWS.map((review, idx) => ({
+      ...review,
+      title: idx === 0 ? brochureTitle : review.alt,
+    }));
+  }, [brochureTitle]);
+
   return (
     <div className="w-full bg-linear-to-r from-slate-700 via-slate-600 to-blue-950 px-4 sm:px-6 lg:px-8 bg-white py-5">
       <div className="max-w-7xl mx-auto">
-        <TestimonialSlider reviews={STATIC_REVIEWS} />
+        <TestimonialSlider reviews={reviews} />
       </div>
     </div>
   );

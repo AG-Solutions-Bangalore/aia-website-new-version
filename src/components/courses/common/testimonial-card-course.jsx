@@ -4,6 +4,8 @@ export function TestimonialCardCourse({
   author,
   href,
   alt,
+  title,
+  linkTitle,
   className,
   target,
   size,
@@ -20,6 +22,7 @@ export function TestimonialCardCourse({
             target: target || "_blank",
             rel: "noopener noreferrer",
             tabIndex,
+            title: linkTitle || title || alt || "Academy of Internal Audit",
           }
         : {})}
       className={cn(
@@ -37,7 +40,7 @@ export function TestimonialCardCourse({
           <img
             src={author.avatar}
             alt={alt || "Student Testimonial"}
-            title={alt || "Student Testimonial"}
+            title={title || alt || "Student Testimonial"}
             className="w-full h-full object-contain rounded-md"
             width={290}
             height={165}

@@ -43,6 +43,8 @@ export interface MasterSeoStructure {
   canonicalPath: string;
   noIndex?: boolean;
   schemas?: Thing[];
+  author?: string;
+  publisher?: string;
   isFallback?: boolean;
 }
 

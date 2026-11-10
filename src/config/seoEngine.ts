@@ -50,6 +50,8 @@ export interface MasterSeoStructure {
   description: string;
   keywords: string;
   canonicalPath: string;
+  author?: string;
+  publisher?: string;
   noIndex?: boolean;
   schemas?: Thing[];
   isFallback?: boolean;
@@ -67,6 +69,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     keywords:
       'CIA Training Center, CIA Training Institute, CAMS Training Center, CAMS Training Institute, CFE Training Center, CFE Training Institute, CIA Challenge Training Center, CIA Challenge Training Institute, CISA Training Center, CISA Training Institute, Best Training Institute For CIA, Best Training Institute For CFE, Best Training Institute For CAMS, Global Certification Courses, Internal Audit Training Center',
     canonicalPath: '/',
+    author: 'Academy of Internal Audit',
+    publisher: 'Academy of Internal Audit (AIA)',
     schemas: [
       organizationSchema,
       localBusinessSchema,
@@ -84,6 +88,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       'Academy of Internal Audit is a well-known Training Institute for Professional Courses Training, skilled faculty, and comprehensive guidance services.',
     keywords: 'About AIA, Academy of Internal Audit history, AIA success rate, professional training institute',
     canonicalPath: '/about-aia',
+    author: 'Academy of Internal Audit',
+    publisher: 'Academy of Internal Audit (AIA)',
     schemas: [
       organizationSchema,
       createWebPageSchema(

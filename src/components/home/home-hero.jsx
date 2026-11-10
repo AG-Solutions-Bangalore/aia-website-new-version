@@ -4,6 +4,7 @@ import { BASE_URL } from "@/api/base-url";
 import { getBannerForSlug } from "@/config/bannerData";
 import { COURSE_ROUTES } from "@/config/site";
 import { HOME_HERO_480_BASE64 } from "./hero-480-base64";
+import { getLinkTitle } from "@/utils/seoTitles";
 
 const HOME_BANNER_BASE =
   "https://aia.in.net/webapi/public/assets/images/banner_images/";
@@ -506,7 +507,8 @@ export default function HomeHero({ slug, bottombar = false }) {
                 target={isExternalSlide ? "_blank" : undefined}
                 rel={isExternalSlide ? "noopener noreferrer" : undefined}
                 className="absolute inset-0 z-10"
-                aria-label={activeSlide.alt || "Open banner link"} title={activeSlide.alt || "Open banner link"}
+                aria-label={activeSlide.alt || "Open banner link"}
+                title={getLinkTitle(slideHref || "#", { page: slug, defaultTitle: activeSlide.alt || "Open banner link" })}
                 onClick={(event) => {
                   if (!slideHref) {
                     event.preventDefault();
@@ -618,7 +620,8 @@ export default function HomeHero({ slug, bottombar = false }) {
                   onClick={(event) => {
                     if (!currentHref) event.preventDefault();
                   }}
-                  aria-label={`Know more about: ${current.title}`} title={`Know more about: ${current.title}`}
+                  aria-label={`Know more about: ${current.title}`}
+                  title={getLinkTitle(currentHref || (slug === "about-aia" ? "" : "#"), { page: slug, defaultTitle: `Know more about: ${current.title}` })}
                   className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
                   min-h-11 text-white bg-[#F3831C] hover:bg-[#D16E27] active:bg-[#AE5B1D]

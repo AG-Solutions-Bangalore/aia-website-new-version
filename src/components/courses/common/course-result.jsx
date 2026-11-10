@@ -6,6 +6,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { TestimonialsSectionCourse } from "../common/testimonials-with-marquee-course";
 import { TestimonialsSectionColor } from "@/components/home/testimonialsection-color";
+import { getImageTitle, getLinkTitle } from "@/utils/seoTitles";
 
 const CourseResult = ({ course, queryKey, title, description }) => {
   const {
@@ -46,6 +47,19 @@ const CourseResult = ({ course, queryKey, title, description }) => {
           return null;
         }
 
+        const imgTitle = getImageTitle(
+          certificate.student_other_certificate_image,
+          certificate.student_name
+            ? `${certificate.student_name} – Certification Achievement`
+            : certificate.student_other_certificate_image_alt
+        );
+
+        const linkedinTitle = certificate.student_linkedin_link
+          ? getLinkTitle(certificate.student_linkedin_link, {
+              studentName: certificate.student_name,
+            })
+          : "";
+
         return {
           author: {
             avatar: imageSrc,
@@ -53,6 +67,8 @@ const CourseResult = ({ course, queryKey, title, description }) => {
           alt:
             certificate.student_other_certificate_image_alt ||
             "Certificate Image",
+          title: imgTitle,
+          linkTitle: linkedinTitle,
           youtubeLink: certificate.student_linkedin_link || "",
         };
       })
