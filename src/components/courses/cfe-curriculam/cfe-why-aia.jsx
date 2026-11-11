@@ -17,7 +17,7 @@ const CfeWhyAia = () => {
           },
           {
             img: `${IMAGE_PATH}/support-svgrepo-com.webp`,
-            title: "Complete Prep Support",
+            title: "Complete CFE Prep Support",
           },
           {
             img: `${IMAGE_PATH}/video-record-device-svgrepo-com.webp`,
