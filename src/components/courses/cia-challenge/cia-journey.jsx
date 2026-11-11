@@ -5,7 +5,7 @@ import { IMAGE_PATH } from "@/api/base-url";
 const CiaJourney = () => {
   return (
     <CourseJourney
-      heading="Your Complete Guide to CIA Challenge Mastery - "
+      heading="Your Complete Guide to CIA Challenge Mastery"
       highlight="Value, Learning, Format"
       headingLevel={3}
       stepHeadingLevel={4}

@@ -206,7 +206,7 @@ const HomeContact = () => {
                   },
                   {
                     stat: "22+ Years",
-                    label: "of Industry Experience Faculty",
+                    label: "of the Industry Experience Faculty",
                   },
                 ].map(({ stat, label }) => (
                   <div

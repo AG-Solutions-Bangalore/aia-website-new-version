@@ -58,7 +58,7 @@ const CisaUnique = () => {
           ),
           title: "Expert-Led Teaching Methodology",
           description:
-            "Our preparation is led by Puneet Garg, APMG Authorised Trainer with deep expertise in IS audit and governance. Every session is designed to build exam readiness and professional judgement simultaneously.",
+            "Our preparation is led by Puneet Garg, ISACA Authorised Trainer with deep expertise in IS audit and governance. Every session is designed to build exam readiness and professional judgement simultaneously.",
           position: "right",
         },
         {

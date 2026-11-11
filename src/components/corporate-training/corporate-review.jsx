@@ -38,15 +38,10 @@ const CorporateReview = () => {
       <div className="max-w-340 mx-auto">
         <div className="grid md:grid-cols-2">
           <div className="p-2 rounded-lg px-4">
-            <div className="md:hidden">
-              <SectionHeading
-                title="Real Experience Shared by Professionals"
-                align="center"
-              />
-            </div>
-            <div className="hidden md:block">
-              <SectionHeading title="Real Experience Shared by Professionals" />
-            </div>
+            <SectionHeading
+              title="Real Experience Shared by Professionals"
+              mobileCenter
+            />
             <div className="space-y-4 text-[#0F3652]">
               <p className="font-semibold text-justify">
                 AIA is a trusted partner for organizations seeking measurable
@@ -56,7 +51,7 @@ const CorporateReview = () => {
               <p className="text-justify">
                 Our tailored programs are designed to align with your business
                 objectives - helping teams strengthen core competencies, improve
-                productivity, and foster leadership that's ready for the future.
+                productivity, and foster leadership that&apos;s ready for the future.
               </p>
             </div>
           </div>
