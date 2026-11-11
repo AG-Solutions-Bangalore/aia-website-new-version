@@ -156,9 +156,11 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
 
             <div className="hidden lg:flex flex-row items-center justify-between gap-8 px-8">
               <div className="text-left">
-                <h2 className="text-4xl  font-bold text-white">Top Ratings</h2>
-                <h2 className="text-3xl  font-bold text-white mt-2">
-                  Across Platforms{" "}
+                <h2 className="text-4xl font-bold text-white leading-tight">
+                  Top Ratings <br />
+                  <span className="text-3xl font-bold text-white mt-2 block">
+                    Across Platforms
+                  </span>
                 </h2>
               </div>
 

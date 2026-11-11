@@ -111,9 +111,9 @@ const HomeReview = () => {
                     className="h-10 w-10 md:w-12 md:h-12"
                     loading="lazy"
                   />
-                  <h2 className="text-2xl md:text-3xl font-bold text-[#0F3652]">
+                  <h3 className="text-2xl md:text-3xl font-bold text-[#0F3652]">
                     300+ Professional Experiences Shared
-                  </h2>
+                  </h3>
                 </div>
                 <Swiper
                   modules={[Autoplay, Pagination]}

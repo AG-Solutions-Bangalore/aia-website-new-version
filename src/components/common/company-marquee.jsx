@@ -21,19 +21,17 @@ const CompanyMarquee = ({ companies }) => {
         <div className="p-2 md:pl-4 md:ml-12">
           <div className="px-4  md:hidden">
             <SectionHeading
-              title="AIA Alumni Driving Impact in"
-              highlight="World’s Top Organizations"
+              title="AIA Alumni Driving Impact in the"
+              highlight1="World’s Top Organizations"
               description="AIA alumni contribute to high-impact roles across renowned organizations, reflecting the real-world value of our certification-led training"
-              highlightclassName="text-2xl"
               align="center"
             />
           </div>
           <div className="px-4 hidden md:block">
             <SectionHeading
-              title="AIA Alumni Driving Impact in"
-              highlight="World’s Top Organizations"
+              title="AIA Alumni Driving Impact in the"
+              highlight1="World’s Top Organizations"
               description="AIA alumni contribute to high-impact roles across renowned organizations, reflecting the real-world value of our certification-led training"
-              highlightclassName="md:text-6xl"
             />
           </div>
         </div>
