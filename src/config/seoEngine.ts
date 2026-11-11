@@ -87,13 +87,13 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Academy of Internal Audit is a well-known Training Institute for Professional Courses Training, skilled faculty, and comprehensive guidance services.',
     keywords: 'About AIA, Academy of Internal Audit history, AIA success rate, professional training institute',
-    canonicalPath: '/about-aia',
+    canonicalPath: '/about-aia/',
     author: 'Academy of Internal Audit',
     publisher: 'Academy of Internal Audit (AIA)',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/about-aia',
+        '/about-aia/',
         'About - Academy of Internal Audit',
         'Academy of Internal Audit is a well-known Training Institute for Professional Courses Training, skilled faculty, and comprehensive guidance services.',
       ),
@@ -209,11 +209,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Read Latest Blogs on professional courses like CIA, CFE, CAMS and CIA Challenge | Information that you need to know to grow your skills and career as well.',
     keywords: 'AIA blog, CIA tips, CFE guides, CAMS certification news, internal audit articles',
-    canonicalPath: '/blogs',
+    canonicalPath: '/blogs/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/blogs',
+        '/blogs/',
         'Guide For Professional Courses like CIA, CFE, CIAC, CAMS - AIA',
         'Read Latest Blogs on professional courses like CIA, CFE, CAMS and CIA Challenge | Information that you need to know to grow your skills and career as well.',
       ),
@@ -224,11 +224,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Academy of Internal Audit celebrates 99.6% + pass rate - featuring recent CFE, CIA, CAMS alumni from 40+ countries around the globe sharing their success stories.',
     keywords: 'AIA alumni, student success stories, CIA pass outs, CFE results, CAMS success',
-    canonicalPath: '/alumni-network',
+    canonicalPath: '/alumni-network/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/alumni-network',
+        '/alumni-network/',
         'AIA Alumni Network - Academy of Internal Audit',
         'Academy of Internal Audit celebrates 99.6% + pass rate - featuring recent CFE, CIA, CAMS alumni from 40+ countries around the globe sharing their success stories.',
       ),
@@ -238,11 +238,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Alumni Filter Directory | Academy of Internal Audit',
     description: 'Search and filter through the Academy of Internal Audit global professional network and alumni directory.',
     keywords: 'AIA alumni directory, filter alumni, CFE directory, CIA directory, CAMS directory',
-    canonicalPath: '/fillter',
+    canonicalPath: '/fillter/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/fillter',
+        '/fillter/',
         'Alumni Filter Directory | Academy of Internal Audit',
         'Search and filter through the Academy of Internal Audit global professional network and alumni directory.',
       ),
@@ -252,11 +252,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Alumni Filter Directory | Academy of Internal Audit',
     description: 'Search and filter through the Academy of Internal Audit global professional network and alumni directory.',
     keywords: 'AIA alumni directory, filter alumni, CFE directory, CIA directory, CAMS directory',
-    canonicalPath: '/fillter',
+    canonicalPath: '/fillter/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/filter',
+        '/fillter/',
         'Alumni Filter Directory | Academy of Internal Audit',
         'Search and filter through the Academy of Internal Audit global professional network and alumni directory.',
       ),
@@ -267,11 +267,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Explore AIA Times for the latest Magazines, news, media coverage, PR mentions, expert insights, and key updates from the Academy of Internal Audit.',
     keywords: 'AIA Times, AIA magazine, Academy of Internal Audit news, fraud examination insights, audit magazine',
-    canonicalPath: '/aia-times',
+    canonicalPath: '/aia-times/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/aia-times',
+        '/aia-times/',
         'AIA Times - Magazines, News, and PR Highlights | AIA',
         'Explore AIA Times for the latest Magazines, news, media coverage, PR mentions, expert insights, and key updates from the Academy of Internal Audit.',
       ),
@@ -282,11 +282,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Read the AIA Times magazine in an interactive flip book experience with expert insights, news, and updates from the Academy of Internal Audit.',
     keywords: 'AIA Times flip book, AIA magazine reader, audit magazine online, fraud examination insights',
-    canonicalPath: '/aia-times/flip-book',
+    canonicalPath: '/aia-times/flip-book/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/aia-times/flip-book',
+        '/aia-times/flip-book/',
         'AIA Times Flip Book - Interactive Magazine Reader | AIA',
         'Read the AIA Times magazine in an interactive flip book experience with expert insights, news, and updates from the Academy of Internal Audit.',
       ),
@@ -297,11 +297,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Access CFE Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.',
     keywords: 'free CFE resources, CFE practice questions, CFE flashcards, CFE study material',
-    canonicalPath: '/cfe-free-resources',
+    canonicalPath: '/cfe-free-resources/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/cfe-free-resources',
+        '/cfe-free-resources/',
         'Certified Fraud Examiner Free Resources - AIA',
         'Access CFE Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.',
       ),
@@ -312,11 +312,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Access CIA Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.',
     keywords: 'free CIA resources, CIA practice questions, CIA study guide, internal audit free prep',
-    canonicalPath: '/cia-free-resources',
+    canonicalPath: '/cia-free-resources/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/cia-free-resources',
+        '/cia-free-resources/',
         'Certified Internal Audit Free Resources - AIA',
         'Access CIA Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.',
       ),
@@ -327,11 +327,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Access CAMS Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.',
     keywords: 'free CAMS resources, CAMS practice questions, CAMS study material',
-    canonicalPath: '/cams-free-resources',
+    canonicalPath: '/cams-free-resources/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/cams-free-resources',
+        '/cams-free-resources/',
         'Certified Anti Money Laundering Specialist Free Resources - AIA',
         'Access CAMS Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.',
       ),
@@ -342,11 +342,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Start your CISA preparation with free expert resources: domain-wise practice questions, flashcards, distractors, and insightful videos from the Academy of Internal Audit.',
     keywords: 'free CISA resources, CISA practice questions, CISA flashcards, CISA study material, ISACA CISA prep',
-    canonicalPath: '/cisa-free-resources',
+    canonicalPath: '/cisa-free-resources/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/cisa-free-resources',
+        '/cisa-free-resources/',
         'Certified Information Systems Auditor Free Resources - AIA',
         'Start your CISA preparation with free expert resources: domain-wise practice questions, flashcards, distractors, and insightful videos from the Academy of Internal Audit.',
       ),
@@ -357,12 +357,12 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       "Upskill your team with AIA's corporate training in Internal Audit, Fraud Detection & Risk Management. Customized programs for organizations.",
     keywords: 'corporate audit training, risk management training, fraud detection for organizations',
-    canonicalPath: '/corporate-training',
+    canonicalPath: '/corporate-training/',
     schemas: [
       organizationSchema,
       localBusinessSchema,
       createWebPageSchema(
-        '/corporate-training',
+        '/corporate-training/',
         'Corporate Training Programs of Academy of Internal Audit',
         "Upskill your team with AIA's corporate training in Internal Audit, Fraud Detection & Risk Management. Customized programs for organizations.",
       ),
@@ -373,11 +373,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Enroll with Academy of Internal Audit for CIA, CFE, CAMS, and other global certification training programs led by expert faculty.',
     keywords: 'enroll AIA, CIA enrollment, CFE enrollment, CAMS enrollment, audit certification admission',
-    canonicalPath: '/enroll-now',
+    canonicalPath: '/enroll-now/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/enroll-now',
+        '/enroll-now/',
         'Enroll Now | Academy of Internal Audit',
         'Enroll with Academy of Internal Audit for CIA, CFE, CAMS, and other global certification training programs led by expert faculty.',
       ),
@@ -388,12 +388,12 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Reach out to Academy of Internal Audit for dedicated support in your journey to obtain professional course certifications. We will be happy to help you.',
     keywords: 'contact AIA, Academy of Internal Audit phone, AIA email, audit training support',
-    canonicalPath: '/contact',
+    canonicalPath: '/contact/',
     schemas: [
       organizationSchema,
       localBusinessSchema,
       createWebPageSchema(
-        '/contact',
+        '/contact/',
         'Contact Us | Academy of Internal Audit',
         'Reach out to Academy of Internal Audit for dedicated support in your journey to obtain professional course certifications. We will be happy to help you.',
       ),
@@ -404,12 +404,12 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     description:
       'Thank you for contacting Academy of Internal Audit. Our team will connect with you shortly to assist with your CFE, CIA, CAMS, CISA certifications enquiries.',
     keywords: 'thank you AIA, Academy of Internal Audit, CFE, CIA, CAMS, CISA certification enquiries',
-    canonicalPath: '/thank-you',
+    canonicalPath: '/thank-you/',
     noIndex: true,
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/thank-you',
+        '/thank-you/',
         'Thank You for Choosing AIA | Your Journey Starts Here',
         'Thank you for contacting Academy of Internal Audit. Our team will connect with you shortly to assist with your CFE, CIA, CAMS, CISA certifications enquiries.',
       ),
@@ -419,11 +419,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Policies | Academy of Internal Audit (AIA)',
     description: 'Read AIA policies including privacy policy, refund policy, and terms related to courses, payments, and student services.',
     keywords: 'AIA policies, privacy policy, refund policy',
-    canonicalPath: '/policies',
+    canonicalPath: '/policies/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/policies',
+        '/policies/',
         'Policies | Academy of Internal Audit (AIA)',
         'Read AIA policies including privacy policy, refund policy, and terms related to courses, payments, and student services.',
       ),
@@ -433,11 +433,11 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: 'Terms and Conditions | AIA Courses & Services',
     description: 'Review the terms and conditions for enrolling in AIA courses, including usage policies, payments, access rights, and guidelines.',
     keywords: 'AIA terms and conditions, course usage policy',
-    canonicalPath: '/terms-and-conditions',
+    canonicalPath: '/terms-and-conditions/',
     schemas: [
       organizationSchema,
       createWebPageSchema(
-        '/terms-and-conditions',
+        '/terms-and-conditions/',
         'Terms and Conditions | AIA Courses & Services',
         'Review the terms and conditions for enrolling in AIA courses, including usage policies, payments, access rights, and guidelines.',
       ),

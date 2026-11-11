@@ -37,6 +37,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { parse } from 'node-html-parser';
+import { COURSE_ROUTES } from '../src/config/site';
 
 const distDir = path.resolve(process.cwd(), 'dist');
 
@@ -91,6 +92,27 @@ if (!fs.existsSync(sitemapPath)) {
       hasError = true;
     } else {
       console.log(`  ✓ [dist/sitemap.xml] ${urls.length} URLs verified with canonical HTTPS origin.`);
+    }
+
+    // Strict Trailing Slash Policy Validation:
+    // Course routes MUST NOT have trailing slash; all other routes MUST have trailing slash.
+    const trailingSlashViolations: string[] = [];
+    for (const url of urls) {
+      const pathname = url.replace(/^https:\/\/aia\.in\.net/, '');
+      const clean = pathname.replace(/^\/+/, '').replace(/\/+$/, '');
+      if (!clean) continue; // Root '/' is valid
+      const isCourse = COURSE_ROUTES.has(clean);
+      if (isCourse && url.endsWith('/')) {
+        trailingSlashViolations.push(`Course page has trailing slash: ${url}`);
+      } else if (!isCourse && !url.endsWith('/')) {
+        trailingSlashViolations.push(`Non-course page missing trailing slash: ${url}`);
+      }
+    }
+    if (trailingSlashViolations.length > 0) {
+      console.error(`❌ [dist/sitemap.xml] FAIL: Trailing slash policy violations found:\n`, trailingSlashViolations.join('\n'));
+      hasError = true;
+    } else {
+      console.log(`  ✓ [dist/sitemap.xml] 100% compliant with Trailing Slash Policy (Course URLs without slash, all other URLs with slash).`);
     }
   }
 }
