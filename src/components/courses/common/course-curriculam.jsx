@@ -45,9 +45,9 @@ const CourseCurriculum = ({
                 }
                 className="w-full text-left p-4 flex items-center justify-between text-sm"
               >
-                <span className="font-semibold text-[#0F3652]">
+                <h3 className="font-semibold text-[#0F3652]">
                   {item.title}
-                </span>
+                </h3>
               </button>
 
               {activeTab === item.id && (
@@ -82,7 +82,7 @@ const CourseCurriculum = ({
                     : "bg-white text-[#0F3652] border-gray-200 hover:bg-[#0F3652]/5"
                 }`}
               >
-                <span className="font-medium text-md">{item.title}</span>
+                <h3 className="font-medium text-md">{item.title}</h3>
               </button>
             ))}
           </div>

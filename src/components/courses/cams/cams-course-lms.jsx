@@ -52,7 +52,7 @@ const CamsCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
   return (
     <>
       <CourseLms
-        cardTitle="What’s Included in the AIA CAMS Prep Course ?"
+        cardTitle="What’s Included in the AIA CAMS Prep Course?"
         courseFeatures={courseFeatures}
         image={image}
         bannerTitle="Become CAMS Certified in 45 Days"

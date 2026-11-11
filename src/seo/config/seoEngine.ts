@@ -163,9 +163,9 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     ],
   },
   '/cams': {
-    title: 'Certified Anti Money Laundering Specialist | CAMS Course',
+    title: 'Clear Certified Anti-Money Laundering Specialist Exam with AIA',
     description:
-      "Prepare to excel in CAMS Certification Exam with AIA's CAMS Study Guide and CAMS Practice Questions provided for Certified Anti Money Laundering Specialist.",
+      "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
     keywords:
       'CAMS COURSE, CAMS Certification, Certified Anti Money Laundering Specialist, CAMS Prep Course, CAMS Training, CAMS Coaching, CAMS Classes, CAMS Study Material, CAMS Mock Test, CAMS Exam Syllabus, CAMS Exam Preparation',
     canonicalPath: '/cams',
@@ -173,12 +173,13 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         '/cams',
-        'Certified Anti Money Laundering Specialist | CAMS Course',
-        "Prepare to excel in CAMS Certification Exam with AIA's CAMS Study Guide and CAMS Practice Questions provided for Certified Anti Money Laundering Specialist.",
+        'Clear Certified Anti-Money Laundering Specialist Exam with AIA',
+        "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
       ),
       createCourseSchema({
         name: 'Certified Anti-Money Laundering Specialist (CAMS) Training',
-        description: 'CAMS certification preparation by Academy of Internal Audit: expert guidance and study materials.',
+        description:
+          "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
         path: '/cams',
       }),
     ],

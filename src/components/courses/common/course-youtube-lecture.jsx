@@ -110,7 +110,7 @@ const CourseYoutubeLecture = ({
                       : "border-transparent text-[#0F3652] hover:text-[#F3831C] hover:border-[#F3831C]/40"
                   }`}
                 >
-                  {tab}
+                  <h3 className="inline font-medium text-sm m-0 p-0">{tab}</h3>
                 </button>
               ))}
             </div>

@@ -25,7 +25,7 @@ const CamsWhyAia = () => {
           },
           {
             img: `${IMAGE_PATH}/calender-svgrepo-com.webp`,
-            title: "Flexible Learning schedule",
+            title: "Flexible Learning Schedule",
           },
           {
             img: `${IMAGE_PATH}/books-svgrepo-com.webp`,

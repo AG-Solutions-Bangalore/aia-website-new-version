@@ -5,7 +5,7 @@ const CamsAbout = () => {
   return (
     <>
       <CourseAboutH1
-        badgeText="BEST PREP COURSE FOR CAMS CERTIFICATION "
+        badgeText="BEST PREP COURSE FOR CAMS CERTIFICATION"
         heading="Join AIA's CAMS Prep Course and Crack Your CAMS Exam on Your 1st Attempt"
         description={`The (CAMS) Certified Anti-Money Laundering Specialist certification by ACAMS is widely recognized as the leading global credential in anti-money laundering and financial crime compliance. With 50,000+ CAMS-certified professionals worldwide, it is the preferred qualification for AML, compliance, risk, and audit professionals across banks, fintechs, consulting firms, and regulators.
          \nAt the AIA, we design our CAMS prep program in the best manner to provide comprehensive, end-to-end training to master all exam concepts. Whether you are preparing alongside a full-time job or returning to AML after a break, AIA’s CAMS prep course offers the structure, guidance, and flexibility required to clear the exam on your first serious attempt.`}
