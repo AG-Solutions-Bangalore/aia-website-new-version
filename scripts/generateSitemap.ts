@@ -4,32 +4,25 @@
  * ============================================================================
  *
  * WHY:
- * Search engines rely on an accurate, automatically generated XML sitemap to
- * discover and index published pages. Static sitemaps go stale as soon as an
- * editor publishes a new blog or student story. The backend `getSitemap` API is
- * the source of truth for all published pages, so the sitemap is built from it
- * on every build while remaining resilient if the API is unavailable.
+ * Search engines rely on an accurate XML sitemap to discover and index published pages.
+ * The backend `getSitemap` API (https://aia.in.net/webapi/public/api/getSitemap) is the
+ * single source of truth for all published CRM content, blogs, and core pages.
  *
  * WHAT:
- * 1. Fetches `https://aia.in.net/webapi/public/api/getSitemap` at build time.
- * 2. Maps the `data` (static pages), `blog` posts, and `student` stories into
- *    canonical URLs, using the API priority and `updated_at` lastmod values.
- * 3. Merges any pre-rendered routes discovered in `dist/` that the API does
- *    not return (home, policies, terms, course blog hubs, etc.).
- * 4. Falls back to the pre-rendered `dist/` routes if the API request fails,
- *    so the build never produces an empty or missing sitemap.
- * 5. Writes `sitemap.xml` and `robots.txt` to `dist/` and `public/`.
- *
- * DEPENDENCIES:
- * - `node:fs`, `node:path`, `node:url`: Native Node.js modules.
- * - `../src/seo/server.ts`: `SITE_ORIGIN`, `COURSE_ROUTES`, `getCanonicalUrl`.
+ * 1. Fetches live content directly from `https://aia.in.net/webapi/public/api/getSitemap`.
+ * 2. Maps `data` (active static pages) and `blog` (active CRM blog posts) into canonical URLs.
+ * 3. Enforces strict trailing-slash rules:
+ *    - Course pages ONLY (/cfe-curriculum, /cia-curriculum, /cia-challenge-curriculum, /cams, /cisa) have NO trailing slash.
+ *    - All other pages (/, /about-aia/, /blogs/, /blogs/:slug/, etc.) have a trailing slash.
+ * 4. Excludes student passout stories (/passout-stories/*) per noindex policy.
+ * 5. Generates sitemap.xml and robots.txt in dist/ and public/.
  * ============================================================================
  */
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { COURSE_ROUTES, SITE_ORIGIN, getCanonicalUrl } from '../src/seo/server';
+import { SITE_ORIGIN, getCanonicalUrl } from '../src/seo/server';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,12 +34,6 @@ const API_TIMEOUT_MS = 30_000;
 const buildDate = new Date().toISOString().split('T')[0];
 
 /**
- * Routes that must never appear in sitemap.xml.
- * `/filter/` is a client-side redirect alias for `/fillter/` (see AppRoutes).
- */
-const EXCLUDED_ROUTES = new Set<string>(['/filter', '/thank-you']);
-
-/**
  * Legacy API page URLs that redirect to a different canonical route.
  * Sitemaps must advertise the final destination, never the redirect source.
  */
@@ -54,6 +41,7 @@ const PAGE_URL_ALIASES: Record<string, string> = {
   'about-us': 'about-aia',
   'passed-out': 'alumni-network',
   'our-passouts': 'alumni-network',
+  'contact-us': 'contact',
 };
 
 interface SitemapApiPage {
@@ -63,16 +51,9 @@ interface SitemapApiPage {
   updated_at?: string | null;
 }
 
-interface SitemapApiStudent {
-  student_slug?: string | null;
-  student_status?: string | null;
-  updated_at?: string | null;
-}
-
 interface SitemapApiResponse {
   data?: SitemapApiPage[];
   blog?: SitemapApiPage[];
-  student?: SitemapApiStudent[];
 }
 
 interface SitemapEntry {
@@ -115,44 +96,6 @@ function formatLastmod(value?: string | null): string {
   return date.toISOString().split('T')[0];
 }
 
-/**
- * Recursively scans directory for pre-rendered `index.html` files
- * and maps them to clean relative URL routes.
- */
-function getHtmlFiles(dir: string, baseDir: string = dir): string[] {
-  let results: string[] = [];
-  if (!fs.existsSync(dir)) return results;
-  const list = fs.readdirSync(dir);
-  for (const file of list) {
-    const filePath = path.join(dir, file);
-    const stat = fs.statSync(filePath);
-    if (stat.isDirectory()) {
-      results = results.concat(getHtmlFiles(filePath, baseDir));
-    } else if (file === 'index.html') {
-      const relative = path.relative(baseDir, filePath);
-      const urlPath = relative.replace(/\\/g, '/').replace(/index\.html$/, '');
-      const clean = urlPath.replace(/^\/+/, '').replace(/\/+$/, '');
-      if (!clean) {
-        results.push('/');
-      } else if (COURSE_ROUTES.has(clean)) {
-        results.push(`/${clean}`);
-      } else {
-        results.push(`/${clean}/`);
-      }
-    }
-  }
-  return results;
-}
-
-/**
- * Calculates SEO crawling priority and change frequency based on route importance:
- * - `1.0` (daily): Home page (`/`) - main brand hub.
- * - `0.9` (weekly): Flagship course landing pages (CFE, CIA, CAMS, CISA, Enroll Now).
- * - `0.8` (weekly): Dynamic and static blog articles (`/blogs/*`) - high organic search traffic.
- * - `0.7` (monthly): Student success stories and alumni network (`/passout-stories/*`).
- * - `0.3` (monthly): Legal, policies, terms & conditions.
- * - `0.6` (weekly): All other standard pages.
- */
 function getRoutePriority(route: string): { priority: string; changefreq: string } {
   const clean = route.replace(/\/+$/, '') || '/';
   if (clean === '/') return { priority: '1.0', changefreq: 'daily' };
@@ -169,7 +112,7 @@ function getRoutePriority(route: string): { priority: string; changefreq: string
     return { priority: '0.9', changefreq: 'weekly' };
   }
   if (clean.startsWith('/blogs')) return { priority: '0.8', changefreq: 'weekly' };
-  if (clean.startsWith('/passout-stories') || clean === '/alumni-network') {
+  if (clean === '/alumni-network') {
     return { priority: '0.7', changefreq: 'monthly' };
   }
   if (['/policies', '/terms-and-conditions'].includes(clean)) {
@@ -178,7 +121,7 @@ function getRoutePriority(route: string): { priority: string; changefreq: string
   return { priority: '0.6', changefreq: 'weekly' };
 }
 
-async function fetchSitemapData(): Promise<SitemapApiResponse | null> {
+async function fetchSitemapData(): Promise<SitemapApiResponse> {
   try {
     const response = await fetch(SITEMAP_API, {
       headers: { Accept: 'application/json' },
@@ -193,10 +136,10 @@ async function fetchSitemapData(): Promise<SitemapApiResponse | null> {
     }
     return payload;
   } catch (error) {
-    console.warn(
-      `⚠️ [Sitemap Generator] getSitemap API unavailable (${(error as Error).message}). Falling back to pre-rendered routes.`,
+    console.error(
+      `❌ [Sitemap Generator] Failed to fetch getSitemap API: ${(error as Error).message}`,
     );
-    return null;
+    throw error;
   }
 }
 
@@ -216,7 +159,7 @@ function upsertEntry(
   overrides: Partial<Pick<SitemapEntry, 'priority' | 'changefreq' | 'lastmod'>> = {},
 ): void {
   const normalized = normalizeRoute(route);
-  if (!normalized || EXCLUDED_ROUTES.has(normalized) || normalized.startsWith('/passout-stories')) return;
+  if (!normalized || normalized.startsWith('/passout-stories')) return;
   const defaults = getRoutePriority(normalized);
   entries.set(normalized, {
     route: normalized,
@@ -226,69 +169,54 @@ function upsertEntry(
   });
 }
 
-/**
- * Blog articles and student stories are owned by the CMS. When the API is
- * reachable, its response is authoritative for these routes so unpublished
- * entries do not linger in a stale pre-rendered `dist/` directory.
- */
-function isApiManagedRoute(route: string): boolean {
-  const clean = route.replace(/\/+$/, '');
-  if (clean.startsWith('/passout-stories/')) return true;
-  return clean.startsWith('/blogs/') && !clean.startsWith('/blogs/course/');
-}
-
-// 1. Fetch live CMS data before seeding so dynamic routes can be delegated to it.
+// 1. Fetch live CMS data from the getSitemap API (single source of truth)
 const apiData = await fetchSitemapData();
 let apiRouteCount = 0;
 
-// 2. Seed with pre-rendered routes; skip API-owned sections when the API is live.
-for (const route of getHtmlFiles(distDir)) {
-  if (apiData && isApiManagedRoute(route)) continue;
-  upsertEntry(route);
-}
-
-// 3. Overlay live CMS data from the getSitemap API.
-if (apiData) {
-  for (const page of apiData.data ?? []) {
-    if (!page.page_two_url || !isActive(page.page_two_status)) continue;
-    const route = normalizeRoute(page.page_two_url);
-    const canonicalRoute = PAGE_URL_ALIASES[route.replace(/^\//, '')] ?? route;
-    upsertEntry(canonicalRoute, {
-      priority: formatPriority(page.page_two_priority, getRoutePriority(canonicalRoute).priority),
-      changefreq: 'weekly',
-      lastmod: formatLastmod(page.updated_at),
-    });
-    apiRouteCount += 1;
-  }
-
-  for (const blog of apiData.blog ?? []) {
-    if (!blog.page_two_url || !isActive(blog.page_two_status)) continue;
-    const slug = cleanSlug(blog.page_two_url, 'blogs');
-    if (!slug) continue;
-    upsertEntry(`/blogs/${slug}`, {
-      priority: formatPriority(blog.page_two_priority, '0.8'),
-      changefreq: 'weekly',
-      lastmod: formatLastmod(blog.updated_at),
-    });
-    apiRouteCount += 1;
-  }
-
-  for (const student of apiData.student ?? []) {
-    if (!student.student_slug || !isActive(student.student_status)) continue;
-    const slug = cleanSlug(student.student_slug, 'passout-stories');
-    if (!slug) continue;
-    upsertEntry(`/passout-stories/${slug}`, {
-      priority: '0.7',
-      changefreq: 'monthly',
-      lastmod: formatLastmod(student.updated_at),
-    });
-    apiRouteCount += 1;
-  }
-}
-
-// 4. Always guarantee the home page is present and sorted first.
+// 2. Always guarantee the home page is present and sorted first
 upsertEntry('/', { priority: '1.0', changefreq: 'daily', lastmod: buildDate });
 
+// 3. Process static and core pages from apiData.data
+for (const page of apiData.data ?? []) {
+  if (!page.page_two_url || !isActive(page.page_two_status)) continue;
+  const route = normalizeRoute(page.page_two_url);
+  const rawKey = route.replace(/^\//, '');
+  const canonicalRoute = PAGE_URL_ALIASES[rawKey] ? `/${PAGE_URL_ALIASES[rawKey]}` : route;
+
+  upsertEntry(canonicalRoute, {
+    priority: formatPriority(page.page_two_priority, getRoutePriority(canonicalRoute).priority),
+    changefreq: getRoutePriority(canonicalRoute).changefreq,
+    lastmod: formatLastmod(page.updated_at),
+  });
+  apiRouteCount += 1;
+}
+
+// 4. Process dynamic blog articles from apiData.blog
+for (const blog of apiData.blog ?? []) {
+  if (!blog.page_two_url || !isActive(blog.page_two_status)) continue;
+  const slug = cleanSlug(blog.page_two_url, 'blogs');
+  if (!slug) continue;
+  upsertEntry(`/blogs/${slug}`, {
+    priority: formatPriority(blog.page_two_priority, '0.8'),
+    changefreq: 'weekly',
+    lastmod: formatLastmod(blog.updated_at),
+  });
+  apiRouteCount += 1;
+}
+
+// 5. Ensure core course blog hubs are indexed
+const courseBlogHubs = [
+  '/blogs/course/cfe',
+  '/blogs/course/cia',
+  '/blogs/course/cams',
+  '/blogs/course/cisa',
+  '/blogs/course/other',
+];
+for (const hub of courseBlogHubs) {
+  upsertEntry(hub, { priority: '0.8', changefreq: 'weekly', lastmod: buildDate });
+}
+
+// Sort routes deterministically: '/' first, followed by alphabetical order
 const routes = [...entries.values()].sort((a, b) => {
   if (a.route === '/') return -1;
   if (b.route === '/') return 1;
@@ -307,13 +235,13 @@ ${routes
   </url>`,
   )
   .join('\n')}
-</urlset>`;
+</urlset>
+`;
 
 if (fs.existsSync(distDir)) {
   fs.writeFileSync(path.join(distDir, 'sitemap.xml'), sitemapXml.trim(), 'utf8');
 }
 
-// Also keep public/sitemap.xml updated for repo consistency
 if (fs.existsSync(publicDir)) {
   fs.writeFileSync(path.join(publicDir, 'sitemap.xml'), sitemapXml.trim(), 'utf8');
 }
@@ -341,6 +269,6 @@ if (fs.existsSync(publicDir)) {
 }
 
 console.log(
-  `✅ [Sitemap Generator] Generated sitemap.xml with ${routes.length} URLs (${apiRouteCount} from getSitemap API) -> dist/ & public/`,
+  `✅ [Sitemap Generator] Generated dynamic sitemap.xml with ${routes.length} URLs (${apiRouteCount} from getSitemap API) -> dist/ & public/`,
 );
 console.log(`✅ [Sitemap Generator] Generated robots.txt referencing ${SITE_ORIGIN}/sitemap.xml`);

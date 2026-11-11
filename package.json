@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && bun scripts/seo/generateSitemap.ts",
+    "build": "vite build",
+    "generate:sitemap": "bun scripts/seo/generateSitemap.ts",
     "test:schema": "bun scripts/seo/validate.ts",
     "test:sitemap": "bun scripts/seo/validate.ts --sitemap-only",
     "test:seo": "bun scripts/seo/validate.ts",
