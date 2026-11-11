@@ -75,7 +75,7 @@ const CIACurriculam = () => {
         <CourseTopStudent
           courseSlug="cia"
           needPrefix="false"
-          title="We Stand by Results "
+          title="We Stand by Results"
           subtitle="Meet the latest AIA-trained professionals who successfully earned their CIA credential through structured preparation and expert guidance."
         />
       </LazySection>

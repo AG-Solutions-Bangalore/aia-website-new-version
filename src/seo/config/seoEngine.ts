@@ -121,9 +121,9 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     ],
   },
   '/cia-curriculum': {
-    title: 'Certified Internal Auditor Course | CIA Certification Course',
+    title: 'Earn Certified Internal Auditor (CIA) Certification with AIA',
     description:
-      'Elevate your auditing career with AIA Institute which help you to ace your Certified Internal Auditor Course (CIA) and get your Internal Audit Certification.',
+      'Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.',
     keywords:
       'CIA Course, CIA Certification, Certified Internal Auditor, CIA Prep Course, CIA Training, CIA Coaching, CIA Classes, CIA Study Material, CIA Mock Test, CIA Exam Syllabus, CIA Exam Preparation',
     canonicalPath: '/cia-curriculum',
@@ -131,12 +131,13 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         '/cia-curriculum',
-        'Certified Internal Auditor Course | CIA Certification Course',
-        'Elevate your auditing career with AIA Institute which help you to ace your Certified Internal Auditor Course (CIA) and get your Internal Audit Certification.',
+        'Earn Certified Internal Auditor (CIA) Certification with AIA',
+        'Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.',
       ),
       createCourseSchema({
         name: 'Certified Internal Auditor (CIA) Training',
-        description: 'CIA certification training by the Academy of Internal Audit: comprehensive exam preparation and guidance.',
+        description:
+          'Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.',
         path: '/cia-curriculum',
       }),
     ],
