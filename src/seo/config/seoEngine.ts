@@ -53,6 +53,7 @@ export interface MasterSeoStructure {
   author?: string;
   publisher?: string;
   noIndex?: boolean;
+  robots?: string;
   schemas?: Thing[];
   isFallback?: boolean;
 }
@@ -518,6 +519,8 @@ export function buildDynamicBlogSeo(
     description,
     keywords,
     canonicalPath,
+    noIndex: true,
+    robots: 'noindex, follow',
     schemas,
     isFallback: false,
   };
@@ -550,6 +553,8 @@ export function buildDynamicStudentStorySeo(
     description,
     keywords,
     canonicalPath,
+    noIndex: true,
+    robots: 'noindex, follow',
     schemas: [
       organizationSchema,
       websiteSchema,
@@ -734,6 +739,8 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
       description,
       keywords: `${studentName} success story, AIA alumni, CIA CFE CAMS results`,
       canonicalPath: path,
+      noIndex: true,
+      robots: 'noindex, follow',
       schemas: [
         organizationSchema,
         createWebPageSchema(path, title, description),

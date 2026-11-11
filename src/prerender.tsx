@@ -302,7 +302,7 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
       type: "meta",
       props: {
         name: "robots",
-        content: seo.noIndex ? "noindex, nofollow" : "index, follow",
+        content: seo.robots || (seo.noIndex ? "noindex, nofollow" : "index, follow"),
         "data-rh": "true",
       },
     },

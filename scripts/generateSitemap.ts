@@ -216,7 +216,7 @@ function upsertEntry(
   overrides: Partial<Pick<SitemapEntry, 'priority' | 'changefreq' | 'lastmod'>> = {},
 ): void {
   const normalized = normalizeRoute(route);
-  if (!normalized || EXCLUDED_ROUTES.has(normalized)) return;
+  if (!normalized || EXCLUDED_ROUTES.has(normalized) || normalized.startsWith('/passout-stories')) return;
   const defaults = getRoutePriority(normalized);
   entries.set(normalized, {
     route: normalized,

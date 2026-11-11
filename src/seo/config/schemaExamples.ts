@@ -42,6 +42,7 @@ export interface MasterSeoStructure {
   keywords: string;
   canonicalPath: string;
   noIndex?: boolean;
+  robots?: string;
   schemas?: Thing[];
   author?: string;
   publisher?: string;

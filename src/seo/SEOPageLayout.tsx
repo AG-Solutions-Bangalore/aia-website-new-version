@@ -77,6 +77,7 @@ export default function SEOPageLayout({
     if (!canonicals[0]) document.head.appendChild(canonical);
     for (let index = 1; index < canonicals.length; index += 1) canonicals[index].remove();
 
+    syncMeta('robots', seo.robots || (seo.noIndex ? 'noindex, nofollow' : 'index, follow'));
     syncMeta('description', seo.description || '');
     syncMeta('keywords', seo.keywords || '');
     if (seo.author) syncMeta('author', seo.author);
@@ -107,7 +108,7 @@ export default function SEOPageLayout({
         {seo.author && <meta name="author" content={seo.author} />}
         {seo.publisher && <meta name="publisher" content={seo.publisher} />}
         <link rel="canonical" href={finalCanonical} />
-        <meta name="robots" content={seo.noIndex ? 'noindex, nofollow' : 'index, follow'} />
+        <meta name="robots" content={seo.robots || (seo.noIndex ? 'noindex, nofollow' : 'index, follow')} />
         <meta property="og:title" content={seo.title} />
         <meta property="og:description" content={seo.description} />
         <meta property="og:url" content={finalCanonical} />
