@@ -92,6 +92,7 @@ export function TestimonialsSectionCourse({
               }
               title="Academy of Internal Audit – YouTube Video Playlist"
               target="_blank"
+              rel="noopener noreferrer"
             >
               <span className="relative z-10 text-white">
                 <span>View All Success Stories</span>

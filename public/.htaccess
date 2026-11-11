@@ -136,11 +136,19 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.html [L]
 </IfModule>
 
-# 7. Static asset caching & Security Headers for cPanel
+# 7. Security Headers & Static asset caching for Apache / cPanel / LiteSpeed
 <IfModule mod_headers.c>
-    # Prevent MIME sniffing and clickjacking on cPanel
-    Header set X-Content-Type-Options "nosniff"
-    Header set X-Frame-Options "SAMEORIGIN"
+    # 1. Prevent Clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # 2. Enforce HSTS (Strict-Transport-Security for 1 year)
+    Header always set Strict-Transport-Security "max-age=31536000"
+
+    # 3. Secure Referrer Policy (protect path leakage to cross-origin destinations)
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # 4. Prevent MIME-Type Sniffing
+    Header always set X-Content-Type-Options "nosniff"
 
     # Hashed Vite bundles are content-addressed, so they can be cached for a year.
     <FilesMatch "\.(js|mjs|css|woff2|woff|ttf|otf|eot)$">

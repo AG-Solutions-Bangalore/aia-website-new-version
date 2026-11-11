@@ -187,7 +187,12 @@ const CourseYoutubeLecture = ({
           variant="ghost"
           aria-label="Visit Our YouTube Channel"
         >
-          <Link to={"https://www.youtube.com/@academyofia"} title="Academy of Internal Audit – YouTube Channel" target="_blank">
+          <Link
+            to={"https://www.youtube.com/@academyofia"}
+            title="Academy of Internal Audit – YouTube Channel"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <span className="relative z-10 text-white">
               <span>Visit Our YouTube Channel</span>
             </span>
