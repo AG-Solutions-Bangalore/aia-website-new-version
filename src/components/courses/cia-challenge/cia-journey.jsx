@@ -7,6 +7,8 @@ const CiaJourney = () => {
     <CourseJourney
       heading="Your Complete Guide to CIA Challenge Mastery - "
       highlight="Value, Learning, Format"
+      headingLevel={3}
+      stepHeadingLevel={4}
       connectorImage={`${IMAGE_PATH}/step-line.webp`}
       steps={[
         {
@@ -35,7 +37,7 @@ const CiaJourney = () => {
         },
         {
           number: 3,
-          title: "CIA  CHALLENGE EXAM FORMAT",
+          title: "CIA CHALLENGE EXAM FORMAT",
           items: [
             "Passing Score 80%",
             "No Negative Marking",

@@ -142,9 +142,9 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     ],
   },
   '/cia-challenge-curriculum': {
-    title: 'CIA Challenge Exam Prep | Clear in One Attempt with AIA Guidance',
+    title: 'Clear (CIA) Certified Internal Auditor Challenge Exam with AIA',
     description:
-      "Short on time? AIA's CIA Challenge Prep helps busy auditors fast-track their certification with flexible notes, expert-recorded lectures, and 1:1 live support. Enroll today!",
+      'Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.',
     keywords:
       'CIA Challenge Course, CIA Challenge Certification, Certified Internal Auditor Challenge, CIA Challenge Prep Course, CIA Challenge Training, CIA Challenge Coaching, CIA Challenge Classes, CIA Challenge Study Material, CIA Challenge Mock Test, CIA Challenge Exam Syllabus, CIA Challenge Exam Preparation',
     canonicalPath: '/cia-challenge-curriculum',
@@ -152,12 +152,13 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         '/cia-challenge-curriculum',
-        'CIA Challenge Exam Prep | Clear in One Attempt with AIA Guidance',
-        "Short on time? AIA's CIA Challenge Prep helps busy auditors fast-track their certification with flexible notes, expert-recorded lectures, and 1:1 live support. Enroll today!",
+        'Clear (CIA) Certified Internal Auditor Challenge Exam with AIA',
+        'Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.',
       ),
       createCourseSchema({
         name: 'CIA Challenge Exam Training',
-        description: 'Fast-track CIA Challenge exam training by the Academy of Internal Audit for qualified professionals.',
+        description:
+          'Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.',
         path: '/cia-challenge-curriculum',
       }),
     ],
