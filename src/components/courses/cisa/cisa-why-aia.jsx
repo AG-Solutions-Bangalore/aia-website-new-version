@@ -17,7 +17,7 @@ const CisaWhyAia = () => {
           },
           {
             img: `${IMAGE_PATH}/teacher-svgrepo-com.webp`,
-            title: "APMG Authorised Trainer",
+            title: "ISACA Authorised Trainer",
           },
           {
             img: `${IMAGE_PATH}/ISACA.webp`,

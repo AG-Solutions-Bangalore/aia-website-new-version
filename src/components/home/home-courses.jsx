@@ -29,14 +29,14 @@ const ServiceCard = ({ service, i, progress, total }) => {
       >
         <div>
           <div className="flex items-start justify-between mb-2">
-            <p
+            <h4
               className="text-xl  font-bold"
               style={{
                 color: service.textColor === "#ffffff" ? "#ffffff" : "#000000",
               }}
             >
               {service.description2}
-            </p>
+            </h4>
             <div className="text-5xl font-bold text-[#F3831C] opacity-20">
               {String(service.id).padStart(2, "0")}
             </div>
@@ -143,7 +143,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             </div>
 
             <div className="mb-4">
-              <p
+              <h4
                 className="text-sm font-bold mb-3 text-justify"
                 style={{
                   color:
@@ -151,7 +151,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                 }}
               >
                 {service.description2}
-              </p>
+              </h4>
 
               {service.features && (
                 <div className="space-y-2">

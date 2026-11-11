@@ -691,9 +691,9 @@ export default function HomeHero({ slug, bottombar = false }) {
 
       {slug === "home" && (
         <div className="bg-[#0F3652] px-4 py-3">
-          <h1 className="mx-auto max-w-5xl text-center text-sm font-bold leading-snug text-white sm:text-lg md:text-xl">
+          <p className="mx-auto max-w-5xl text-center text-sm font-bold leading-snug text-white sm:text-lg md:text-xl">
             CIA, CFE, CAMS &amp; CISA Certification Training
-          </h1>
+          </p>
         </div>
       )}
     </>

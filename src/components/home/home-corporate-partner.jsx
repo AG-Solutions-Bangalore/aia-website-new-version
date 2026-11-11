@@ -259,7 +259,7 @@ const HomeCorporatePartner = () => {
         {/* Section 1 – dark bg, item index [2] */}
         <section className="bg-[#0F3652] p-4 mt-6 overflow-hidden">
           <SectionHeading
-            title="AIA Empowers Organisations Through Audit & Fraud Risk Excellences"
+            title="AIA Empowers Organisations Through Audit & Fraud Risk Excellence"
             description="Industry-aligned certification training designed to strengthen fraud prevention, detection, investigation, and audit capabilities across organisations."
             align="center"
             titleClass="text-white text-[1.1rem] lg:text-3xl"
@@ -338,7 +338,7 @@ const HomeCorporatePartner = () => {
         <section className="relative w-full overflow-hidden bg-[#0F3652] pt-6">
           <div className="px-6">
             <SectionHeading
-              title="AIA Empowers Organisations Through Audit & Fraud Risk Excellences"
+              title="AIA Empowers Organisations Through Audit & Fraud Risk Excellence"
               description="Industry-aligned certification training designed to strengthen fraud prevention, detection, investigation, and audit capabilities across organisations."
               align="center"
               titleClass="text-white text-[1.1rem] lg:text-3xl"

@@ -47,7 +47,7 @@ const HomePassout = () => {
       <div className="mx-auto pt-10 max-w-340 z-10">
         <div className="flex flex-col items-center justify-center  mx-auto px-6">
           <SectionHeading
-            title="AIA Certified Achievers"
+            title="AIA Certified CFE, CIA and CAMS Achievers"
             description="Professionals who turned global certifications into career milestones with AIA."
             align="center"
           />

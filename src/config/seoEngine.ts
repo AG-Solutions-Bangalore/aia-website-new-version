@@ -63,11 +63,11 @@ export interface MasterSeoStructure {
  */
 export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
   '/': {
-    title: 'Academy of Internal Audit | Best Training Institute For Top Certification Courses - AIA',
+    title: 'Expert Training for CFE, CIA, CAMS & CISA Certification | AIA',
     description:
-      'Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses.',
+      'Academy of Internal Audit offers expert-led CIA, CFE, CAMS & CISA training with a 99.6% success rate, helping professionals achieve global certifications.',
     keywords:
-      'CIA Training Center, CIA Training Institute, CAMS Training Center, CAMS Training Institute, CFE Training Center, CFE Training Institute, CIA Challenge Training Center, CIA Challenge Training Institute, CISA Training Center, CISA Training Institute, Best Training Institute For CIA, Best Training Institute For CFE, Best Training Institute For CAMS, Global Certification Courses, Internal Audit Training Center',
+      'Academy of Internal Audit, CFE Certification, CIA Certification, CAMS Certification, CISA Certification, Coaching Institute, Global Certification Training Institute',
     canonicalPath: '/',
     author: 'Academy of Internal Audit',
     publisher: 'Academy of Internal Audit (AIA)',
@@ -77,8 +77,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       websiteSchema,
       createWebPageSchema(
         '/',
-        'Academy of Internal Audit | Best Training Institute For Top Certification Courses - AIA',
-        'Academy of Internal Audit (AIA) is Online Training Institute for Global Certification Courses like CIA, CFE, and other International Certification Courses.',
+        'Expert Training for CFE, CIA, CAMS & CISA Certification | AIA',
+        'Academy of Internal Audit offers expert-led CIA, CFE, CAMS & CISA training with a 99.6% success rate, helping professionals achieve global certifications.',
       ),
     ],
   },

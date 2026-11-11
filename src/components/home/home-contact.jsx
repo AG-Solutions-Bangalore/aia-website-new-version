@@ -197,14 +197,17 @@ const HomeContact = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 col-span-1 lg:col-span-2">
                 {[
                   {
-                    stat: "10k+ hours",
-                    label: "Expert-Led Training Delivered",
+                    stat: "99.6%",
+                    label: "Proven Success Track Record",
                   },
                   {
-                    stat: "2,000+ Professionals",
-                    label: "Trained & Certified",
+                    stat: "2000+",
+                    label: "Professionals Trained & Certified",
                   },
-                  { stat: "22+ Years", label: "Industry Experience" },
+                  {
+                    stat: "22+ Years",
+                    label: "of Industry Experience Faculty",
+                  },
                 ].map(({ stat, label }) => (
                   <div
                     key={stat}

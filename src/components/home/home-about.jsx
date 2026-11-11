@@ -9,8 +9,8 @@ const HomeAbout = () => {
     <>
       <CourseAboutH1
         badgeText="Empowering Professionals Through Global Certifications & Structured Approach"
-        heading="Excellence in Professional Education"
-        headingLevel={2}
+        heading="Training Institute for Global Certification - CFE, CIA, CAMS & CISA"
+        headingLevel={1}
         description={`
 <strong>Academy of Internal Audit (AIA) is a leading and trusted learning partner for professionals preparing for global certification focused on Audit, Fraud, AML, Risk, and IT Audit.</strong>
 \n

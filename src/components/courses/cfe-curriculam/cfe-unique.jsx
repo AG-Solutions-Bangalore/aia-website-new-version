@@ -36,7 +36,7 @@ const CfeUnique = () => {
             secondaryIcon: (
               <CheckCircle className="w-4 h-4 absolute -top-1 -right-1 text-blue-400" />
             ),
-            title: "Structured & Practical Fraud-Focused Learning",
+            title: "Structured & Practical Learning",
             description:
               "Our CFE exam prep follows a clear, structured learning path built around practical fraud scenarios. Each concept is explain learners how fraud actually occurs in depth, about how fraud actually occurs.",
             position: "left",
