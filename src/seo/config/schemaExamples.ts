@@ -1,5 +1,5 @@
 /**
- * @file src/config/schemaExamples.ts
+ * @file src/seo/config/schemaExamples.ts
  * @description Type-safe Schema.org factory functions providing Rich Results compliant
  * JSON-LD structures (Product, Review snippets, SoftwareApplication, Course).
  *

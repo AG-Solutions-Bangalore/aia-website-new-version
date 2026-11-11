@@ -37,7 +37,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { parse } from 'node-html-parser';
-import { COURSE_ROUTES } from '../src/config/site';
+import { getCanonicalUrl, INDEXABLE_HEADING_EXPECTATIONS } from '../src/seo/server';
+import { COURSE_ROUTES } from '../src/seo/server';
 
 const distDir = path.resolve(process.cwd(), 'dist');
 
@@ -145,10 +146,98 @@ const htmlFiles = findHtmlFiles(distDir);
 
 console.log(`\n🔍 [Schema Validator] Auditing ${htmlFiles.length} pre-rendered HTML files in dist/...\n`);
 
+function routeFromHtmlFile(file: string): string {
+  const relative = path.relative(distDir, file).replace(/\\/g, '/');
+  if (relative === 'index.html') return '/';
+  const route = relative.replace(/\/index\.html$/, '').replace(/^\/+/, '');
+  return route ? `/${route}` : '/';
+}
+
+const REDIRECT_ONLY_ROUTES = new Set(['/filter']);
+
+function isInExcludedLandmark(node: ReturnType<typeof parse>['children'][number]): boolean {
+  let parent = node.parentNode;
+  while (parent) {
+    const tagName = parent.rawTagName?.toLowerCase() || '';
+    if (tagName === 'footer' || tagName === 'nav') return true;
+    parent = parent.parentNode;
+  }
+  return false;
+}
+
+function validateHeadAndHierarchy(file: string, root: ReturnType<typeof parse>): void {
+  const route = routeFromHtmlFile(file);
+  if (REDIRECT_ONLY_ROUTES.has(route)) return;
+  const canonicalTags = root.querySelectorAll('link[rel="canonical"]');
+  const canonical = canonicalTags[0]?.getAttribute('href') || '';
+  const expectedCanonical = getCanonicalUrl(route);
+
+  if (canonicalTags.length !== 1) {
+    console.error(`❌ [${path.relative(distDir, file)}] FAIL: Expected exactly one canonical tag, found ${canonicalTags.length}.`);
+    hasError = true;
+  } else if (canonical !== expectedCanonical) {
+    console.error(`❌ [${path.relative(distDir, file)}] FAIL: Canonical mismatch. Expected ${expectedCanonical}, found ${canonical}.`);
+    hasError = true;
+  }
+
+  const robots = root.querySelector('meta[name="robots"]')?.getAttribute('content') || '';
+  const isIndexable = !/noindex/i.test(robots);
+  const headings = root.querySelectorAll('h1,h2,h3,h4')
+    .filter((heading) => !isInExcludedLandmark(heading))
+    .map((heading) => ({
+      level: Number(heading.tagName.slice(1)),
+      text: heading.text.trim().replace(/\s+/g, ' '),
+    }));
+
+  if (!isIndexable) return;
+
+  const h1Count = headings.filter((heading) => heading.level === 1).length;
+  if (h1Count !== 1) {
+    console.error(`❌ [${path.relative(distDir, file)}] FAIL: Expected exactly one H1, found ${h1Count}.`);
+    hasError = true;
+  }
+
+  const expectedHeading = INDEXABLE_HEADING_EXPECTATIONS[route];
+  if (expectedHeading && headings[0]?.text !== expectedHeading.h1) {
+    console.error(
+      `❌ [${path.relative(distDir, file)}] FAIL: H1 mismatch. Expected "${expectedHeading.h1}", found "${headings[0]?.text || '(missing)'}".`,
+    );
+    hasError = true;
+  }
+
+  headings.forEach((heading) => {
+    if (!heading.text) {
+      console.error(`❌ [${path.relative(distDir, file)}] FAIL: Empty H${heading.level} heading.`);
+      hasError = true;
+    }
+  });
+
+  for (let index = 1; index < headings.length; index += 1) {
+    const previous = headings[index - 1];
+    const current = headings[index];
+    if (current.level > previous.level + 1) {
+      console.error(
+        `❌ [${path.relative(distDir, file)}] FAIL: Heading hierarchy skips H${previous.level} → H${current.level} (${current.text}).`,
+      );
+      hasError = true;
+    }
+  }
+
+  const title = root.querySelector('title')?.text.trim() || '';
+  const description = root.querySelector('meta[name="description"]')?.getAttribute('content') || '';
+  if (title.length < 30 || title.length > 65) {
+    console.warn(`⚠️ [${path.relative(distDir, file)}] SEO quality: title length is ${title.length}; recommended range is 30–65 characters.`);
+  }
+  if (description.length < 120 || description.length > 170) {
+    console.warn(`⚠️ [${path.relative(distDir, file)}] SEO quality: description length is ${description.length}; recommended range is 120–170 characters.`);
+  }
+}
+
 for (const file of htmlFiles) {
   const relPath = path.relative(distDir, file);
   const content = fs.readFileSync(file, 'utf8');
   const root = parse(content);
+  validateHeadAndHierarchy(file, root);
   const scripts = root.querySelectorAll('script[type="application/ld+json"]');
 
   if (scripts.length === 0) {

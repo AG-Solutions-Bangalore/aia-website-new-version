@@ -1139,9 +1139,9 @@ const AlumniDirectory = ({ headingLevel = 2 }) => {
             {filteredAlumni.length === 0 ? (
               <div className="bg-white rounded-lg border border-gray-200 p-12 text-center">
                 <Briefcase className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-                <h4 className="text-lg font-bold text-gray-700 mb-1">
+                <p className="text-lg font-bold text-gray-700 mb-1">
                   No matches found
-                </h4>
+                </p>
                 <p className="text-sm text-gray-500 max-w-sm mx-auto mb-4">
                   We couldn&apos;t find any professionals matching your search query
                   or filters.
@@ -1212,9 +1212,9 @@ const AlumniDirectory = ({ headingLevel = 2 }) => {
                     {/* Info */}
                     <div className="text-center flex-1 flex flex-col justify-between mt-2">
                       <div className="flex flex-col items-center">
-                        <h4 className="font-bold text-slate-800 text-[15px] tracking-tight leading-snug line-clamp-1">
+                        <p className="font-bold text-slate-800 text-[15px] tracking-tight leading-snug line-clamp-1">
                           {student.name}
-                        </h4>
+                        </p>
 
                         <p className="text-xs font-bold text-blue-600 mt-1 uppercase">
                           {student.course}

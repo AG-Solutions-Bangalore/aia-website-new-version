@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && bun scripts/generateSitemap.ts",
-    "test:schema": "bun scripts/validateSchemas.ts",
-    "test:sitemap": "bun scripts/validateSchemas.ts --sitemap-only",
+    "build": "vite build && bun scripts/seo/generateSitemap.ts",
+    "test:schema": "bun scripts/seo/validate.ts",
+    "test:sitemap": "bun scripts/seo/validate.ts --sitemap-only",
+    "test:seo": "bun scripts/seo/validate.ts",
     "audit:ssg": "bun scripts/auditSeoHtml.mjs",
     "optimize:images": "bun scripts/optimizeImages.ts",
     "preview": "vite preview --port 4173 --strictPort --host 0.0.0.0",

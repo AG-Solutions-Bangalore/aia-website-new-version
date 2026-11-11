@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
 import { getBannerForSlug } from "@/config/bannerData";
-import { COURSE_ROUTES } from "@/config/site";
+import { normalizeRoutePath } from "@/routes/route-path";
 import { HOME_HERO_480_BASE64 } from "./hero-480-base64";
 import { getLinkTitle } from "@/utils/seoTitles";
 
@@ -479,9 +479,7 @@ export default function HomeHero({ slug, bottombar = false }) {
   const normalizeRoute = (rawLink) => {
     if (!rawLink) return undefined;
     if (rawLink.startsWith("http")) return rawLink;
-    const clean = rawLink.replace(/^\/+/, "").replace(/\/+$/, "");
-    if (!clean) return "/";
-    return COURSE_ROUTES.has(clean) ? `/${clean}` : `/${clean}/`;
+    return normalizeRoutePath(rawLink);
   };
 
   const slideHref = normalizeRoute(activeSlide?.link);

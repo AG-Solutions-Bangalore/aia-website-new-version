@@ -22,14 +22,14 @@
  *
  * DEPENDENCIES:
  * - `node:fs`, `node:path`, `node:url`: Native Node.js modules.
- * - `../src/config/site.ts`: `SITE_ORIGIN`, `COURSE_ROUTES`, `getCanonicalUrl`.
+ * - `../src/seo/server.ts`: `SITE_ORIGIN`, `COURSE_ROUTES`, `getCanonicalUrl`.
  * ============================================================================
  */
 
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { COURSE_ROUTES, SITE_ORIGIN, getCanonicalUrl } from '../src/config/site';
+import { COURSE_ROUTES, SITE_ORIGIN, getCanonicalUrl } from '../src/seo/server';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

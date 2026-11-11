@@ -9,7 +9,7 @@ import { isReactSnapPrerender } from "@/lib/prerender";
 import {
   getAllDynamicBlogSummaries,
   getDynamicImageBase,
-} from "@/config/dynamicData";
+} from "@/data/blogCatalog";
 import { getCourseColor } from "@/utils/courseColor";
 import axios from "axios";
 import {

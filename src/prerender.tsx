@@ -29,16 +29,18 @@
  * - @tanstack/react-query: `QueryClient`
  * - vite-prerender-plugin/parse: HTML link extraction (`parseLinks`)
  * - @/routes/AppRoutes: Main application route tree
- * - @/config/site: `getCanonicalUrl`, `SITE_LOGO`
- * - @/config/seoEngine: `createCompositeGraph`, `getSeoForRoute`, `ROUTE_SEO`
- * - @/config/dynamicData: `loadDynamicData`, `getDynamicBlog`, `getDynamicStudentStory`, `getAllDynamicRouteUrls`
+ * - @/seo/server: `getCanonicalUrl`, `SITE_LOGO`, route metadata, schemas, and dynamic data
  */
 
-import React from 'react';
-import { QueryClient, dehydrate } from '@tanstack/react-query';
-import { getCanonicalUrl, SITE_LOGO } from '@/config/site';
-import { getSeoForRoute, ROUTE_SEO } from '@/config/seoEngine';
-import { createCompositeGraph } from './config/schemaExamples';
+import React from "react";
+import { QueryClient, dehydrate } from "@tanstack/react-query";
+import {
+  getCanonicalUrl,
+  SITE_LOGO,
+  ROUTE_SEO,
+  createCompositeGraph,
+  getSeoForRoute,
+} from "@/seo/server";
 import {
   getAllDynamicBlogSummaries,
   getAllDynamicRouteUrls,
@@ -51,12 +53,12 @@ import {
   getDynamicPassoutStudentsYear,
   getDynamicStudentStory,
   loadDynamicData,
-} from './config/dynamicData';
+} from "@/seo/server";
 import {
   BANNER_ROUTE_SLUGS,
   getBannerForSlug,
   loadBannerData,
-} from './config/bannerData';
+} from "./config/bannerData";
 
 export interface PrerenderData {
   url: string;
@@ -75,7 +77,7 @@ export interface PrerenderReturn {
 
 /**
  * Asynchronously renders a React element to string using Web standard `renderToReadableStream`.
- * 
+ *
  * WHY `renderToReadableStream` INSTEAD OF `renderToString`:
  * 1. Synchronous `renderToString` throws an error or aborts when encountering `React.lazy()` chunks
  *    and Suspense boundaries because dynamic imports are inherently asynchronous.
@@ -86,10 +88,10 @@ export interface PrerenderReturn {
  *    lazy chunks and data queries resolve completely before returning the final HTML string.
  */
 async function renderToStringAsync(element: React.ReactNode): Promise<string> {
-  const { renderToReadableStream } = await import('react-dom/server');
+  const { renderToReadableStream } = await import("react-dom/server");
   const stream = await renderToReadableStream(element, {
     onError(err) {
-      console.warn('⚠️ [SSG SSR warning]:', err);
+      console.warn("⚠️ [SSG SSR warning]:", err);
     },
   });
   // Wait until all Suspense boundaries, lazy components, and promises resolve
@@ -108,14 +110,14 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
   //    are loaded into memory before rendering.
   await Promise.all([loadDynamicData(), loadBannerData()]);
 
-  const url = data.url || '/';
-  const cleanPath = url.split('?')[0].split('#')[0].replace(/\/$/, '') || '/';
+  const url = data.url || "/";
+  const cleanPath = url.split("?")[0].split("#")[0].replace(/\/$/, "") || "/";
   const seo = getSeoForRoute(url);
   const canonical = getCanonicalUrl(seo.canonicalPath);
 
   /**
    * 2. Setup SSR QueryClient with pre-cached dynamic state.
-   * 
+   *
    * WHY REACT QUERY PRE-HYDRATION IN SSR:
    * Normally in an SPA, pages fetch data inside client-side `useEffect` or `useQuery` after mounting in the browser.
    * In SSR/SSG, `useEffect` never runs! Without pre-populating the cache, components like `BlogDetails` or
@@ -133,49 +135,49 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
 
   // Seed the alumni directory so `/fillter` emits the complete directory
   // markup instead of a loading skeleton during SSG.
-  if (cleanPath === '/fillter') {
+  if (cleanPath === "/fillter") {
     const passoutYearData = getDynamicPassoutStudentsYear();
     if (passoutYearData) {
-      queryClient.setQueryData(['passout-students-year'], passoutYearData);
+      queryClient.setQueryData(["passout-students-year"], passoutYearData);
     }
   }
 
   // Seed the home widgets that render during SSG so their server markup and
   // first client render match, and so the crawler sees FAQs and blog links.
-  if (cleanPath === '/') {
+  if (cleanPath === "/") {
     const homeBlogs = getDynamicHomeBlogs();
     const homeFaq = getDynamicHomeFaq();
     const homeCertificates = getDynamicHomeCertificates();
 
-    if (homeBlogs) queryClient.setQueryData(['aia-blog'], homeBlogs);
-    if (homeFaq) queryClient.setQueryData(['aia-faq'], homeFaq);
+    if (homeBlogs) queryClient.setQueryData(["aia-blog"], homeBlogs);
+    if (homeFaq) queryClient.setQueryData(["aia-faq"], homeFaq);
     if (homeCertificates) {
-      queryClient.setQueryData(['course-results-common'], homeCertificates);
+      queryClient.setQueryData(["course-results-common"], homeCertificates);
     }
-  } else if (cleanPath === '/cfe-curriculum') {
-    const cfeFaq = getDynamicFaqBySlug('cfe-curriculum');
+  } else if (cleanPath === "/cfe-curriculum") {
+    const cfeFaq = getDynamicFaqBySlug("cfe-curriculum");
     if (cfeFaq && cfeFaq.length > 0) {
-      queryClient.setQueryData(['aia-faq-cfe'], { data: cfeFaq });
+      queryClient.setQueryData(["aia-faq-cfe"], { data: cfeFaq });
     }
-  } else if (cleanPath === '/cams') {
-    const camsFaq = getDynamicFaqBySlug('cams');
+  } else if (cleanPath === "/cams") {
+    const camsFaq = getDynamicFaqBySlug("cams");
     if (camsFaq && camsFaq.length > 0) {
-      queryClient.setQueryData(['aia-faq'], { data: camsFaq });
+      queryClient.setQueryData(["aia-faq"], { data: camsFaq });
     }
-  } else if (cleanPath === '/cia-challenge-curriculum') {
-    const ciacFaq = getDynamicFaqBySlug('cia-challenge-curriculum');
+  } else if (cleanPath === "/cia-challenge-curriculum") {
+    const ciacFaq = getDynamicFaqBySlug("cia-challenge-curriculum");
     if (ciacFaq && ciacFaq.length > 0) {
-      queryClient.setQueryData(['aia-faq-ciac'], { data: ciacFaq });
+      queryClient.setQueryData(["aia-faq-ciac"], { data: ciacFaq });
     }
-  } else if (cleanPath === '/cia-curriculum') {
-    const ciaFaq = getDynamicFaqBySlug('cia-curriculum');
+  } else if (cleanPath === "/cia-curriculum") {
+    const ciaFaq = getDynamicFaqBySlug("cia-curriculum");
     if (ciaFaq && ciaFaq.length > 0) {
-      queryClient.setQueryData(['aia-faq-cia-curr'], { data: ciaFaq });
+      queryClient.setQueryData(["aia-faq-cia-curr"], { data: ciaFaq });
     }
-  } else if (cleanPath === '/cisa') {
-    const cisaFaq = getDynamicFaqBySlug('cisa');
+  } else if (cleanPath === "/cisa") {
+    const cisaFaq = getDynamicFaqBySlug("cisa");
     if (cisaFaq && cisaFaq.length > 0) {
-      queryClient.setQueryData(['aia-faq-cisa'], { data: cisaFaq });
+      queryClient.setQueryData(["aia-faq-cisa"], { data: cisaFaq });
     }
   }
 
@@ -183,11 +185,11 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
 
   // Pre-populate blog query cache for /blogs/:slug
   const blogMatch = cleanPath.match(/^\/blogs\/([^/]+)$/);
-  if (blogMatch && blogMatch[1] !== 'course') {
+  if (blogMatch && blogMatch[1] !== "course") {
     const slug = blogMatch[1];
     const blogData = getDynamicBlog(slug);
     if (blogData) {
-      queryClient.setQueryData(['blog-details', slug], blogData);
+      queryClient.setQueryData(["blog-details", slug], blogData);
       if (blogData.data?.blog_images) {
         ogImage = `https://aia.in.net/webapi/public/assets/images/blog_images/${blogData.data.blog_images}`;
       }
@@ -200,7 +202,7 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
     const slug = passoutMatch[1];
     const storyData = getDynamicStudentStory(slug);
     if (storyData) {
-      queryClient.setQueryData(['passout-stories-slug', slug], storyData);
+      queryClient.setQueryData(["passout-stories-slug", slug], storyData);
       if (storyData.data?.student_story_banner_image) {
         ogImage = `https://aia.in.net/webapi/public/assets/images/student_images/${storyData.data.student_story_banner_image}`;
       }
@@ -209,10 +211,10 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
 
   // 3. Dynamically import server router and helmet provider to avoid bundling Node-only modules into client code
   const [{ StaticRouter }, { HelmetProvider }] = await Promise.all([
-    import('react-router'),
-    import('react-helmet-async'),
+    import("react-router"),
+    import("react-helmet-async"),
   ]);
-  const { default: App } = await import('@/App');
+  const { default: App } = await import("@/App");
 
   const helmetContext: Record<string, unknown> = {};
 
@@ -231,7 +233,7 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
 
   /**
    * 5. Clean raw SSR artifacts from rendered body.
-   * 
+   *
    * WHY HEAD CLEANUP:
    * React Helmet and subcomponents might inject tags into the component markup string during render.
    * If left alone, duplicate <title> or <meta> tags would appear in both <head> and <body>.
@@ -239,39 +241,123 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
    * then inject the single, authoritative set of head elements through the plugin's `head.elements` below.
    */
   const html = rawHtml
-    .replace(/<title[^>]*>[\s\S]*?<\/title>/gi, '')
-    .replace(/<script[^>]*type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi, '')
-    .replace(/<meta[^>]*>/gi, '')
-    .replace(/<link[^>]*>/gi, '');
+    .replace(/<title[^>]*>[\s\S]*?<\/title>/gi, "")
+    .replace(
+      /<script[^>]*type="application\/ld\+json"[^>]*>[\s\S]*?<\/script>/gi,
+      "",
+    )
+    .replace(/<meta[^>]*>/gi, "")
+    .replace(/<link[^>]*>/gi, "");
 
-  const isArticle = url.startsWith('/blogs/') && !url.includes('/course/');
+  const isArticle = url.startsWith("/blogs/") && !url.includes("/course/");
 
   // Serialize the page-specific query cache so the client hydrates with the
   // same data the SSG markup was rendered from. Without this, server-rendered
   // FAQ/blog/certificate markup would be replaced by loading skeletons.
   const dehydratedState = dehydrate(queryClient);
-  const queryStatePayload = JSON.stringify(dehydratedState).replace(/</g, '\\u003c');
+  const queryStatePayload = JSON.stringify(dehydratedState).replace(
+    /</g,
+    "\\u003c",
+  );
 
   // 6. Build the authoritative head elements (title, canonical, robots, OpenGraph, Twitter)
   const elements = new Set<Record<string, unknown>>([
-    { type: 'meta', props: { name: 'description', content: seo.description, 'data-rh': 'true' } },
-    { type: 'meta', props: { name: 'keywords', content: seo.keywords, 'data-rh': 'true' } },
-    ...(seo.author ? [{ type: 'meta', props: { name: 'author', content: seo.author, 'data-rh': 'true' } }] : []),
-    ...(seo.publisher ? [{ type: 'meta', props: { name: 'publisher', content: seo.publisher, 'data-rh': 'true' } }] : []),
-    { type: 'link', props: { rel: 'canonical', href: canonical, 'data-rh': 'true' } },
     {
-      type: 'meta',
-      props: { name: 'robots', content: seo.noIndex ? 'noindex, nofollow' : 'index, follow', 'data-rh': 'true' },
+      type: "meta",
+      props: {
+        name: "description",
+        content: seo.description,
+        "data-rh": "true",
+      },
     },
-    { type: 'meta', props: { property: 'og:title', content: seo.title, 'data-rh': 'true' } },
-    { type: 'meta', props: { property: 'og:description', content: seo.description, 'data-rh': 'true' } },
-    { type: 'meta', props: { property: 'og:url', content: canonical, 'data-rh': 'true' } },
-    { type: 'meta', props: { property: 'og:type', content: isArticle ? 'article' : 'website', 'data-rh': 'true' } },
-    { type: 'meta', props: { property: 'og:image', content: ogImage, 'data-rh': 'true' } },
-    { type: 'meta', props: { name: 'twitter:card', content: 'summary_large_image', 'data-rh': 'true' } },
-    { type: 'meta', props: { name: 'twitter:title', content: seo.title, 'data-rh': 'true' } },
-    { type: 'meta', props: { name: 'twitter:description', content: seo.description, 'data-rh': 'true' } },
-    { type: 'meta', props: { name: 'twitter:image', content: ogImage, 'data-rh': 'true' } },
+    {
+      type: "meta",
+      props: { name: "keywords", content: seo.keywords, "data-rh": "true" },
+    },
+    ...(seo.author
+      ? [
+          {
+            type: "meta",
+            props: { name: "author", content: seo.author, "data-rh": "true" },
+          },
+        ]
+      : []),
+    ...(seo.publisher
+      ? [
+          {
+            type: "meta",
+            props: {
+              name: "publisher",
+              content: seo.publisher,
+              "data-rh": "true",
+            },
+          },
+        ]
+      : []),
+    {
+      type: "link",
+      props: { rel: "canonical", href: canonical, "data-rh": "true" },
+    },
+    {
+      type: "meta",
+      props: {
+        name: "robots",
+        content: seo.noIndex ? "noindex, nofollow" : "index, follow",
+        "data-rh": "true",
+      },
+    },
+    {
+      type: "meta",
+      props: { property: "og:title", content: seo.title, "data-rh": "true" },
+    },
+    {
+      type: "meta",
+      props: {
+        property: "og:description",
+        content: seo.description,
+        "data-rh": "true",
+      },
+    },
+    {
+      type: "meta",
+      props: { property: "og:url", content: canonical, "data-rh": "true" },
+    },
+    {
+      type: "meta",
+      props: {
+        property: "og:type",
+        content: isArticle ? "article" : "website",
+        "data-rh": "true",
+      },
+    },
+    {
+      type: "meta",
+      props: { property: "og:image", content: ogImage, "data-rh": "true" },
+    },
+    {
+      type: "meta",
+      props: {
+        name: "twitter:card",
+        content: "summary_large_image",
+        "data-rh": "true",
+      },
+    },
+    {
+      type: "meta",
+      props: { name: "twitter:title", content: seo.title, "data-rh": "true" },
+    },
+    {
+      type: "meta",
+      props: {
+        name: "twitter:description",
+        content: seo.description,
+        "data-rh": "true",
+      },
+    },
+    {
+      type: "meta",
+      props: { name: "twitter:image", content: ogImage, "data-rh": "true" },
+    },
   ]);
 
   /**
@@ -288,41 +374,44 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
   const bannerSet = bannerSlug ? getBannerForSlug(bannerSlug) : null;
   if (bannerSlug && bannerSet) {
     const firstSlide = bannerSet.slides[0];
-    if (firstSlide?.imageUrl && bannerSlug !== 'home') {
+    if (firstSlide?.imageUrl && bannerSlug !== "home") {
       elements.add({
-        type: 'link',
+        type: "link",
         props: {
-          rel: 'preload',
-          as: 'image',
+          rel: "preload",
+          as: "image",
           href: firstSlide.imageUrl,
-          fetchpriority: 'high',
-          'data-rh': 'true',
+          fetchpriority: "high",
+          "data-rh": "true",
         },
       });
     }
 
-    const bannerPayload = JSON.stringify({ [bannerSlug]: bannerSet }).replace(/</g, '\\u003c');
+    const bannerPayload = JSON.stringify({ [bannerSlug]: bannerSet }).replace(
+      /</g,
+      "\\u003c",
+    );
     elements.add({
-      type: 'script',
-      props: { id: 'ssg-banners', 'data-rh': 'true' },
+      type: "script",
+      props: { id: "ssg-banners", "data-rh": "true" },
       children: `window.__SSG_BANNERS__=${bannerPayload};`,
     });
   }
 
   elements.add({
-    type: 'script',
-    props: { id: 'ssg-query-state', 'data-rh': 'true' },
+    type: "script",
+    props: { id: "ssg-query-state", "data-rh": "true" },
     children: `window.__REACT_QUERY_STATE__=${queryStatePayload};`,
   });
 
   // 7. Inject single unified Schema.org @graph JSON-LD script tag
   if (seo.schemas.length > 0) {
     elements.add({
-      type: 'script',
+      type: "script",
       props: {
-        type: 'application/ld+json',
-        id: 'schema-jsonld',
-        'data-rh': 'true',
+        type: "application/ld+json",
+        id: "schema-jsonld",
+        "data-rh": "true",
       },
       children: JSON.stringify(createCompositeGraph(seo.schemas)),
     });
@@ -330,24 +419,24 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
 
   /**
    * 7b. Seed the `/blogs` index page with its article catalog.
-    *
-    * WHY: `Blog.jsx` fetches its listing inside client-side `useEffect`, so the
-    * SSG HTML would contain zero article links and crawlers following links from
-    * `/blogs/` would discover nothing. Injecting the lightweight catalog as an
-    * inline script lets the page render all `<a href="/blogs/:slug">` cards on
-    * the very first SSR pass. `<` is escaped as `\u003c` so embedded HTML can
-    * never prematurely close the script tag.
-    */
-  if (cleanPath === '/blogs') {
+   *
+   * WHY: `Blog.jsx` fetches its listing inside client-side `useEffect`, so the
+   * SSG HTML would contain zero article links and crawlers following links from
+   * `/blogs/` would discover nothing. Injecting the lightweight catalog as an
+   * inline script lets the page render all `<a href="/blogs/:slug">` cards on
+   * the very first SSR pass. `<` is escaped as `\u003c` so embedded HTML can
+   * never prematurely close the script tag.
+   */
+  if (cleanPath === "/blogs") {
     const catalog = getAllDynamicBlogSummaries();
     if (catalog.length > 0) {
       const payload = JSON.stringify({
         blogs: catalog,
-        imageBase: getDynamicImageBase('Blog'),
-      }).replace(/</g, '\\u003c');
+        imageBase: getDynamicImageBase("Blog"),
+      }).replace(/</g, "\\u003c");
       elements.add({
-        type: 'script',
-        props: { id: 'ssg-blogs', 'data-rh': 'true' },
+        type: "script",
+        props: { id: "ssg-blogs", "data-rh": "true" },
         children: `window.__SSG_BLOGS__=${payload};`,
       });
     }
@@ -355,7 +444,7 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
 
   /**
    * 8. Discover child links and inject into crawler queue.
-   * 
+   *
    * WHY YOU SEE `[from /]` IN THE BUILD LOG:
    * `vite-prerender-plugin` works as an automated website crawler. It starts by pre-rendering `/` (the home page).
    * When `/` finishes, the plugin inspects the `links` Set returned below.
@@ -365,18 +454,23 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
    * it tracks the referrer URL and logs `/blogs/<slug> [from /]` or `/passout-stories/<slug> [from /]`.
    * The `[from /]` label simply means: "This URL was discovered from the root page (`/`) link set."
    */
-  const { parseLinks } = await import('vite-prerender-plugin/parse');
+  const { parseLinks } = await import("vite-prerender-plugin/parse");
   const discovered: string[] = parseLinks(html);
   const dynamicUrls = getAllDynamicRouteUrls();
 
   return {
     html,
     head: {
-      lang: 'en',
+      lang: "en",
       title: seo.title,
       elements,
     },
-    links: new Set<string>(['/', ...Object.keys(ROUTE_SEO), ...dynamicUrls, ...discovered]),
+    links: new Set<string>([
+      "/",
+      ...Object.keys(ROUTE_SEO),
+      ...dynamicUrls,
+      ...discovered,
+    ]),
     data: { url },
   };
 }

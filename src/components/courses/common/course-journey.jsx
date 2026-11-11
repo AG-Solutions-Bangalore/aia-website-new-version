@@ -6,15 +6,14 @@ const CourseJourney = ({ heading, highlight, steps, connectorImage }) => {
     <section className="py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center max-w-4xl mx-auto mb-8 md:mb-10 lg:mb-14 px-2">
-          <h3>
-            <SectionHeading
-              title={heading}
-              highlight={highlight}
-              align="center"
-              titleClass="text-[1rem] md:text-3xl"
-              highlightClass="text-[1rem] md:text-3xl"
-            />
-          </h3>
+          <SectionHeading
+            title={heading}
+            highlight={highlight}
+            align="center"
+            headingLevel={3}
+            titleClass="text-[1rem] md:text-3xl"
+            highlightClass="text-[1rem] md:text-3xl"
+          />
         </div>
 
         <div className="relative">

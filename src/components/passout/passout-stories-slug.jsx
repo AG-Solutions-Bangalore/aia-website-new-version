@@ -10,20 +10,15 @@
  * static HTML file contains 100% of the student story markup without displaying a fallback "Loading..." state.
  */
 
-import { useEffect } from "react";
 import { BASE_URL } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
 import OptimizedImage from "../common/optmized-image";
-import { useDynamicSeo } from "@/components/SEOPageLayout";
-import { buildDynamicStudentStorySeo } from "@/config/seoEngine";
 
 const PassoutStoriesSlug = () => {
   const { slug } = useParams();
-  const location = useLocation();
-  const dynamicSeoContext = useDynamicSeo();
 
   // Retrieves student story data (pre-hydrated during SSG, fetched on client navigation)
   const {
@@ -42,14 +37,6 @@ const PassoutStoriesSlug = () => {
   });
 
   const story = storyData?.data;
-
-  useEffect(() => {
-    if (!story) return;
-    if (dynamicSeoContext?.setDynamicSeo) {
-      const dynamicSeo = buildDynamicStudentStorySeo(story, location.pathname);
-      dynamicSeoContext.setDynamicSeo(dynamicSeo);
-    }
-  }, [story, location.pathname, dynamicSeoContext]);
 
   const formatLinkedInUrl = (url) => {
     if (!url) return "#";
@@ -324,9 +311,9 @@ const PassoutStoriesSlug = () => {
                 </h1>
 
                 <div className="mb-8 sm:mb-10 lg:mb-12">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0F3652] mb-4 sm:mb-5 lg:mb-6">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0F3652] mb-4 sm:mb-5 lg:mb-6">
                     Our Impact
-                  </h3>
+                  </h2>
 
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                     {[

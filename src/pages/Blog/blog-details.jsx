@@ -1,18 +1,13 @@
 import { BASE_URL } from "@/api/base-url";
 import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
-import { Helmet } from "react-helmet-async";
 import BlogFaq from "@/components/blog/blog-faq";
 import axios from "axios";
 import { ArrowLeft, Calendar, Clock, Image as ImageIcon, User } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ShareButtons } from "./share-button";
 import OptimizedImage from "@/components/common/optmized-image";
-import { SITE_ORIGIN, getCanonicalUrl } from "@/config/site";
-import { titleFromSlug } from "@/utils/titleFromSlug";
-import { useDynamicSeo } from "@/components/SEOPageLayout";
-import { buildDynamicBlogSeo } from "@/config/seoEngine";
 
 /**
  * @file src/pages/Blog/blog-details.jsx
@@ -83,17 +78,7 @@ const BlogDetails = () => {
   const [email, setEmail] = useState("");
   const [subscriptionStatus, setSubscriptionStatus] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
-  const dynamicSeoContext = useDynamicSeo();
-
-  useEffect(() => {
-    if (!blog) return;
-    if (dynamicSeoContext?.setDynamicSeo) {
-      const dynamicSeo = buildDynamicBlogSeo(blog, faq, location.pathname);
-      dynamicSeoContext.setDynamicSeo(dynamicSeo);
-    }
-  }, [blog, faq, location.pathname, dynamicSeoContext]);
 
   const faqItems = useMemo(
     () =>
@@ -105,17 +90,6 @@ const BlogDetails = () => {
     [faq],
   );
 
-  const blogSlug = blog?.blog_slug || id || "";
-  const blogCanonical = getCanonicalUrl(`/blogs/${blogSlug}`);
-  const fallbackBlogTitle = `${titleFromSlug(id || "")} | AIA Blog`;
-  const blogTitle = blog?.blog_meta_title || blog?.blog_heading || fallbackBlogTitle;
-  const blogDescription = blog?.blog_meta_description || blog?.blog_short_description || "Read certification insights, exam preparation guidance, and career advice from Academy of Internal Audit.";
-  const blogKeywords = blog?.blog_meta_keywords || "";
-  const blogImageUrl = getRemoteImageUrl(
-    imageBaseUrl,
-    blog?.blog_images,
-    FALLBACK_IMAGE_PATH,
-  );
 
   useEffect(() => {
     const handleScroll = () => {
@@ -289,12 +263,6 @@ const BlogDetails = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-white py-12">
-        <Helmet>
-          <title>{blogTitle}</title>
-          <meta name="title" content={blogTitle} />
-          <meta name="description" content={blogDescription} />
-          <meta property="og:url" content={blogCanonical} />
-        </Helmet>
         <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8">
           <div className="animate-pulse space-y-8">
             <div className="h-8 bg-[#0F3652]/10 rounded w-1/4 mb-8"></div>
@@ -313,13 +281,6 @@ const BlogDetails = () => {
   if (!blog) {
     return (
       <div className="min-h-screen bg-white py-12">
-        <Helmet>
-          <title>{blogTitle}</title>
-          <meta name="title" content={blogTitle} />
-          <meta name="description" content={blogDescription} />
-          <meta name="robots" content="noindex, follow" />
-          <meta property="og:url" content={blogCanonical} />
-        </Helmet>
         <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-2xl font-bold text-[#0F3652] mb-4">
             Blog not found
@@ -338,36 +299,6 @@ const BlogDetails = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      <Helmet>
-        <title>{blogTitle}</title>
-        <meta name="title" content={blogTitle} />
-        <meta name="description" content={blogDescription} />
-        <meta name="keywords" content={blogKeywords} />
-        <meta name="robots" content="index, follow" />
-
-        {/* Open Graph */}
-        <meta property="og:type" content="article" />
-        <meta property="og:title" content={blogTitle} />
-        <meta property="og:description" content={blogDescription} />
-        <meta property="og:url" content={blogCanonical} />
-        <meta property="og:image" content={blogImageUrl} />
-        <meta property="og:image:alt" content={blog?.blog_images_alt || blogTitle} />
-        <meta property="og:site_name" content="Academy of Internal Audit" />
-        <meta property="og:locale" content="en_US" />
-        {(blog?.created_at || blog?.blog_created) && (
-          <meta property="article:published_time" content={blog.created_at || blog.blog_created} />
-        )}
-        {(blog?.updated_at || blog?.blog_created) && (
-          <meta property="article:modified_time" content={blog.updated_at || blog.blog_created} />
-        )}
-
-        {/* Twitter */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={blogCanonical} />
-        <meta name="twitter:title" content={blogTitle} />
-        <meta name="twitter:description" content={blogDescription} />
-        {/* Structured data is managed centrally by the SEO engine */}
-      </Helmet>
       <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <button
           onClick={goBack}

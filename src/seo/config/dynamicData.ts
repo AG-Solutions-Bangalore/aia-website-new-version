@@ -1,5 +1,5 @@
 /**
- * @file src/config/dynamicData.ts
+ * @file src/seo/config/dynamicData.ts
  * @description Dynamic build-time data loader and in-memory cache for blogs, student stories,
  * and testimonials used by the SSG prerendering engine and SEO resolvers.
  *
@@ -168,7 +168,7 @@ export async function loadDynamicData(): Promise<void> {
 
   loadPromise = (async () => {
     try {
-      console.log('🔄 [SSG] Pre-fetching dynamic blogs, student stories, and testimonials from API...');
+      console.log('\n🔄 [SSG] Pre-fetching dynamic blogs, student stories, and testimonials from API...');
 
       // 1. Fetch Blogs catalog, Stories catalog, Testimonials, home widgets, and course FAQs in parallel
       const [

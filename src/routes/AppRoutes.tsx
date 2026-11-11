@@ -27,15 +27,14 @@
  * - @tanstack/react-query: `QueryClient`, `QueryClientProvider`
  * - @/layout/Layout: Main site layout shell (Navbar, Footer)
  * - @/components/SEOPageLayout: Dedicated head and schema synchronizer
- * - @/config/seoEngine: `getSeoForRoute`
+ * - @/seo: `getSeoForRoute`
  */
 
 import React, { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/layout/Layout';
-import SEOPageLayout from '@/components/SEOPageLayout';
-import { getSeoForRoute } from '@/config/seoEngine';
-import { COURSE_ROUTES } from '@/config/site';
+import { SEOPageLayout, getSeoForRoute } from '@/seo';
+import { COURSE_ROUTES } from '@/seo';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import blogRedirects from './blog-redirects';
 

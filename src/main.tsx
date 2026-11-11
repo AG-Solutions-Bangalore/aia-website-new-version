@@ -100,7 +100,7 @@ if (rootElement) {
       (window as unknown as { requestIdleCallback: (cb: () => void, opts: { timeout: number }) => number })
         .requestIdleCallback(startHydration, { timeout: 1200 });
     } else {
-      window.setTimeout(startHydration, 50);
+      globalThis.setTimeout(startHydration, 50);
     }
   } else {
     startHydration();

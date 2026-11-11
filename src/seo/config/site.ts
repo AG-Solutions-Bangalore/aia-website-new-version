@@ -1,5 +1,5 @@
 /**
- * @file src/config/site.ts
+ * @file src/seo/config/site.ts
  * @description Single source of truth for site-wide branding constants, contact information,
  * origin URLs, and canonical URL derivation.
  *
@@ -35,13 +35,8 @@ export const SITE_EMAIL = 'support@aia.in.net';
  * Course routes that are indexed in Google WITHOUT a trailing slash.
  * Follows the strict SEO requirement to prevent index drift and canonical mismatches.
  */
-export const COURSE_ROUTES = new Set([
-  'cfe-curriculum',
-  'cia-curriculum',
-  'cia-challenge-curriculum',
-  'cams',
-  'cisa',
-]);
+export { COURSE_ROUTES } from './route-path';
+import { COURSE_ROUTES } from './route-path';
 
 /**
  * Normalizes any route pathname to an absolute canonical URL.

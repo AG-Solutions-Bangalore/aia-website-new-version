@@ -1,5 +1,5 @@
 /**
- * @file src/config/seoEngine.ts
+ * @file src/seo/config/seoEngine.ts
  * @description Centralized Master SEO and Schema.org Graph Engine for the entire application.
  *
  * @why

@@ -29,14 +29,14 @@ const ServiceCard = ({ service, i, progress, total }) => {
       >
         <div>
           <div className="flex items-start justify-between mb-2">
-            <h4
+            <h3
               className="text-xl  font-bold"
               style={{
                 color: service.textColor === "#ffffff" ? "#ffffff" : "#000000",
               }}
             >
               {service.description2}
-            </h4>
+            </h3>
             <div className="text-5xl font-bold text-[#F3831C] opacity-20">
               {String(service.id).padStart(2, "0")}
             </div>

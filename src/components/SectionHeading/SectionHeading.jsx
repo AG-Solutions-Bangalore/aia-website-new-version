@@ -19,8 +19,10 @@ const SectionHeading = ({
 
   preheadingclassName,
   preheading,
+  headingLevel = 2,
 }) => {
   const isCenter = align == "center";
+  const HeadingTag = `h${headingLevel}`;
 
   return (
     <div
@@ -36,7 +38,7 @@ const SectionHeading = ({
       )}
 
       <div className={`inline-block mb-3 ${isCenter ? "mx-auto" : ""}`}>
-        <h2
+        <HeadingTag
           className={`text-xl md:text-4xl font-bold text-[#0F3652] ${isCenter ? "text-center" : "text-left"} ${titleClass}`}
         >
           <span
@@ -50,15 +52,15 @@ const SectionHeading = ({
             title
           )}{" "}
           <span className="text-[#F3831C]">{highlight1}</span>
-        </h2>
+        </HeadingTag>
 
         {highlight && (
-          <h2
+          <HeadingTag
             className={`font-bold text-[#F3831C] mt-2 ${highlightclassName ? highlightclassName : "text-xl md:text-4xl"
               } ${highlightClass}`}
           >
             {highlight}
-          </h2>
+          </HeadingTag>
         )}
       </div>
 
