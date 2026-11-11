@@ -184,9 +184,9 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     ],
   },
   '/cisa': {
-    title: 'Certified Information Systems Auditor | CISA Course',
+    title: 'Clear Certified Information Systems Auditor (CISA) Exam with AIA',
     description:
-      "Prepare to excel in CISA Certification Exam with AIA's CISA Prep Course. Get access to official ISACA study resource kits, recorded video lectures, and doubt sessions.",
+      'Prepare for CISA exam with AIA. Get access to official ISACA CISA prep kit and expert-led resources to clear the CISA Exam on your first attempt confidently.',
     keywords:
       'CISA Course, CISA Certification, Certified Information Systems Auditor, CISA Prep Course, CISA Training, CISA Coaching, CISA Classes, CISA Study Material, CISA Mock Test, CISA Exam Syllabus, CISA Exam Preparation',
     canonicalPath: '/cisa',
@@ -194,8 +194,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         '/cisa',
-        'Certified Information Systems Auditor | CISA Course',
-        "Prepare to excel in CISA Certification Exam with AIA's CISA Prep Course. Get access to official ISACA study resource kits, recorded video lectures, and doubt sessions.",
+        'Clear Certified Information Systems Auditor (CISA) Exam with AIA',
+        'Prepare for CISA exam with AIA. Get access to official ISACA CISA prep kit and expert-led resources to clear the CISA Exam on your first attempt confidently.',
       ),
       createCourseSchema({
         name: 'Certified Information Systems Auditor (CISA) Training',
