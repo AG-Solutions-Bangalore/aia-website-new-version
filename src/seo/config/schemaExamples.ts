@@ -291,6 +291,20 @@ export function createWebPageSchema(
     description,
     isPartOf: { "@id": `${SITE_ORIGIN}#website` },
     about: { "@id": `${SITE_ORIGIN}#organization` },
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+      logo: {
+        "@type": "ImageObject",
+        url: SITE_LOGO,
+      },
+    },
   } as Thing;
 }
 
@@ -421,9 +435,21 @@ export function createBlogPostingSchema(blog: {
     dateModified: formatIsoDateWithTimezone(
       blog.blog_updated || blog.blog_created,
     ),
-    mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
-    author: { "@id": `${SITE_ORIGIN}#organization` },
-    publisher: { "@id": `${SITE_ORIGIN}#organization` },
+        mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+      logo: {
+        "@type": "ImageObject",
+        url: SITE_LOGO,
+      },
+    },
     articleSection: blog.blog_course || "Professional Certification",
     inLanguage: "en-US",
   };
@@ -504,6 +530,15 @@ export function createStudentReviewSchema(story: {
     author: {
       "@type": "Person",
       name: story.student_name,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+      logo: {
+        "@type": "ImageObject",
+        url: SITE_LOGO,
+      },
     },
     reviewRating: {
       "@type": "Rating",

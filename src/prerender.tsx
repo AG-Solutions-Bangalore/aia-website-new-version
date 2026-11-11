@@ -274,26 +274,22 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
       type: "meta",
       props: { name: "keywords", content: seo.keywords, "data-rh": "true" },
     },
-    ...(seo.author
-      ? [
-          {
-            type: "meta",
-            props: { name: "author", content: seo.author, "data-rh": "true" },
-          },
-        ]
-      : []),
-    ...(seo.publisher
-      ? [
-          {
-            type: "meta",
-            props: {
-              name: "publisher",
-              content: seo.publisher,
-              "data-rh": "true",
-            },
-          },
-        ]
-      : []),
+    {
+      type: "meta",
+      props: {
+        name: "author",
+        content: seo.author || "Academy of Internal Audit",
+        "data-rh": "true",
+      },
+    },
+    {
+      type: "meta",
+      props: {
+        name: "publisher",
+        content: seo.publisher || "Academy of Internal Audit (AIA)",
+        "data-rh": "true",
+      },
+    },
     {
       type: "link",
       props: { rel: "canonical", href: canonical, "data-rh": "true" },

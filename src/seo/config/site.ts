@@ -30,6 +30,8 @@ export const SITE_ORIGIN = 'https://aia.in.net';
 export const SITE_LOGO = 'https://aia.in.net/webapi/public/assets/images/web_images/new_logo.webp';
 export const SITE_PHONE = '+91 93113 20114';
 export const SITE_EMAIL = 'support@aia.in.net';
+export const DEFAULT_AUTHOR = 'Academy of Internal Audit';
+export const DEFAULT_PUBLISHER = 'Academy of Internal Audit (AIA)';
 
 /**
  * Course routes that are indexed in Google WITHOUT a trailing slash.

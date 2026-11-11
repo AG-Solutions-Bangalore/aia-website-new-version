@@ -80,8 +80,10 @@ export default function SEOPageLayout({
     syncMeta('robots', seo.robots || (seo.noIndex ? 'noindex, nofollow' : 'index, follow'));
     syncMeta('description', seo.description || '');
     syncMeta('keywords', seo.keywords || '');
-    if (seo.author) syncMeta('author', seo.author);
-    if (seo.publisher) syncMeta('publisher', seo.publisher);
+    const authorContent = seo.author || DEFAULT_AUTHOR;
+    const publisherContent = seo.publisher || DEFAULT_PUBLISHER;
+    syncMeta('author', authorContent);
+    syncMeta('publisher', publisherContent);
     syncProperty('og:title', seo.title || '');
     syncProperty('og:description', seo.description || '');
     syncProperty('og:url', finalCanonical);
@@ -105,8 +107,8 @@ export default function SEOPageLayout({
         <title>{seo.title}</title>
         <meta name="description" content={seo.description} />
         <meta name="keywords" content={seo.keywords} />
-        {seo.author && <meta name="author" content={seo.author} />}
-        {seo.publisher && <meta name="publisher" content={seo.publisher} />}
+        <meta name="author" content={seo.author || DEFAULT_AUTHOR} />
+        <meta name="publisher" content={seo.publisher || DEFAULT_PUBLISHER} />
         <link rel="canonical" href={finalCanonical} />
         <meta name="robots" content={seo.robots || (seo.noIndex ? 'noindex, nofollow' : 'index, follow')} />
         <meta property="og:title" content={seo.title} />

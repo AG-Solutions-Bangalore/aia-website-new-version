@@ -43,7 +43,7 @@ import {
   RouteSeoEntry,
   websiteSchema,
 } from './schemaExamples';
-import { SITE_NAME } from './site';
+import { DEFAULT_AUTHOR, DEFAULT_PUBLISHER, SITE_NAME } from './site';
 
 export interface MasterSeoStructure {
   title: string;
@@ -519,6 +519,8 @@ export function buildDynamicBlogSeo(
     description,
     keywords,
     canonicalPath,
+    author: DEFAULT_AUTHOR,
+    publisher: DEFAULT_PUBLISHER,
     noIndex: true,
     robots: 'noindex, follow',
     schemas,
@@ -553,6 +555,8 @@ export function buildDynamicStudentStorySeo(
     description,
     keywords,
     canonicalPath,
+    author: DEFAULT_AUTHOR,
+    publisher: DEFAULT_PUBLISHER,
     noIndex: true,
     robots: 'noindex, follow',
     schemas: [
@@ -601,7 +605,7 @@ const ROUTE_FAQ_MAP: Record<string, string> = {
  * @param url - Relative route URL or full pathname (e.g. '/cfe-curriculum' or '/blogs/aml-career')
  * @returns Complete `RouteSeoEntry`
  */
-export function getSeoForRoute(url: string): RouteSeoEntry {
+function resolveRawSeoForRoute(url: string): RouteSeoEntry {
   const path = url.split('?')[0].split('#')[0].replace(/\/$/, '') || '/';
 
   // 1. Direct match in ROUTE_SEO table
@@ -770,5 +774,15 @@ export function getSeoForRoute(url: string): RouteSeoEntry {
     canonicalPath: path,
     noIndex: true,
     schemas: [organizationSchema],
+  };
+}
+
+
+export function getSeoForRoute(url: string): RouteSeoEntry {
+  const result = resolveRawSeoForRoute(url);
+  return {
+    ...result,
+    author: result.author || DEFAULT_AUTHOR,
+    publisher: result.publisher || DEFAULT_PUBLISHER,
   };
 }
