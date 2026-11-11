@@ -1,7 +1,7 @@
 import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import type { Thing } from 'schema-dts';
-import { getCanonicalUrl } from './site';
+import { getCanonicalUrl, DEFAULT_AUTHOR, DEFAULT_PUBLISHER } from './site';
 import type { MasterSeoStructure } from './engine';
 import { createCompositeGraph } from './schema';
 import { useDynamicRouteSeo } from './dynamicRouteSeo';
@@ -75,7 +75,9 @@ export default function SEOPageLayout({
     canonical.setAttribute('rel', 'canonical');
     canonical.setAttribute('href', finalCanonical);
     if (!canonicals[0]) document.head.appendChild(canonical);
-    for (let index = 1; index < canonicals.length; index += 1) canonicals[index].remove();
+    for (let index = 1; index < canonicals.length; index += 1) {
+      if (canonicals[index].parentElement) canonicals[index].remove();
+    }
 
     syncMeta('robots', seo.robots || (seo.noIndex ? 'noindex, nofollow' : 'index, follow'));
     syncMeta('description', seo.description || '');
@@ -97,7 +99,7 @@ export default function SEOPageLayout({
     if (schemaScript.textContent !== jsonStr) schemaScript.textContent = jsonStr;
     if (!schemaScript.parentElement) document.head.appendChild(schemaScript);
     scripts.forEach((script) => {
-      if (script !== schemaScript) script.remove();
+      if (script !== schemaScript && script.parentElement) script.remove();
     });
   }, [dynamicSeo, finalCanonical, initialSeo.isFallback, pageGraphPayload, seo]);
 

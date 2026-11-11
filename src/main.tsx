@@ -53,13 +53,11 @@ if (ssgState) {
 }
 
 const app = (
-  <React.StrictMode>
-    <HelmetProvider>
-      <BrowserRouter>
-        <App queryClient={queryClient} />
-      </BrowserRouter>
-    </HelmetProvider>
-  </React.StrictMode>
+  <HelmetProvider>
+    <BrowserRouter>
+      <App queryClient={queryClient} />
+    </BrowserRouter>
+  </HelmetProvider>
 );
 
 const rootElement = document.getElementById('root');

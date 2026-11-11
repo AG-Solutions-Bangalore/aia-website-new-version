@@ -28,7 +28,9 @@
  * - vite-plugin-compression: Gzip & Brotli pre-compression for production hosting
  */
 
-import { defineConfig } from 'vite';
+import fs from 'fs';
+import type { IncomingMessage, ServerResponse } from 'http';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
@@ -64,6 +66,79 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compressionFilter = /\.(js|mjs|json|css|svg|webmanifest)$/i;
 
+/**
+ * Serves /sitemap.xml in `vite dev` and `vite preview` without Apache/.htaccess.
+ * Mirrors production: /sitemap.xml/ 301-redirects to /sitemap.xml, and the XML is
+ * proxied from the live CRM sitemap (with public/sitemap.xml as offline fallback).
+ */
+function devSitemapPlugin(): Plugin {
+  const sitemapPath = '/sitemap.xml';
+  const remoteSitemapUrl = 'https://aia.in.net/webapi/public/sitemap.xml';
+  const localSitemapPath = path.resolve(__dirname, 'public/sitemap.xml');
+  const cacheTtlMs = 5 * 60 * 1000;
+  let cachedXml = '';
+  let cachedAt = 0;
+
+  const loadSitemapXml = async (): Promise<string> => {
+    if (cachedXml && Date.now() - cachedAt < cacheTtlMs) return cachedXml;
+    try {
+      const response = await fetch(remoteSitemapUrl, {
+        headers: { Accept: 'application/xml,text/xml,*/*' },
+        signal: AbortSignal.timeout(15_000),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      const xml = (await response.text()).trim();
+      if (!xml.includes('<urlset')) throw new Error('Invalid sitemap payload');
+      cachedXml = xml;
+      cachedAt = Date.now();
+      return xml;
+    } catch (error) {
+      if (fs.existsSync(localSitemapPath)) {
+        return fs.readFileSync(localSitemapPath, 'utf8').trim();
+      }
+      throw error;
+    }
+  };
+
+  const middleware = (
+    req: IncomingMessage,
+    res: ServerResponse,
+    next: (err?: unknown) => void,
+  ): void => {
+    const pathname = (req.url ?? '').split('?')[0].toLowerCase();
+    if (pathname === `${sitemapPath}/`) {
+      res.statusCode = 301;
+      res.setHeader('Location', sitemapPath);
+      res.end();
+      return;
+    }
+    if (pathname !== sitemapPath) {
+      next();
+      return;
+    }
+    void loadSitemapXml().then(
+      (xml) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+        res.setHeader('Cache-Control', 'no-cache');
+        res.end(req.method === 'HEAD' ? undefined : xml);
+      },
+      (error) => next(error),
+    );
+  };
+
+  return {
+    name: 'dev-sitemap',
+    configureServer(server) {
+      server.middlewares.use(middleware);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(middleware);
+    },
+  };
+}
+
+
 export default defineConfig({
   root: process.cwd(),
   server: {
@@ -71,6 +146,7 @@ export default defineConfig({
   },
   base: '/',
   plugins: [
+    devSitemapPlugin(),
     tailwindcss(),
     react(),
     vitePrerenderPlugin({
