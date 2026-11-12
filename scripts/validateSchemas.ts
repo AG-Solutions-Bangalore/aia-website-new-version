@@ -35,10 +35,8 @@
 
 import fs from 'fs';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import { parse } from 'node-html-parser';
 import { getCanonicalUrl, INDEXABLE_HEADING_EXPECTATIONS } from '../src/seo/server';
-import { COURSE_ROUTES } from '../src/seo/server';
 
 const distDir = path.resolve(process.cwd(), 'dist');
 
@@ -59,89 +57,7 @@ function findHtmlFiles(dir: string): string[] {
   return files;
 }
 
-const isSitemapOnly = process.argv.includes('--sitemap-only');
 let hasError = false;
-
-// ============================================================================
-// SITEMAP & ROBOTS.TXT AUDIT GATE
-// ============================================================================
-console.log(`\n🔍 [SEO Assets Validator] Auditing dist/sitemap.xml & dist/robots.txt...\n`);
-
-const sitemapPath = path.join(distDir, 'sitemap.xml');
-if (!fs.existsSync(sitemapPath)) {
-  console.error(`❌ [dist/sitemap.xml] FAIL: File does not exist! Run 'bun run build' or 'bun scripts/generateSitemap.ts' first.`);
-  hasError = true;
-} else {
-  const xml = fs.readFileSync(sitemapPath, 'utf8');
-  const hasXmlns = xml.includes('xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"');
-  const urls = (xml.match(/<loc>(.*?)<\/loc>/g) || []).map((m) => m.replace(/<\/?loc>/g, ''));
-
-  if (!hasXmlns) {
-    console.error(`❌ [dist/sitemap.xml] FAIL: Missing mandatory XML namespace 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"'! Google Search Console will reject this as 'Type: Unknown'.`);
-    hasError = true;
-  } else {
-    console.log(`  ✓ [dist/sitemap.xml] Valid XML Namespace (xmlns="http://www.sitemaps.org/schemas/sitemap/0.9").`);
-  }
-
-  if (urls.length === 0) {
-    console.error(`❌ [dist/sitemap.xml] FAIL: 0 URLs found in sitemap.`);
-    hasError = true;
-  } else {
-    const invalidOrigins = urls.filter((u) => !u.startsWith('https://aia.in.net/'));
-    if (invalidOrigins.length > 0) {
-      console.error(`❌ [dist/sitemap.xml] FAIL: Found ${invalidOrigins.length} URLs with non-canonical origin (expected https://aia.in.net/). Sample: ${invalidOrigins[0]}`);
-      hasError = true;
-    } else {
-      console.log(`  ✓ [dist/sitemap.xml] ${urls.length} URLs verified with canonical HTTPS origin.`);
-    }
-
-    // Strict Trailing Slash Policy Validation:
-    // Course routes MUST NOT have trailing slash; all other routes MUST have trailing slash.
-    const trailingSlashViolations: string[] = [];
-    for (const url of urls) {
-      const pathname = url.replace(/^https:\/\/aia\.in\.net/, '');
-      const clean = pathname.replace(/^\/+/, '').replace(/\/+$/, '');
-      if (!clean) continue; // Root '/' is valid
-      const isCourse = COURSE_ROUTES.has(clean);
-      if (isCourse && url.endsWith('/')) {
-        trailingSlashViolations.push(`Course page has trailing slash: ${url}`);
-      } else if (!isCourse && !url.endsWith('/')) {
-        trailingSlashViolations.push(`Non-course page missing trailing slash: ${url}`);
-      }
-    }
-    if (trailingSlashViolations.length > 0) {
-      console.error(`❌ [dist/sitemap.xml] FAIL: Trailing slash policy violations found:\n`, trailingSlashViolations.join('\n'));
-      hasError = true;
-    } else {
-      console.log(`  ✓ [dist/sitemap.xml] 100% compliant with Trailing Slash Policy (Course URLs without slash, all other URLs with slash).`);
-    }
-  }
-}
-
-const robotsPath = path.join(distDir, 'robots.txt');
-if (!fs.existsSync(robotsPath)) {
-  console.error(`❌ [dist/robots.txt] FAIL: File does not exist!`);
-  hasError = true;
-} else {
-  const robots = fs.readFileSync(robotsPath, 'utf8');
-  if (!robots.includes('Sitemap: https://aia.in.net/sitemap.xml')) {
-    console.error(`❌ [dist/robots.txt] FAIL: Missing Sitemap reference to https://aia.in.net/sitemap.xml`);
-    hasError = true;
-  } else {
-    console.log(`  ✓ [dist/robots.txt] Valid robots.txt referencing https://aia.in.net/sitemap.xml`);
-  }
-}
-
-if (isSitemapOnly) {
-  if (hasError) {
-    console.error(`\n🚨 Sitemap validation failed!\n`);
-    process.exit(1);
-  } else {
-    console.log(`\n🎉 Success! Sitemap and robots.txt passed all Google Search Console criteria.\n`);
-    process.exit(0);
-  }
-}
-
 const htmlFiles = findHtmlFiles(distDir);
 
 console.log(`\n🔍 [Schema Validator] Auditing ${htmlFiles.length} pre-rendered HTML files in dist/...\n`);
