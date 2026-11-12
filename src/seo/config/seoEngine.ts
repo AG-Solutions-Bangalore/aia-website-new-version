@@ -548,8 +548,9 @@ export function buildDynamicBlogSeo(
     canonicalPath,
     author: DEFAULT_AUTHOR,
     publisher: DEFAULT_PUBLISHER,
-    noIndex: true,
-    robots: "noindex, follow",
+    ...(b.blog_index === "no"
+      ? { noIndex: true, robots: "noindex, follow" }
+      : {}),
     schemas,
     isFallback: false,
   };

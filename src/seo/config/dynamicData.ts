@@ -36,6 +36,7 @@ export interface DynamicBlogSummary {
   blog_images_alt?: string;
   blog_categories?: string;
   blog_trending?: string;
+  blog_index?: string;
 }
 
 export interface DynamicPassoutStudentsYearResponse {
