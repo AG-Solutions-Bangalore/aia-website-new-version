@@ -65,6 +65,44 @@ export interface MasterSeoStructure {
 }
 
 /**
+ * Canonical course entities reused across the homepage list and each course route.
+ */
+const COURSE_SCHEMAS = {
+  "/cfe-curriculum": {
+    name: "Certified Fraud Examiner (CFE) Training",
+    description:
+      "CFE certification training by the Academy of Internal Audit: exam-focused study guidance and practice questions.",
+    path: "/cfe-curriculum",
+  },
+  "/cia-curriculum": {
+    name: "Certified Internal Auditor (CIA) Training",
+    description:
+      "Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.",
+    path: "/cia-curriculum",
+  },
+  "/cia-challenge-curriculum": {
+    name: "CIA Challenge Exam Training",
+    description:
+      "Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.",
+    path: "/cia-challenge-curriculum",
+  },
+  "/cams": {
+    name: "Certified Anti-Money Laundering Specialist (CAMS) Training",
+    description:
+      "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
+    path: "/cams",
+  },
+  "/cisa": {
+    name: "Certified Information Systems Auditor (CISA) Training",
+    description:
+      "Comprehensive CISA certification course prep by Academy of Internal Audit.",
+    path: "/cisa",
+  },
+} as const;
+
+const HOME_COURSE_SCHEMAS = Object.values(COURSE_SCHEMAS).map(createCourseSchema);
+
+/**
  * Complete catalog of static application routes and their pre-configured SEO payloads.
  */
 export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
@@ -86,6 +124,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
         "Expert Training for CFE, CIA, CAMS & CISA Certification | AIA",
         "Academy of Internal Audit offers expert-led CIA, CFE, CAMS & CISA training with a 99.6% success rate, helping professionals achieve global certifications.",
       ),
+      ...HOME_COURSE_SCHEMAS,
     ],
   },
   "/about-aia": {
@@ -120,12 +159,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
         "Certified Fraud Examiner Course | CFE Certification Course",
         "Get Certification in Certified Fraud Examiner Course with AIA Institute to become a skilled Certified Fraud Investigator and unlock fraud prevention mystery.",
       ),
-      createCourseSchema({
-        name: "Certified Fraud Examiner (CFE) Training",
-        description:
-          "CFE certification training by the Academy of Internal Audit: exam-focused study guidance and practice questions.",
-        path: "/cfe-curriculum",
-      }),
+      createCourseSchema(COURSE_SCHEMAS["/cfe-curriculum"]),
     ],
   },
   "/cia-curriculum": {
@@ -142,12 +176,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
         "Earn Certified Internal Auditor (CIA) Certification with AIA",
         "Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.",
       ),
-      createCourseSchema({
-        name: "Certified Internal Auditor (CIA) Training",
-        description:
-          "Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.",
-        path: "/cia-curriculum",
-      }),
+      createCourseSchema(COURSE_SCHEMAS["/cia-curriculum"]),
     ],
   },
   "/cia-challenge-curriculum": {
@@ -164,12 +193,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
         "Clear (CIA) Certified Internal Auditor Challenge Exam with AIA",
         "Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.",
       ),
-      createCourseSchema({
-        name: "CIA Challenge Exam Training",
-        description:
-          "Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.",
-        path: "/cia-challenge-curriculum",
-      }),
+      createCourseSchema(COURSE_SCHEMAS["/cia-challenge-curriculum"]),
     ],
   },
   "/cams": {
@@ -186,12 +210,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
         "Clear Certified Anti-Money Laundering Specialist Exam with AIA",
         "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
       ),
-      createCourseSchema({
-        name: "Certified Anti-Money Laundering Specialist (CAMS) Training",
-        description:
-          "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
-        path: "/cams",
-      }),
+      createCourseSchema(COURSE_SCHEMAS["/cams"]),
     ],
   },
   "/cisa": {
@@ -208,12 +227,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
         "Clear Certified Information Systems Auditor (CISA) Exam with AIA",
         "Prepare for CISA exam with AIA. Get access to official ISACA CISA prep kit and expert-led resources to clear the CISA Exam on your first attempt confidently.",
       ),
-      createCourseSchema({
-        name: "Certified Information Systems Auditor (CISA) Training",
-        description:
-          "Comprehensive CISA certification course prep by Academy of Internal Audit.",
-        path: "/cisa",
-      }),
+      createCourseSchema(COURSE_SCHEMAS["/cisa"]),
     ],
   },
   "/blogs": {
