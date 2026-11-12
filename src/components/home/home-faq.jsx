@@ -47,9 +47,9 @@ const HomeFaq = () => {
   }
 
   return (
-    <section>
+    <div>
       <FaqSection title={faqHeading} faqs={faqItems} />
-    </section>
+    </div>
   );
 };
 

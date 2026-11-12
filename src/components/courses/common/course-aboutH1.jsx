@@ -38,9 +38,9 @@ const CourseAboutH1 = ({
           <div>
             {badgeText && (
               <div className="flex items-center gap-3 mb-2 md:mb-3">
-                <span className="text-xs sm:text-sm font-medium text-[#F3831C] tracking-wider">
+                <div className="text-xs sm:text-sm font-medium text-[#F3831C] tracking-wider">
                   <h2>{badgeText}</h2>
-                </span>
+                </div>
               </div>
             )}
 

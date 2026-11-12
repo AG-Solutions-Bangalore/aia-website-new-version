@@ -138,14 +138,6 @@ const SectionHeadingH1 = ({
             }}
           />
         </div>
-
-        <style>{`
-  @keyframes slideBackForth {
-    0% { transform: translate(-40px, -50%); }
-    50% { transform: translate(40px, -50%); }
-    100% { transform: translate(-40px, -50%); }
-  }
-`}</style>
       </div>
     </div>
   );

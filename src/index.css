@@ -270,6 +270,20 @@ body {
   animation-play-state: paused;
 }
 
+@keyframes slideBackForth {
+  0% {
+    transform: translate(-40px, -50%);
+  }
+
+  50% {
+    transform: translate(40px, -50%);
+  }
+
+  100% {
+    transform: translate(-40px, -50%);
+  }
+}
+
 @keyframes slide-down {
   from {
     transform: translateY(-100px);

@@ -399,7 +399,7 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   if (isLoading) {
     return (
-      <section className="relative">
+      <div className="relative">
         <div
           className="relative w-full overflow-hidden"
           style={{ aspectRatio: "11/5" }}
@@ -450,27 +450,27 @@ export default function HomeHero({ slug, bottombar = false }) {
             </div>
           </>
         )}
-      </section>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <section className="relative h-[420px] bg-red-50 flex items-center justify-center">
+      <div className="relative h-[420px] bg-red-50 flex items-center justify-center">
         <span className="text-xs text-red-400 font-medium">
           Failed to load banners: {error?.message}
         </span>
-      </section>
+      </div>
     );
   }
 
   if (carouselSlides.length === 0) {
     return (
-      <section className="relative h-[420px] bg-gray-100 flex items-center justify-center">
+      <div className="relative h-[420px] bg-gray-100 flex items-center justify-center">
         <span className="text-xs text-gray-400 font-medium">
           No banners available
         </span>
-      </section>
+      </div>
     );
   }
 
@@ -489,7 +489,7 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   return (
     <>
-      <section className="relative">
+      <div className="relative">
         <div
           className="relative overflow-hidden"
           onMouseEnter={() => setIsAutoPlaying(false)}
@@ -685,7 +685,7 @@ export default function HomeHero({ slug, bottombar = false }) {
             </div>
           </div>
         )}
-      </section>
+      </div>
 
       {slug === "home" && (
         <div className="bg-[#0F3652] px-4 py-3">
