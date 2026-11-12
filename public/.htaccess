@@ -37,8 +37,8 @@ RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\.aia\.in\.net$ [NC]
 RewriteRule ^ https://aia.in.net%{REQUEST_URI} [R=301,L]
 
-# 2b. Fully Dynamic CRM Sitemap: Route /sitemap.xml directly to the live backend CRM sitemap
-RewriteRule ^sitemap\.xml$ /webapi/public/sitemap.xml [L]
+# 2b. Fully Dynamic API Sitemap: Pure data direct from /webapi/public/api/getSitemap
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
 # 2. Retired page URLs (Permanent 301 redirects with trailing slash)
 RewriteRule ^about-us/?$ /about-aia/ [R=301,L]

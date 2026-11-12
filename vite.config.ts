@@ -67,35 +67,79 @@ const __dirname = path.dirname(__filename);
 const compressionFilter = /\.(js|mjs|json|css|svg|webmanifest)$/i;
 
 /**
- * Serves /sitemap.xml in `vite dev` and `vite preview` without Apache/.htaccess.
- * Mirrors production: /sitemap.xml/ 301-redirects to /sitemap.xml, and the XML is
- * proxied from the live CRM sitemap (with public/sitemap.xml as offline fallback).
+ * Serves /sitemap.xml in `vite dev` and `vite preview` purely from the live CRM API.
+ * Uses `https://aia.in.net/webapi/public/api/getSitemap` as the single source of truth.
+ * No custom aliases, no modifications, strictly matching live API data.
  */
 function devSitemapPlugin(): Plugin {
   const sitemapPath = '/sitemap.xml';
-  const remoteSitemapUrl = 'https://aia.in.net/webapi/public/sitemap.xml';
-  const localSitemapPath = path.resolve(__dirname, 'public/sitemap.xml');
-  const cacheTtlMs = 5 * 60 * 1000;
+  const apiUrl = 'https://aia.in.net/webapi/public/api/getSitemap';
+  const cacheTtlMs = 60 * 1000;
   let cachedXml = '';
   let cachedAt = 0;
+
+  interface ApiPageItem {
+    page_two_url?: string | null;
+    page_two_priority?: string | null;
+    page_two_status?: string | null;
+    updated_at?: string | null;
+  }
 
   const loadSitemapXml = async (): Promise<string> => {
     if (cachedXml && Date.now() - cachedAt < cacheTtlMs) return cachedXml;
     try {
-      const response = await fetch(remoteSitemapUrl, {
-        headers: { Accept: 'application/xml,text/xml,*/*' },
+      const response = await fetch(apiUrl, {
+        headers: { Accept: 'application/json' },
         signal: AbortSignal.timeout(15_000),
       });
       if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
-      const xml = (await response.text()).trim();
-      if (!xml.includes('<urlset')) throw new Error('Invalid sitemap payload');
+      const json = (await response.json()) as {
+        data?: ApiPageItem[];
+        blog?: ApiPageItem[];
+      };
+
+      const urls: Array<{ loc: string; lastmod: string; priority: string }> = [];
+      urls.push({
+        loc: 'https://aia.in.net/',
+        lastmod: '2026-03-09',
+        priority: '1.00',
+      });
+
+      for (const page of json.data || []) {
+        if ((page.page_two_status || '').trim().toLowerCase() !== 'active') continue;
+        const url = (page.page_two_url || '').trim().replace(/^\/+/, '');
+        if (!url) continue;
+        urls.push({
+          loc: `https://aia.in.net/${url}`,
+          lastmod: page.updated_at ? page.updated_at.split('T')[0] : '',
+          priority: page.page_two_priority || '0.80',
+        });
+      }
+
+      for (const blog of json.blog || []) {
+        if ((blog.page_two_status || '').trim().toLowerCase() !== 'active') continue;
+        const url = (blog.page_two_url || '').trim().replace(/^\/+/, '');
+        if (!url) continue;
+        urls.push({
+          loc: `https://aia.in.net/blogs/${url}`,
+          lastmod: blog.updated_at ? blog.updated_at.split('T')[0] : '',
+          priority: blog.page_two_priority || '0.80',
+        });
+      }
+
+      const entries = urls
+        .map(
+          (u) =>
+            `  <url>\n    <loc>${u.loc}</loc>${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ''}\n    <priority>${u.priority}</priority>\n  </url>`,
+        )
+        .join('\n');
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>`;
       cachedXml = xml;
       cachedAt = Date.now();
       return xml;
     } catch (error) {
-      if (fs.existsSync(localSitemapPath)) {
-        return fs.readFileSync(localSitemapPath, 'utf8').trim();
-      }
+      if (cachedXml) return cachedXml;
       throw error;
     }
   };
