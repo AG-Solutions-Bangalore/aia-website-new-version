@@ -27,6 +27,7 @@
  * - ./site: `SITE_NAME`, `SITE_ORIGIN`, `SITE_LOGO`, `getCanonicalUrl`
  */
 
+import type { DynamicTestimonial } from "./dynamicData";
 import type { BlogPosting, Graph, Review, Thing } from "schema-dts";
 import {
   SITE_LOGO,
@@ -547,6 +548,51 @@ export function createStudentReviewSchema(story: {
     },
     reviewBody,
     datePublished: formatIsoDateWithTimezone(story.student_story_date),
+  };
+
+  return schema as Thing;
+}
+
+/**
+ * Creates a Review Schema.org entity from a course/home testimonial.
+ *
+ * @param testimonial - DynamicTestimonial from /api/getAllTestimonials or /api/getTestimonialbyCourse/{root}
+ * @param route - The route path (e.g. "/", "/cfe-curriculum") used for @id
+ * @returns Type-safe Schema.org Review as `Thing`
+ */
+export function createTestimonialReviewSchema(
+  testimonial: DynamicTestimonial,
+  route: string,
+): Thing {
+  const canonicalUrl = getCanonicalUrl(route);
+  const reviewBody = (testimonial?.student_testimonial || "")
+    .replace(/<[^>]*>?/gm, "")
+    .trim();
+
+  const schema: Review = {
+    "@type": "Review",
+    "@id": `${canonicalUrl}#review-${testimonial?.id ?? 0}`,
+    itemReviewed: { "@id": `${SITE_ORIGIN}#organization` },
+    author: {
+      "@type": "Person",
+      name: testimonial?.student_name || "Student",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+      logo: {
+        "@type": "ImageObject",
+        url: SITE_LOGO,
+      },
+    },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+    },
+    reviewBody,
+    datePublished: formatIsoDateWithTimezone(testimonial.updated_at),
   };
 
   return schema as Thing;

@@ -34,6 +34,7 @@ import {
   getDynamicBlog,
   getDynamicFaqBySlug,
   getDynamicStudentStory,
+  getDynamicTestimonials,
 } from "./dynamicData";
 import {
   createBlogPostingSchema,
@@ -41,6 +42,7 @@ import {
   createCourseSchema,
   createFaqSchema,
   createStudentReviewSchema,
+  createTestimonialReviewSchema,
   createWebPageSchema,
   localBusinessSchema,
   organizationSchema,
@@ -649,6 +651,22 @@ function resolveRawSeoForRoute(url: string): RouteSeoEntry {
       ) {
         schemas.push(createFaqSchema(faqs, path));
       }
+    }
+    // Automatically inject Review schema from testimonials on all pages (when data exists)
+    try {
+      const testimonials = getDynamicTestimonials();
+      if (
+        testimonials &&
+        testimonials.length > 0 &&
+        !schemas.some((s) => (s as any)["@type"] === "Review")
+      ) {
+        testimonials.forEach((t) => {
+          if (!t) return;
+          schemas.push(createTestimonialReviewSchema(t, path));
+        });
+      }
+    } catch (err) {
+      console.warn(`⚠️ [SEO] Testimonial schema injection failed for ${path}:`, err);
     }
 
     return {

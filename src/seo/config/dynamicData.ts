@@ -138,6 +138,7 @@ export interface DynamicTestimonial {
 let dynamicBlogsMap = new Map<string, DynamicBlogDetailResponse>();
 let dynamicStoriesMap = new Map<string, DynamicStoryResponse>();
 let dynamicTestimonials: DynamicTestimonial[] = [];
+let dynamicTestimonialsMap = new Map<string, DynamicTestimonial[]>();
 let dynamicBlogSummaries: DynamicBlogSummary[] = [];
 let dynamicImageUrls: Array<{ image_for: string; image_url: string }> = [];
 let dynamicPassoutStudentsYear: DynamicPassoutStudentsYearResponse | null = null;
@@ -240,6 +241,9 @@ export async function loadDynamicData(): Promise<void> {
       const storyList: DynamicStudentStory[] = storiesRes?.data || [];
       const storyImageUrls = storiesRes?.image_url || [];
       dynamicTestimonials = testimonialsRes?.data || [];
+
+      // Populate Testimonials lookup by route (all routes get all testimonials)
+      dynamicTestimonialsMap.set('all', testimonialsRes?.data || []);
       dynamicPassoutStudentsYear = passoutYearRes || null;
       dynamicHomeBlogs = homeBlogsRes || null;
       dynamicHomeFaq = homeFaqRes || null;
@@ -385,6 +389,10 @@ export function getDynamicHomeFaq(): DynamicHomeFaqResponse | null {
 
 export function getDynamicFaqBySlug(slug: string): DynamicFaqItem[] | undefined {
   return dynamicFaqsMap.get(slug.toLowerCase().trim());
+}
+
+export function getDynamicTestimonials(): DynamicTestimonial[] | undefined {
+  return dynamicTestimonialsMap.get('all');
 }
 
 export function getDynamicHomeCertificates(): DynamicCertificatesResponse | null {
