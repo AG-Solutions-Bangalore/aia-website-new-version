@@ -291,7 +291,21 @@ export default defineConfig({
     outDir: 'dist',
     emptyOutDir: true,
     target: 'baseline-widely-available',
-    chunkSizeWarningLimit: 1000,
+    chunkSizeWarningLimit: 500,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.warn', 'console.error'],
+      },
+      mangle: true,
+      format: {
+        comments: false,
+      },
+    },
+    cssCodeSplit: true,
+    sourcemap: false,
     modulePreload: { polyfill: false },
 
     rolldownOptions: {

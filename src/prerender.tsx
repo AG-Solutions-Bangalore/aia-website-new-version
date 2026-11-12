@@ -147,13 +147,13 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
   if (cleanPath === "/") {
     const homeBlogs = getDynamicHomeBlogs();
     const homeFaq = getDynamicHomeFaq();
-    const homeCertificates = getDynamicHomeCertificates();
 
     if (homeBlogs) queryClient.setQueryData(["aia-blog"], homeBlogs);
     if (homeFaq) queryClient.setQueryData(["aia-faq"], homeFaq);
-    if (homeCertificates) {
-      queryClient.setQueryData(["course-results-common"], homeCertificates);
-    }
+    // homeCertificates is intentionally NOT seeded here:
+    // - home-results.jsx already fetches ["course-results-common"] client-side via useQuery
+    // - certificates render below the fold in TestimonialsSectionColor
+    // - Keeping them out of SSR reduces window.__REACT_QUERY_STATE__ size (~1-2KB)
   } else if (cleanPath === "/cfe-curriculum") {
     const cfeFaq = getDynamicFaqBySlug("cfe-curriculum");
     if (cfeFaq && cfeFaq.length > 0) {

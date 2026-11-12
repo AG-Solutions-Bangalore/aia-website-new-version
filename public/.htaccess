@@ -154,21 +154,34 @@ RewriteRule . /index.html [L]
     Header always set X-Content-Type-Options "nosniff"
 
     # Hashed Vite bundles are content-addressed, so they can be cached for a year.
-    <FilesMatch "\.(js|mjs|css|woff2|woff|ttf|otf|eot)$">
+    # sw.js / workbox-*.js are excluded here and handled by the revalidate block below.
+    <FilesMatch "^(?!sw\.js$)(?!workbox-).*\.(js|mjs|css|woff2|woff|ttf|otf|eot)$">
         Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
 
-    # Static images and modern formats
-    <FilesMatch "\.(webp|avif|png|jpe?g|gif|svg|ico)$">
-        Header set Cache-Control "public, max-age=31536000, immutable"
-    </FilesMatch>
-
-    # Always revalidate HTML/documents after a deploy (prevents proxy cache from serving stale HTML)
-    <FilesMatch "\.(html|json|xml|webmanifest)$">
+    # Service worker + Workbox runtime must always revalidate after a deploy.
+    <FilesMatch "^(sw\.js|workbox-.*\.js)$">
         Header set Cache-Control "public, no-cache, max-age=0, must-revalidate"
-        Header set Pragma "no-cache"
-        Header set Expires "0"
-        Header set X-Accel-Expires "0"
+    </FilesMatch>
+
+    # Public images are NOT content-hashed (e.g. /images/hero/*.webp),
+    # so 30 days instead of immutable 1 year to avoid stale files after replacement.
+    <FilesMatch "\.(webp|avif|png|jpe?g|gif|svg|ico)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+
+    # HTML/manifest: browsers revalidate, edge/CDN (Cloudflare/nginx/Varnish)
+    # may cache for 10 minutes to cut TTFB. X-Accel-Expires is intentionally removed.
+    <FilesMatch "\.(html|webmanifest)$">
+        Header set Cache-Control "public, max-age=0, s-maxage=600, stale-while-revalidate=86400"
+        Header unset Pragma
+        Header unset Expires
+        Header unset X-Accel-Expires
+    </FilesMatch>
+
+    # API JSON / sitemap XML must NOT be edge-cached.
+    <FilesMatch "\.(json|xml)$">
+        Header set Cache-Control "public, no-cache, max-age=0, must-revalidate"
     </FilesMatch>
 </IfModule>
 
@@ -180,16 +193,23 @@ RewriteRule . /index.html [L]
     ExpiresByType text/javascript "access plus 1 year"
     ExpiresByType font/woff2 "access plus 1 year"
     ExpiresByType font/woff "access plus 1 year"
-    ExpiresByType image/webp "access plus 1 year"
-    ExpiresByType image/avif "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/svg+xml "access plus 1 year"
-    ExpiresByType image/x-icon "access plus 1 year"
+    ExpiresByType image/webp "access plus 30 days"
+    ExpiresByType image/avif "access plus 30 days"
+    ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/jpeg "access plus 30 days"
+    ExpiresByType image/svg+xml "access plus 30 days"
+    ExpiresByType image/x-icon "access plus 30 days"
     ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
 
-# 8. Gzip Compression for all text assets
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json application/ld+json application/manifest+json application/xml application/rss+xml image/svg+xml font/woff font/woff2
+# 8. Compression: Brotli when available, otherwise gzip.
+# Fonts (woff/woff2) are already compressed and are intentionally not re-compressed.
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json application/ld+json application/manifest+json application/xml application/rss+xml image/svg+xml
+</IfModule>
+
+<IfModule !mod_brotli.c>
+    <IfModule mod_deflate.c>
+        AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json application/ld+json application/manifest+json application/xml application/rss+xml image/svg+xml
+    </IfModule>
 </IfModule>
