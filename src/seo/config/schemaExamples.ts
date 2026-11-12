@@ -481,10 +481,12 @@ export function createFaqSchema(
     "@id": `${canonicalUrl}#faq`,
     mainEntity: faqs.map((f) => ({
       "@type": "Question",
-      name: f.faq_que,
+      name: f?.faq_que || "",
       acceptedAnswer: {
         "@type": "Answer",
-        text: f.faq_ans.replace(/<[^>]*>?/gm, "").trim(),
+        text: (f?.faq_ans !== undefined && f?.faq_ans !== null)
+          ? String(f.faq_ans).replace(/<[^>]*>?/gm, "").trim()
+          : "",
       },
     })),
   } as Thing;
@@ -564,10 +566,11 @@ export function createTestimonialReviewSchema(
   testimonial: DynamicTestimonial,
   route: string,
 ): Thing {
-  const canonicalUrl = getCanonicalUrl(route);
-  const reviewBody = (testimonial?.student_testimonial || "")
-    .replace(/<[^>]*>?/gm, "")
-    .trim();
+  const canonicalUrl = `${SITE_ORIGIN}${route}`;
+  const rawText = testimonial?.student_testimonial;
+  const reviewBody = (rawText !== undefined && rawText !== null)
+    ? String(rawText).replace(/<[^>]*>?/gm, "").trim()
+    : "";
 
   const schema: Review = {
     "@type": "Review",
@@ -592,7 +595,7 @@ export function createTestimonialReviewSchema(
       bestRating: "5",
     },
     reviewBody,
-    datePublished: formatIsoDateWithTimezone(testimonial.updated_at),
+    datePublished: formatIsoDateWithTimezone(testimonial?.updated_at),
   };
 
   return schema as Thing;

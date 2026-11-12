@@ -23,6 +23,7 @@
  */
 
 import { BASE_URL } from '@/api/base-url';
+import { fetchTestimonials } from '@/api/testimonials';
 
 export interface DynamicBlogSummary {
   id: number;
@@ -186,6 +187,11 @@ export async function loadDynamicData(): Promise<void> {
         ciacFaqRes,
         ciaFaqRes,
         cisaFaqRes,
+        cfeTestimonialsRes,
+        ciaTestimonialsRes,
+        ciacTestimonialsRes,
+        camsTestimonialsRes,
+        cisaTestimonialsRes,
       ] = await Promise.all([
         fetch(`${BASE_URL}/api/getAllBlogs`).then((r) => r.json()).catch((err) => {
           console.warn('⚠️ [SSG] Failed to fetch getAllBlogs:', err);
@@ -235,6 +241,26 @@ export async function loadDynamicData(): Promise<void> {
           console.warn('⚠️ [SSG] Failed to fetch CISA FAQ:', err);
           return { data: [] };
         }),
+        fetchTestimonials('cfe').catch((err) => {
+          console.warn('⚠️ [SSG] Failed to fetch testimonials for cfe:', err);
+          return { data: [] };
+        }),
+        fetchTestimonials('cia').catch((err) => {
+          console.warn('⚠️ [SSG] Failed to fetch testimonials for cia:', err);
+          return { data: [] };
+        }),
+        fetchTestimonials('ciac').catch((err) => {
+          console.warn('⚠️ [SSG] Failed to fetch testimonials for ciac:', err);
+          return { data: [] };
+        }),
+        fetchTestimonials('cams').catch((err) => {
+          console.warn('⚠️ [SSG] Failed to fetch testimonials for cams:', err);
+          return { data: [] };
+        }),
+        fetchTestimonials('cisa').catch((err) => {
+          console.warn('⚠️ [SSG] Failed to fetch testimonials for cisa:', err);
+          return { data: [] };
+        }),
       ]);
 
       const blogList: DynamicBlogSummary[] = blogsRes?.data || [];
@@ -243,8 +269,13 @@ export async function loadDynamicData(): Promise<void> {
       const storyImageUrls = storiesRes?.image_url || [];
       dynamicTestimonials = testimonialsRes?.data || [];
 
-      // Populate Testimonials lookup by route (all routes get all testimonials)
-      dynamicTestimonialsMap.set('all', testimonialsRes?.data || []);
+      // Populate Testimonials lookup by route
+      dynamicTestimonialsMap.set('/', testimonialsRes?.data || []);
+      dynamicTestimonialsMap.set('/cfe-curriculum', cfeTestimonialsRes?.data || []);
+      dynamicTestimonialsMap.set('/cia-curriculum', ciaTestimonialsRes?.data || []);
+      dynamicTestimonialsMap.set('/cia-challenge-curriculum', ciacTestimonialsRes?.data || []);
+      dynamicTestimonialsMap.set('/cams', camsTestimonialsRes?.data || []);
+      dynamicTestimonialsMap.set('/cisa', cisaTestimonialsRes?.data || []);
       dynamicPassoutStudentsYear = passoutYearRes || null;
       dynamicHomeBlogs = homeBlogsRes || null;
       dynamicHomeFaq = homeFaqRes || null;
@@ -392,8 +423,8 @@ export function getDynamicFaqBySlug(slug: string): DynamicFaqItem[] | undefined 
   return dynamicFaqsMap.get(slug.toLowerCase().trim());
 }
 
-export function getDynamicTestimonials(): DynamicTestimonial[] | undefined {
-  return dynamicTestimonialsMap.get('all');
+export function getDynamicTestimonialsByRoute(route: string): DynamicTestimonial[] | undefined {
+  return dynamicTestimonialsMap.get(route.toLowerCase().trim());
 }
 
 export function getDynamicHomeCertificates(): DynamicCertificatesResponse | null {

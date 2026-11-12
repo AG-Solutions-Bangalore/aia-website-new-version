@@ -34,7 +34,7 @@ import {
   getDynamicBlog,
   getDynamicFaqBySlug,
   getDynamicStudentStory,
-  getDynamicTestimonials,
+  getDynamicTestimonialsByRoute,
 } from "./dynamicData";
 import {
   createBlogPostingSchema,
@@ -508,6 +508,7 @@ export function buildDynamicBlogSeo(
     blog_created?: string;
     blog_updated?: string;
     blog_images?: string;
+    blog_index?: string;
   },
   faq: Array<{ faq_que: string; faq_ans: string }> = [],
   path?: string,
@@ -653,9 +654,9 @@ function resolveRawSeoForRoute(url: string): RouteSeoEntry {
         schemas.push(createFaqSchema(faqs, path));
       }
     }
-    // Automatically inject Review schema from testimonials on all pages (when data exists)
+    // Automatically inject Review schema from testimonials on matching route (when data exists)
     try {
-      const testimonials = getDynamicTestimonials();
+      const testimonials = getDynamicTestimonialsByRoute(path);
       if (
         testimonials &&
         testimonials.length > 0 &&

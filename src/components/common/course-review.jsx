@@ -1,12 +1,12 @@
-import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
+import { IMAGE_PATH } from "@/api/base-url";
+import { fetchTestimonials } from "@/api/testimonials";
 import SectionHeading from "@/components/SectionHeading/SectionHeading";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
   const start = i / total;
   const end = (i + 1) / total;
@@ -70,7 +70,7 @@ const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
             className="text-lg italic mb-8 text-justify"
             style={{ color: i % 2 === 0 ? "#1e293b" : "#ffffff" }}
           >
-            "{testimonial.student_testimonial}"
+            &quot;{testimonial.student_testimonial}&quot;
           </div>
         </div>
 
@@ -84,21 +84,13 @@ const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
 
 const CourseReview = ({ slug, title, limit = 5 }) => {
   const containerRef = useRef(null);
-  const { pathname } = useLocation();
   const [testimonials, setTestimonials] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
   const [scrollFinished, setScrollFinished] = useState(false);
-  const [activeCard, setActiveCard] = useState(0);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["course-testimonials", slug],
-    queryFn: async () => {
-      const endpoint = slug === "home" || slug === "all"
-        ? `${BASE_URL}/api/getAllTestimonials`
-        : `${BASE_URL}/api/getTestimonialbyCourse/${slug}`;
-      const res = await axios.get(endpoint);
-      return res.data;
-    },
+    queryFn: () => fetchTestimonials(slug),
   });
 
   useEffect(() => {

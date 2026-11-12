@@ -2,10 +2,10 @@
 import React, { useRef, useEffect, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
+import { IMAGE_PATH } from "@/api/base-url";
+import { fetchTestimonials } from "@/api/testimonials";
 
 const ServiceCard = React.forwardRef(
   ({ testimonial, i, progress, range, targetScale, imageUrl }, ref) => {
@@ -74,7 +74,7 @@ const ServiceCard = React.forwardRef(
                 className="text-lg italic"
                 style={{ color: i % 2 === 0 ? "#0F3652" : "#ffffff" }}
               >
-                "{testimonial.student_testimonial}"
+                &quot;{testimonial.student_testimonial}&quot;
               </div>
             </div>
           </div>
@@ -105,12 +105,7 @@ const EnrollReview = () => {
     isError,
   } = useQuery({
     queryKey: ["enroll-testimonials"],
-    queryFn: async () => {
-      const res = await axios.get(
-        `${BASE_URL}/api/getTestimonialbyCourse/Enroll-Now`,
-      );
-      return res.data;
-    },
+    queryFn: () => fetchTestimonials("Enroll-Now"),
   });
 
   useEffect(() => {
