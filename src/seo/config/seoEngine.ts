@@ -630,6 +630,117 @@ const ROUTE_FAQ_MAP: Record<string, string> = {
 };
 
 /**
+ * Breadcrumb hierarchy for every static route. Course pages use their actual
+ * Course schema names since no dedicated `/courses` hub page exists.
+ */
+const ROUTE_BREADCRUMBS: Record<
+  string,
+  Array<{ name: string; path: string }>
+> = {
+  "/": [{ name: "Home", path: "/" }],
+  "/about-aia": [
+    { name: "Home", path: "/" },
+    { name: "About AIA", path: "/about-aia" },
+  ],
+  "/cfe-curriculum": [
+    { name: "Home", path: "/" },
+    {
+      name: COURSE_SCHEMAS["/cfe-curriculum"].name,
+      path: "/cfe-curriculum",
+    },
+  ],
+  "/cia-curriculum": [
+    { name: "Home", path: "/" },
+    {
+      name: COURSE_SCHEMAS["/cia-curriculum"].name,
+      path: "/cia-curriculum",
+    },
+  ],
+  "/cia-challenge-curriculum": [
+    { name: "Home", path: "/" },
+    {
+      name: COURSE_SCHEMAS["/cia-challenge-curriculum"].name,
+      path: "/cia-challenge-curriculum",
+    },
+  ],
+  "/cams": [
+    { name: "Home", path: "/" },
+    { name: COURSE_SCHEMAS["/cams"].name, path: "/cams" },
+  ],
+  "/cisa": [
+    { name: "Home", path: "/" },
+    { name: COURSE_SCHEMAS["/cisa"].name, path: "/cisa" },
+  ],
+  "/blogs": [
+    { name: "Home", path: "/" },
+    { name: "Blogs", path: "/blogs" },
+  ],
+  "/alumni-network": [
+    { name: "Home", path: "/" },
+    { name: "Alumni Network", path: "/alumni-network" },
+  ],
+  "/fillter": [
+    { name: "Home", path: "/" },
+    { name: "Alumni Network", path: "/alumni-network" },
+    { name: "Alumni Directory", path: "/fillter" },
+  ],
+  "/filter": [
+    { name: "Home", path: "/" },
+    { name: "Alumni Network", path: "/alumni-network" },
+    { name: "Alumni Directory", path: "/fillter" },
+  ],
+  "/aia-times": [
+    { name: "Home", path: "/" },
+    { name: "AIA Times", path: "/aia-times" },
+  ],
+  "/aia-times/flip-book": [
+    { name: "Home", path: "/" },
+    { name: "AIA Times", path: "/aia-times" },
+    { name: "Flip Book", path: "/aia-times/flip-book" },
+  ],
+  "/cfe-free-resources": [
+    { name: "Home", path: "/" },
+    { name: "CFE Free Resources", path: "/cfe-free-resources" },
+  ],
+  "/cia-free-resources": [
+    { name: "Home", path: "/" },
+    { name: "CIA Free Resources", path: "/cia-free-resources" },
+  ],
+  "/cams-free-resources": [
+    { name: "Home", path: "/" },
+    { name: "CAMS Free Resources", path: "/cams-free-resources" },
+  ],
+  "/cisa-free-resources": [
+    { name: "Home", path: "/" },
+    { name: "CISA Free Resources", path: "/cisa-free-resources" },
+  ],
+  "/corporate-training": [
+    { name: "Home", path: "/" },
+    { name: "Corporate Training", path: "/corporate-training" },
+  ],
+  "/enroll-now": [
+    { name: "Home", path: "/" },
+    { name: "Enroll Now", path: "/enroll-now" },
+  ],
+  "/contact": [
+    { name: "Home", path: "/" },
+    { name: "Contact Us", path: "/contact" },
+  ],
+  "/thank-you": [
+    { name: "Home", path: "/" },
+    { name: "Thank You", path: "/thank-you" },
+  ],
+  "/policies": [
+    { name: "Home", path: "/" },
+    { name: "Policies", path: "/policies" },
+  ],
+  "/terms-and-conditions": [
+    { name: "Home", path: "/" },
+    { name: "Terms and Conditions", path: "/terms-and-conditions" },
+  ],
+};
+
+/**
  * Core route resolver determining the exact SEO metadata and Schema.org graph for any URL.
  * Handles both registered static routes and dynamic parameterized patterns.
  *
@@ -655,6 +766,20 @@ function resolveRawSeoForRoute(url: string): RouteSeoEntry {
   if (ROUTE_SEO[path]) {
     const baseEntry = ROUTE_SEO[path];
     const schemas = [...(baseEntry.schemas || [])];
+
+    // Automatically inject BreadcrumbList schema for static routes
+    const breadcrumbTrail = ROUTE_BREADCRUMBS[path];
+    if (
+      breadcrumbTrail &&
+      !schemas.some((s) => (s as any)["@type"] === "BreadcrumbList")
+    ) {
+      schemas.push(
+        createBreadcrumbSchema(
+          breadcrumbTrail,
+          baseEntry.canonicalPath || path,
+        ),
+      );
+    }
 
     // Automatically inject verified FAQPage schema if available for this route
     const faqSlug = ROUTE_FAQ_MAP[path];
@@ -778,7 +903,7 @@ function resolveRawSeoForRoute(url: string): RouteSeoEntry {
         createBreadcrumbSchema(
           [
             { name: "Home", path: "/" },
-            { name: "Free Resources", path: "/cfe-free-resources" },
+            { name: "CFE Free Resources", path: "/cfe-free-resources" },
             { name: `${modTitle} Questions`, path },
           ],
           path,
@@ -836,7 +961,16 @@ function resolveRawSeoForRoute(url: string): RouteSeoEntry {
     keywords: "404, not found",
     canonicalPath: path,
     noIndex: true,
-    schemas: [organizationSchema],
+    schemas: [
+      organizationSchema,
+      createBreadcrumbSchema(
+        [
+          { name: "Home", path: "/" },
+          { name: "Page Not Found", path },
+        ],
+        path,
+      ),
+    ],
   };
 }
 
