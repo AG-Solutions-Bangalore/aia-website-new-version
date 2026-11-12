@@ -17,7 +17,7 @@ const CfeWhyAia = () => {
           },
           {
             img: `${IMAGE_PATH}/support-svgrepo-com.webp`,
-            title: "Complete Prep Support",
+            title: "Complete CFE Prep Support",
           },
           {
             img: `${IMAGE_PATH}/video-record-device-svgrepo-com.webp`,
@@ -50,7 +50,7 @@ const CfeWhyAia = () => {
           cursor-pointer
             "
         >
-          <Link to={`${ENROLL_URL}`} title={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} title="Enroll Now – AIA Certification Courses" target="_blank" rel="noopener noreferrer">
             Enroll Now
           </Link>
         </Button>

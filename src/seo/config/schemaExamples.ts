@@ -1,5 +1,5 @@
 /**
- * @file src/config/schemaExamples.ts
+ * @file src/seo/config/schemaExamples.ts
  * @description Type-safe Schema.org factory functions providing Rich Results compliant
  * JSON-LD structures (Product, Review snippets, SoftwareApplication, Course).
  *
@@ -27,8 +27,15 @@
  * - ./site: `SITE_NAME`, `SITE_ORIGIN`, `SITE_LOGO`, `getCanonicalUrl`
  */
 
-import type { BlogPosting, Graph, Review, Thing } from 'schema-dts';
-import { SITE_LOGO, SITE_NAME, SITE_ORIGIN, SITE_PHONE, getCanonicalUrl } from './site';
+import type { DynamicTestimonial } from "./dynamicData";
+import type { BlogPosting, Graph, Review, Thing } from "schema-dts";
+import {
+  SITE_LOGO,
+  SITE_NAME,
+  SITE_ORIGIN,
+  SITE_PHONE,
+  getCanonicalUrl,
+} from "./site";
 
 export interface MasterSeoStructure {
   title: string;
@@ -36,7 +43,10 @@ export interface MasterSeoStructure {
   keywords: string;
   canonicalPath: string;
   noIndex?: boolean;
+  robots?: string;
   schemas?: Thing[];
+  author?: string;
+  publisher?: string;
   isFallback?: boolean;
 }
 
@@ -46,63 +56,61 @@ export interface RouteSeoEntry extends MasterSeoStructure {
 
 /** Root Organization entity representing Academy of Internal Audit */
 export const organizationSchema: Thing = {
-  '@type': 'Organization',
-  '@id': `${SITE_ORIGIN}#organization`,
+  "@type": "Organization",
+  "@id": `${SITE_ORIGIN}#organization`,
   name: SITE_NAME,
-  alternateName: ['AIA', 'AIA Institute', 'Academy of Internal Audit'],
+  alternateName: ["AIA", "AIA Institute", "Academy of Internal Audit"],
   url: SITE_ORIGIN,
   logo: {
-    '@type': 'ImageObject',
+    "@type": "ImageObject",
     url: SITE_LOGO,
   },
   sameAs: [
-    'https://www.facebook.com/academyofinternalaudit',
-    'https://twitter.com/AcademyAudit',
-    'https://www.instagram.com/academyofia/',
-    'https://www.linkedin.com/company/academy-of-internal-audit',
-    'https://in.pinterest.com/academyofia/',
-    'https://www.youtube.com/@academyofia',
+    "https://www.facebook.com/academyofinternalaudit",
+    "https://twitter.com/AcademyAudit",
+    "https://www.instagram.com/academyofia/",
+    "https://www.linkedin.com/company/academy-of-internal-audit",
+    "https://in.pinterest.com/academyofia/",
+    "https://www.youtube.com/@academyofia",
   ],
 } as Thing;
 
 /** LocalBusiness entity providing verified physical office address and phone */
 export const localBusinessSchema: Thing = {
-  '@type': 'LocalBusiness',
-  '@id': `${SITE_ORIGIN}#localbusiness`,
+  "@type": "LocalBusiness",
+  "@id": `${SITE_ORIGIN}#localbusiness`,
   name: `${SITE_NAME} HQ`,
   image: `${SITE_ORIGIN}/android-chrome-512x512.png`,
   telephone: SITE_PHONE,
   priceRange: "5000",
   url: SITE_ORIGIN,
   address: {
-    '@type': 'PostalAddress',
-    streetAddress: 'C826-828, Vipul Plaza, Sector-81',
-    addressLocality: 'Faridabad',
-    addressRegion: 'Delhi - NCR',
-    postalCode: '121002',
-    addressCountry: 'IN',
+    "@type": "PostalAddress",
+    streetAddress: "C826-828, Vipul Plaza, Sector-81",
+    addressLocality: "Faridabad",
+    addressRegion: "Delhi - NCR",
+    postalCode: "121002",
+    addressCountry: "IN",
   },
-  parentOrganization: { '@id': `${SITE_ORIGIN}#organization` },
+  parentOrganization: { "@id": `${SITE_ORIGIN}#organization` },
 } as Thing;
 
 /** WebSite entity with SearchAction declaration */
 export const websiteSchema: Thing = {
-  '@type': 'WebSite',
-  '@id': `${SITE_ORIGIN}#website`,
+  "@type": "WebSite",
+  "@id": `${SITE_ORIGIN}#website`,
   url: SITE_ORIGIN,
   name: SITE_NAME,
-  publisher: { '@id': `${SITE_ORIGIN}#organization` },
+  publisher: { "@id": `${SITE_ORIGIN}#organization` },
   potentialAction: {
-    '@type': 'SearchAction',
+    "@type": "SearchAction",
     target: {
-      '@type': 'EntryPoint',
+      "@type": "EntryPoint",
       urlTemplate: `${SITE_ORIGIN}/blogs?s={search_term_string}`,
     },
-    'query-input': 'required name=search_term_string',
+    "query-input": "required name=search_term_string",
   },
 } as Thing;
-
-
 
 /**
  * Creates a fully compliant Schema.org Product object with Offer, Shipping, Return Policy,
@@ -120,81 +128,83 @@ export function createProductSchema(product?: {
   price?: string | number;
   priceCurrency?: string;
 }): Thing {
-  const name = product?.name || `${SITE_NAME} Professional Certification Training`;
-  const description = product?.description || 'Premier training program for CIA, CFE, CAMS, and global certifications.';
-  const sku = product?.sku || 'AIA-CERT-001';
+  const name =
+    product?.name || `${SITE_NAME} Professional Certification Training`;
+  const description =
+    product?.description ||
+    "Premier training program for CIA, CFE, CAMS, and global certifications.";
+  const sku = product?.sku || "AIA-CERT-001";
   const image = product?.image || SITE_LOGO;
   const brand = product?.brand || SITE_NAME;
-  const price = product?.price !== undefined ? String(product.price) : '0';
-  const priceCurrency = product?.priceCurrency || 'INR';
+  const price = product?.price !== undefined ? String(product.price) : "0";
+  const priceCurrency = product?.priceCurrency || "INR";
 
   return {
-    '@type': 'Product',
-    '@id': `${getCanonicalUrl('/enroll-now')}#product`,
+    "@type": "Product",
+    "@id": `${getCanonicalUrl("/enroll-now")}#product`,
     name,
     description,
     sku,
     image,
-    brand: { '@type': 'Brand', name: brand },
+    brand: { "@type": "Brand", name: brand },
     offers: {
-      '@type': 'Offer',
+      "@type": "Offer",
       price,
       priceCurrency,
-      priceValidUntil: '2027-12-31',
-      validFrom: '2026-09-01',
-      availability: 'https://schema.org/InStock',
-      url: getCanonicalUrl('/enroll-now'),
+      priceValidUntil: "2027-12-31",
+      validFrom: "2026-09-01",
+      availability: "https://schema.org/InStock",
+      url: getCanonicalUrl("/enroll-now"),
 
       shippingDetails: {
-        '@type': 'OfferShippingDetails',
+        "@type": "OfferShippingDetails",
 
         shippingRate: {
-          '@type': 'MonetaryAmount',
-          value: '0',
+          "@type": "MonetaryAmount",
+          value: "0",
           currency: priceCurrency,
         },
 
         shippingDestination: {
-          '@type': 'DefinedRegion',
-          addressCountry: 'IN',
+          "@type": "DefinedRegion",
+          addressCountry: "IN",
         },
 
         deliveryTime: {
-          '@type': 'ShippingDeliveryTime',
+          "@type": "ShippingDeliveryTime",
 
           handlingTime: {
-            '@type': 'QuantitativeValue',
+            "@type": "QuantitativeValue",
             minValue: 0,
             maxValue: 1,
-            unitCode: 'DAY',
+            unitCode: "DAY",
           },
 
           transitTime: {
-            '@type': 'QuantitativeValue',
+            "@type": "QuantitativeValue",
             minValue: 2,
             maxValue: 5,
-            unitCode: 'DAY',
+            unitCode: "DAY",
           },
         },
       },
 
       hasMerchantReturnPolicy: {
-        '@type': 'MerchantReturnPolicy',
-        applicableCountry: 'IN',
+        "@type": "MerchantReturnPolicy",
+        applicableCountry: "IN",
         returnPolicyCategory:
-          'https://schema.org/MerchantReturnFiniteReturnWindow',
+          "https://schema.org/MerchantReturnFiniteReturnWindow",
         merchantReturnDays: 30,
-        returnMethod: 'https://schema.org/ReturnByMail',
-        returnFees: 'https://schema.org/FreeReturn',
+        returnMethod: "https://schema.org/ReturnByMail",
+        returnFees: "https://schema.org/FreeReturn",
       },
-    }
-    ,
+    },
     aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
       reviewCount: 340,
-      bestRating: '5',
-      worstRating: '1',
+      bestRating: "5",
+      worstRating: "1",
     },
   } as Thing;
 }
@@ -206,27 +216,28 @@ export function createProductSchema(product?: {
  */
 export function createSoftwareAppSchema(): Thing {
   return {
-    '@type': 'SoftwareApplication',
-    '@id': `${SITE_ORIGIN}#software`,
+    "@type": "SoftwareApplication",
+    "@id": `${SITE_ORIGIN}#software`,
     name: `${SITE_NAME} LMS & Learning Portal`,
-    description: 'Online learning platform and test-prep portal for CIA, CFE, and CAMS certifications.',
+    description:
+      "Online learning platform and test-prep portal for CIA, CFE, and CAMS certifications.",
     image: SITE_LOGO,
-    operatingSystem: 'All modern web browsers',
-    applicationCategory: 'EducationalApplication',
+    operatingSystem: "All modern web browsers",
+    applicationCategory: "EducationalApplication",
     url: SITE_ORIGIN,
-    author: { '@id': `${SITE_ORIGIN}#organization` },
+    author: { "@id": `${SITE_ORIGIN}#organization` },
     offers: {
-      '@type': 'Offer',
-      price: '0',
-      priceCurrency: 'INR',
-      availability: 'https://schema.org/InStock',
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "INR",
+      availability: "https://schema.org/InStock",
     },
     aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: '4.9',
+      "@type": "AggregateRating",
+      ratingValue: "4.9",
       reviewCount: 340,
-      bestRating: '5',
-      worstRating: '1',
+      bestRating: "5",
+      worstRating: "1",
     },
   } as Thing;
 }
@@ -243,15 +254,14 @@ export function createCourseSchema(course: {
   path: string;
 }): Thing {
   return {
-    '@type': 'Course',
-    '@id': `${getCanonicalUrl(course.path)}#course`,
+    "@type": "Course",
+    "@id": `${getCanonicalUrl(course.path)}#course`,
     name: course.name,
     description: course.description,
-    provider: { '@id': `${SITE_ORIGIN}#organization` },
+    provider: { "@id": `${SITE_ORIGIN}#organization` },
     url: getCanonicalUrl(course.path),
   } as Thing;
 }
-
 
 /**
  * Packs multiple Schema.org entities into a single unified JSON-LD graph.
@@ -262,24 +272,40 @@ export function createCourseSchema(course: {
  */
 export function createCompositeGraph(schemas: Thing[]): Graph {
   return {
-    '@context': 'https://schema.org',
-    '@graph': schemas,
+    "@context": "https://schema.org",
+    "@graph": schemas,
   };
 }
 
-
-
 /** Helper creating a WebPage schema node connected to the root WebSite and Organization */
-export function createWebPageSchema(canonicalPath: string, title: string, description: string): Thing {
+export function createWebPageSchema(
+  canonicalPath: string,
+  title: string,
+  description: string,
+): Thing {
   const url = getCanonicalUrl(canonicalPath);
   return {
-    '@type': 'WebPage',
-    '@id': `${url}#webpage`,
+    "@type": "WebPage",
+    "@id": `${url}#webpage`,
     url,
     name: title,
     description,
-    isPartOf: { '@id': `${SITE_ORIGIN}#website` },
-    about: { '@id': `${SITE_ORIGIN}#organization` },
+    isPartOf: { "@id": `${SITE_ORIGIN}#website` },
+    about: { "@id": `${SITE_ORIGIN}#organization` },
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+      logo: {
+        "@type": "ImageObject",
+        url: SITE_LOGO,
+      },
+    },
   } as Thing;
 }
 
@@ -296,10 +322,10 @@ export function createBreadcrumbSchema(
 ): Thing {
   const url = getCanonicalUrl(currentPath);
   return {
-    '@type': 'BreadcrumbList',
-    '@id': `${url}#breadcrumb`,
+    "@type": "BreadcrumbList",
+    "@id": `${url}#breadcrumb`,
     itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
+      "@type": "ListItem",
       position: index + 1,
       name: item.name,
       item: getCanonicalUrl(item.path),
@@ -310,7 +336,7 @@ export function createBreadcrumbSchema(
 /**
  * Normalizes any date string (e.g., "2026-06-23", "2026-01-01", or custom formats)
  * into a strict ISO-8601 string containing explicit timezone information (+05:30 or Z).
- * 
+ *
  * ============================================================================
  * WHY THIS IS CRITICAL FOR GOOGLE SEARCH & RICH RESULTS:
  * ============================================================================
@@ -333,15 +359,18 @@ export function createBreadcrumbSchema(
  * @returns Fully qualified ISO-8601 string with timezone (e.g., "2026-06-23T00:00:00+05:30")
  */
 export function formatIsoDateWithTimezone(dateStr?: string): string {
-  const DEFAULT_DATE = '2026-01-01T00:00:00+05:30';
-  if (!dateStr || typeof dateStr !== 'string' || !dateStr.trim()) {
+  const DEFAULT_DATE = "2026-01-01T00:00:00+05:30";
+  if (!dateStr || typeof dateStr !== "string" || !dateStr.trim()) {
     return DEFAULT_DATE;
   }
 
   const trimmed = dateStr.trim();
 
   // If already formatted with timezone (e.g. 2026-06-23T00:00:00+05:30 or 2026-06-23T00:00:00Z)
-  if (trimmed.includes('T') && (trimmed.includes('+') || trimmed.endsWith('Z'))) {
+  if (
+    trimmed.includes("T") &&
+    (trimmed.includes("+") || trimmed.endsWith("Z"))
+  ) {
     return trimmed;
   }
 
@@ -362,7 +391,7 @@ export function formatIsoDateWithTimezone(dateStr?: string): string {
 /**
  * Creates a BlogPosting Schema.org entity linked to the Organization publisher.
  * Valid for Google Article and Blog rich results.
- * 
+ *
  * ============================================================================
  * GOOGLE RICH RESULTS REQUIREMENTS FOR BLOGPOSTING:
  * ============================================================================
@@ -395,18 +424,35 @@ export function createBlogPostingSchema(blog: {
     : SITE_LOGO;
 
   const schema: BlogPosting = {
-    '@type': 'BlogPosting',
-    '@id': `${canonicalUrl}#blogposting`,
+    "@type": "BlogPosting",
+    "@id": `${canonicalUrl}#blogposting`,
     headline: blog.blog_heading,
-    description: blog.blog_meta_description || blog.blog_short_description || blog.blog_heading,
+    description:
+      blog.blog_meta_description ||
+      blog.blog_short_description ||
+      blog.blog_heading,
     image: imageUrl,
     datePublished: formatIsoDateWithTimezone(blog.blog_created),
-    dateModified: formatIsoDateWithTimezone(blog.blog_updated || blog.blog_created),
-    mainEntityOfPage: { '@id': `${canonicalUrl}#webpage` },
-    author: { '@id': `${SITE_ORIGIN}#organization` },
-    publisher: { '@id': `${SITE_ORIGIN}#organization` },
-    articleSection: blog.blog_course || 'Professional Certification',
-    inLanguage: 'en-US',
+    dateModified: formatIsoDateWithTimezone(
+      blog.blog_updated || blog.blog_created,
+    ),
+        mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
+    author: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+      logo: {
+        "@type": "ImageObject",
+        url: SITE_LOGO,
+      },
+    },
+    articleSection: blog.blog_course || "Professional Certification",
+    inLanguage: "en-US",
   };
 
   return schema as Thing;
@@ -414,7 +460,7 @@ export function createBlogPostingSchema(blog: {
 
 /**
  * Creates a FAQPage Schema.org entity for rich question-and-answer snippets in Google SERPs.
- * 
+ *
  * GOOGLE RICH RESULTS REQUIREMENTS FOR FAQPAGE:
  * 1. Questions must be actual questions (`Question` entity with `name`).
  * 2. Answers must be complete answers without raw HTML or script injections (`acceptedAnswer.text`).
@@ -431,14 +477,16 @@ export function createFaqSchema(
 ): Thing {
   const canonicalUrl = getCanonicalUrl(canonicalPath);
   return {
-    '@type': 'FAQPage',
-    '@id': `${canonicalUrl}#faq`,
+    "@type": "FAQPage",
+    "@id": `${canonicalUrl}#faq`,
     mainEntity: faqs.map((f) => ({
-      '@type': 'Question',
-      name: f.faq_que,
+      "@type": "Question",
+      name: f?.faq_que || "",
       acceptedAnswer: {
-        '@type': 'Answer',
-        text: f.faq_ans.replace(/<[^>]*>?/gm, '').trim(),
+        "@type": "Answer",
+        text: (f?.faq_ans !== undefined && f?.faq_ans !== null)
+          ? String(f.faq_ans).replace(/<[^>]*>?/gm, "").trim()
+          : "",
       },
     })),
   } as Thing;
@@ -446,7 +494,7 @@ export function createFaqSchema(
 
 /**
  * Creates a verified Review Schema.org entity representing a student testimonial/success story.
- * 
+ *
  * ============================================================================
  * GOOGLE CRITIC REVIEW & TESTIMONIAL GUIDELINES:
  * ============================================================================
@@ -469,28 +517,85 @@ export function createStudentReviewSchema(story: {
   student_story_details?: string;
   student_story_date?: string;
 }): Thing {
-  const canonicalUrl = getCanonicalUrl(`/passout-stories/${story.student_slug}`);
+  const canonicalUrl = getCanonicalUrl(
+    `/passout-stories/${story.student_slug}`,
+  );
   const reviewBody = (
     story.student_story_short_description ||
-    story.student_story_details?.replace(/<[^>]*>?/gm, '').slice(0, 300) ||
-    `${story.student_name} cleared the ${story.student_course || 'certification'} exam with Academy of Internal Audit.`
+    story.student_story_details?.replace(/<[^>]*>?/gm, "").slice(0, 300) ||
+    `${story.student_name} cleared the ${story.student_course || "certification"} exam with Academy of Internal Audit.`
   ).trim();
 
   const schema: Review = {
-    '@type': 'Review',
-    '@id': `${canonicalUrl}#review`,
-    itemReviewed: { '@id': `${SITE_ORIGIN}#organization` },
+    "@type": "Review",
+    "@id": `${canonicalUrl}#review`,
+    itemReviewed: { "@id": `${SITE_ORIGIN}#organization` },
     author: {
-      '@type': 'Person',
+      "@type": "Person",
       name: story.student_name,
     },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+      logo: {
+        "@type": "ImageObject",
+        url: SITE_LOGO,
+      },
+    },
     reviewRating: {
-      '@type': 'Rating',
-      ratingValue: '5',
-      bestRating: '5',
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
     },
     reviewBody,
     datePublished: formatIsoDateWithTimezone(story.student_story_date),
+  };
+
+  return schema as Thing;
+}
+
+/**
+ * Creates a Review Schema.org entity from a course/home testimonial.
+ *
+ * @param testimonial - DynamicTestimonial from /api/getAllTestimonials or /api/getTestimonialbyCourse/{root}
+ * @param route - The route path (e.g. "/", "/cfe-curriculum") used for @id
+ * @returns Type-safe Schema.org Review as `Thing`
+ */
+export function createTestimonialReviewSchema(
+  testimonial: DynamicTestimonial,
+  route: string,
+): Thing {
+  const canonicalUrl = `${SITE_ORIGIN}${route}`;
+  const rawText = testimonial?.student_testimonial;
+  const reviewBody = (rawText !== undefined && rawText !== null)
+    ? String(rawText).replace(/<[^>]*>?/gm, "").trim()
+    : "";
+
+  const schema: Review = {
+    "@type": "Review",
+    "@id": `${canonicalUrl}#review-${testimonial?.id ?? 0}`,
+    itemReviewed: { "@id": `${SITE_ORIGIN}#organization` },
+    author: {
+      "@type": "Person",
+      name: testimonial?.student_name || "Student",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_ORIGIN,
+      logo: {
+        "@type": "ImageObject",
+        url: SITE_LOGO,
+      },
+    },
+    reviewRating: {
+      "@type": "Rating",
+      ratingValue: "5",
+      bestRating: "5",
+    },
+    reviewBody,
+    datePublished: formatIsoDateWithTimezone(testimonial?.updated_at),
   };
 
   return schema as Thing;

@@ -1,10 +1,9 @@
-import { isReactSnapPrerender } from "@/lib/prerender";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
+import OptimizedImage from "@/components/common/optmized-image";
 
 const FALLBACK_IMAGE_PATH = "/no-image.svg";
 
 const BannerBlogCard = ({ blog, handleBlogClick, imageBaseUrl }) => {
-  const isPrerendering = isReactSnapPrerender();
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -36,21 +35,18 @@ const BannerBlogCard = ({ blog, handleBlogClick, imageBaseUrl }) => {
       <div className="flex flex-col md:flex-row gap-6">
         <div className="md:w-2/5 relative overflow-hidden rounded-lg">
           <div className="h-auto lg:h-full min-h-40 bg-gradient-to-r from-[#0F3652]/10 to-[#0F3652]/20">
-            {isPrerendering ? (
-              <span className="sr-only">
-                {blog.blog_images_alt || blog.blog_heading}
-              </span>
-            ) : (
-              <img
-                src={imageSrc}
-                alt={blog.blog_images_alt || blog.blog_heading} title={blog.blog_images_alt || blog.blog_heading}
-                className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
-                onError={handleImageFallback}
-                loading="lazy"
-                width={640}
-                height={360}
-              />
-            )}
+            <OptimizedImage
+              src={imageSrc}
+              alt={blog.blog_images_alt || blog.blog_heading}
+              title={blog.blog_images_alt || blog.blog_heading}
+              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
+              onError={handleImageFallback}
+              loading="lazy"
+              width={640}
+              height={360}
+              sizes="(min-width: 768px) 40vw, 100vw"
+              imageKind="blog"
+            />
           </div>
           <div className="absolute top-1 left-1 lg:top-2 lg:left-2">
             {/* <span

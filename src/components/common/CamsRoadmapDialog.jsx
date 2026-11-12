@@ -16,7 +16,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import { Loader2, X } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function CamsRoadmapDialog({
@@ -27,6 +29,7 @@ export default function CamsRoadmapDialog({
   modalSubtitle = "Enter your details to receive the roadmap directly in your inbox",
   submitLabel = "Get the CAMS Roadmap",
 }) {
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -132,7 +135,7 @@ export default function CamsRoadmapDialog({
         { headers: { "Content-Type": "application/json" } },
       );
 
-      if (res.data?.code == "200" || res.status === 200 || res.status === 201) {
+      if (isConfirmedFormSuccess(res)) {
         toast.success(
           "Thank you! The CAMS in 45 Days roadmap has been sent to your email.",
         );
@@ -146,6 +149,7 @@ export default function CamsRoadmapDialog({
         setTimeout(() => {
           setOpen(false);
         }, 1200);
+        redirectToThankYou(navigate);
       } else {
         toast.error(res.data?.msg || "Something went wrong. Please try again.");
       }

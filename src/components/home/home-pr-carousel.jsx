@@ -114,9 +114,11 @@ const CourseTopStudent = ({
       <div className="max-w-340 mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
         <div className="mb-8 text-center gap-4">
           <div className="relative z-30">
-            <h2 className="text-3xl font-medium text-gray-900">
-              {needPrefix == "true" && <span>Recent Passout Students</span>}{" "}
-            </h2>
+            {needPrefix == "true" && (
+              <h2 className="text-3xl font-medium text-gray-900">
+                Recent Passout Students
+              </h2>
+            )}
             <SectionHeading
               title={title}
               description={description}

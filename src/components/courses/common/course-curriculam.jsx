@@ -14,7 +14,7 @@ const CourseCurriculum = ({
     <div className="py-6 px-4 sm:px-6 lg:px-8">
       <div className="mb-8">
         <div className="bg-[#0F3652] text-white text-center py-3 px-4 rounded-lg">
-          <h1 className="text-lg sm:text-xl font-bold">{title}</h1>
+          <h2 className="text-lg sm:text-xl font-bold">{title}</h2>
         </div>
       </div>
       {description && (
@@ -45,9 +45,9 @@ const CourseCurriculum = ({
                 }
                 className="w-full text-left p-4 flex items-center justify-between text-sm"
               >
-                <span className="font-semibold text-[#0F3652]">
+                <h3 className="font-semibold text-[#0F3652]">
                   {item.title}
-                </span>
+                </h3>
               </button>
 
               {activeTab === item.id && (
@@ -82,7 +82,7 @@ const CourseCurriculum = ({
                     : "bg-white text-[#0F3652] border-gray-200 hover:bg-[#0F3652]/5"
                 }`}
               >
-                <span className="font-medium text-md">{item.title}</span>
+                <h3 className="font-medium text-md">{item.title}</h3>
               </button>
             ))}
           </div>

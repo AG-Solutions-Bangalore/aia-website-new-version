@@ -19,6 +19,7 @@ const CourseAboutH1 = ({
   customButton,
   customBottomButton,
   children,
+  headingLevel = 1,
 }) => {
   const location = useLocation();
 
@@ -30,15 +31,16 @@ const CourseAboutH1 = ({
           preheading={preheading}
           align="center"
           titleClass="!text-[1.1rem] md:!text-3xl"
+          headingLevel={headingLevel}
         />
 
         <div className="grid lg:grid-cols-2 gap-8 md:gap-10 lg:gap-12 xl:gap-16 items-center">
           <div>
             {badgeText && (
               <div className="flex items-center gap-3 mb-2 md:mb-3">
-                <span className="text-xs sm:text-sm font-medium text-[#F3831C] tracking-wider">
-                  {badgeText}
-                </span>
+                <div className="text-xs sm:text-sm font-medium text-[#F3831C] tracking-wider">
+                  <h2>{badgeText}</h2>
+                </div>
               </div>
             )}
 

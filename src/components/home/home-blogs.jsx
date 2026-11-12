@@ -1,10 +1,10 @@
 import * as React from "react";
+import { Link } from "react-router-dom";
 import { Star } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { BASE_URL } from "@/api/base-url";
-import OptimizedImage from "../common/optmized-image";
 
 const HomeBlog = () => {
   const carouselRef = React.useRef(null);
@@ -18,10 +18,11 @@ const HomeBlog = () => {
 
   const blogs = data?.data || [];
   const blogImageBaseUrl =
-    data?.image_url?.find((item) => item.image_for === "Blog")?.image_url || "";
+    data?.image_url?.find((item) => item.image_for === "Blog")?.image_url ||
+    "https://aia.in.net/webapi/public/assets/images/blog_images/";
   const noImageUrl =
     data?.image_url?.find((item) => item.image_for === "No Image")?.image_url ||
-    "";
+    "/no-image.svg";
 
   if (isLoading) {
     return (
@@ -67,15 +68,16 @@ const HomeBlog = () => {
               Expert articles, exam tips, and real-world insights for CFE, CIA, CAMS, and CISA aspirants
             </h2>
             <Button
+              asChild
               className="rounded-xl mt-6 px-5 text-base relative cursor-pointer overflow-hidden group"
-              onClick={() => window.open("/blogs/", "_blank")}
               variant="ghost"
-              aria-label="Read All Blogs"
             >
-              <span className="relative z-10 text-white">
-                <span>Read All Blogs</span>
-              </span>
-              <span className="absolute inset-0 bg-[#F3831C] opacity-100 transition-opacity duration-300 -skew-x-12" />
+              <Link to="/blogs/" target="_blank" rel="noopener noreferrer" aria-label="Read All Blogs">
+                <span className="relative z-10 text-white">
+                  <span>Read All Blogs</span>
+                </span>
+                <span className="absolute inset-0 bg-[#F3831C] opacity-100 transition-opacity duration-300 -skew-x-12" />
+              </Link>
             </Button>
           </div>
         </div>
@@ -96,21 +98,27 @@ const HomeBlog = () => {
                     : noImageUrl;
 
                   return (
-                    <div
+                    <Link
                       key={blog.id}
-                      onClick={() =>
-                        window.open(`/blogs/${blog.blog_slug}/`, "_blank")
-                      }
+                      to={`/blogs/${blog.blog_slug}/`}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="group w-64 shrink-0 cursor-pointer transition-transform duration-200 lg:hover:-translate-y-1"
                     >
                       <div className="overflow-hidden rounded-lg border border-[#F3831C]/20 bg-white shadow-sm">
                         <div className="relative ">
-                          <OptimizedImage
+                          <img
                             src={imageUrl}
                             alt={blog.blog_images_alt || blog.blog_heading}
+                            title={blog.blog_images_alt || blog.blog_heading}
+                            width={360}
+                            height={202}
+                            loading="lazy"
+                            decoding="async"
                             className="h-auto w-full object-contain transition-transform duration-300 lg:group-hover:scale-105 lg:grayscale lg:hover:grayscale-0 "
                             onError={(e) => {
-                              e.target.src = noImageUrl;
+                              e.currentTarget.onerror = null;
+                              e.currentTarget.src = noImageUrl || "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
                             }}
                           />
                           <div className="absolute bottom-2 right-2 rounded-md bg-[#F3831C] px-2 py-1 text-xs font-semibold text-white">
@@ -151,20 +159,12 @@ const HomeBlog = () => {
                             </div>
                           </div>
 
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="mt-3 w-full cursor-pointer bg-[#F3831C] text-white hover:bg-[#F3831C]"
-                            aria-label={`Read full blog post: ${blog.blog_heading}`}
-                            onClick={() =>
-                              window.open(`/blogs/${blog.blog_slug}/`, "_blank")
-                            }
-                          >
+                          <span className="mt-3 flex h-8 w-full items-center justify-center rounded-md bg-[#F3831C] px-3 text-xs font-medium text-white">
                             Read More
-                          </Button>
+                          </span>
                         </div>
                       </div>
-                    </div>
+                    </Link>
                   );
                 })
               )}

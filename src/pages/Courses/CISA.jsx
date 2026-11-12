@@ -167,7 +167,7 @@ const CISA = () => {
       <LazySection minHeight={500}>
         <CourseAchivers
           slug="cisa"
-          title="From Aspirants to Global Certified Professionals - Our Recent Achievers"
+          title="From Aspirants to Globally Certified Professionals - Our Recent Achievers"
           description="Meet AIA's proud achievers who advance their careers by achieving the CFE, CIA & CAMS credentials with structured prep and real-world expertise."
         />
       </LazySection>

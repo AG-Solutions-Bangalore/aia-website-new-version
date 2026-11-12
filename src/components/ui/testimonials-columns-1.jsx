@@ -1,6 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
-import OptimizedImage from "../common/optmized-image";
+
+const FALLBACK = "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
+const handleImgError = (e) => {
+  if (e.currentTarget.dataset.fallback === "true") return;
+  e.currentTarget.dataset.fallback = "true";
+  e.currentTarget.src = FALLBACK;
+};
 
 export const TestimonialsColumn = (props, className) => {
   const getCourseName = (course) => {
@@ -65,11 +71,17 @@ export const TestimonialsColumn = (props, className) => {
                     <div
                       className={`h-[28vw] sm:h-[18vw] md:h-44 lg:h-56  w-full relative ${className}`}
                     >
-                      <OptimizedImage
-                        src={image}
-                        alt={alt}
-                        className="h-full w-full object-top object-cover"
-                      />
+                      {image && (
+                        <img
+                          src={image}
+                          alt={alt}
+                          title={alt}
+                          className="h-full w-full object-top object-cover"
+                          loading="lazy"
+                          decoding="async"
+                          onError={handleImgError}
+                        />
+                      )}
                       <div
                         className={`absolute top-1 right-1 sm:top-2 sm:right-2 backdrop-blur-sm px-1.5 py-0.5 sm:px-3 sm:py-1 rounded-md text-[8px] sm:text-[10px] md:text-xs font-semibold ${getCourseStyles(course)}`}
                       >
@@ -87,12 +99,17 @@ export const TestimonialsColumn = (props, className) => {
                             {student_designation}
                           </span>
                         </div>
-                        <OptimizedImage
-                          src={comapany_image}
-                          alt={company_alt}
-                          className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 object-contain flex-shrink-0"
-                          sizes="32px"
-                        />
+                        {comapany_image && (
+                          <img
+                            src={comapany_image}
+                            alt={company_alt}
+                            title={company_alt}
+                            className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 object-contain flex-shrink-0"
+                            loading="lazy"
+                            decoding="async"
+                            onError={handleImgError}
+                          />
+                        )}
                       </div>
                     </div>
                   </div>

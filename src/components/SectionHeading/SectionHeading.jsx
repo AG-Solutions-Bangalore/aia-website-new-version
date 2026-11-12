@@ -19,16 +19,29 @@ const SectionHeading = ({
 
   preheadingclassName,
   preheading,
+  headingLevel = 2,
+  mobileCenter = false,
 }) => {
   const isCenter = align == "center";
+  const HeadingTag = `h${headingLevel}`;
+  const textAlignment = isCenter
+    ? "text-center"
+    : mobileCenter
+      ? "text-center md:text-left"
+      : "text-left";
+  const underlineAlignment = isCenter
+    ? "justify-center"
+    : mobileCenter
+      ? "justify-center md:justify-start"
+      : "justify-start";
 
   return (
     <div
-      className={`py-2 ${isCenter ? "text-center" : "text-left"} ${wrapperClass}`}
+      className={`py-2 ${textAlignment} ${wrapperClass}`}
     >
       {beforeheading && (
         <div
-          className={`mt-4 text-gray-600 leading-relaxed mx-auto ${isCenter ? "text-center" : "text-left"
+          className={`mt-4 text-gray-600 leading-relaxed mx-auto ${textAlignment
             } ${beforeHeadingClass}`}
         >
           <p>{beforeheading}</p>
@@ -36,8 +49,8 @@ const SectionHeading = ({
       )}
 
       <div className={`inline-block mb-3 ${isCenter ? "mx-auto" : ""}`}>
-        <h2
-          className={`text-xl md:text-4xl font-bold text-[#0F3652] ${isCenter ? "text-center" : "text-left"} ${titleClass}`}
+        <HeadingTag
+          className={`text-xl md:text-4xl font-bold text-[#0F3652] ${textAlignment} ${titleClass}`}
         >
           <span
             className={preheadingclassName || "text-[#F3831C]"}
@@ -50,23 +63,21 @@ const SectionHeading = ({
             title
           )}{" "}
           <span className="text-[#F3831C]">{highlight1}</span>
-        </h2>
-
-        {highlight && (
-          <h2
-            className={`font-bold text-[#F3831C] mt-2 ${highlightclassName ? highlightclassName : "text-xl md:text-4xl"
-              } ${highlightClass}`}
-          >
-            {highlight}
-          </h2>
-        )}
+          {highlight && (
+            <span
+              className={`block font-bold text-[#F3831C] mt-2 ${highlightclassName ? highlightclassName : "text-xl md:text-4xl"} ${highlightClass}`}
+            >
+              {highlight}
+            </span>
+          )}
+        </HeadingTag>
       </div>
 
       {/* Desktop Description */}
       <div className="hidden lg:block">
         {description && (
           <div
-            className={`mt-4 text-[16px] text-gray-600 leading-relaxed mx-auto ${isCenter ? "text-center" : "text-left"
+            className={`mt-4 text-[16px] text-gray-600 leading-relaxed mx-auto ${textAlignment
               } ${descriptionClass}`}
           >
             <p>{description}</p>
@@ -75,7 +86,7 @@ const SectionHeading = ({
 
         {description1 && (
           <div
-            className={`text-gray-600 text-[16px] leading-relaxed mx-auto ${isCenter ? "text-center" : "text-left"
+            className={`text-gray-600 text-[16px] leading-relaxed mx-auto ${textAlignment
               } ${descriptionClass}`}
           >
             <p>{description1}</p>
@@ -97,17 +108,17 @@ const SectionHeading = ({
       </div> */}
       <div className="lg:hidden">
         <div
-          className={`text-gray-600 text-[16px] leading-relaxed mx-auto ${isCenter ? "text-center" : "text-left"
+          className={`text-gray-600 text-[16px] leading-relaxed mx-auto ${textAlignment
             } ${descriptionClass}`}
         >
-          <p className={isCenter ? "text-center" : "text-justify"}>
+          <p className={isCenter || mobileCenter ? "text-center md:text-left" : "text-justify"}>
             {description}
             {description1}
           </p>
         </div>
       </div>
       <div
-        className={`mt-3 flex ${isCenter ? "justify-center" : "justify-start"}`}
+        className={`mt-3 flex ${underlineAlignment}`}
       >
         <div
           className="relative flex items-center justify-center"
@@ -136,14 +147,6 @@ const SectionHeading = ({
             }}
           />
         </div>
-
-        <style>{`
-  @keyframes slideBackForth {
-    0% { transform: translate(-40px, -50%); }
-    50% { transform: translate(40px, -50%); }
-    100% { transform: translate(-40px, -50%); }
-  }
-`}</style>
       </div>
     </div>
   );

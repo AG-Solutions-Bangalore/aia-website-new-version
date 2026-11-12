@@ -28,7 +28,9 @@
  * - vite-plugin-compression: Gzip & Brotli pre-compression for production hosting
  */
 
-import { defineConfig } from 'vite';
+import fs from 'fs';
+import type { IncomingMessage, ServerResponse } from 'http';
+import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import path from 'path';
@@ -64,6 +66,123 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const compressionFilter = /\.(js|mjs|json|css|svg|webmanifest)$/i;
 
+/**
+ * Serves /sitemap.xml in `vite dev` and `vite preview` purely from the live CRM API.
+ * Uses `https://aia.in.net/webapi/public/api/getSitemap` as the single source of truth.
+ * No custom aliases, no modifications, strictly matching live API data.
+ */
+function devSitemapPlugin(): Plugin {
+  const sitemapPath = '/sitemap.xml';
+  const apiUrl = 'https://aia.in.net/webapi/public/api/getSitemap';
+  const cacheTtlMs = 60 * 1000;
+  let cachedXml = '';
+  let cachedAt = 0;
+
+  interface ApiPageItem {
+    page_two_url?: string | null;
+    page_two_priority?: string | null;
+    page_two_status?: string | null;
+    updated_at?: string | null;
+  }
+
+  const loadSitemapXml = async (): Promise<string> => {
+    if (cachedXml && Date.now() - cachedAt < cacheTtlMs) return cachedXml;
+    try {
+      const response = await fetch(apiUrl, {
+        headers: { Accept: 'application/json' },
+        signal: AbortSignal.timeout(15_000),
+      });
+      if (!response.ok) throw new Error(`HTTP ${response.status} ${response.statusText}`);
+      const json = (await response.json()) as {
+        data?: ApiPageItem[];
+        blog?: ApiPageItem[];
+      };
+
+      const urls: Array<{ loc: string; lastmod: string; priority: string }> = [];
+      urls.push({
+        loc: 'https://aia.in.net/',
+        lastmod: '2026-03-09',
+        priority: '1.00',
+      });
+
+      for (const page of json.data || []) {
+        if ((page.page_two_status || '').trim().toLowerCase() !== 'active') continue;
+        const url = (page.page_two_url || '').trim().replace(/^\/+/, '');
+        if (!url) continue;
+        urls.push({
+          loc: `https://aia.in.net/${url}`,
+          lastmod: page.updated_at ? page.updated_at.split('T')[0] : '',
+          priority: page.page_two_priority || '0.80',
+        });
+      }
+
+      for (const blog of json.blog || []) {
+        if ((blog.page_two_status || '').trim().toLowerCase() !== 'active') continue;
+        const url = (blog.page_two_url || '').trim().replace(/^\/+/, '');
+        if (!url) continue;
+        urls.push({
+          loc: `https://aia.in.net/blogs/${url}`,
+          lastmod: blog.updated_at ? blog.updated_at.split('T')[0] : '',
+          priority: blog.page_two_priority || '0.80',
+        });
+      }
+
+      const entries = urls
+        .map(
+          (u) =>
+            `  <url>\n    <loc>${u.loc}</loc>${u.lastmod ? `\n    <lastmod>${u.lastmod}</lastmod>` : ''}\n    <priority>${u.priority}</priority>\n  </url>`,
+        )
+        .join('\n');
+
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>`;
+      cachedXml = xml;
+      cachedAt = Date.now();
+      return xml;
+    } catch (error) {
+      if (cachedXml) return cachedXml;
+      throw error;
+    }
+  };
+
+  const middleware = (
+    req: IncomingMessage,
+    res: ServerResponse,
+    next: (err?: unknown) => void,
+  ): void => {
+    const pathname = (req.url ?? '').split('?')[0].toLowerCase();
+    if (pathname === `${sitemapPath}/`) {
+      res.statusCode = 301;
+      res.setHeader('Location', sitemapPath);
+      res.end();
+      return;
+    }
+    if (pathname !== sitemapPath) {
+      next();
+      return;
+    }
+    void loadSitemapXml().then(
+      (xml) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'application/xml; charset=utf-8');
+        res.setHeader('Cache-Control', 'no-cache');
+        res.end(req.method === 'HEAD' ? undefined : xml);
+      },
+      (error) => next(error),
+    );
+  };
+
+  return {
+    name: 'dev-sitemap',
+    configureServer(server) {
+      server.middlewares.use(middleware);
+    },
+    configurePreviewServer(server) {
+      server.middlewares.use(middleware);
+    },
+  };
+}
+
+
 export default defineConfig({
   root: process.cwd(),
   server: {
@@ -71,6 +190,7 @@ export default defineConfig({
   },
   base: '/',
   plugins: [
+    devSitemapPlugin(),
     tailwindcss(),
     react(),
     vitePrerenderPlugin({
@@ -170,9 +290,23 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-    target: 'chrome61',
-    chunkSizeWarningLimit: 1000,
-    modulePreload: false,
+    target: 'baseline-widely-available',
+    chunkSizeWarningLimit: 500,
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+        pure_funcs: ['console.log', 'console.warn', 'console.error'],
+      },
+      mangle: true,
+      format: {
+        comments: false,
+      },
+    },
+    cssCodeSplit: true,
+    sourcemap: false,
+    modulePreload: { polyfill: false },
 
     rolldownOptions: {
       output: {

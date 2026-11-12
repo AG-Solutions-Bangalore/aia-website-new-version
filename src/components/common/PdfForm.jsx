@@ -8,9 +8,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import axios from "axios";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 let referralCache = null;
@@ -27,6 +29,7 @@ export default function PdfJoinDialog({
   submitLabel = "Submit Now",
   successMessage,
 }) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
     userMobile: "",
@@ -131,7 +134,7 @@ export default function PdfJoinDialog({
         payload,
         { headers: { "Content-Type": "application/json" } },
       );
-      if (res.data.code == "200") {
+      if (isConfirmedFormSuccess(res)) {
         toast.success(
           successMessage ||
           res.data.msg ||
@@ -150,6 +153,7 @@ export default function PdfJoinDialog({
           utm_medium: "",
           utm_campaign: "",
         });
+        redirectToThankYou(navigate);
       } else {
         toast.error(res.data.msg || "Something went wrong. Please try again.");
       }

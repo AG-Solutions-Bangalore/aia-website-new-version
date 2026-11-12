@@ -87,6 +87,7 @@ const HomeMap = ({ courseCode }) => {
     tileLayer.addTo(map);
 
     const layerGroup = L.layerGroup();
+    const FALLBACK_AVATAR = "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
 
     const makeAvatarIcon = (student, index) => {
       const size = SIZES[index % SIZES.length];
@@ -107,7 +108,7 @@ const HomeMap = ({ courseCode }) => {
             alt="${student.name}"
             title="${student.name}"
             style="width:100%;height:100%;object-fit:cover;display:block;"
-            loading="lazy"
+            onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';"
           />
         </div>
       `;
@@ -125,7 +126,7 @@ const HomeMap = ({ courseCode }) => {
         <h4>${countryName}</h4>
         <div style="margin-top:8px;">
           <div class="card" style="margin:auto;width:90px;">
-            <img class="thumb" src="${student.imageUrl}" alt="${student.name}" title="${student.name}" loading="lazy">
+            <img class="thumb" src="${student.imageUrl}" alt="${student.name}" title="${student.name}" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';">
             <div class="course-name">${student.course}</div>
             <div class="caption">${student.name}</div>
           </div>
@@ -141,10 +142,15 @@ const HomeMap = ({ courseCode }) => {
 
       if (isNaN(lat) || isNaN(lng)) return;
 
+      const rawImage = student.student_image;
+      const studentImageUrl = rawImage
+        ? (rawImage.startsWith("http") ? rawImage : `${imageUrl}${rawImage.replace(/^\/+/, "")}`)
+        : FALLBACK_AVATAR;
+
       const studentData = {
         name: student.student_name,
         course: student.student_course,
-        imageUrl: `${imageUrl}${student.student_image}`,
+        imageUrl: studentImageUrl,
         lat,
         lng,
       };

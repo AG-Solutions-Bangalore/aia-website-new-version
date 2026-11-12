@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { PaymentAccreditation } from "@/components/Footer/footer-accredationbadges";
 import FooterReviews from "@/components/Footer/footer-review";
 import { ContactGrid } from "@/components/Footer/global-contact";
+import { getLinkTitle } from "@/utils/seoTitles";
 
 export default function Footer() {
   return (
@@ -34,7 +35,8 @@ export default function Footer() {
               ].map((link, idx) => (
                 <li key={idx} className="group">
                   <Link
-                    to={link.href} title={link.href}
+                    to={link.href}
+                    title={getLinkTitle(link.href)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
@@ -69,7 +71,8 @@ export default function Footer() {
                 ].map((course, idx) => (
                   <li key={idx} className="group">
                     <Link
-                      to={course.href} title={course.href}
+                      to={course.href}
+                      title={getLinkTitle(course.href)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"
@@ -98,7 +101,8 @@ export default function Footer() {
                 ].map((resource, idx) => (
                   <li key={idx} className="group">
                     <Link
-                      to={resource.href} title={resource.href}
+                      to={resource.href}
+                      title={getLinkTitle(resource.href)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center gap-3 text-gray-300 hover:text-[#fa8017] transition-all duration-300 text-sm"

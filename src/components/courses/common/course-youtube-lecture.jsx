@@ -7,6 +7,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import SectionHeading from "@/components/SectionHeading/SectionHeading";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { getImageTitle, getLinkTitle } from "@/utils/seoTitles";
 
 const CourseYoutubeLecture = ({
   courseSlug,
@@ -109,7 +110,7 @@ const CourseYoutubeLecture = ({
                       : "border-transparent text-[#0F3652] hover:text-[#F3831C] hover:border-[#F3831C]/40"
                   }`}
                 >
-                  {tab}
+                  <h3 className="inline font-medium text-sm m-0 p-0">{tab}</h3>
                 </button>
               ))}
             </div>
@@ -134,7 +135,11 @@ const CourseYoutubeLecture = ({
               {filteredVideos.map((video) => (
                 <a
                   key={video.id}
-                  href={video.youtube_link} title={video.youtube_link}
+                  href={video.youtube_link}
+                  title={getLinkTitle(video.youtube_link, {
+                    page: courseSlug,
+                    defaultTitle: "Academy of Internal Audit – YouTube Video",
+                  })}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="shrink-0 w-72 group/card cursor-pointer border p-2 rounded-md bg-white"
@@ -143,7 +148,11 @@ const CourseYoutubeLecture = ({
                     <div className="relative overflow-hidden bg-gray-100">
                       <img
                         src={getImageUrl(video.youtube_image)}
-                        alt={video.youtube_image_alt || video.youtube_language} title={video.youtube_image_alt || video.youtube_language}
+                        alt={video.youtube_image_alt || video.youtube_language}
+                        title={getImageTitle(
+                          video.youtube_image,
+                          video.youtube_title || video.youtube_image_alt || "Academy of Internal Audit"
+                        )}
                         className="w-full h-auto object-contain"
                         loading="lazy"
                       />
@@ -178,7 +187,12 @@ const CourseYoutubeLecture = ({
           variant="ghost"
           aria-label="Visit Our YouTube Channel"
         >
-          <Link to={"https://www.youtube.com/@academyofia"} title={"https://www.youtube.com/@academyofia"} target="_blank">
+          <Link
+            to={"https://www.youtube.com/@academyofia"}
+            title="Academy of Internal Audit – YouTube Channel"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             <span className="relative z-10 text-white">
               <span>Visit Our YouTube Channel</span>
             </span>

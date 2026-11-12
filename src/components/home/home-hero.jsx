@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
-import OptimizedImage from "@/components/common/optmized-image";
 import { getBannerForSlug } from "@/config/bannerData";
-import { COURSE_ROUTES } from "@/config/site";
+import { normalizeRoutePath } from "@/routes/route-path";
+import { HOME_HERO_480_BASE64 } from "./hero-480-base64";
+import { getLinkTitle } from "@/utils/seoTitles";
 
 const HOME_BANNER_BASE =
   "https://aia.in.net/webapi/public/assets/images/banner_images/";
@@ -272,6 +273,8 @@ export default function HomeHero({ slug, bottombar = false }) {
   const suppressClick = useRef(false);
 
   useEffect(() => {
+    if (ssgBanner?.slides?.length) return;
+
     const controller = new AbortController();
 
     const loadBanner = async () => {
@@ -396,7 +399,7 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   if (isLoading) {
     return (
-      <section className="relative">
+      <div className="relative">
         <div
           className="relative w-full overflow-hidden"
           style={{ aspectRatio: "11/5" }}
@@ -447,27 +450,27 @@ export default function HomeHero({ slug, bottombar = false }) {
             </div>
           </>
         )}
-      </section>
+      </div>
     );
   }
 
   if (error) {
     return (
-      <section className="relative h-[420px] bg-red-50 flex items-center justify-center">
+      <div className="relative h-[420px] bg-red-50 flex items-center justify-center">
         <span className="text-xs text-red-400 font-medium">
           Failed to load banners: {error?.message}
         </span>
-      </section>
+      </div>
     );
   }
 
   if (carouselSlides.length === 0) {
     return (
-      <section className="relative h-[420px] bg-gray-100 flex items-center justify-center">
+      <div className="relative h-[420px] bg-gray-100 flex items-center justify-center">
         <span className="text-xs text-gray-400 font-medium">
           No banners available
         </span>
-      </section>
+      </div>
     );
   }
 
@@ -476,9 +479,7 @@ export default function HomeHero({ slug, bottombar = false }) {
   const normalizeRoute = (rawLink) => {
     if (!rawLink) return undefined;
     if (rawLink.startsWith("http")) return rawLink;
-    const clean = rawLink.replace(/^\/+/, "").replace(/\/+$/, "");
-    if (!clean) return "/";
-    return COURSE_ROUTES.has(clean) ? `/${clean}` : `/${clean}/`;
+    return normalizeRoutePath(rawLink);
   };
 
   const slideHref = normalizeRoute(activeSlide?.link);
@@ -488,7 +489,7 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   return (
     <>
-      <section className="relative">
+      <div className="relative">
         <div
           className="relative overflow-hidden"
           onMouseEnter={() => setIsAutoPlaying(false)}
@@ -500,12 +501,17 @@ export default function HomeHero({ slug, bottombar = false }) {
             {activeSlide && (
               <a
                 key={activeSlide.id}
-                href={slideHref}
+                href={slideHref || "#"}
                 target={isExternalSlide ? "_blank" : undefined}
                 rel={isExternalSlide ? "noopener noreferrer" : undefined}
                 className="absolute inset-0 z-10"
-                aria-label={activeSlide.alt || "Open banner link"} title={activeSlide.alt || "Open banner link"}
+                aria-label={activeSlide.alt || "Open banner link"}
+                title={getLinkTitle(slideHref || "#", { page: slug, defaultTitle: activeSlide.alt || "Open banner link" })}
                 onClick={(event) => {
+                  if (!slideHref) {
+                    event.preventDefault();
+                  }
+
                   if (suppressClick.current) {
                     event.preventDefault();
                     suppressClick.current = false;
@@ -516,36 +522,38 @@ export default function HomeHero({ slug, bottombar = false }) {
                   <picture>
                     <source
                       media="(max-width: 640px)"
-                      srcSet="/images/hero/home-hero-480.webp"
+                      srcSet={HOME_HERO_480_BASE64}
                     />
                     <source
                       media="(min-width: 641px)"
                       srcSet="/images/hero/home-hero-1600.webp"
                     />
-                    <OptimizedImage
-                      src="/images/hero/home-hero-1600.webp"
+                    <img
+                      src={HOME_HERO_480_BASE64}
                       alt={activeSlide.alt}
-                      priority={true}
+                      title={activeSlide.alt || "AIA Training Institute"}
                       width={1600}
                       height={727}
                       className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.target.src = "/no-image.svg";
-                      }}
+                      loading="eager"
+                      fetchPriority="high"
+                      decoding="sync"
                     />
                   </picture>
                 ) : (
-                  <OptimizedImage
+                  <img
                     src={activeSlide.imageUrl}
-                    srcSet={activeSlide.srcSet}
                     alt={activeSlide.alt}
-                    priority={currentSlide === 0}
+                    title={activeSlide.alt || "AIA Training Institute"}
+                    loading={currentSlide === 0 ? "eager" : "lazy"}
+                    fetchPriority={currentSlide === 0 ? "high" : "low"}
+                    decoding="async"
                     width={activeSlide.width || 1600}
                     height={activeSlide.height || 727}
-                    sizes={activeSlide.sizes || "100vw"}
                     className="w-full h-full object-cover"
                     onError={(e) => {
-                      e.target.src = "/no-image.svg";
+                      e.currentTarget.onerror = null;
+                      e.currentTarget.src = "/no-image.svg";
                     }}
                   />
                 )}
@@ -604,10 +612,14 @@ export default function HomeHero({ slug, bottombar = false }) {
                 </div>
 
                 <a
-                  href={currentHref}
+                  href={currentHref || "#"}
                   target={isExternalCurrent ? "_blank" : undefined}
                   rel={isExternalCurrent ? "noopener noreferrer" : undefined}
-                  aria-label={`Learn more about: ${current.title}`} title={`Learn more about: ${current.title}`}
+                  onClick={(event) => {
+                    if (!currentHref) event.preventDefault();
+                  }}
+                  aria-label={`Know more about: ${current.title}`}
+                  title={getLinkTitle(currentHref || (slug === "about-aia" ? "" : "#"), { page: slug, defaultTitle: `Know more about: ${current.title}` })}
                   className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
                   min-h-11 text-white bg-[#F3831C] hover:bg-[#D16E27] active:bg-[#AE5B1D]
@@ -631,7 +643,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                       key={index}
                       onClick={() => goToSlide(index)}
                       aria-label={`Go to slide ${index + 1}`}
-                      className="min-h-6 w-4 sm:w-6 shrink flex items-center justify-center overflow-hidden"
+                      className="min-h-6 min-w-6 w-6 h-6 shrink flex items-center justify-center overflow-hidden"
                       aria-current={index === currentSlide ? "true" : undefined}
                     >
                       <span
@@ -673,7 +685,15 @@ export default function HomeHero({ slug, bottombar = false }) {
             </div>
           </div>
         )}
-      </section>
+      </div>
+
+      {slug === "home" && (
+        <div className="bg-[#0F3652] px-4 py-3">
+          <p className="mx-auto max-w-5xl text-center text-sm font-bold leading-snug text-white sm:text-lg md:text-xl">
+            CIA, CFE, CAMS &amp; CISA Certification Training
+          </p>
+        </div>
+      )}
     </>
   );
 }

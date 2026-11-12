@@ -6,14 +6,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import axios from "axios";
 import { X } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export const CorporateQuoteForm = ({
   onSuccess,
   userType = "Corporate-Quote",
 }) => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
     userEmail: "",
@@ -80,7 +83,7 @@ export const CorporateQuoteForm = ({
     }
     setLoader(true);
     try {
-      await axios.post(
+      const res = await axios.post(
         `${BASE_URL}/api/create-webenquiry`,
         {
           userName: formData.userName,
@@ -94,9 +97,17 @@ export const CorporateQuoteForm = ({
         },
         { headers: { "Content-Type": "application/json" } },
       );
-      alert("Demo booked successfully!");
-      resetForm();
-      onSuccess?.();
+      if (isConfirmedFormSuccess(res)) {
+        resetForm();
+        onSuccess?.();
+        redirectToThankYou(navigate);
+      } else {
+        alert(
+          res.data?.msg ||
+            res.data?.message ||
+            "Something went wrong. Please try again.",
+        );
+      }
     } catch (error) {
       console.error("API error:", error.response?.data || error.message);
       alert(

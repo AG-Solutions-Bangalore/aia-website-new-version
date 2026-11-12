@@ -158,7 +158,7 @@ const CAMS = () => {
       <LazySection minHeight={420}>
         <CourseBlog
           course="CAMS"
-          title="Expert articles, exam tips, and real-world insights for  CAMS aspirants."
+          title="Expert articles, exam tips, and real-world insights for CAMS aspirants."
         />
       </LazySection>
 

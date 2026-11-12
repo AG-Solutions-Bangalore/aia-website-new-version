@@ -1,13 +1,16 @@
 import { BASE_URL } from "@/api/base-url";
 import { Button } from "@/components/ui/button";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import TextCaptcha from "../custom-captcha/text-captcha";
 
 let referralCache = null;
 let referralFetchPromise = null;
 
 const HomeContact = () => {
+  const navigate = useNavigate();
   const [captchaVerified, setCaptchaVerified] = useState(false);
   const [captchaFailed, setCaptchaFailed] = useState(false);
   const [captchaRequired, setCaptchaRequired] = useState(false);
@@ -78,7 +81,8 @@ const HomeContact = () => {
         });
     };
 
-    loadReferral();
+    const timer = setTimeout(loadReferral, 2500);
+    return () => clearTimeout(timer);
   }, []);
 
   const handleChange = (e) => {
@@ -134,7 +138,7 @@ const HomeContact = () => {
         { headers: { "Content-Type": "application/json" } },
       );
 
-      if (response.status === 200 || response.status === 201) {
+      if (isConfirmedFormSuccess(response)) {
         setSubmitSuccess(true);
         setFormData({
           ...formData,
@@ -149,6 +153,7 @@ const HomeContact = () => {
         setCaptchaFailed(false);
         setCaptchaRequired(false);
         setTimeout(() => setSubmitSuccess(false), 5000);
+        redirectToThankYou(navigate);
       }
     } catch (error) {
       setSubmitError(
@@ -175,14 +180,14 @@ const HomeContact = () => {
             {/* ── Left column ── */}
             <div className="space-y-4">
               <div>
-                <span className="text-xs md:text-sm font-semibold text-[#F48F32] uppercase tracking-wider block">
-                  Add Global Certifications for a brighter Career Path
-                </span>
-                <h2 className="text-[#0F3652] text-xl md:text-3xl mt-2 font-medium">
+                <h2 className="text-xs md:text-sm font-semibold text-[#F48F32] uppercase tracking-wider block">
+                  Add Global Certifications for a Brighter Career Path
+                </h2>
+                <div className="text-[#0F3652] text-xl md:text-3xl mt-2 font-medium">
                   <span className="text-2xl md:text-5xl font-bold text-[#0F3652] italic block mt-2">
                     Prepare. Certify. Succeed
                   </span>
-                </h2>
+                </div>
                 <p className="mt-2 text-[#0F3652] text-sm md:text-base">
                   Connect with experienced professionals and get clear, honest
                   guidance on choosing the right international certification for
@@ -192,14 +197,17 @@ const HomeContact = () => {
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-8 col-span-1 lg:col-span-2">
                 {[
                   {
-                    stat: "10k+ hours",
-                    label: "Expert-Led Training Delivered",
+                    stat: "99.6%",
+                    label: "Proven Success Track Record",
                   },
                   {
-                    stat: "2,000+ Professionals",
-                    label: "Trained & Certified",
+                    stat: "2000+",
+                    label: "Professionals Trained & Certified",
                   },
-                  { stat: "22+ Years", label: "Industry Experience" },
+                  {
+                    stat: "22+ Years",
+                    label: "of the Industry Experience Faculty",
+                  },
                 ].map(({ stat, label }) => (
                   <div
                     key={stat}

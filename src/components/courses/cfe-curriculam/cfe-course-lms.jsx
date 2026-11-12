@@ -29,7 +29,7 @@ const CfeCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
         "Attend weekly live query sessions with experienced industry faculty to clarify doubts, interact with peers, and gain practical insights that strengthen conceptual clarity and real-world fraud understanding.",
     },
     {
-      title: "Expert-curated Flash Cards.",
+      title: "Expert-curated Flash Cards",
       description:
         "We’ve created 400+ easy-to-use flashcards to help learners revise key fraud concepts and definitions faster, making last-minute revision more focused, effective, and easier to retain.",
     },
@@ -62,7 +62,7 @@ const CfeCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
   return (
     <>
       <CourseLms
-        cardTitle="What's Included in the AIA CFE Prep Course ?"
+        cardTitle="What's Included in the AIA CFE Prep Course?"
         courseFeatures={courseFeatures}
         image={image}
         bannerTitle="Become CFE Certified in 60 Days"
@@ -92,7 +92,7 @@ const CfeCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
           cursor-pointer
             "
         >
-          <Link to={`${ENROLL_URL}`} title={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} title="Enroll Now – AIA Certification Courses" target="_blank" rel="noopener noreferrer">
             Enroll Now
           </Link>
         </Button>

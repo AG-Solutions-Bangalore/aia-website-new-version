@@ -15,7 +15,7 @@ const curriculumData = [
   },
   {
     id: 2,
-    title: "Fraud Investigation and Law",
+    title: "Fraud Investigation and Legal Issues",
     content: [
       `This module <strong> concentrates on the practical process of conducting a fraud investigation while staying within appropriate legal boundaries .</strong> It covers the key stages involved in examining suspected fraud, including planning an investigation, gathering information, and evaluating evidence. Learners also <strong>study proper methods for collecting and preserving documentation and digital data,</strong> as well as techniques for analysing findings .
        The curriculum also addresses interview approaches used during investigations and how to present results in a clear and professional investigative report. In addition, this section introduces the basic functioning of legal systems in different jurisdictions, explains <strong>how fraud cases are pursued through criminal or civil actions,</strong> and outlines the <strong>responsibilities involved when presenting professional opinions </strong> or expert testimony.`,
@@ -23,7 +23,7 @@ const curriculumData = [
   },
   {
     id: 3,
-    title: "Fraud Prevention and Deterrence ",
+    title: "Fraud Prevention and Deterrence",
     content: [
       `This area<strong> focuses on understanding the underlying factors that lead individuals to commit fraud and the strategies organisations can implement to reduce such risks.</strong>It discusses the importance of strong governance, ethical culture, and effective oversight in minimising fraudulent behaviour .<strong> Learners explore the responsibilities of management, auditors, and compliance professionals</strong>in maintaining an environment that discourages misconduct. 
       The section also explains <strong> how to perform a structured fraud risk assessment, implement appropriate control measures, and design a proactive fraud prevention framework </strong> Ethical decision-making and professional responsibility are also emphasised as key elements in maintaining integrity within organisations.`,
@@ -72,7 +72,7 @@ const CfeCourseCurriculum = () => {
           cursor-pointer
             "
         >
-          <Link to={`${ENROLL_URL}`} title={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} title="Enroll Now – AIA Certification Courses" target="_blank" rel="noopener noreferrer">
             Enroll Now
           </Link>
         </Button>

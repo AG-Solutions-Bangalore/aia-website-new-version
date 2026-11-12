@@ -52,7 +52,7 @@ const CamsCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
   return (
     <>
       <CourseLms
-        cardTitle="What’s Included in the AIA CAMS Prep Course ?"
+        cardTitle="What’s Included in the AIA CAMS Prep Course?"
         courseFeatures={courseFeatures}
         image={image}
         bannerTitle="Become CAMS Certified in 45 Days"
@@ -82,7 +82,7 @@ const CamsCourseLms = ({ title, subtitle, course, buttonlabel, image }) => {
           cursor-pointer
             "
         >
-          <Link to={`${ENROLL_URL}`} title={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} title="Enroll Now – AIA Certification Courses" target="_blank" rel="noopener noreferrer">
             Enroll Now
           </Link>
         </Button>

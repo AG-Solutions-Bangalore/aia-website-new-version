@@ -70,19 +70,11 @@ const FreeResourceReview = () => {
   return (
     <section className="py-12 bg-white">
       <div className="max-w-340 mx-auto w-full px-4 sm:px-6 lg:px-8">
-        <div className="md:hidden">
-          <SectionHeading
-            title="Trusted by Learners Across the Globe"
-            description="Real experiences shared by professionals on how AIA helped them achieve their certification goals."
-            align="center"
-          />
-        </div>
-        <div className="hidden md:block">
-          <SectionHeading
-            title="Trusted by Learners Across the Globe"
-            description="Real experiences shared by professionals on how AIA helped them achieve their certification goals."
-          />
-        </div>
+        <SectionHeading
+          title="Trusted by Learners Across the Globe"
+          description="Real experiences shared by professionals on how AIA helped them achieve their certification goals."
+          mobileCenter
+        />
         <div className="flex flex-col lg:flex-row items-center">
           <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
             <Suspense fallback={null}>
@@ -143,6 +135,14 @@ const FreeResourceReview = () => {
                             title={item.alt || item.name}
                             className="w-14 h-14 min-w-14 min-h-14 rounded-full object-cover border-2 border-[#0F3652] flex-shrink-0"
                             effect="blur"
+                            onError={(e) => {
+                              if (e?.currentTarget) {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src =
+                                  noImageUrl ||
+                                  "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
+                              }
+                            }}
                           />
 
                           <div>

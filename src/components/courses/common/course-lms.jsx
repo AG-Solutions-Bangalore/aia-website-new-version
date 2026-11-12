@@ -53,7 +53,7 @@ const CourseLms = ({
 
   return (
     <>
-      <section className="mt-8">
+      <div className="mt-8">
         {/* Image */}
         <img
           src={`${IMAGE_PATH}/${image}`}
@@ -86,7 +86,7 @@ const CourseLms = ({
             </Button>
           )}
         </div>
-      </section>
+      </div>
       <section className="py-12 px-4 bg-white">
         <div className="max-w-340 mx-auto">
           <SectionHeading

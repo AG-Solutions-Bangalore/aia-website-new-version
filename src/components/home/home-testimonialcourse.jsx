@@ -1,13 +1,15 @@
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 
 export function TestimonialCardColor({
   author,
   href,
   alt,
+  title,
+  linkTitle,
   className,
   target,
   course,
+  tabIndex,
 }) {
   const Card = href ? "a" : "div";
   const getCourseName = (course) => {
@@ -42,6 +44,8 @@ export function TestimonialCardColor({
           href,
           target: target || "_blank",
           rel: "noopener noreferrer",
+          tabIndex,
+          title: linkTitle || title || alt || "Certificate",
         }
         : {})}
       className={cn(
@@ -50,7 +54,6 @@ export function TestimonialCardColor({
         "overflow-hidden",
         className
       )}
-    // style={{ width: cardWidth, height: cardHeight }}
     >
       <div
         className={`absolute top-0 right-0 z-30 backdrop-blur-sm px-3 py-1 rounded-md text-xs font-semibold ${getCourseStyles(
@@ -60,14 +63,23 @@ export function TestimonialCardColor({
         {getCourseName(course)}
       </div>
       <div className="h-full w-full flex items-center justify-center overflow-hidden relative">
-        <Avatar className="h-full w-full rounded-md">
-          <AvatarImage
-            src={author?.avatar}
+        {author?.avatar ? (
+          <img
+            src={author.avatar}
             alt={alt || "Certificate Image"}
+            title={title || alt || "Certificate Image"}
             className="w-full h-full object-contain rounded-md"
+            width={340}
+            height={220}
             loading="lazy"
+            decoding="async"
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src =
+                "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
+            }}
           />
-        </Avatar>
+        ) : null}
       </div>
     </Card>
   );

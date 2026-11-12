@@ -9,7 +9,7 @@ import { prefetchPopup } from "@/lib/popup-cache";
 import { X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 
-const IMAGE_OPEN_FALLBACK_MS = 1200;
+const IMAGE_OPEN_FALLBACK_MS = 600;
 
 const PopUp = ({ slug = "home" }) => {
   const [open, setOpen] = useState(false);
@@ -162,8 +162,9 @@ const PopUp = ({ slug = "home" }) => {
                 width={1200}
                 height={400}
                 className={`${popupData.popup_heading ? "rounded-b-lg" : "rounded-lg"} w-full h-auto`}
-                loading="eager"
-                fetchPriority="high"
+                loading="lazy"
+                fetchPriority="low"
+                decoding="async"
               />
             )}
           </div>

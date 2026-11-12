@@ -29,14 +29,14 @@ const ServiceCard = ({ service, i, progress, total }) => {
       >
         <div>
           <div className="flex items-start justify-between mb-2">
-            <p
+            <h4
               className="text-xl  font-bold"
               style={{
                 color: service.textColor === "#ffffff" ? "#ffffff" : "#000000",
               }}
             >
               {service.description2}
-            </p>
+            </h4>
             <div className="text-5xl font-bold text-[#F3831C] opacity-20">
               {String(service.id).padStart(2, "0")}
             </div>
@@ -143,7 +143,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             </div>
 
             <div className="mb-4">
-              <p
+              <h4
                 className="text-sm font-bold mb-3 text-justify"
                 style={{
                   color:
@@ -151,7 +151,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                 }}
               >
                 {service.description2}
-              </p>
+              </h4>
 
               {service.features && (
                 <div className="space-y-2">
@@ -246,14 +246,14 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             <div className="h-full flex flex-col justify-between">
               <div>
                 <div className="transition-opacity duration-300 mb-20">
-                  <h2
+                  <h3
                     className="text-xl lg:text-3xl font-bold mb-3 leading-tight "
                     style={{
                       color: ALL_SERVICES[activeCard]?.lefttextColor || "",
                     }}
                   >
                     {ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}
-                  </h2>
+                  </h3>
 
                   <p className="text-[#0F3652] text-lg mb-2 max-w-lg leading-relaxed text-justify">
                     {ALL_SERVICES[activeCard]?.description ||

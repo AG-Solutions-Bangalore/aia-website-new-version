@@ -1,5 +1,5 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
-import PopUp from "@/components/common/pop-up";
+import DeferredPopUp from "@/components/common/deferred-popup";
 import HomeHero from "@/components/home/home-hero";
 import { isBrowser } from "@/lib/prerender";
 import CamsRoadmapDialog from "@/components/common/CamsRoadmapDialog";
@@ -89,10 +89,16 @@ const CAMSFreeResources = () => {
       {/* Initial render */}
       
 
-<PopUp slug="cams-free-resources" />
+<DeferredPopUp slug="cams-free-resources" />
 
 
       <HomeHero slug="cams-free-resources" />
+
+      <div className="bg-[#0F3652] px-4 py-3">
+        <h1 className="mx-auto max-w-5xl text-center text-sm font-bold leading-snug text-white sm:text-lg md:text-xl">
+          Free CAMS Resources: Flashcards &amp; Practice Questions
+        </h1>
+      </div>
 
       <div ref={refs.youtube}>
         {visible.youtube && (

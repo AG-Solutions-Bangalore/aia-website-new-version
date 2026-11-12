@@ -1,5 +1,22 @@
 Options -Indexes -MultiViews
 
+# ----------------------------------------------------------------------
+# | MIME Types (Apache mod_mime for cPanel / LiteSpeed / Apache)       |
+# ----------------------------------------------------------------------
+<IfModule mod_mime.c>
+    AddType application/javascript .js .mjs
+    AddType text/javascript .js .mjs
+    AddType text/css .css
+    AddType image/svg+xml .svg
+    AddType application/json .json .ld+json
+    AddType font/woff2 .woff2
+    AddType font/woff .woff
+    AddType font/ttf .ttf
+    AddType image/webp .webp
+    AddType image/avif .avif
+    AddType application/manifest+json .webmanifest
+</IfModule>
+
 <IfModule mod_dir.c>
     DirectorySlash Off
     DirectoryIndex index.html
@@ -19,6 +36,9 @@ RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\.aia\.in\.net$ [NC]
 RewriteRule ^ https://aia.in.net%{REQUEST_URI} [R=301,L]
+
+# 2b. Fully Dynamic API Sitemap: Pure data direct from /webapi/public/api/getSitemap
+RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
 # 2. Retired page URLs (Permanent 301 redirects with trailing slash)
 RewriteRule ^about-us/?$ /about-aia/ [R=301,L]
@@ -119,24 +139,49 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.html [L]
 </IfModule>
 
-# 7. Static asset caching
-# Hashed Vite bundles are content-addressed, so they can be cached for a year.
+# 7. Security Headers & Static asset caching for Apache / cPanel / LiteSpeed
 <IfModule mod_headers.c>
-    <FilesMatch "\.(js|mjs|css|woff2|woff|ttf|otf|eot)$">
+    # 1. Prevent Clickjacking
+    Header always set X-Frame-Options "SAMEORIGIN"
+
+    # 2. Enforce HSTS (Strict-Transport-Security for 1 year)
+    Header always set Strict-Transport-Security "max-age=31536000"
+
+    # 3. Secure Referrer Policy (protect path leakage to cross-origin destinations)
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+
+    # 4. Prevent MIME-Type Sniffing
+    Header always set X-Content-Type-Options "nosniff"
+
+    # Hashed Vite bundles are content-addressed, so they can be cached for a year.
+    # sw.js / workbox-*.js are excluded here and handled by the revalidate block below.
+    <FilesMatch "^(?!sw\.js$)(?!workbox-).*\.(js|mjs|css|woff2|woff|ttf|otf|eot)$">
         Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
 
-    # Banners/logos may be replaced with the same filename; keep a bounded TTL.
-    <FilesMatch "\.(webp|avif|png|jpe?g|gif|svg|ico)$">
-        Header set Cache-Control "public, max-age=2592000, stale-while-revalidate=604800"
+    # Service worker + Workbox runtime must always revalidate after a deploy.
+    <FilesMatch "^(sw\.js|workbox-.*\.js)$">
+        Header set Cache-Control "public, no-cache, max-age=0, must-revalidate"
     </FilesMatch>
 
-    # Always revalidate HTML/documents after a deploy (prevents Nginx proxy cache from serving stale HTML)
-    <FilesMatch "\.(html|json|xml|webmanifest)$">
-        Header set Cache-Control "no-cache, no-store, must-revalidate, max-age=0, s-maxage=0"
-        Header set Pragma "no-cache"
-        Header set Expires "0"
-        Header set X-Accel-Expires "0"
+    # Public images are NOT content-hashed (e.g. /images/hero/*.webp),
+    # so 30 days instead of immutable 1 year to avoid stale files after replacement.
+    <FilesMatch "\.(webp|avif|png|jpe?g|gif|svg|ico)$">
+        Header set Cache-Control "public, max-age=2592000"
+    </FilesMatch>
+
+    # HTML/manifest: browsers revalidate, edge/CDN (Cloudflare/nginx/Varnish)
+    # may cache for 10 minutes to cut TTFB. X-Accel-Expires is intentionally removed.
+    <FilesMatch "\.(html|webmanifest)$">
+        Header set Cache-Control "public, max-age=0, s-maxage=600, stale-while-revalidate=86400"
+        Header unset Pragma
+        Header unset Expires
+        Header unset X-Accel-Expires
+    </FilesMatch>
+
+    # API JSON / sitemap XML must NOT be edge-cached.
+    <FilesMatch "\.(json|xml)$">
+        Header set Cache-Control "public, no-cache, max-age=0, must-revalidate"
     </FilesMatch>
 </IfModule>
 
@@ -157,7 +202,14 @@ RewriteRule . /index.html [L]
     ExpiresByType text/html "access plus 0 seconds"
 </IfModule>
 
-# 8. Gzip Compression for all text assets
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json application/xml application/rss+xml image/svg+xml
+# 8. Compression: Brotli when available, otherwise gzip.
+# Fonts (woff/woff2) are already compressed and are intentionally not re-compressed.
+<IfModule mod_brotli.c>
+    AddOutputFilterByType BROTLI_COMPRESS text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json application/ld+json application/manifest+json application/xml application/rss+xml image/svg+xml
+</IfModule>
+
+<IfModule !mod_brotli.c>
+    <IfModule mod_deflate.c>
+        AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json application/ld+json application/manifest+json application/xml application/rss+xml image/svg+xml
+    </IfModule>
 </IfModule>

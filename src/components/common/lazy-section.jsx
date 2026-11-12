@@ -26,7 +26,7 @@ const LazySection = memo(function LazySection({
   QueryProvider,
   prerender = true,
   deferUntilIdle = false,
-  idleDelay = 1600,
+  idleDelay = 800,
   idleTimeout = 1500,
   mountOnInteraction = true,
 }) {

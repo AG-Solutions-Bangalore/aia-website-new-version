@@ -1,9 +1,10 @@
 import { IMAGE_PATH } from "@/api/base-url";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import PdfJoinDialog from "./PdfForm";
+import OptimizedImage from "./optmized-image";
 
 const STATIC_REVIEWS = [
   { id: 1, image: "/pdf/1.webp", alt: "Brochure image" },
@@ -32,11 +33,15 @@ const STATIC_REVIEWS = [
   { id: 24, image: "/pdf/24.webp", alt: "Brochure image" },
 ];
 
+const pdfImageUrl = (image) =>
+  `${IMAGE_PATH}${image.startsWith("/") ? image : `/${image}`}`;
+
 export const TestimonialSlider = ({ reviews, className }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState("right");
 
   const activeReview = reviews[currentIndex];
+  const activeImageUrl = activeReview ? pdfImageUrl(activeReview.image) : "";
 
   const goTo = useCallback((newIndex, dir) => {
     setDirection(dir);
@@ -104,8 +109,14 @@ export const TestimonialSlider = ({ reviews, className }) => {
           <AnimatePresence initial={false} custom={direction}>
             <motion.img
               key={currentIndex}
-              src={`${IMAGE_PATH}${activeReview.image}`}
+              src={activeImageUrl}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              data-original-src={activeImageUrl}
               alt={activeReview.alt}
+              title={activeReview.title || activeReview.alt}
+              loading="lazy"
+              decoding="async"
+              fetchPriority="low"
               custom={direction}
               variants={imageVariants}
               initial="enter"
@@ -133,10 +144,16 @@ export const TestimonialSlider = ({ reviews, className }) => {
                         : "ring-transparent opacity-50 hover:opacity-80 scale-100",
                     )}
                   >
-                    <img
-                      src={`${IMAGE_PATH}/${review.image}`}
-                      alt={review.alt} title={review.alt}
+                    <OptimizedImage
+                      src={pdfImageUrl(review.image)}
+                      alt={review.alt}
+                      title={review.title || review.alt}
                       className="w-full h-full"
+                      imageKind="pdf"
+                      width={112}
+                      height={144}
+                      sizes="112px"
+                      loading="lazy"
                     />
 
                     {currentIndex === idx && (
@@ -258,7 +275,8 @@ export const TestimonialSlider = ({ reviews, className }) => {
                   In recognition of his impact on ethical leadership and
                   capability building in the profession,{" "}
                   <a
-                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html" title="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
+                    href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
+                    title="Puneet Garg – CEO Insights Leadership Profile"
                     target="_blank"
                     className="font-bold text-[#F3831C]"
                     rel="noreferrer"
@@ -272,11 +290,13 @@ export const TestimonialSlider = ({ reviews, className }) => {
                 </p>
               </div>
               <div className="mt-5">
-                <img
+                <OptimizedImage
                   src={`${IMAGE_PATH}/message_about.webp`}
-                  alt="Student Testimonials" title="Student Testimonials"
+                  alt="Student Testimonials"
+                  title="Student Testimonials"
                   className="w-full rounded-lg"
                   loading="lazy"
+                  sizes="(min-width: 768px) 50vw, 100vw"
                 />
               </div>
             </div>
@@ -287,11 +307,18 @@ export const TestimonialSlider = ({ reviews, className }) => {
   );
 };
 
-const Pdf = () => {
+const Pdf = ({ brochureTitle = "Academy of Internal Audit Brochure" }) => {
+  const reviews = React.useMemo(() => {
+    return STATIC_REVIEWS.map((review, idx) => ({
+      ...review,
+      title: idx === 0 ? brochureTitle : review.alt,
+    }));
+  }, [brochureTitle]);
+
   return (
     <div className="w-full bg-linear-to-r from-slate-700 via-slate-600 to-blue-950 px-4 sm:px-6 lg:px-8 bg-white py-5">
       <div className="max-w-7xl mx-auto">
-        <TestimonialSlider reviews={STATIC_REVIEWS} />
+        <TestimonialSlider reviews={reviews} />
       </div>
     </div>
   );

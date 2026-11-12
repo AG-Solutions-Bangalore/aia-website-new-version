@@ -3,7 +3,6 @@ import DeferredPopUp from "@/components/common/deferred-popup";
 import LazySection from "@/components/common/lazy-section";
 import { lazy, Suspense } from "react";
 
-const AppQueryProvider = lazy(() => import("@/lib/query-provider"));
 const HomeAbout = lazy(() => import("@/components/home/home-about"));
 const HomeContact = lazy(() => import("@/components/home/home-contact"));
 const HomeCourses = lazy(() => import("@/components/home/home-courses"));
@@ -48,7 +47,7 @@ export default function Home() {
       <DeferredPopUp slug="home" />
 
       <HomeHero slug="home" bottombar="true" />
-      <LazySection {...homeSectionProps} minHeight="400px">
+      <LazySection {...homeSectionProps} prerender minHeight="400px">
         <HomeAbout />
       </LazySection>
 
@@ -60,7 +59,7 @@ export default function Home() {
         <HomeCourses />
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="400px">
         <HomePassout />
       </LazySection>
 
@@ -80,7 +79,7 @@ export default function Home() {
         </section>
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="500px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="500px">
         <HomeResults
           title="We Stand by Results - Actual Certificates Earned by AIA Learners"
           description="Actual certificates earned by professionals across CFE, CIA, and CAMS after structured preparation with AIA."
@@ -91,7 +90,7 @@ export default function Home() {
         <HomeAccredited />
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="400px">
         <WhatsappCarosal
           course="all"
           title="Unfiltered Reflections from AIA-Trained Professionals"
@@ -115,27 +114,27 @@ export default function Home() {
         </section>
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="400px">
         <HomeReview />
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="350px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="350px">
         <AllYoutube />
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="300px">
         <HomeCorporatePartner />
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="300px">
         <HomePrCarousel />
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="300px">
         <HomeAlumniWork />
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} minHeight="400px">
         <CourseYoutubeLecture
           courseSlug="home"
           title="Watch & Learn! Everything You Need to"
@@ -143,11 +142,11 @@ export default function Home() {
         />
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="400px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} prerender minHeight="400px">
         <HomeBlogs />
       </LazySection>
 
-      <LazySection {...homeSectionProps} minHeight="300px" withQuery QueryProvider={AppQueryProvider}>
+      <LazySection {...homeSectionProps} prerender minHeight="300px">
         <HomeFaq />
       </LazySection>
     </div>

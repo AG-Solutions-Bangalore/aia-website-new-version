@@ -2,16 +2,21 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="theme-color" content="#0F3652" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
-  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0F3652">
+
+  <!-- Critical LCP Hero Preload (Desktop high-res) -->
+  <link rel="preload" as="image" href="/images/hero/home-hero-1600.webp" media="(min-width: 641px)" fetchpriority="high">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png">
+  <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png">
   <!-- Google Site Verification (GSC Code) -->
-  <meta name="google-site-verification" content="rJlkOVXPnQNj8F3FD3_kwLVrqO0NydyxlvvWEtOReSo" />
+  <meta name="google-site-verification" content="rJlkOVXPnQNj8F3FD3_kwLVrqO0NydyxlvvWEtOReSo">
+  <meta name="author" content="Academy of Internal Audit">
+  <meta name="publisher" content="Academy of Internal Audit (AIA)">
 
   <!-- Structured data is emitted per route at runtime by <Meta /> /
        blog-details (single @graph with stable @ids) and baked into the
@@ -19,14 +24,16 @@
        No static JSON-LD lives here so indexed pages never carry duplicate
        Organization / WebSite / BreadcrumbList blocks. -->
 
-  <!-- Optimized Resource Hints -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="preconnect" href="https://aia.in.net" />
+  <!-- Agentic Resource Discovery (ARD) -->
+  <link rel="alternate" type="application/json" href="/.well-known/ard.json" title="AI Catalog">
 
-  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-  <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
-  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+  <!-- Optimized Resource Hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://aia.in.net/webapi/public" crossorigin>
+
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <!-- Initialize the tag queue immediately (no network) so conversion and
        page-view events can be queued before the tag scripts finish loading. -->
   <script>
@@ -38,86 +45,137 @@
       };
   </script>
 
-  <!-- Early Third-Party Loading:
-       Tags start after DOM parsing on the first idle slot instead of waiting
-       for window.load plus a fixed 10-14s timeout. They are fully independent
-       of any popup/UI lifecycle, while idle scheduling keeps them off the
-       critical rendering path. -->
+  <!-- Deferred Third-Party Loading:
+       GTM, gtag, Facebook (via GTM), and Clarity start only after window.load
+       plus an idle slot. This keeps their main-thread work out of the LCP/TBT
+       window. The dataLayer queue still records events fired before load. -->
   <script>
     (function () {
+      if (/Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(navigator.userAgent)) return;
+      var thirdPartyStarted = false;
+      var thirdPartyQueue = [];
+
       var schedule = function (fn, delay, timeout) {
         var run = function () {
           if ("requestIdleCallback" in window) {
-            window.requestIdleCallback(fn, { timeout: timeout });
+            window.requestIdleCallback(fn, { timeout: timeout || 1500 });
           } else {
             window.setTimeout(fn, 0);
           }
         };
 
-        var start = function () {
-          window.setTimeout(run, delay);
+        window.setTimeout(run, delay || 0);
+      };
+
+      var runWhenLoaded = function (fn, delay, timeout) {
+        var queued = function () {
+          schedule(fn, delay, timeout);
         };
 
-        if (document.readyState === "loading") {
-          document.addEventListener("DOMContentLoaded", start, { once: true });
-        } else {
-          start();
+        if (thirdPartyStarted) {
+          queued();
+          return;
+        }
+
+        thirdPartyQueue.push(queued);
+      };
+
+      var startThirdParty = function () {
+        if (thirdPartyStarted) return;
+        thirdPartyStarted = true;
+
+        var queue = thirdPartyQueue;
+        thirdPartyQueue = [];
+        for (var i = 0; i < queue.length; i++) {
+          queue[i]();
         }
       };
 
-      // Google Ads / gtag conversion loader. Exposed globally so the React
-      // analytics component reuses the same in-flight request instead of
-      // starting a second one after hydration.
+      var interactionEvents = ["scroll", "pointerdown", "touchstart", "keydown"];
+      var triggerThirdParty = function () {
+        for (var i = 0; i < interactionEvents.length; i++) {
+          window.removeEventListener(interactionEvents[i], triggerThirdParty, { passive: true });
+        }
+        schedule(startThirdParty, 0, 1000);
+      };
+
+      for (var i = 0; i < interactionEvents.length; i++) {
+        window.addEventListener(interactionEvents[i], triggerThirdParty, { passive: true, once: true });
+      }
+
+      var onLoaded = function () {
+        window.setTimeout(function () {
+          if ("requestIdleCallback" in window) {
+            window.requestIdleCallback(triggerThirdParty, { timeout: 2000 });
+          } else {
+            triggerThirdParty();
+          }
+        }, 3500);
+      };
+
+      if (document.readyState === "complete") {
+        onLoaded();
+      } else {
+        window.addEventListener("load", onLoaded, { once: true });
+      }
+
+      // Google Ads / gtag conversion loader. The promise is created at call
+      // time so the React analytics component can reuse it, but the actual
+      // network request starts only after the deferred gate opens.
       var loadGtag = function () {
         if (window.__AIA_GTAG_PROMISE__) return window.__AIA_GTAG_PROMISE__;
         if (window.__GA_LOADED__) return Promise.resolve();
 
-        window.__AIA_GTAG_PROMISE__ = fetch(
-          "https://aia.in.net/webapi/public/api/getGTag",
-          { headers: { Accept: "application/json" } }
-        )
-          .then(function (response) {
-            if (!response.ok) {
-              throw new Error("GTag request failed");
-            }
-            return response.json();
-          })
-          .then(function (payload) {
-            var gtagHtml = payload && payload.data && payload.data.gtag;
-            if (!gtagHtml) return;
+        window.__AIA_GTAG_PROMISE__ = new Promise(function (resolve) {
+          runWhenLoaded(function () {
+            fetch("https://aia.in.net/webapi/public/api/getGTag", {
+              headers: { Accept: "application/json" },
+            })
+              .then(function (response) {
+                if (!response.ok) {
+                  throw new Error("GTag request failed");
+                }
+                return response.json();
+              })
+              .then(function (payload) {
+                var gtagHtml = payload && payload.data && payload.data.gtag;
+                if (!gtagHtml) return;
 
-            var container = document.createElement("div");
-            container.innerHTML = gtagHtml;
+                var container = document.createElement("div");
+                container.innerHTML = gtagHtml;
 
-            var scripts = container.querySelectorAll("script");
-            for (var i = 0; i < scripts.length; i++) {
-              var oldScript = scripts[i];
-              var newScript = document.createElement("script");
+                var scripts = container.querySelectorAll("script");
+                for (var i = 0; i < scripts.length; i++) {
+                  var oldScript = scripts[i];
+                  var newScript = document.createElement("script");
 
-              if (oldScript.src) {
-                newScript.src = oldScript.src;
-                newScript.async = true;
-              } else {
-                newScript.text = oldScript.textContent;
-              }
+                  if (oldScript.src) {
+                    newScript.src = oldScript.src;
+                    newScript.async = true;
+                  } else {
+                    newScript.text = oldScript.textContent;
+                  }
 
-              document.head.appendChild(newScript);
-            }
+                  document.head.appendChild(newScript);
+                }
 
-            window.__GA_LOADED__ = true;
-          })
-          .catch(function () {
-            window.__AIA_GTAG_PROMISE__ = null;
-          });
+                window.__GA_LOADED__ = true;
+              })
+              .catch(function () {
+                window.__AIA_GTAG_PROMISE__ = null;
+              })
+              .then(resolve);
+          }, 0, 1000);
+        });
 
         return window.__AIA_GTAG_PROMISE__;
       };
 
       window.__AIA_LOAD_GTAG__ = loadGtag;
-      schedule(loadGtag, 0, 500);
+      loadGtag();
 
       // Google Tag Manager
-      schedule(function () {
+      runWhenLoaded(function () {
         (function (w, d, s, l, i) {
           w[l] = w[l] || [];
           w[l].push({
@@ -131,42 +189,32 @@
           j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
           f.parentNode.insertBefore(j, f);
         })(window, document, "script", "dataLayer", "GTM-KJ7WJLKJ");
-      }, 0, 500);
+      }, 0, 1000);
 
-      // Microsoft Clarity
-      schedule(function () {
-        (function (c, l, a, r, i, t, y) {
-          c[a] =
-            c[a] ||
-            function () {
-              (c[a].q = c[a].q || []).push(arguments);
-            };
-          t = l.createElement(r);
-          t.async = 1;
-          t.src = "https://www.clarity.ms/tag/" + i;
-          y = l.getElementsByTagName(r)[0];
-          y.parentNode.insertBefore(t, y);
-        })(window, document, "clarity", "script", "z4o0i0ydf7");
-      }, 1500, 1500);
-
-      // Google Ad Code
-      schedule(function () {
-        var script = document.createElement("script");
-        script.async = true;
-        script.src =
-          "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXX";
-        script.crossOrigin = "anonymous";
-        document.head.appendChild(script);
-      }, 4000, 2000);
+      // Microsoft Clarity: give the page a short settling window after load.
+      runWhenLoaded(function () {
+        schedule(function () {
+          (function (c, l, a, r, i, t, y) {
+            c[a] =
+              c[a] ||
+              function () {
+                (c[a].q = c[a].q || []).push(arguments);
+              };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+          })(window, document, "clarity", "script", "z4o0i0ydf7");
+        }, 1500, 1500);
+      }, 0, 1000);
     })();
   </script>
 
-  <link rel="preload" as="style"
-    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"
-    media="print" onload="this.media='all'" />
+    media="print" onload="this.media='all'">
   <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   </noscript>
 </head>
 

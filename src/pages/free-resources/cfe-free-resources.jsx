@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import HomeHero from "@/components/home/home-hero";
-import PopUp from "@/components/common/pop-up";
+import DeferredPopUp from "@/components/common/deferred-popup";
 import { isBrowser } from "@/lib/prerender";
 import CfeRoadmapDialog from "@/components/common/CfeRoadmapDialog";
 import FreeResourceRoadmapCTA from "@/components/common/free-resource-roadmap-cta";
@@ -94,10 +94,16 @@ const FreeResources = () => {
       {/* Initial render */}
       
 
- <PopUp slug="cfe-free-resources" />
+ <DeferredPopUp slug="cfe-free-resources" />
 
 
       <HomeHero slug="cfe-free-resources" />
+
+      <div className="bg-[#0F3652] px-4 py-3">
+        <h1 className="mx-auto max-w-5xl text-center text-sm font-bold leading-snug text-white sm:text-lg md:text-xl">
+          Free CFE Resources: Roadmap, Flashcards &amp; Practice Questions
+        </h1>
+      </div>
 
       <div ref={refs.youtube}>
         {visible.youtube && (

@@ -19,21 +19,12 @@ const CompanyMarquee = ({ companies }) => {
 
       <div className="w-full bg-gradient-to-b from-[#0f365200]/5 via-[#0F3652]/30 to-[#0F3652]/60 py-10 md:py-20 overflow-hidden">
         <div className="p-2 md:pl-4 md:ml-12">
-          <div className="px-4  md:hidden">
+          <div className="px-4">
             <SectionHeading
-              title="AIA Alumni Driving Impact in"
-              highlight="World’s Top Organizations"
+              title="AIA Alumni Driving Impact in the"
+              highlight1="World’s Top Organizations"
               description="AIA alumni contribute to high-impact roles across renowned organizations, reflecting the real-world value of our certification-led training"
-              highlightclassName="text-2xl"
-              align="center"
-            />
-          </div>
-          <div className="px-4 hidden md:block">
-            <SectionHeading
-              title="AIA Alumni Driving Impact in"
-              highlight="World’s Top Organizations"
-              description="AIA alumni contribute to high-impact roles across renowned organizations, reflecting the real-world value of our certification-led training"
-              highlightclassName="md:text-6xl"
+              mobileCenter
             />
           </div>
         </div>

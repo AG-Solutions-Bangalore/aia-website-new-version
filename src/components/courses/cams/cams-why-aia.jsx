@@ -25,7 +25,7 @@ const CamsWhyAia = () => {
           },
           {
             img: `${IMAGE_PATH}/calender-svgrepo-com.webp`,
-            title: "Flexible Learning schedule",
+            title: "Flexible Learning Schedule",
           },
           {
             img: `${IMAGE_PATH}/books-svgrepo-com.webp`,
@@ -49,7 +49,7 @@ const CamsWhyAia = () => {
           cursor-pointer
             "
         >
-          <Link to={`${ENROLL_URL}`} title={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer">
+          <Link to={`${ENROLL_URL}`} title="Enroll Now – AIA Certification Courses" target="_blank" rel="noopener noreferrer">
             Enroll Now
           </Link>
         </Button>

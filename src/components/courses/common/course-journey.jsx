@@ -1,20 +1,27 @@
 import SectionHeading from "@/components/SectionHeading/SectionHeading";
 import React from "react";
 
-const CourseJourney = ({ heading, highlight, steps, connectorImage }) => {
+const CourseJourney = ({
+  heading,
+  highlight,
+  steps,
+  connectorImage,
+  headingLevel = 2,
+  stepHeadingLevel = 3,
+}) => {
+  const StepHeadingTag = `h${stepHeadingLevel}`;
   return (
     <section className="py-12 md:py-16 lg:py-20 px-4 md:px-8 lg:px-12 bg-white">
       <div className="max-w-6xl mx-auto">
         <div className="text-center max-w-4xl mx-auto mb-8 md:mb-10 lg:mb-14 px-2">
-          <h3>
-            <SectionHeading
-              title={heading}
-              highlight={highlight}
-              align="center"
-              titleClass="text-[1rem] md:text-3xl"
-              highlightClass="text-[1rem] md:text-3xl"
-            />
-          </h3>
+          <SectionHeading
+            title={heading}
+            highlight={highlight}
+            align="center"
+            headingLevel={headingLevel || 2}
+            titleClass="text-[1rem] md:text-3xl"
+            highlightClass="text-[1rem] md:text-3xl"
+          />
         </div>
 
         <div className="relative">
@@ -38,9 +45,9 @@ const CourseJourney = ({ heading, highlight, steps, connectorImage }) => {
                   </div>
 
                   <div className="p-4 md:p-6 lg:p-8 pt-6 md:pt-8">
-                    <h4 className="text-base md:text-lg font-semibold mb-3 text-center px-2">
+                    <StepHeadingTag className="text-base md:text-lg font-semibold mb-3 text-center px-2">
                       {step.title}
-                    </h4>
+                    </StepHeadingTag>
 
                     <ul className="text-xs md:text-sm leading-relaxed pl-2 md:pl-6 lg:pl-8 space-y-1 list-disc list-inside">
                       {step.items.map((item, i) => (

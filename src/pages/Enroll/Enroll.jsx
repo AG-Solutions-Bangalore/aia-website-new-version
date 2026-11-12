@@ -75,6 +75,12 @@ const Enrool = () => {
 
   return (
     <div>
+      <div className="bg-[#0F3652] px-4 py-3">
+        <h1 className="mx-auto max-w-5xl text-center text-sm font-bold leading-snug text-white sm:text-lg md:text-xl">
+          Enroll Now: CIA, CFE, CAMS &amp; CISA Certification Courses
+        </h1>
+      </div>
+
       {/* Initial render */}
       <EnrollHighlight />
 

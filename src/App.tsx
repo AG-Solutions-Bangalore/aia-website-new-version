@@ -47,6 +47,8 @@ import type { QueryClient } from '@tanstack/react-query';
 
 export default function App({ queryClient }: { queryClient?: QueryClient } = {}): React.JSX.Element {
   const location = useLocation();
+  const isThankYouPage =
+    location.pathname.replace(/\/+$/, '') === '/thank-you';
   const [loadEarlyWidgets, setLoadEarlyWidgets] = useState<boolean>(false);
   const [loadDeferredWidgets, setLoadDeferredWidgets] = useState<boolean>(false);
 
@@ -66,12 +68,14 @@ export default function App({ queryClient }: { queryClient?: QueryClient } = {})
       {loadEarlyWidgets && (
         <Suspense fallback={null}>
           <GoogleAnalytics />
-          {!location.pathname.startsWith('/blogs/') && <NotificationPopup />}
+          {!isThankYouPage && !location.pathname.startsWith('/blogs/') && (
+            <NotificationPopup />
+          )}
         </Suspense>
       )}
       {loadDeferredWidgets && (
         <Suspense fallback={null}>
-          <FloatingContact />
+          {!isThankYouPage && <FloatingContact />}
           <LazyToaster position="top-right" richColors />
         </Suspense>
       )}

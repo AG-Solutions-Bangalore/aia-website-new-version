@@ -1,7 +1,6 @@
 import { IMAGE_PATH } from "@/api/base-url";
 import React from "react";
 import SectionHeading from "../SectionHeading/SectionHeading";
-import OptimizedImage from "../common/optmized-image";
 
 const ACCREDITATIONS = [
   {
@@ -102,23 +101,27 @@ export const Partners = ({ grayscale = false, className = "" }) => {
                 rel="noreferrer"
                 aria-label={item.alt} title={item.alt}
               >
-                <OptimizedImage
+                <img
                   src={item.src}
                   alt={item.alt}
+                  title={item.alt}
                   className={`${item.desktopImgClass} ${grayscale ? "grayscale hover:grayscale-0" : ""}`}
                   width={160}
                   height={160}
                   loading="lazy"
+                  decoding="async"
                 />
               </a>
             ) : (
-              <OptimizedImage
+              <img
                 src={item.src}
                 alt={item.alt}
+                title={item.alt}
                 className={item.desktopImgClass}
                 width={160}
                 height={160}
                 loading="lazy"
+                decoding="async"
               />
             )}
           </div>
@@ -140,19 +143,23 @@ export const Partners = ({ grayscale = false, className = "" }) => {
                 aria-label={item.alt} title={item.alt}
                 className="flex w-full items-center justify-center"
               >
-                <OptimizedImage
+                <img
                   src={item.src}
                   alt={item.alt}
+                  title={item.alt}
                   className={item.mobileImgClass}
                   loading="lazy"
+                  decoding="async"
                 />
               </a>
             ) : (
-              <OptimizedImage
+              <img
                 src={item.src}
                 alt={item.alt}
+                title={item.alt}
                 className={item.mobileImgClass}
                 loading="lazy"
+                decoding="async"
               />
             )}
           </div>

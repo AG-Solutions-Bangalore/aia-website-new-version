@@ -49,7 +49,7 @@ const CisaHero = () => {
             {/* Orange Badges Row */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
               <span className="bg-[#F3831C] text-white text-xs sm:text-sm font-extrabold px-5 py-2.5 rounded-lg shadow-sm">
-                APMG Accredited Trainer
+                ISACA Authorised Trainer
               </span>
               <span className="bg-[#F3831C] text-white text-xs sm:text-sm font-extrabold px-5 py-2.5 rounded-lg shadow-sm">
                 AIA Prep Course+ISACA Prep Kit
@@ -74,7 +74,7 @@ const CisaHero = () => {
 
               {/* Styled Devices Skeleton Loader (Visible while loading or if image error) */}
               {(!imgLoaded || imgError) && (
-                <div className="w-full aspect-16/11 bg-white/70 border border-white/90 rounded-2xl p-4 sm:p-5 shadow-2xl relative animate-pulse flex flex-col justify-between overflow-hidden border-b-4 border-b-gray-300">
+                <div className="w-full aspect-16/11 bg-white/70 border border-white/90 rounded-2xl p-4 sm:p-5 shadow-2xl relative animate-pulse flex flex-col justify-between overflow-hidden">
                   {/* Browser Bar */}
                   <div className="flex items-center justify-between border-b border-gray-200 pb-3 mb-2 shrink-0">
                     <div className="flex gap-1.5">

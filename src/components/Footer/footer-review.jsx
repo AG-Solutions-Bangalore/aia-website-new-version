@@ -9,6 +9,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
       rating: "5.0",
       img: `${IMAGE_PATH}/footer-3.webp`,
       alt: "Google Reviews",
+      title: "Academy of Internal Audit – Google Business Profile",
       bgColor: "bg-[#2D3748]",
       link: "https://share.google/oM14oVPaO0YbwCdzS",
     },
@@ -17,6 +18,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
       rating: "5.0",
       img: `${IMAGE_PATH}/footer-5.webp`,
       alt: "Ambition Box Reviews",
+      title: "Academy of Internal Audit Reviews on AmbitionBox",
       bgColor: "bg-[#2D3748]",
       link: "https://www.ambitionbox.com/reviews/academy-of-internal-audit-reviews",
     },
@@ -25,6 +27,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
       rating: "5.0",
       img: `${IMAGE_PATH}/footer-1.webp`,
       alt: "Justdial Reviews",
+      title: "Academy of Internal Audit – Justdial Business Listing",
       bgColor: "bg-[#2D3748]",
       link: "https://www.justdial.com/Faridabad/Academy-Of-Internal-Audit-Bptp-Faridabad-Sector-81/011PXX11-XX11-240417200220-E3R9_BZDET?trkid=&term=&ncatid=10180006&area=&search=Showing%20Results%20for%20%22Academy%20Of%20Internal%20Audit%20Srs%20City%20Faridabad%20Sector%2081%22%20in%20Faridabad%20Nit,%20Faridabad&mncatname=Academy%20Of%20Internal%20Audit%20Srs%20City%20Faridabad%20Sector%2081&ftterm=Academy%20Of%20Internal%20Audit%20Srs%20City%20Faridabad%20Sector%2081&csell=&oncatid=10180006&abd_btn=&abd_heading=&isFreetxt=1&bd=2&cat_b2b_flag=&searchfrom=lst&thumbnail=",
     },
@@ -33,6 +36,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
       rating: "4.5",
       img: `${IMAGE_PATH}/footer-4.webp`,
       alt: "G2 Reviews",
+      title: "Academy of Internal Audit Reviews on G2",
       bgColor: "bg-[#2D3748]",
       link: "https://www.g2.com/products/academy-of-internal-audit/reviews",
     },
@@ -41,6 +45,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
       rating: "4.0",
       img: `${IMAGE_PATH}/footer-2.webp`,
       alt: "Trustpilot Reviews",
+      title: "Academy of Internal Audit Reviews on Trustpilot",
       bgColor: "bg-[#2D3748]",
       link: "https://www.trustpilot.com/review/aia.in.net",
     },
@@ -70,6 +75,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
                     target={item.link ? "_blank" : undefined}
                     rel={item.link ? "noopener noreferrer" : undefined}
                     aria-label={`View AIA reviews on ${item.name}`}
+                    title={item.title}
                     className={`flex items-center ${item.bgColor} 
         max-h-18 rounded-lg overflow-hidden 
         hover:scale-105 transition-transform duration-300 
@@ -119,6 +125,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
                       target={item.link ? "_blank" : undefined}
                       rel={item.link ? "noopener noreferrer" : undefined}
                       aria-label={`View AIA reviews on ${item.name}`}
+                      title={item.title}
                       className={`flex items-center ${item.bgColor} 
         max-h-14 rounded-lg overflow-hidden 
         hover:scale-105 transition-transform duration-300 
@@ -149,9 +156,11 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
 
             <div className="hidden lg:flex flex-row items-center justify-between gap-8 px-8">
               <div className="text-left">
-                <h2 className="text-4xl  font-bold text-white">Top Ratings</h2>
-                <h2 className="text-3xl  font-bold text-white mt-2">
-                  Across Platforms{" "}
+                <h2 className="text-4xl font-bold text-white leading-tight">
+                  Top Ratings <br />
+                  <span className="text-3xl font-bold text-white mt-2 block">
+                    Across Platforms
+                  </span>
                 </h2>
               </div>
 
@@ -167,6 +176,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
                       target={item.link ? "_blank" : undefined}
                       rel={item.link ? "noopener noreferrer" : undefined}
                       aria-label={`View AIA reviews on ${item.name}`}
+                      title={item.title}
                       className={`flex items-center ${item.bgColor} 
 min-w-0 
 max-h-16 

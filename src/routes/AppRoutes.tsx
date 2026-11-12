@@ -27,15 +27,14 @@
  * - @tanstack/react-query: `QueryClient`, `QueryClientProvider`
  * - @/layout/Layout: Main site layout shell (Navbar, Footer)
  * - @/components/SEOPageLayout: Dedicated head and schema synchronizer
- * - @/config/seoEngine: `getSeoForRoute`
+ * - @/seo: `getSeoForRoute`
  */
 
 import React, { lazy, Suspense } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Layout from '@/layout/Layout';
-import SEOPageLayout from '@/components/SEOPageLayout';
-import { getSeoForRoute } from '@/config/seoEngine';
-import { COURSE_ROUTES } from '@/config/site';
+import { SEOPageLayout, getSeoForRoute } from '@/seo';
+import { COURSE_ROUTES } from '@/seo';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import blogRedirects from './blog-redirects';
 
@@ -78,6 +77,7 @@ const PassoutStoriesSlug = lazy(
   () => import('@/components/passout/passout-stories-slug'),
 );
 const NotFound = lazy(() => import('@/components/common/not-found'));
+const ThankYou = lazy(() => import('@/pages/ThankYou/ThankYou'));
 const FlipbookSection = lazy(
   () => import('@/components/aia-times/flipbook-section'),
 );
@@ -169,7 +169,7 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
         <TrailingSlashEnforcer />
         <Routes>
           <Route path="/" element={<PageSEO path="/"><Home /></PageSEO>} />
-          <Route path="/about-aia" element={<PageSEO path="/about-aia"><AboutPage /></PageSEO>} />
+          <Route path="/about-aia" element={<PageSEO path="/about-aia/"><AboutPage /></PageSEO>} />
           <Route path="/about-us" element={<Navigate to="/about-aia/" replace />} />
           <Route path="/about-aia/cia-curriculum" element={<Navigate to="/cia-curriculum" replace />} />
           <Route path="/about-aia/cams" element={<Navigate to="/cams" replace />} />
@@ -183,31 +183,32 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/cia-challenge-prep-course" element={<Navigate to="/cia-challenge-curriculum" replace />} />
           <Route path="/cisa" element={<PageSEO path="/cisa"><CISA /></PageSEO>} />
           <Route path="/cams" element={<PageSEO path="/cams"><CAMS /></PageSEO>} />
-          <Route path="/cia-free-resources" element={<PageSEO path="/cia-free-resources"><CIAFreeResources /></PageSEO>} />
-          <Route path="/cams-free-resources" element={<PageSEO path="/cams-free-resources"><CAMSFreeResources /></PageSEO>} />
-          <Route path="/cisa-free-resources" element={<PageSEO path="/cisa-free-resources"><CISAFreeResources /></PageSEO>} />
-          <Route path="/cfe-free-resources" element={<PageSEO path="/cfe-free-resources"><FreeResources /></PageSEO>} />
+          <Route path="/cia-free-resources" element={<PageSEO path="/cia-free-resources/"><CIAFreeResources /></PageSEO>} />
+          <Route path="/cams-free-resources" element={<PageSEO path="/cams-free-resources/"><CAMSFreeResources /></PageSEO>} />
+          <Route path="/cisa-free-resources" element={<PageSEO path="/cisa-free-resources/"><CISAFreeResources /></PageSEO>} />
+          <Route path="/cfe-free-resources" element={<PageSEO path="/cfe-free-resources/"><FreeResources /></PageSEO>} />
           <Route path="/cfe-free-resource/:questions_module" element={<PageSEO><CfePracticeQuestion /></PageSEO>} />
-          <Route path="/blogs" element={<PageSEO path="/blogs"><Blog /></PageSEO>} />
+          <Route path="/blogs" element={<PageSEO path="/blogs/"><Blog /></PageSEO>} />
           <Route path="/blogs/:id" element={<PageSEO><BlogDetails /></PageSEO>} />
           <Route path="/blogs/course/:courseName" element={<PageSEO><BlogCourse /></PageSEO>} />
-          <Route path="/alumni-network" element={<PageSEO path="/alumni-network"><OurPassout /></PageSEO>} />
-          <Route path="/fillter" element={<PageSEO path="/fillter"><FilterPage /></PageSEO>} />
+          <Route path="/alumni-network" element={<PageSEO path="/alumni-network/"><OurPassout /></PageSEO>} />
+          <Route path="/fillter" element={<PageSEO path="/fillter/"><FilterPage /></PageSEO>} />
           <Route path="/filter" element={<Navigate to="/fillter/" replace />} />
           <Route path="/our-passouts/*" element={<Navigate to="/alumni-network/" replace />} />
           <Route path="/passed-out/*" element={<Navigate to="/alumni-network/" replace />} />
-          <Route path="/enroll-now" element={<PageSEO path="/enroll-now"><Enrool /></PageSEO>} />
-          <Route path="/contact" element={<PageSEO path="/contact"><Contact /></PageSEO>} />
+          <Route path="/enroll-now" element={<PageSEO path="/enroll-now/"><Enrool /></PageSEO>} />
+          <Route path="/contact" element={<PageSEO path="/contact/"><Contact /></PageSEO>} />
+          <Route path="/thank-you" element={<PageSEO path="/thank-you/"><ThankYou /></PageSEO>} />
           <Route path="/passout-stories/:slug" element={<PageSEO><PassoutStoriesSlug /></PageSEO>} />
-          <Route path="/corporate-training" element={<PageSEO path="/corporate-training"><CorporateTraining /></PageSEO>} />
-          <Route path="/aia-times" element={<PageSEO path="/aia-times"><AiaTimes /></PageSEO>} />
-          <Route path="/aia-times/flip-book" element={<PageSEO path="/aia-times/flip-book"><FlipbookSection /></PageSEO>} />
+          <Route path="/corporate-training" element={<PageSEO path="/corporate-training/"><CorporateTraining /></PageSEO>} />
+          <Route path="/aia-times" element={<PageSEO path="/aia-times/"><AiaTimes /></PageSEO>} />
+          <Route path="/aia-times/flip-book" element={<PageSEO path="/aia-times/flip-book/"><FlipbookSection /></PageSEO>} />
           <Route path="/corporate-training/cia-curriculum" element={<Navigate to="/cia-curriculum" replace />} />
           <Route path="/corporate-training/cams" element={<Navigate to="/cams" replace />} />
           <Route path="/corporate-training/cfe-curriculum" element={<Navigate to="/cfe-curriculum" replace />} />
           <Route path="/corporate-training/cisa" element={<Navigate to="/cisa" replace />} />
-          <Route path="/policies" element={<PageSEO path="/policies"><Policies /></PageSEO>} />
-          <Route path="/terms-and-conditions" element={<PageSEO path="/terms-and-conditions"><TermsAndConditions /></PageSEO>} />
+          <Route path="/policies" element={<PageSEO path="/policies/"><Policies /></PageSEO>} />
+          <Route path="/terms-and-conditions" element={<PageSEO path="/terms-and-conditions/"><TermsAndConditions /></PageSEO>} />
           <Route path="*" element={<PageSEO><NotFound /></PageSEO>} />
 
           {Object.entries(blogRedirects).map(([oldPath, newPath]) => (

@@ -1,5 +1,5 @@
 /**
- * @file src/config/site.ts
+ * @file src/seo/config/site.ts
  * @description Single source of truth for site-wide branding constants, contact information,
  * origin URLs, and canonical URL derivation.
  *
@@ -30,18 +30,15 @@ export const SITE_ORIGIN = 'https://aia.in.net';
 export const SITE_LOGO = 'https://aia.in.net/webapi/public/assets/images/web_images/new_logo.webp';
 export const SITE_PHONE = '+91 93113 20114';
 export const SITE_EMAIL = 'support@aia.in.net';
+export const DEFAULT_AUTHOR = 'Academy of Internal Audit';
+export const DEFAULT_PUBLISHER = 'Academy of Internal Audit (AIA)';
 
 /**
  * Course routes that are indexed in Google WITHOUT a trailing slash.
  * Follows the strict SEO requirement to prevent index drift and canonical mismatches.
  */
-export const COURSE_ROUTES = new Set([
-  'cfe-curriculum',
-  'cia-curriculum',
-  'cia-challenge-curriculum',
-  'cams',
-  'cisa',
-]);
+export { COURSE_ROUTES } from './route-path';
+import { COURSE_ROUTES } from './route-path';
 
 /**
  * Normalizes any route pathname to an absolute canonical URL.

@@ -85,9 +85,8 @@ export function TestimonialsSectionColor({
                   href={testimonial.youtubeLink}
                   target="_blank"
                   course={testimonial.course}
-                  // cardWidth={image?.width}
-                  // cardHeight={image?.height}
                   className={imageclassName}
+                  tabIndex={-1}
                 />
               ))}
             </div>
@@ -113,6 +112,7 @@ export function TestimonialsSectionColor({
                 "https://www.youtube.com/playlist?list=PLHH4EQbbvYIZSnYeZNB3-zoHdVGS6BvWV"
               }
               target="_blank"
+              rel="noopener noreferrer"
             >
               <span className="relative z-10 text-white">
                 <span>View All Success Stories</span>

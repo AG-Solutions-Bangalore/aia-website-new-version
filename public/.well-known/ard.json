@@ -1,0 +1,63 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Academy of Internal Audit"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:aia.in.net:curriculum:cia",
+      "displayName": "CIA Curriculum",
+      "type": "application/ai-catalog+json",
+      "url": "https://aia.in.net/cia-curriculum",
+      "description": "Comprehensive CIA course curriculum, syllabus, and exam preparation.",
+      "representativeQueries": [
+        "Certified Internal Auditor certification course",
+        "CIA curriculum and syllabus"
+      ]
+    },
+    {
+      "identifier": "urn:air:aia.in.net:curriculum:cfe",
+      "displayName": "CFE Curriculum",
+      "type": "application/ai-catalog+json",
+      "url": "https://aia.in.net/cfe-curriculum",
+      "description": "Certified Fraud Examiner training modules, question banks, and notes.",
+      "representativeQueries": [
+        "Certified Fraud Examiner training",
+        "CFE syllabus and exam preparation"
+      ]
+    },
+    {
+      "identifier": "urn:air:aia.in.net:curriculum:cams",
+      "displayName": "CAMS Course",
+      "type": "application/ai-catalog+json",
+      "url": "https://aia.in.net/cams",
+      "description": "Anti-money laundering specialist certification training program.",
+      "representativeQueries": [
+        "Certified Anti-Money Laundering Specialist",
+        "CAMS exam preparation"
+      ]
+    },
+    {
+      "identifier": "urn:air:aia.in.net:curriculum:cisa",
+      "displayName": "CISA Course",
+      "type": "application/ai-catalog+json",
+      "url": "https://aia.in.net/cisa",
+      "description": "Certified Information Systems Auditor curriculum and exam preparation.",
+      "representativeQueries": [
+        "Certified Information Systems Auditor course",
+        "CISA syllabus and training"
+      ]
+    },
+    {
+      "identifier": "urn:air:aia.in.net:curriculum:cia-challenge",
+      "displayName": "CIA Challenge Curriculum",
+      "type": "application/ai-catalog+json",
+      "url": "https://aia.in.net/cia-challenge-curriculum",
+      "description": "Fast-track CIA Challenge exam preparation syllabus for qualified professionals.",
+      "representativeQueries": [
+        "CIA Challenge exam course",
+        "CIA fast track for CA and ACCA"
+      ]
+    }
+  ]
+}

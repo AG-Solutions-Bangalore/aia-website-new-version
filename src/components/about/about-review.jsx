@@ -11,6 +11,7 @@ import { Autoplay, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import SectionHeading from "../SectionHeading/SectionHeading";
 import { ssrLazy } from "@/lib/ssrLazy";
+import { getLinkTitle } from "@/utils/seoTitles";
 
 // Leaflet touches `window` at module scope and crashes Node SSR — load it
 // lazily on the client only so the review content still pre-renders.
@@ -52,19 +53,11 @@ const AboutReview = () => {
   return (
     <section className="py-12 bg-white">
       <div className="max-w-340 mx-auto w-full px-4 sm:px-6 lg:px-8">
-        <div className="md:hidden">
-          <SectionHeading
-            title="Trusted by Learners Across the Globe"
-            description="Real experiences shared by professionals on how AIA helped them achieve their certification goals."
-            align="center"
-          />
-        </div>
-        <div className="hidden md:block">
-          <SectionHeading
-            title="Trusted by Learners Across the Globe"
-            description="Real experiences shared by professionals on how AIA helped them achieve their certification goals."
-          />
-        </div>
+        <SectionHeading
+          title="Trusted by Learners Across the Globe"
+          description="Real experiences shared by professionals on how AIA helped them achieve their certification goals."
+          mobileCenter
+        />
         <div className="flex flex-col lg:flex-row items-center">
           <div className="w-full lg:w-1/2 mb-8 lg:mb-0">
             <Suspense fallback={null}>
@@ -123,6 +116,14 @@ const AboutReview = () => {
                             alt={item.alt}
                             className="w-14 h-14 min-w-14 min-h-14 rounded-full object-cover border-2 border-[#0F3652] flex-shrink-0"
                             effect="blur"
+                            onError={(e) => {
+                              if (e?.currentTarget) {
+                                e.currentTarget.onerror = null;
+                                e.currentTarget.src =
+                                  noImageUrl ||
+                                  "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
+                              }
+                            }}
                           />
                           <div>
                             <h4 className="text-lg font-semibold text-[#0F3652]">
@@ -160,7 +161,8 @@ const AboutReview = () => {
 
                           {item?.link && (
                             <a
-                              href={item.link} title={item.link}
+                              href={item.link}
+                              title={getLinkTitle(item.link, { defaultTitle: "Academy of Internal Audit Student Review" })}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="ml-2 text-[#F3831C] font-medium text-sm hover:underline cursor-pointer"

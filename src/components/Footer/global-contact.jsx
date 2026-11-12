@@ -97,7 +97,8 @@ const ContactCard = ({ country, contacts }) => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="min-h-10 min-w-10 bg-[#25D366]/15 border border-[#25D366]/20 rounded-md flex items-center justify-center text-[#25D366] hover:bg-[#128C7E] hover:text-white transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"
-                  aria-label={`WhatsApp ${number}`} title={`WhatsApp ${number}`}
+                  aria-label={`WhatsApp ${number}`}
+                  title="Contact Academy of Internal Audit on WhatsApp"
                 >
                   <WhatsAppIcon />
                 </a>

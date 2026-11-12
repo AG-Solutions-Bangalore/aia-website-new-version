@@ -5,14 +5,16 @@ import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import { Avatar, AvatarImage } from "../ui/avatar";
+import OptimizedImage from "../common/optmized-image";
 import SectionHeadingH1 from "../SectionHeading/SectionHeadingH1";
+
 export function TestimonialCardCourse({
   author,
   href,
   alt,
   className,
   target,
+  tabIndex,
 }) {
   const Card = href ? "a" : "div";
 
@@ -23,6 +25,7 @@ export function TestimonialCardCourse({
             href,
             target: target || "_blank",
             rel: "noopener noreferrer",
+            tabIndex,
           }
         : {})}
       className={cn(
@@ -37,13 +40,19 @@ export function TestimonialCardCourse({
       )}
     >
       <div className="h-full w-full flex items-center justify-center">
-        <Avatar className="h-full w-full rounded-md">
-          <AvatarImage
-            src={author?.avatar}
+        {author?.avatar ? (
+          <OptimizedImage
+            src={author.avatar}
             alt={alt || "Certificate Image"}
+            title={alt || "Certificate Image"}
             className="w-full h-full object-contain rounded-md"
+            imageKind="story"
+            sizes="(min-width: 768px) 320px, 100vw"
+            width={320}
+            height={200}
+            loading="lazy"
           />
-        </Avatar>
+        ) : null}
       </div>
     </Card>
   );
@@ -177,6 +186,7 @@ const PassoutResult = () => {
                     href={testimonial.href}
                     alt={testimonial.alt}
                     target={testimonial.target}
+                    tabIndex={-1}
                   />
                 ))}
               </div>
@@ -218,6 +228,7 @@ const PassoutResult = () => {
                     href={testimonial.href}
                     alt={testimonial.alt}
                     target={testimonial.target}
+                    tabIndex={-1}
                   />
                 ))}
               </div>

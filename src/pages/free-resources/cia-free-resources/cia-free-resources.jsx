@@ -1,7 +1,7 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import HomeHero from "@/components/home/home-hero";
-import PopUp from "@/components/common/pop-up";
+import DeferredPopUp from "@/components/common/deferred-popup";
 import { isBrowser } from "@/lib/prerender";
 const CourseYoutubeLecture = lazy(() =>
   import("@/components/courses/common/course-youtube-lecture")
@@ -92,10 +92,16 @@ const CIAFreeResources = () => {
       {/* Initial render */}
       
 
-<PopUp slug="cia-free-resources" />
+<DeferredPopUp slug="cia-free-resources" />
 
 
       <HomeHero slug="cia-free-resources" />
+
+      <div className="bg-[#0F3652] px-4 py-3">
+        <h1 className="mx-auto max-w-5xl text-center text-sm font-bold leading-snug text-white sm:text-lg md:text-xl">
+          Free CIA Resources: Flashcards &amp; Practice Questions
+        </h1>
+      </div>
 
       <div ref={refs.youtube}>
         {visible.youtube && (

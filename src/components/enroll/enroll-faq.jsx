@@ -25,28 +25,28 @@ const EnrollFaq = () => {
 
   if (isLoading) {
     return (
-      <section className="py-16 md:py-24">
+      <div className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center">Loading FAQs...</div>
         </div>
-      </section>
+      </div>
     );
   }
 
   if (isError) {
     return (
-      <section className="py-16 md:py-24">
+      <div className="py-16 md:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="text-center text-red-500">Error loading FAQs</div>
         </div>
-      </section>
+      </div>
     );
   }
 
   return (
-    <section className="py-4">
+    <div className="py-4">
       <FaqSection title={faqHeading} faqs={faqItems} />
-    </section>
+    </div>
   );
 };
 

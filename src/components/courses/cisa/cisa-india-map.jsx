@@ -2,7 +2,7 @@ import { IMAGE_PATH } from "@/api/base-url";
 
 const CisaIndiaMap = () => {
   return (
-    <section className="py-12 bg-white">
+    <div className="py-12 bg-white">
       <div className="px-4 sm:px-6 lg:px-8">
         {/* Center-aligned Unified Map Image */}
         <img
@@ -15,7 +15,7 @@ const CisaIndiaMap = () => {
           loading="lazy"
         />
       </div>
-    </section>
+    </div>
   );
 };
 

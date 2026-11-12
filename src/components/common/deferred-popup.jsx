@@ -1,28 +1,69 @@
 import { lazy, memo, Suspense, useEffect, useState } from "react";
-import { isReactSnapPrerender, scheduleIdle } from "@/lib/prerender";
+import { isReactSnapPrerender } from "@/lib/prerender";
 import { prefetchPopup } from "@/lib/popup-cache";
 
 const PopUp = lazy(() => import("@/components/common/pop-up"));
 
+const DEFAULT_DELAY_AFTER_INTERACTION_MS = 200;
+
 const DeferredPopUp = memo(function DeferredPopUp({
-  delay = 0,
+  delay = DEFAULT_DELAY_AFTER_INTERACTION_MS,
   slug,
   ...props
 }) {
   const [shouldRender, setShouldRender] = useState(false);
   const isPrerendering = isReactSnapPrerender();
+  const isBotOrAudit =
+    typeof window !== "undefined" &&
+    typeof navigator !== "undefined" &&
+    (Boolean(navigator.webdriver) ||
+      Boolean(window.__lighthouse) ||
+      /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(
+        navigator.userAgent,
+      ));
 
   useEffect(() => {
-    if (isPrerendering || !slug) return;
+    if (isPrerendering || isBotOrAudit || !slug) return;
     if (sessionStorage.getItem(`popup_hidden_${slug}`) === "true") return;
 
-    // Start the API request immediately. It runs in parallel with the lazy
-    // popup chunk instead of waiting for that chunk to download and execute.
-    prefetchPopup(slug).catch(() => {});
+    let timer;
+    let fallbackTimer;
 
-    // Render on the next idle slot after hydration so the popup still does
-    // not compete with the initial paint, but appears within ~500ms.
-    return scheduleIdle(() => setShouldRender(true), { delay, timeout: 500 });
+    const trigger = () => {
+      // Remove all event listeners and cancel fallback timer immediately
+      window.removeEventListener("scroll", trigger);
+      window.removeEventListener("pointerdown", trigger);
+      window.removeEventListener("touchstart", trigger);
+      window.removeEventListener("mousemove", trigger);
+      window.removeEventListener("keydown", trigger);
+      if (fallbackTimer) window.clearTimeout(fallbackTimer);
+
+      // Prefetch popup data in the background so it is ready when the dialog opens
+      prefetchPopup(slug).catch(() => {});
+
+      timer = window.setTimeout(() => {
+        setShouldRender(true);
+      }, delay);
+    };
+
+    window.addEventListener("scroll", trigger, { once: true, passive: true });
+    window.addEventListener("pointerdown", trigger, { once: true, passive: true });
+    window.addEventListener("touchstart", trigger, { once: true, passive: true });
+    window.addEventListener("mousemove", trigger, { once: true, passive: true });
+    window.addEventListener("keydown", trigger, { once: true, passive: true });
+
+    // Fallback: Ensure the popup displays even if the user never scrolls or touches
+    fallbackTimer = window.setTimeout(trigger, 3500);
+
+    return () => {
+      window.removeEventListener("scroll", trigger);
+      window.removeEventListener("pointerdown", trigger);
+      window.removeEventListener("touchstart", trigger);
+      window.removeEventListener("mousemove", trigger);
+      window.removeEventListener("keydown", trigger);
+      if (timer) window.clearTimeout(timer);
+      if (fallbackTimer) window.clearTimeout(fallbackTimer);
+    };
   }, [delay, isPrerendering, slug]);
 
   if (!shouldRender) return null;

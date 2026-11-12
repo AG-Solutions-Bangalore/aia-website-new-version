@@ -1,6 +1,8 @@
 import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
+import { isConfirmedFormSuccess, redirectToThankYou } from "@/lib/thankYou";
 import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FooterReviews from "../Footer/footer-review";
 import { toast } from "sonner";
 
@@ -8,6 +10,7 @@ let referralCache = null;
 let referralFetchPromise = null;
 
 const ContactHero = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
     userEmail: "",
@@ -127,7 +130,7 @@ const ContactHero = () => {
         { headers: { "Content-Type": "application/json" } },
       );
 
-      if (res.data.code == 200) {
+      if (isConfirmedFormSuccess(res)) {
         setFormData({
           userName: "",
           userEmail: "",
@@ -141,6 +144,7 @@ const ContactHero = () => {
         });
         toast.success(res?.data?.msg || "Enquiry Successfully Created");
         setErrors({});
+        redirectToThankYou(navigate);
       } else {
         toast.error(
           res?.data?.msg || "Something went wrong. Please try again.",

@@ -18,9 +18,9 @@ const TermsAndConditions = () => {
         </div>
 
         <div className="relative z-10 max-w-4xl">
-          <h2 className="mb-4 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
+          <h1 className="mb-4 text-2xl font-bold text-white sm:text-3xl md:text-4xl">
             Terms & Conditions
-          </h2>
+          </h1>
         </div>
       </div>
 

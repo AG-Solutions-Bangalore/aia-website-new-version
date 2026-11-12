@@ -1,5 +1,11 @@
-import { memo, useMemo } from "react";
+import { memo } from "react";
 
+const FALLBACK_IMAGE = "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
+
+/**
+ * Standard pass-through image component using real server URLs directly.
+ * Server images on aia.in.net are already pre-optimized WebP assets.
+ */
 const OptimizedImage = memo(function OptimizedImage({
   src,
   alt = "",
@@ -9,60 +15,33 @@ const OptimizedImage = memo(function OptimizedImage({
   priority = false,
   width,
   height,
-  sizes = "100vw",
-  srcSet: providedSrcSet,
   onError,
   fetchPriority,
   decoding,
+  // Ignored props passed from older call sites
+  imageKind,
+  sizes,
+  srcSet,
   ...rest
 }) {
-  const safeSrc = useMemo(() => {
-    if (!src || src === "undefined" || src === "null" || src.includes("undefined")) return "";
-    try {
-      return encodeURI(src);
-    } catch {
-      return src;
+  if (!src || src === "undefined" || src === "null" || src.includes("undefined")) {
+    return null;
+  }
+
+  const handleError = (event) => {
+    if (typeof onError === "function") {
+      onError(event);
+      return;
     }
-  }, [src]);
-
-  const generatedSrcSet = useMemo(() => {
-    if (!safeSrc) return "";
-
-    try {
-      const url = new URL(safeSrc);
-      if (url.hostname === "aia.in.net" && url.pathname.includes("/webapi/")) {
-        return "";
-      }
-    } catch {
-      return "";
-    }
-
-    const widths = [320, 640, 960, 1280, 1600];
-    const quality = 75;
-
-    const buildUrl = (originalSrc, w, q) => {
-      try {
-        const url = new URL(originalSrc);
-        url.searchParams.set("w", w);
-        url.searchParams.set("q", q);
-        return url.toString();
-      } catch {
-        return originalSrc;
-      }
-    };
-
-    return widths.map((w) => `${buildUrl(safeSrc, w, quality)} ${w}w`).join(", ");
-  }, [safeSrc]);
-  const resolvedSrcSet =
-    providedSrcSet !== undefined ? providedSrcSet : generatedSrcSet;
-
-  if (!safeSrc) return null;
+    const img = event.currentTarget;
+    if (img.dataset.fallback === "true") return;
+    img.dataset.fallback = "true";
+    img.src = FALLBACK_IMAGE;
+  };
 
   return (
     <img
-      src={safeSrc}
-      srcSet={resolvedSrcSet || undefined}
-      sizes={sizes}
+      src={src}
       alt={alt}
       title={title ?? alt ?? "Academy of Internal Audit"}
       className={className}
@@ -72,7 +51,7 @@ const OptimizedImage = memo(function OptimizedImage({
       loading={priority ? "eager" : "lazy"}
       fetchPriority={fetchPriority || (priority ? "high" : "low")}
       decoding={decoding || (priority ? "sync" : "async")}
-      onError={onError}
+      onError={handleError}
       {...rest}
     />
   );

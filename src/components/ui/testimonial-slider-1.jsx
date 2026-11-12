@@ -446,6 +446,11 @@ export const TestimonialSlider = ({ reviews, className }) => {
                 key={currentIndex}
                 src={activeReview.imageSrc}
                 alt={activeReview.name}
+                title={
+                  activeReview.name === "Rakhi Garg"
+                    ? "Rakhi Garg – Academy of Internal Audit"
+                    : activeReview.title || activeReview.name
+                }
                 className="absolute inset-0 w-full h-full object-cover rounded-lg"
                 onLoad={() => handleImageLoad(activeReview.imageSrc)}
               />
@@ -468,6 +473,11 @@ export const TestimonialSlider = ({ reviews, className }) => {
                   <OptimizedImage
                     src={review.thumbnailSrc}
                     alt={review.name}
+                    title={
+                      review.name === "Rakhi Garg"
+                        ? "Rakhi Garg – AIA Team"
+                        : review.thumbnailTitle || review.name
+                    }
                     className="w-full h-full object-cover"
                     sizes="100px"
                   />
@@ -536,6 +546,11 @@ export const TestimonialSlider = ({ reviews, className }) => {
                   <OptimizedImage
                     src={review.thumbnailSrc}
                     alt={review.name}
+                    title={
+                      review.name === "Rakhi Garg"
+                        ? "Rakhi Garg – AIA Team"
+                        : review.thumbnailTitle || review.name
+                    }
                     width="80"
                     height="96"
                     className="w-full h-full object-cover"
@@ -554,6 +569,11 @@ export const TestimonialSlider = ({ reviews, className }) => {
               key={currentIndex}
               src={activeReview.imageSrc}
               alt={activeReview.name}
+              title={
+                activeReview.name === "Rakhi Garg"
+                  ? "Rakhi Garg – Academy of Internal Audit"
+                  : activeReview.title || activeReview.name
+              }
               custom={direction}
               variants={imageVariants}
               initial="enter"
@@ -590,6 +610,11 @@ export const TestimonialSlider = ({ reviews, className }) => {
                   <OptimizedImage
                     src={review.thumbnailSrc}
                     alt={review.name}
+                    title={
+                      review.name === "Rakhi Garg"
+                        ? "Rakhi Garg – AIA Team"
+                        : review.thumbnailTitle || review.name
+                    }
                     className="w-full h-full object-cover"
                     onLoad={() => handleImageLoad(review.thumbnailSrc)}
                     sizes="64px"

@@ -7,6 +7,8 @@ const CfeJourney = () => {
     <CourseJourney
       heading="Your Complete Guide to CFE Mastery –"
       highlight="Value, Learning, Format"
+      headingLevel={3}
+      stepHeadingLevel={4}
       connectorImage={`${IMAGE_PATH}/step-line.webp`}
       steps={[
         {
@@ -35,7 +37,7 @@ const CfeJourney = () => {
         },
         {
           number: 3,
-          title: "CFE Exam Format (2026)",
+          title: "CFE EXAM FORMAT (2026)",
           items: [
             "M1 & M2 120 Ques. / 2.5 Hr",
             "M3 70 Ques. / 1.5 hr",

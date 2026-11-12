@@ -17,7 +17,7 @@ const CisaWhyAia = () => {
           },
           {
             img: `${IMAGE_PATH}/teacher-svgrepo-com.webp`,
-            title: "APMG Authorised Trainer",
+            title: "ISACA Authorised Trainer",
           },
           {
             img: `${IMAGE_PATH}/ISACA.webp`,
@@ -52,7 +52,7 @@ const CisaWhyAia = () => {
               w-full sm:w-auto
             "
         >
-          <Link to={`${ENROLL_URL}`} title={`${ENROLL_URL}`} target="_blank" rel="noopener noreferrer" className="w-full text-center">
+          <Link to={`${ENROLL_URL}`} title="Enroll Now – AIA Certification Courses" target="_blank" rel="noopener noreferrer" className="w-full text-center">
             Enroll Now
           </Link>
         </Button>

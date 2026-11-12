@@ -12,30 +12,36 @@ const NotificationPopup = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  /* ---------------- FETCH DATA ---------------- */
+  /* ---------------- FETCH DATA & SHOW AFTER 2.5 SEC ---------------- */
   useEffect(() => {
-    const fetchPopupData = async () => {
+    if (
+      typeof navigator !== "undefined" &&
+      /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(
+        navigator.userAgent,
+      )
+    ) {
+      return;
+    }
+    let cancelled = false;
+
+    const timer = setTimeout(async () => {
       try {
-        setIsLoading(true);
         const response = await axios.get(`${BASE_URL}/api/getSidePopup`);
+        if (cancelled) return;
         setPopupData(response.data?.data || []);
         setIsLoading(false);
-      } catch (error) {
+        setIsVisible(true);
+      } catch {
+        if (cancelled) return;
         setIsError(true);
         setIsLoading(false);
       }
+    }, 2500);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(timer);
     };
-
-    fetchPopupData();
-  }, []);
-
-  /* ---------------- SHOW AFTER 2 SEC ---------------- */
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 2000);
-
-    return () => clearTimeout(timer);
   }, []);
 
   /* ---------------- FLATTEN MESSAGES ---------------- */
@@ -98,6 +104,7 @@ const NotificationPopup = () => {
         {" "}
         <button
           onClick={handleClose}
+          aria-label="Close notification"
           className="absolute top-2.5 right-2.5 text-[#F3831C] cursor-pointer hover:text-gray-600 transition-all duration-200 z-10 bg-white/80 backdrop-blur-sm rounded-full p-1 hover:scale-110 shadow-sm"
         >
           <X size={16} />

@@ -75,7 +75,7 @@ const CIACurriculam = () => {
         <CourseTopStudent
           courseSlug="cia"
           needPrefix="false"
-          title="We Stand by Results "
+          title="We Stand by Results"
           subtitle="Meet the latest AIA-trained professionals who successfully earned their CIA credential through structured preparation and expert guidance."
         />
       </LazySection>
@@ -129,7 +129,7 @@ const CIACurriculam = () => {
       </LazySection>
 
       <LazySection minHeight={500}>
-        <Pdf />
+        <Pdf brochureTitle="Academy of Internal Audit – CIA Course Brochure" />
       </LazySection>
 
       <LazySection minHeight={420}>

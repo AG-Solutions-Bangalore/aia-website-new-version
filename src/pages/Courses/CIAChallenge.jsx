@@ -85,7 +85,7 @@ const CIAChallenge = () => {
         <CourseResult
           course="CIAC"
           queryKey="cia-challenge-certificates"
-          title="CIA Challenge Exam Results by AIA Professionals"
+          title={"CIA Challenge Exam Results<br className='hidden md:inline' /> by AIA Professionals"}
           description="Actual score results of professionals who cleared the CIA Challenge Exam through AIA’s structured, exam-focused preparation."
         />
       </LazySection>
@@ -127,7 +127,7 @@ const CIAChallenge = () => {
       </LazySection>
 
       <LazySection minHeight={500}>
-        <Pdf />
+        <Pdf brochureTitle="Academy of Internal Audit – CIA Challenge Course Brochure" />
       </LazySection>
 
 
@@ -158,7 +158,7 @@ const CIAChallenge = () => {
       <LazySection minHeight={420}>
         <CourseBlog
           course="CIAC"
-          title="Expert articles, exam tips, and real-world insights for CIAC aspirants."
+          title="Expert articles, exam tips, and real-world insights for CIA Challenge aspirants."
         />
       </LazySection>
 

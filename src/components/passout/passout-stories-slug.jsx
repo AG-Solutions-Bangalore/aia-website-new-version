@@ -10,19 +10,15 @@
  * static HTML file contains 100% of the student story markup without displaying a fallback "Loading..." state.
  */
 
-import { useEffect } from "react";
 import { BASE_URL } from "@/api/base-url";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
-import { useDynamicSeo } from "@/components/SEOPageLayout";
-import { buildDynamicStudentStorySeo } from "@/config/seoEngine";
+import OptimizedImage from "../common/optmized-image";
 
 const PassoutStoriesSlug = () => {
   const { slug } = useParams();
-  const location = useLocation();
-  const dynamicSeoContext = useDynamicSeo();
 
   // Retrieves student story data (pre-hydrated during SSG, fetched on client navigation)
   const {
@@ -41,14 +37,6 @@ const PassoutStoriesSlug = () => {
   });
 
   const story = storyData?.data;
-
-  useEffect(() => {
-    if (!story) return;
-    if (dynamicSeoContext?.setDynamicSeo) {
-      const dynamicSeo = buildDynamicStudentStorySeo(story, location.pathname);
-      dynamicSeoContext.setDynamicSeo(dynamicSeo);
-    }
-  }, [story, location.pathname, dynamicSeoContext]);
 
   const formatLinkedInUrl = (url) => {
     if (!url) return "#";
@@ -167,11 +155,14 @@ const PassoutStoriesSlug = () => {
               <div className="flex justify-center">
                 <div className="mt-2 relative overflow-hidden max-w-5xl rounded-xl sm:rounded-2xl lg:rounded-3xl">
                   {bannerImageUrl && (
-                    <img
+                    <OptimizedImage
                       src={bannerImageUrl}
-                      alt={student_story_banner_image_alt || student_name} title={student_story_banner_image_alt || student_name}
+                      alt={student_story_banner_image_alt || student_name}
+                      title={student_story_banner_image_alt || student_name}
                       className="w-full h-auto max-h-[250px] sm:max-h-[350px] md:max-h-[400px] lg:max-h-[500px] object-contain mt-2 sm:mt-3 lg:mt-4"
-                      loading="eager"
+                      imageKind="story"
+                      sizes="(min-width: 1024px) 1024px, 100vw"
+                      priority
                     />
                   )}
                 </div>
@@ -197,16 +188,22 @@ const PassoutStoriesSlug = () => {
                       <div className="mt-2"></div>
                       <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                         {companyImageUrl && (
-                          <img
+                          <OptimizedImage
                             src={companyImageUrl}
                             alt={
                               company?.student_company_image_alt ||
                               company?.student_company_name
-                            } title={
+                            }
+                            title={
                               company?.student_company_image_alt ||
                               company?.student_company_name
                             }
                             className="w-8 h-8 sm:w-10 sm:h-10 rounded-full object-cover"
+                            imageKind="story"
+                            width={40}
+                            height={40}
+                            sizes="40px"
+                            loading="lazy"
                           />
                         )}
                         <div>
@@ -308,10 +305,15 @@ const PassoutStoriesSlug = () => {
 
               {/* Right Content */}
               <div className="lg:w-3/4">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-[#0F3652] mb-6 sm:mb-8">
+                  {student_name}
+                  {student_course ? `: ${student_course} Success Story` : " Success Story"}
+                </h1>
+
                 <div className="mb-8 sm:mb-10 lg:mb-12">
-                  <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0F3652] mb-4 sm:mb-5 lg:mb-6">
+                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0F3652] mb-4 sm:mb-5 lg:mb-6">
                     Our Impact
-                  </h3>
+                  </h2>
 
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                     {[
