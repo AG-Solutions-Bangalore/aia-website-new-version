@@ -107,9 +107,9 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
           <>
             <div className="flex flex-col items-center justify-center lg:hidden px-3">
               <div className="text-center mb-8">
-                <h2 className={`text-3xl font-bold ${title == "white" ? "text-white" : "text-black"}`}>
+                <span className={`text-3xl font-bold block ${title == "white" ? "text-white" : "text-black"}`}>
                   Top Ratings Across Platforms{" "}
-                </h2>
+                </span>
               </div>
 
               <div className="grid grid-cols-2 gap-3 md:gap-4 max-w-2xl w-full">

@@ -2,6 +2,10 @@ export interface CertificationCourse {
   id: number;
   title: string;
   description: string;
+  keywordLink?: {
+    keyword: string;
+    url: string;
+  };
   description2: string;
   features: string[];
   cta: string;
@@ -19,6 +23,10 @@ const certificationCourses: CertificationCourse[] = [
     title: "Certified Fraud Examiner (CFE)",
     description:
       "The Certified Fraud Examiner (CFE) credential is a globally recognised certification designed for professionals involved in fraud prevention, detection, and investigation. It equips learners with strong knowledge of fraud schemes, investigative techniques, legal frameworks, and ethical practices. This certification is highly valued across audit, compliance, risk management, and forensic roles. It helps professionals identify red flags, prevent financial misconduct, and strengthen organisational fraud risk controls.",
+    keywordLink: {
+      keyword: "Certified Fraud Examiner",
+      url: "/cfe-curriculum",
+    },
     description2: "How AIA Supports Your CFE Certification",
     features: [
       "250 Pages Updated, concise notes curated by experts",
@@ -42,6 +50,10 @@ const certificationCourses: CertificationCourse[] = [
     title: "Certified Internal Auditor (CIA)",
     description:
       "The Certified Internal Auditor (CIA) is the leading international certification for internal audit professionals. Structured across three exam parts, it covers internal audit fundamentals, risk management, governance, internal controls, and advanced audit practices. The CIA credential strengthens professional credibility and equips auditors with the skills needed to evaluate business risks and support ethical governance, making it ideal for those aiming to grow into senior audit and leadership roles.",
+    keywordLink: {
+      keyword: "Certified Internal Auditor",
+      url: "/cia-curriculum",
+    },
     description2: "How AIA Supports Your CIA Certification",
     features: [
       "250 Pages concise study notes curated by experts",
@@ -65,6 +77,10 @@ const certificationCourses: CertificationCourse[] = [
     title: "CIA Challenge Exam",
     description:
       "The CIA Challenge Exam is a fast-track pathway offered by The Institute of Internal Auditors (IIA) for qualified professionals (such as CAs, CMAs, and ACCAs) to earn the Certified Internal Auditor (CIA) designation through a single comprehensive exam. It covers internal audit governance, risk management, internal controls, IT, ethics, and business acumen.",
+    keywordLink: {
+      keyword: "CIA Challenge Exam",
+      url: "/cia-challenge-curriculum",
+    },
     description2: "How AIA Supports Your CIA Challenge Certification",
     features: [
       "150 Pages concise study notes curated by experts",
@@ -87,6 +103,10 @@ const certificationCourses: CertificationCourse[] = [
     title: "Certified Anti-Money Laundering Specialist (CAMS)",
     description:
       "The Certified Anti-Money Laundering Specialist (CAMS) is a globally respected certification focused on combating money laundering and financial crime. It covers AML regulations, risk assessment, compliance frameworks, transaction monitoring, and investigative processes. Widely recognised in banking and financial services, CAMS equips professionals with practical skills to detect suspicious activities, strengthen compliance programs, and meet regulatory expectations effectively.",
+    keywordLink: {
+      keyword: "Certified Anti-Money Laundering Specialist",
+      url: "/cams",
+    },
     description2: "How AIA Supports Your CAMS Certification",
     features: [
       "Expert curated 100 Pages condensed study notes for CAMS prep",
@@ -109,6 +129,10 @@ const certificationCourses: CertificationCourse[] = [
     title: "Certified Information Systems Auditor (CISA)",
     description:
       "The Certified Information Systems Auditor (CISA) is a globally recognized professional certification awarded by ISACA for professionals who audit, control, monitor, and assess information systems and technology environments. It validates expertise across IT audit, governance, information security, and IT controls, making it a valuable credential for professionals building or advancing careers in IT audit, risk, compliance, cybersecurity, and information systems assurance. CISA is a strong fit for finance and governance professionals working closely with IT systems and controls.",
+    keywordLink: {
+      keyword: "Certified Information Systems Auditor",
+      url: "/cisa",
+    },
     description2: "How AIA Supports Your CISA Certification",
     features: [
       "Access to ISACA Official CISA Prep Resources",

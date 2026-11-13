@@ -45,9 +45,9 @@ const CourseCurriculum = ({
                 }
                 className="w-full text-left p-4 flex items-center justify-between text-sm"
               >
-                <h3 className="font-semibold text-[#0F3652]">
+                <span className="font-semibold text-[#0F3652]">
                   {item.title}
-                </h3>
+                </span>
               </button>
 
               {activeTab === item.id && (

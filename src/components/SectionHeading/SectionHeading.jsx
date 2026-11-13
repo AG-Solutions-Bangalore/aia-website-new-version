@@ -20,10 +20,11 @@ const SectionHeading = ({
   preheadingclassName,
   preheading,
   headingLevel = 2,
+  as,
   mobileCenter = false,
 }) => {
   const isCenter = align == "center";
-  const HeadingTag = `h${headingLevel}`;
+  const HeadingTag = as || (typeof headingLevel === "string" && !headingLevel.startsWith("h") ? headingLevel : `h${headingLevel}`);
   const textAlignment = isCenter
     ? "text-center"
     : mobileCenter
