@@ -76,7 +76,7 @@ const HomeBlog = () => {
                 <span className="relative z-10 text-white">
                   <span>Read All Blogs</span>
                 </span>
-                <span className="absolute inset-0 bg-[#F3831C] opacity-100 transition-opacity duration-300 -skew-x-12" />
+                <span className="absolute inset-0 bg-[#B45309] opacity-100 transition-opacity duration-300 -skew-x-12" />
               </Link>
             </Button>
           </div>
@@ -121,7 +121,7 @@ const HomeBlog = () => {
                               e.currentTarget.src = noImageUrl || "https://aia.in.net/webapi/public/assets/images/no_image.jpg";
                             }}
                           />
-                          <div className="absolute bottom-2 right-2 rounded-md bg-[#F3831C] px-2 py-1 text-xs font-semibold text-white">
+                          <div className="absolute bottom-2 right-2 rounded-md bg-[#B45309] px-2 py-1 text-xs font-semibold text-white">
                             {blog.blog_course}
                           </div>
                         </div>
@@ -153,13 +153,13 @@ const HomeBlog = () => {
                                 )}
                               </p>
                             </div>
-                            <div className="flex items-center gap-1 rounded-full bg-[#F3831C]/10 px-2 py-0.5 text-xs font-semibold text-[#F48F32]">
+                            <div className="flex items-center gap-1 rounded-full bg-[#F3831C]/10 px-2 py-0.5 text-xs font-semibold text-[#B45309]">
                               <Star className="h-3 w-3" />
                               {blog.blog_course}
                             </div>
                           </div>
 
-                          <span className="mt-3 flex h-8 w-full items-center justify-center rounded-md bg-[#F3831C] px-3 text-xs font-medium text-white">
+                          <span className="mt-3 flex h-8 w-full items-center justify-center rounded-md bg-[#B45309] px-3 text-xs font-medium text-white">
                             Read More
                           </span>
                         </div>

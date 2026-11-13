@@ -171,7 +171,7 @@ export default function PdfJoinDialog({
   const inputStyle = "focus:border-[#B45309]";
   const triggerButtonClassName =
     buttonClassName ||
-    "bg-[#F3831C] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#F3831C] transition-all cursor-pointer";
+    "bg-[#B45309] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#92400E] transition-all cursor-pointer";
   const showPhoneBeforeEmail = fieldOrder === "phoneFirst";
 
   const nameField = (

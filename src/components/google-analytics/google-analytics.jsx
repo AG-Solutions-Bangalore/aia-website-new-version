@@ -7,7 +7,7 @@ let gtagLoadPromise = null;
 
 const loadGTagOnce = () => {
   if (typeof window === 'undefined') return Promise.resolve();
-  if (typeof navigator !== 'undefined' && /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(navigator.userAgent)) {
+  if (typeof navigator !== 'undefined' && (navigator.webdriver || /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(navigator.userAgent))) {
     return Promise.resolve();
   }
   if (window.__GA_LOADED__) return Promise.resolve();

@@ -3,7 +3,6 @@ import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
 import { getBannerForSlug } from "@/config/bannerData";
 import { normalizeRoutePath } from "@/routes/route-path";
-import { HOME_HERO_480_BASE64 } from "./hero-480-base64";
 import { getLinkTitle } from "@/utils/seoTitles";
 
 const HOME_BANNER_BASE =
@@ -476,6 +475,11 @@ export default function HomeHero({ slug, bottombar = false }) {
 
   const activeSlide = carouselSlides[currentSlide];
   const current = announcements[currentSlide];
+  const mobileDotWindow = 5;
+  const mobileDotStart = Math.max(
+    0,
+    Math.min(currentSlide - 2, announcements.length - mobileDotWindow)
+  );
   const normalizeRoute = (rawLink) => {
     if (!rawLink) return undefined;
     if (rawLink.startsWith("http")) return rawLink;
@@ -522,14 +526,14 @@ export default function HomeHero({ slug, bottombar = false }) {
                   <picture>
                     <source
                       media="(max-width: 640px)"
-                      srcSet={HOME_HERO_480_BASE64}
+                      srcSet="/images/hero/home-hero-480.webp"
                     />
                     <source
                       media="(min-width: 641px)"
                       srcSet="/images/hero/home-hero-1600.webp"
                     />
                     <img
-                      src={HOME_HERO_480_BASE64}
+                      src="/images/hero/home-hero-1600.webp"
                       alt={activeSlide.alt}
                       title={activeSlide.alt || "AIA Training Institute"}
                       width={1600}
@@ -537,7 +541,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                       className="w-full h-full object-cover"
                       loading="eager"
                       fetchPriority="high"
-                      decoding="sync"
+                      decoding="async"
                     />
                   </picture>
                 ) : (
@@ -622,7 +626,8 @@ export default function HomeHero({ slug, bottombar = false }) {
                   title={getLinkTitle(currentHref || (slug === "about-aia" ? "" : "#"), { page: slug, defaultTitle: `Know more about: ${current.title}` })}
                   className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
-                  min-h-11 text-white bg-[#F3831C] hover:bg-[#D16E27] active:bg-[#AE5B1D]
+                                    min-h-11 text-white bg-[#F3831C] hover:bg-[#D16E27] active:bg-[#AE5B1D]
+
                   transition-colors duration-150 whitespace-nowrap self-start"
                 >
                   Know More.
@@ -636,18 +641,20 @@ export default function HomeHero({ slug, bottombar = false }) {
                   {String(announcements.length).padStart(2, "0")}
                 </span>
 
-                <div className="flex min-w-0 flex-1 items-center justify-center gap-1 sm:gap-2 overflow-hidden">
+                <div className="flex min-w-0 flex-1 items-center justify-center gap-0.5 sm:gap-1 pr-2 overflow-hidden">
                   {announcements.map((_, index) => (
                     <button
                       type="button"
                       key={index}
                       onClick={() => goToSlide(index)}
                       aria-label={`Go to slide ${index + 1}`}
-                      className="min-h-6 min-w-6 w-6 h-6 shrink flex items-center justify-center overflow-hidden"
+                      className={`min-h-6 min-w-6 w-6 h-6 sm:min-h-7 sm:min-w-7 sm:w-7 sm:h-7 shrink-0 items-center justify-center overflow-hidden ${
+                        index >= mobileDotStart && index < mobileDotStart + mobileDotWindow ? "flex" : "hidden"
+                      } sm:flex`}
                       aria-current={index === currentSlide ? "true" : undefined}
                     >
                       <span
-                        className="h-[3px] w-3 sm:w-4 overflow-hidden rounded-full"
+                        className="h-[3px] w-2.5 sm:w-3 overflow-hidden rounded-full"
                         style={{ background: "rgba(255,255,255,0.45)" }}
                       >
                         <span
@@ -661,7 +668,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                     </button>
                   ))}
                 </div>
-                <div className="flex shrink-0 items-center gap-0.5">
+                <div className="ml-2 flex shrink-0 items-center gap-0.5">
                   <button
                     type="button"
                     onClick={prevSlide}

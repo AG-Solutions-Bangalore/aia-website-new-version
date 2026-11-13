@@ -32,3 +32,6 @@ dist-ssr
 .playwright-cli/
 scratch/
 .trae/
+reports/
+.reports
+reports

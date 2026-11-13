@@ -15,6 +15,8 @@ Options -Indexes -MultiViews
     AddType image/webp .webp
     AddType image/avif .avif
     AddType application/manifest+json .webmanifest
+    RemoveType .gz
+    AddEncoding gzip .gz
 </IfModule>
 
 <IfModule mod_dir.c>
@@ -39,6 +41,13 @@ RewriteRule ^ https://aia.in.net%{REQUEST_URI} [R=301,L]
 
 # 2b. Fully Dynamic API Sitemap: Pure data direct from /webapi/public/api/getSitemap
 RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+# 2c. Serve precompressed gzip assets when the browser supports gzip.
+# The .gz files are generated at build time, so Apache avoids recompressing them.
+RewriteCond %{HTTP:Accept-Encoding} gzip
+RewriteCond %{REQUEST_URI} !\.gz$ [NC]
+RewriteCond %{REQUEST_FILENAME}\.gz -s
+RewriteRule ^(.+)$ $1.gz [L]
 
 # 2. Retired page URLs (Permanent 301 redirects with trailing slash)
 RewriteRule ^about-us/?$ /about-aia/ [R=301,L]
@@ -155,24 +164,24 @@ RewriteRule . /index.html [L]
 
     # Hashed Vite bundles are content-addressed, so they can be cached for a year.
     # sw.js / workbox-*.js are excluded here and handled by the revalidate block below.
-    <FilesMatch "^(?!sw\.js$)(?!workbox-).*\.(js|mjs|css|woff2|woff|ttf|otf|eot)$">
+    <FilesMatch "^(?!sw\.js(\.gz)?$)(?!workbox-).*\.(js|mjs|css|woff2|woff|ttf|otf|eot)(\.gz)?$">
         Header set Cache-Control "public, max-age=31536000, immutable"
     </FilesMatch>
 
     # Service worker + Workbox runtime must always revalidate after a deploy.
-    <FilesMatch "^(sw\.js|workbox-.*\.js)$">
+    <FilesMatch "^(sw\.js|workbox-.*\.js)(\.gz)?$">
         Header set Cache-Control "public, no-cache, max-age=0, must-revalidate"
     </FilesMatch>
 
     # Public images are NOT content-hashed (e.g. /images/hero/*.webp),
     # so 30 days instead of immutable 1 year to avoid stale files after replacement.
-    <FilesMatch "\.(webp|avif|png|jpe?g|gif|svg|ico)$">
+    <FilesMatch "\.(webp|avif|png|jpe?g|gif|svg|ico)(\.gz)?$">
         Header set Cache-Control "public, max-age=2592000"
     </FilesMatch>
 
     # HTML/manifest: browsers revalidate, edge/CDN (Cloudflare/nginx/Varnish)
     # may cache for 10 minutes to cut TTFB. X-Accel-Expires is intentionally removed.
-    <FilesMatch "\.(html|webmanifest)$">
+    <FilesMatch "\.(html|webmanifest)(\.gz)?$">
         Header set Cache-Control "public, max-age=0, s-maxage=600, stale-while-revalidate=86400"
         Header unset Pragma
         Header unset Expires
@@ -180,8 +189,13 @@ RewriteRule . /index.html [L]
     </FilesMatch>
 
     # API JSON / sitemap XML must NOT be edge-cached.
-    <FilesMatch "\.(json|xml)$">
+    <FilesMatch "\.(json|xml)(\.gz)?$">
         Header set Cache-Control "public, no-cache, max-age=0, must-revalidate"
+    </FilesMatch>
+
+    # Precompressed responses still need to vary by Accept-Encoding.
+    <FilesMatch "\.(js|mjs|css|html|webmanifest|json|xml|svg)\.gz$">
+        Header set Vary "Accept-Encoding"
     </FilesMatch>
 </IfModule>
 

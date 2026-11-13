@@ -38,7 +38,7 @@ const CourseAboutH1 = ({
           <div>
             {badgeText && (
               <div className="flex items-center gap-3 mb-2 md:mb-3">
-                <div className="text-xs sm:text-sm font-medium text-[#F3831C] tracking-wider">
+                <div className="text-xs sm:text-sm font-medium text-[#B45309] tracking-wider">
                   <h2>{badgeText}</h2>
                 </div>
               </div>
@@ -66,7 +66,7 @@ const CourseAboutH1 = ({
                   to={buttonLink} title={buttonLink}
                   className="flex justify-center md:justify-start"
                 >
-                  <span className="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#F3831C] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300">
+                  <span className="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#B45309] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300">
                     {buttonText}
                   </span>
                 </Link>
