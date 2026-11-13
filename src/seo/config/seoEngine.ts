@@ -50,6 +50,7 @@ import {
   websiteSchema,
 } from "./schemaExamples";
 import { DEFAULT_AUTHOR, DEFAULT_PUBLISHER, SITE_NAME } from "./site";
+import { getMetaKeywords } from "./pageKeywords";
 
 export interface MasterSeoStructure {
   title: string;
@@ -110,8 +111,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: "Expert Training for CFE, CIA, CAMS & CISA Certification | AIA",
     description:
       "Academy of Internal Audit offers expert-led CIA, CFE, CAMS & CISA training with a 99.6% success rate, helping professionals achieve global certifications.",
-    keywords:
-      "Academy of Internal Audit, CFE Certification, CIA Certification, CAMS Certification, CISA Certification, Coaching Institute, Global Certification Training Institute",
+    keywords: getMetaKeywords("homepage"),
     canonicalPath: "/",
     author: "Academy of Internal Audit",
     publisher: "Academy of Internal Audit (AIA)",
@@ -149,8 +149,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: "Certified Fraud Examiner Course | CFE Certification Course",
     description:
       "Get Certification in Certified Fraud Examiner Course with AIA Institute to become a skilled Certified Fraud Investigator and unlock fraud prevention mystery.",
-    keywords:
-      "CFE Course, CFE Certification, Certified Fraud Examiner, CFE Prep Course, CFE Training, CFE Coaching, CFE Classes, CFE Study Material, CFE Mock Test, CFE Exam Syllabus, CFE Exam Preparation",
+    keywords: getMetaKeywords("cfe"),
     canonicalPath: "/cfe-curriculum",
     schemas: [
       organizationSchema,
@@ -166,8 +165,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: "Earn Certified Internal Auditor (CIA) Certification with AIA",
     description:
       "Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.",
-    keywords:
-      "CIA Course, CIA Certification, Certified Internal Auditor, CIA Prep Course, CIA Training, CIA Coaching, CIA Classes, CIA Study Material, CIA Mock Test, CIA Exam Syllabus, CIA Exam Preparation",
+    keywords: getMetaKeywords("cia"),
     canonicalPath: "/cia-curriculum",
     schemas: [
       organizationSchema,
@@ -183,8 +181,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: "Clear (CIA) Certified Internal Auditor Challenge Exam with AIA",
     description:
       "Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.",
-    keywords:
-      "CIA Challenge Course, CIA Challenge Certification, Certified Internal Auditor Challenge, CIA Challenge Prep Course, CIA Challenge Training, CIA Challenge Coaching, CIA Challenge Classes, CIA Challenge Study Material, CIA Challenge Mock Test, CIA Challenge Exam Syllabus, CIA Challenge Exam Preparation",
+    keywords: getMetaKeywords("ciaChallenge"),
     canonicalPath: "/cia-challenge-curriculum",
     schemas: [
       organizationSchema,
@@ -200,8 +197,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: "Clear Certified Anti-Money Laundering Specialist Exam with AIA",
     description:
       "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
-    keywords:
-      "CAMS COURSE, CAMS Certification, Certified Anti Money Laundering Specialist, CAMS Prep Course, CAMS Training, CAMS Coaching, CAMS Classes, CAMS Study Material, CAMS Mock Test, CAMS Exam Syllabus, CAMS Exam Preparation",
+    keywords: getMetaKeywords("cams"),
     canonicalPath: "/cams",
     schemas: [
       organizationSchema,
@@ -217,8 +213,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: "Clear Certified Information Systems Auditor (CISA) Exam with AIA",
     description:
       "Prepare for CISA exam with AIA. Get access to official ISACA CISA prep kit and expert-led resources to clear the CISA Exam on your first attempt confidently.",
-    keywords:
-      "CISA Course, CISA Certification, Certified Information Systems Auditor, CISA Prep Course, CISA Training, CISA Coaching, CISA Classes, CISA Study Material, CISA Mock Test, CISA Exam Syllabus, CISA Exam Preparation",
+    keywords: getMetaKeywords("cisa"),
     canonicalPath: "/cisa",
     schemas: [
       organizationSchema,
