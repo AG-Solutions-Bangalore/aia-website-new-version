@@ -588,7 +588,7 @@ export const TestimonialSlider = ({
 
       {/* Mobile-only heading */}
       <div className="pt-4 min-h-[160px] md:hidden">
-        <SectionHeading title={title} description={description} />
+        <SectionHeading title={title} description={description} headingLevel={!isDesktop ? 2 : "div"} />
       </div>
 
       {/*
@@ -689,7 +689,7 @@ export const TestimonialSlider = ({
         <div className="lg:col-span-6 flex flex-col justify-between md:pl-2 lg:pl-8 order-3 min-w-0">
           {/* Desktop heading — tighter min-h at md so it doesn't push thumbs off screen */}
           <div className="pt-2 md:min-h-[200px] lg:min-h-[200px] hidden md:block">
-            <SectionHeading title={title} description={description} />
+            <SectionHeading title={title} description={description} headingLevel={isDesktop ? 2 : "div"} />
           </div>
 
           {/* Right thumbs + nav buttons */}

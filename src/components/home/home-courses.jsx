@@ -59,6 +59,7 @@ const ServiceCard = ({ service, i, progress, total }) => {
         className="relative w-full rounded-none p-8 border-2 border-[#F3831C]/20 min-h-125 flex flex-col justify-between origin-top"
       >
         <div>
+          <h3 className="sr-only">{service.title}</h3>
           <div className="flex items-start justify-between mb-2">
             <h4
               className="text-xl  font-bold"
