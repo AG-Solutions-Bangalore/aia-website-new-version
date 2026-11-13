@@ -106,14 +106,15 @@ function PageSEO({ path, children }: { path?: string; children: React.ReactNode 
   );
 }
 
-function withTrailingSlash(pathname: string): string {
-  return pathname.endsWith('/') ? pathname : `${pathname}/`;
+function stripTrailingSlash(pathname: string): string {
+  if (pathname === '/') return pathname;
+  return pathname.replace(/\/+$/, '');
 }
 
 /**
  * Enforces client-side URL consistency:
- * - Course pages are kept WITHOUT a trailing slash (e.g. /cfe-curriculum).
- * - All other routes are kept WITH a trailing slash (e.g. /about-aia/ or /blogs/).
+ * All URLs across the site are kept WITHOUT a trailing slash (e.g. /about-aia or /blogs).
+ * Any request with a trailing slash is redirected (replace) to without trailing slash.
  */
 function TrailingSlashEnforcer() {
   const location = useLocation();
@@ -123,17 +124,9 @@ function TrailingSlashEnforcer() {
     const { pathname, search, hash } = location;
     if (pathname === '/') return;
 
-    const clean = pathname.replace(/^\/+/, '').replace(/\/+$/, '');
-    const isCourse = COURSE_ROUTES.has(clean);
-
-    if (isCourse) {
-      if (pathname.endsWith('/')) {
-        navigate(`/${clean}${search}${hash}`, { replace: true });
-      }
-    } else {
-      if (!pathname.endsWith('/')) {
-        navigate(`${pathname}/${search}${hash}`, { replace: true });
-      }
+    if (pathname.endsWith('/')) {
+      const clean = pathname.replace(/\/+$/, '');
+      navigate(`${clean}${search}${hash}`, { replace: true });
     }
   }, [location.pathname, location.search, location.hash, navigate]);
 
@@ -169,8 +162,8 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
         <TrailingSlashEnforcer />
         <Routes>
           <Route path="/" element={<PageSEO path="/"><Home /></PageSEO>} />
-          <Route path="/about-aia" element={<PageSEO path="/about-aia/"><AboutPage /></PageSEO>} />
-          <Route path="/about-us" element={<Navigate to="/about-aia/" replace />} />
+          <Route path="/about-aia" element={<PageSEO path="/about-aia"><AboutPage /></PageSEO>} />
+          <Route path="/about-us" element={<Navigate to="/about-aia" replace />} />
           <Route path="/about-aia/cia-curriculum" element={<Navigate to="/cia-curriculum" replace />} />
           <Route path="/about-aia/cams" element={<Navigate to="/cams" replace />} />
           <Route path="/about-aia/cfe-curriculum" element={<Navigate to="/cfe-curriculum" replace />} />
@@ -183,39 +176,39 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/cia-challenge-prep-course" element={<Navigate to="/cia-challenge-curriculum" replace />} />
           <Route path="/cisa" element={<PageSEO path="/cisa"><CISA /></PageSEO>} />
           <Route path="/cams" element={<PageSEO path="/cams"><CAMS /></PageSEO>} />
-          <Route path="/cia-free-resources" element={<PageSEO path="/cia-free-resources/"><CIAFreeResources /></PageSEO>} />
-          <Route path="/cams-free-resources" element={<PageSEO path="/cams-free-resources/"><CAMSFreeResources /></PageSEO>} />
-          <Route path="/cisa-free-resources" element={<PageSEO path="/cisa-free-resources/"><CISAFreeResources /></PageSEO>} />
-          <Route path="/cfe-free-resources" element={<PageSEO path="/cfe-free-resources/"><FreeResources /></PageSEO>} />
+          <Route path="/cia-free-resources" element={<PageSEO path="/cia-free-resources"><CIAFreeResources /></PageSEO>} />
+          <Route path="/cams-free-resources" element={<PageSEO path="/cams-free-resources"><CAMSFreeResources /></PageSEO>} />
+          <Route path="/cisa-free-resources" element={<PageSEO path="/cisa-free-resources"><CISAFreeResources /></PageSEO>} />
+          <Route path="/cfe-free-resources" element={<PageSEO path="/cfe-free-resources"><FreeResources /></PageSEO>} />
           <Route path="/cfe-free-resource/:questions_module" element={<PageSEO><CfePracticeQuestion /></PageSEO>} />
-          <Route path="/blogs" element={<PageSEO path="/blogs/"><Blog /></PageSEO>} />
+          <Route path="/blogs" element={<PageSEO path="/blogs"><Blog /></PageSEO>} />
           <Route path="/blogs/:id" element={<PageSEO><BlogDetails /></PageSEO>} />
           <Route path="/blogs/course/:courseName" element={<PageSEO><BlogCourse /></PageSEO>} />
-          <Route path="/alumni-network" element={<PageSEO path="/alumni-network/"><OurPassout /></PageSEO>} />
-          <Route path="/fillter" element={<PageSEO path="/fillter/"><FilterPage /></PageSEO>} />
-          <Route path="/filter" element={<Navigate to="/fillter/" replace />} />
-          <Route path="/our-passouts/*" element={<Navigate to="/alumni-network/" replace />} />
-          <Route path="/passed-out/*" element={<Navigate to="/alumni-network/" replace />} />
-          <Route path="/enroll-now" element={<PageSEO path="/enroll-now/"><Enrool /></PageSEO>} />
-          <Route path="/contact" element={<PageSEO path="/contact/"><Contact /></PageSEO>} />
-          <Route path="/thank-you" element={<PageSEO path="/thank-you/"><ThankYou /></PageSEO>} />
+          <Route path="/alumni-network" element={<PageSEO path="/alumni-network"><OurPassout /></PageSEO>} />
+          <Route path="/fillter" element={<PageSEO path="/fillter"><FilterPage /></PageSEO>} />
+          <Route path="/filter" element={<Navigate to="/fillter" replace />} />
+          <Route path="/our-passouts/*" element={<Navigate to="/alumni-network" replace />} />
+          <Route path="/passed-out/*" element={<Navigate to="/alumni-network" replace />} />
+          <Route path="/enroll-now" element={<PageSEO path="/enroll-now"><Enrool /></PageSEO>} />
+          <Route path="/contact" element={<PageSEO path="/contact"><Contact /></PageSEO>} />
+          <Route path="/thank-you" element={<PageSEO path="/thank-you"><ThankYou /></PageSEO>} />
           <Route path="/passout-stories/:slug" element={<PageSEO><PassoutStoriesSlug /></PageSEO>} />
-          <Route path="/corporate-training" element={<PageSEO path="/corporate-training/"><CorporateTraining /></PageSEO>} />
-          <Route path="/aia-times" element={<PageSEO path="/aia-times/"><AiaTimes /></PageSEO>} />
-          <Route path="/aia-times/flip-book" element={<PageSEO path="/aia-times/flip-book/"><FlipbookSection /></PageSEO>} />
+          <Route path="/corporate-training" element={<PageSEO path="/corporate-training"><CorporateTraining /></PageSEO>} />
+          <Route path="/aia-times" element={<PageSEO path="/aia-times"><AiaTimes /></PageSEO>} />
+          <Route path="/aia-times/flip-book" element={<PageSEO path="/aia-times/flip-book"><FlipbookSection /></PageSEO>} />
           <Route path="/corporate-training/cia-curriculum" element={<Navigate to="/cia-curriculum" replace />} />
           <Route path="/corporate-training/cams" element={<Navigate to="/cams" replace />} />
           <Route path="/corporate-training/cfe-curriculum" element={<Navigate to="/cfe-curriculum" replace />} />
           <Route path="/corporate-training/cisa" element={<Navigate to="/cisa" replace />} />
-          <Route path="/policies" element={<PageSEO path="/policies/"><Policies /></PageSEO>} />
-          <Route path="/terms-and-conditions" element={<PageSEO path="/terms-and-conditions/"><TermsAndConditions /></PageSEO>} />
+          <Route path="/policies" element={<PageSEO path="/policies"><Policies /></PageSEO>} />
+          <Route path="/terms-and-conditions" element={<PageSEO path="/terms-and-conditions"><TermsAndConditions /></PageSEO>} />
           <Route path="*" element={<PageSEO><NotFound /></PageSEO>} />
 
           {Object.entries(blogRedirects).map(([oldPath, newPath]) => (
             <Route
               key={oldPath}
               path={oldPath}
-              element={<Navigate to={withTrailingSlash(newPath)} replace />}
+              element={<Navigate to={stripTrailingSlash(newPath)} replace />}
             />
           ))}
         </Routes>

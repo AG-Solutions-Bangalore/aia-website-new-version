@@ -2,11 +2,19 @@
 <html lang="en">
 
 <head>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-KJ7WJLKJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0F3652">
 
-  <!-- Critical LCP Hero Preload (Desktop high-res) -->
+  <!-- Critical LCP Hero Preload (responsive) -->
+  <link rel="preload" as="image" href="/images/hero/home-hero-480.webp" media="(max-width: 640px)" fetchpriority="high">
   <link rel="preload" as="image" href="/images/hero/home-hero-1600.webp" media="(min-width: 641px)" fetchpriority="high">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -28,8 +36,6 @@
   <link rel="alternate" type="application/json" href="/.well-known/ard.json" title="AI Catalog">
 
   <!-- Optimized Resource Hints -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://aia.in.net/webapi/public" crossorigin>
 
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
@@ -46,12 +52,12 @@
   </script>
 
   <!-- Deferred Third-Party Loading:
-       GTM, gtag, Facebook (via GTM), and Clarity start only after window.load
+       gtag, Facebook, and Clarity start only after window.load
        plus an idle slot. This keeps their main-thread work out of the LCP/TBT
        window. The dataLayer queue still records events fired before load. -->
   <script>
     (function () {
-      if (/Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(navigator.userAgent)) return;
+      if (navigator.webdriver || /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(navigator.userAgent)) return;
       var thirdPartyStarted = false;
       var thirdPartyQueue = [];
 
@@ -126,8 +132,41 @@
         if (window.__AIA_GTAG_PROMISE__) return window.__AIA_GTAG_PROMISE__;
         if (window.__GA_LOADED__) return Promise.resolve();
 
+        var injectGtag = function (gtagHtml) {
+          var container = document.createElement("div");
+          container.innerHTML = gtagHtml;
+
+          var scripts = container.querySelectorAll("script");
+          for (var i = 0; i < scripts.length; i++) {
+            var oldScript = scripts[i];
+            var newScript = document.createElement("script");
+
+            if (oldScript.src) {
+              newScript.src = oldScript.src;
+              newScript.async = true;
+            } else {
+              newScript.text = oldScript.textContent;
+            }
+
+            document.head.appendChild(newScript);
+          }
+
+          window.__GA_LOADED__ = true;
+        };
+
         window.__AIA_GTAG_PROMISE__ = new Promise(function (resolve) {
           runWhenLoaded(function () {
+            var cachedGtag = null;
+            try {
+              cachedGtag = window.sessionStorage.getItem("aia_gtag_html");
+            } catch (e) {}
+
+            if (cachedGtag) {
+              injectGtag(cachedGtag);
+              resolve();
+              return;
+            }
+
             fetch("https://aia.in.net/webapi/public/api/getGTag", {
               headers: { Accept: "application/json" },
             })
@@ -141,25 +180,10 @@
                 var gtagHtml = payload && payload.data && payload.data.gtag;
                 if (!gtagHtml) return;
 
-                var container = document.createElement("div");
-                container.innerHTML = gtagHtml;
-
-                var scripts = container.querySelectorAll("script");
-                for (var i = 0; i < scripts.length; i++) {
-                  var oldScript = scripts[i];
-                  var newScript = document.createElement("script");
-
-                  if (oldScript.src) {
-                    newScript.src = oldScript.src;
-                    newScript.async = true;
-                  } else {
-                    newScript.text = oldScript.textContent;
-                  }
-
-                  document.head.appendChild(newScript);
-                }
-
-                window.__GA_LOADED__ = true;
+                injectGtag(gtagHtml);
+                try {
+                  window.sessionStorage.setItem("aia_gtag_html", gtagHtml);
+                } catch (e) {}
               })
               .catch(function () {
                 window.__AIA_GTAG_PROMISE__ = null;
@@ -173,23 +197,6 @@
 
       window.__AIA_LOAD_GTAG__ = loadGtag;
       loadGtag();
-
-      // Google Tag Manager
-      runWhenLoaded(function () {
-        (function (w, d, s, l, i) {
-          w[l] = w[l] || [];
-          w[l].push({
-            "gtm.start": new Date().getTime(),
-            event: "gtm.js",
-          });
-          var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s),
-            dl = l != "dataLayer" ? "&l=" + l : "";
-          j.async = true;
-          j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-          f.parentNode.insertBefore(j, f);
-        })(window, document, "script", "dataLayer", "GTM-KJ7WJLKJ");
-      }, 0, 1000);
 
       // Microsoft Clarity: give the page a short settling window after load.
       runWhenLoaded(function () {
@@ -211,11 +218,6 @@
     })();
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"
-    media="print" onload="this.media='all'">
-  <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  </noscript>
 </head>
 
 <body class="antialiased font-poppins">

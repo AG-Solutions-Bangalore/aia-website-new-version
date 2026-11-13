@@ -42,17 +42,14 @@ import { COURSE_ROUTES } from './route-path';
 
 /**
  * Normalizes any route pathname to an absolute canonical URL.
- * - Course pages are formatted WITHOUT a trailing slash (e.g. 'https://aia.in.net/cfe-curriculum')
- * - All other pages retain the trailing slash (e.g. 'https://aia.in.net/about-aia/' or 'https://aia.in.net/blogs/')
+ * All URLs across the site are formatted WITHOUT a trailing slash (e.g. 'https://aia.in.net/about-aia').
+ * The root home page retains its root slash 'https://aia.in.net/'.
  *
  * @param pathname - The route path (e.g. '/about-aia' or 'cfe-curriculum')
- * @returns Fully-qualified canonical URL matching Google indexed format
+ * @returns Fully-qualified canonical URL matching the non-trailing-slash policy
  */
 export function getCanonicalUrl(pathname: string): string {
   const cleanPath = pathname.replace(/^\/+/, '').replace(/\/+$/, '');
   if (!cleanPath) return `${SITE_ORIGIN}/`;
-  if (COURSE_ROUTES.has(cleanPath)) {
-    return `${SITE_ORIGIN}/${cleanPath}`;
-  }
-  return `${SITE_ORIGIN}/${cleanPath}/`;
+  return `${SITE_ORIGIN}/${cleanPath}`;
 }
