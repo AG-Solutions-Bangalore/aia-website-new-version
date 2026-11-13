@@ -262,7 +262,9 @@ const HomeCorporatePartner = () => {
             title="AIA Empowers Organisations Through Audit & Fraud Risk Excellence"
             description="Industry-aligned certification training designed to strengthen fraud prevention, detection, investigation, and audit capabilities across organisations."
             align="center"
-            titleClass="text-white text-[1.1rem] lg:text-3xl"
+            as="span"
+            wrapperClass="block"
+            titleClass="text-white text-[1.1rem] lg:text-3xl font-bold"
             descriptionClass="text-white text-base lg:text-3xl"
             underlineColor="#fff"
           />

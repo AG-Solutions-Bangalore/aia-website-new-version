@@ -146,6 +146,9 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
         <SectionHeading
           title="Global Certification Programs Offered by AIA"
           align="center"
+          as="span"
+          wrapperClass="block"
+          titleClass="text-2xl sm:text-3xl font-bold"
         />
 
         {ALL_SERVICES.map((service) => (
@@ -278,14 +281,14 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             <div className="h-full flex flex-col justify-between">
               <div>
                 <div className="transition-opacity duration-300 mb-20">
-                  <h3
-                    className="text-xl lg:text-3xl font-bold mb-3 leading-tight "
+                  <span
+                    className="text-xl lg:text-3xl font-bold mb-3 leading-tight block"
                     style={{
                       color: ALL_SERVICES[activeCard]?.lefttextColor || "",
                     }}
                   >
                     {ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}
-                  </h3>
+                  </span>
 
                   <p className="text-[#0F3652] text-lg mb-2 max-w-lg leading-relaxed text-justify">
                     {renderDescriptionWithLink(
