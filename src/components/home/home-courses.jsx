@@ -160,12 +160,12 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             }}
           >
             <div className="mb-4">
-              <h3
-                className="text-xl font-bold mb-2"
+              <span
+                className="text-xl font-bold mb-2 block"
                 style={{ color: service.smalllefttextColor }}
               >
                 {service.title}
-              </h3>
+              </span>
               <p
                 className="text-sm mb-4 text-justify"
                 style={{
@@ -178,7 +178,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             </div>
 
             <div className="mb-4">
-              <h4
+              <p
                 className="text-sm font-bold mb-3 text-justify"
                 style={{
                   color:
@@ -186,7 +186,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                 }}
               >
                 {service.description2}
-              </h4>
+              </p>
 
               {service.features && (
                 <div className="space-y-2">

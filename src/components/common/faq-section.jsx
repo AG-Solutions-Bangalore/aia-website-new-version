@@ -64,7 +64,7 @@ const FaqSection = ({ faqs = [] }) => {
                     onMouseLeave={() => setHoveredHeading(null)}
                     onClick={() => setActiveHeading(heading)}
                   >
-                    <h3
+                    <span
                       role="button"
                       tabIndex={0}
                       className={`text-md font-medium cursor-pointer transition-all duration-200 ${
@@ -82,7 +82,7 @@ const FaqSection = ({ faqs = [] }) => {
                       }}
                     >
                       {heading}
-                    </h3>
+                    </span>
                   </div>
                 ))}
               </div>
@@ -91,9 +91,9 @@ const FaqSection = ({ faqs = [] }) => {
 
           <div className="md:col-span-3">
             {displayHeading && (
-              <h3 className="text-[#0F3652] text-2xl font-semibold mb-6">
+              <p className="text-[#0F3652] text-2xl font-semibold mb-6">
                 {displayHeading}
-              </h3>
+              </p>
             )}
 
             <Accordion type="single" collapsible>

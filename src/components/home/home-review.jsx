@@ -139,9 +139,9 @@ const HomeReview = () => {
                             }}
                           />
                           <div>
-                            <h4 className="text-lg font-semibold text-[#0F3652]">
+                            <p className="text-lg font-semibold text-[#0F3652]">
                               {item.name}
-                            </h4>
+                            </p>
                             <div className="flex items-center mt-1">
                               {[...Array(5)].map((_, i) => (
                                 <svg

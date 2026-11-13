@@ -72,7 +72,7 @@
 //                   <div className="order-1">
 //                     <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
 //                       {effortsData?.data[2].efforts_heading}
-//                     </h3>
+//                     </p>
 //                   </div>
 //                   <div className="order-2">
 //                     <p className="text-white text-justify text-lg">
@@ -88,7 +88,7 @@
 //                 <div>
 //                   <h3 className="text-2xl md:text-3xl font-bold text-[#0F3652] mb-3">
 //                     {effortsData?.data[0].efforts_heading}
-//                   </h3>
+//                   </p>
 //                 </div>
 
 //                 <div>
@@ -114,7 +114,7 @@
 //                   <div>
 //                     <h3 className="text-2xl md:text-3xl font-bold text-white mb-3">
 //                       {effortsData?.data[1].efforts_heading}{" "}
-//                     </h3>
+//                     </p>
 //                   </div>
 //                   <div>
 //                     <div className="p-1">
@@ -152,7 +152,7 @@
 //           </div>
 //           <div className="relative z-10 w-full px-8 pb-4 grid grid-cols-1 md:grid-cols-2 items-center gap-8 max-w-340 mx-auto">
 //             <div>
-//               <h3 className="text-3xl font-semibold">
+//               <p className="text-3xl font-semibold">
 //                 {currentTitle?.split("X").map((part, index, arr) => (
 //                   <span key={index}>
 //                     <span className="text-[#F3831C]">{part}</span>
@@ -161,7 +161,7 @@
 //                     )}
 //                   </span>
 //                 ))}
-//               </h3>
+//               </p>
 //               <p className="text-base md:text-lg text-white my-4 text-justify">
 //                 {currentDescription}
 //               </p>
@@ -271,9 +271,9 @@ const HomeCorporatePartner = () => {
 
           {/* stacked: title → image → description, always single column */}
           <div className="mt-8 space-y-6 max-w-3xl mx-auto">
-            <h3 className="text-2xl font-bold text-white">
+            <p className="text-2xl font-bold text-white">
               {effortsData?.data?.[2]?.efforts_heading}
-            </h3>
+            </p>
             {effortsData?.data?.[2]?.efforts_image && imageBaseUrl && (
               <img
                 src={`${imageBaseUrl}${effortsData.data[2].efforts_image}`}
@@ -293,9 +293,9 @@ const HomeCorporatePartner = () => {
         {/* Section 2 – white bg, item index [0] */}
         <section className="p-6 md:p-10 max-w-3xl mx-auto">
           <div className="space-y-6">
-            <h3 className="text-2xl font-bold text-[#0F3652]">
+            <p className="text-2xl font-bold text-[#0F3652]">
               {effortsData?.data?.[0]?.efforts_heading}
-            </h3>
+            </p>
             {effortsData?.data?.[0]?.efforts_image && imageBaseUrl && (
               <img
                 src={`${imageBaseUrl}${effortsData.data[0].efforts_image}`}
@@ -315,9 +315,9 @@ const HomeCorporatePartner = () => {
         {/* Section 3 – dark bg, item index [1] */}
         <section className="bg-[#0F3652] p-6 md:p-10 overflow-hidden">
           <div className="space-y-6 max-w-3xl mx-auto">
-            <h3 className="text-2xl font-bold text-white">
+            <p className="text-2xl font-bold text-white">
               {effortsData?.data?.[1]?.efforts_heading}
-            </h3>
+            </p>
             {effortsData?.data?.[1]?.efforts_image && imageBaseUrl && (
               <img
                 src={`${imageBaseUrl}${effortsData.data[1].efforts_image}`}
@@ -350,7 +350,7 @@ const HomeCorporatePartner = () => {
           </div>
           <div className="relative z-10 w-full px-8 pb-4 grid grid-cols-2 items-center gap-8 max-w-340 mx-auto">
             <div>
-              <h3 className="text-3xl font-semibold">
+              <p className="text-3xl font-semibold">
                 {currentTitle?.split("X").map((part, index, arr) => (
                   <span key={index}>
                     <span className="text-[#FDBA74]">{part}</span>
@@ -359,7 +359,7 @@ const HomeCorporatePartner = () => {
                     )}
                   </span>
                 ))}
-              </h3>
+              </p>
               <p className="text-lg text-white my-4 text-justify">
                 {currentDescription}
               </p>

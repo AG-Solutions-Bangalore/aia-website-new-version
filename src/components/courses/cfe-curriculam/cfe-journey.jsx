@@ -7,8 +7,8 @@ const CfeJourney = () => {
     <CourseJourney
       heading="Your Complete Guide to CFE Mastery –"
       highlight="Value, Learning, Format"
-      headingLevel={3}
-      stepHeadingLevel={4}
+      headingLevel={2}
+      stepHeadingLevel={3}
       connectorImage={`${IMAGE_PATH}/step-line.webp`}
       steps={[
         {

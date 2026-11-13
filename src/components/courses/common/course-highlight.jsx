@@ -281,9 +281,9 @@ const CourseHighLight = ({
               key={index}
               className="text-center px-6 py-4  last:border-r-0 mt-12"
             >
-              <h3 className="text-2xl md:text-[25px] font-bold mb-1 text-[#0F3652]">
+              <span className="text-2xl md:text-[25px] font-bold mb-1 text-[#0F3652] block">
                 <CountUp end={stat.value} suffix={stat.suffix} />
-              </h3>
+              </span>
               <p className="text-sm text-[#0F3652]">{stat.subtitle}</p>
             </div>
           ))}

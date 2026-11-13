@@ -7,8 +7,8 @@ const CiaJourney = () => {
     <CourseJourney
       heading="Your Complete Guide to CIA Challenge Mastery"
       highlight="Value, Learning, Format"
-      headingLevel={3}
-      stepHeadingLevel={4}
+      headingLevel={2}
+      stepHeadingLevel={3}
       connectorImage={`${IMAGE_PATH}/step-line.webp`}
       steps={[
         {
