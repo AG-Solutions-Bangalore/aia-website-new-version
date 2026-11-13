@@ -2,6 +2,13 @@
 <html lang="en">
 
 <head>
+  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-KJ7WJLKJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  </script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#0F3652">
@@ -45,7 +52,7 @@
   </script>
 
   <!-- Deferred Third-Party Loading:
-       GTM, gtag, Facebook (via GTM), and Clarity start only after window.load
+       gtag, Facebook, and Clarity start only after window.load
        plus an idle slot. This keeps their main-thread work out of the LCP/TBT
        window. The dataLayer queue still records events fired before load. -->
   <script>
@@ -190,23 +197,6 @@
 
       window.__AIA_LOAD_GTAG__ = loadGtag;
       loadGtag();
-
-      // Google Tag Manager
-      runWhenLoaded(function () {
-        (function (w, d, s, l, i) {
-          w[l] = w[l] || [];
-          w[l].push({
-            "gtm.start": new Date().getTime(),
-            event: "gtm.js",
-          });
-          var f = d.getElementsByTagName(s)[0],
-            j = d.createElement(s),
-            dl = l != "dataLayer" ? "&l=" + l : "";
-          j.async = true;
-          j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-          f.parentNode.insertBefore(j, f);
-        })(window, document, "script", "dataLayer", "GTM-KJ7WJLKJ");
-      }, 0, 1000);
 
       // Microsoft Clarity: give the page a short settling window after load.
       runWhenLoaded(function () {
