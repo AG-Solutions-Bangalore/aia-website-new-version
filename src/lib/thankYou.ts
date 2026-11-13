@@ -1,6 +1,6 @@
 import type { NavigateFunction } from 'react-router-dom';
 
-export const THANK_YOU_PATH = '/thank-you/';
+export const THANK_YOU_PATH = '/thank-you';
 export const THANK_YOU_SOURCE_KEY = 'aia:thank-you:source';
 export const THANK_YOU_COUNTDOWN_SECONDS = 120;
 

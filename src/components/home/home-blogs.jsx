@@ -72,7 +72,7 @@ const HomeBlog = () => {
               className="rounded-xl mt-6 px-5 text-base relative cursor-pointer overflow-hidden group"
               variant="ghost"
             >
-              <Link to="/blogs/" target="_blank" rel="noopener noreferrer" aria-label="Read All Blogs">
+              <Link to="/blogs" target="_blank" rel="noopener noreferrer" aria-label="Read All Blogs">
                 <span className="relative z-10 text-white">
                   <span>Read All Blogs</span>
                 </span>
@@ -100,7 +100,7 @@ const HomeBlog = () => {
                   return (
                     <Link
                       key={blog.id}
-                      to={`/blogs/${blog.blog_slug}/`}
+                      to={`/blogs/${blog.blog_slug}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="group w-64 shrink-0 cursor-pointer transition-transform duration-200 lg:hover:-translate-y-1"
