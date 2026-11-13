@@ -1,9 +1,40 @@
 import React, { useRef, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import SectionHeading from "../SectionHeading/SectionHeading";
 import defaultCertificationCourses from "@/data/certificationCourses";
 import CfeRoadmapDialog from "@/components/common/CfeRoadmapDialog";
 import CamsRoadmapDialog from "@/components/common/CamsRoadmapDialog";
+
+const renderDescriptionWithLink = (service, isSmall = false) => {
+  const desc = service?.description || "";
+  const keyword = service?.keywordLink?.keyword;
+  const url = service?.keywordLink?.url;
+
+  if (!keyword || !url || !desc.includes(keyword)) {
+    return desc;
+  }
+
+  const parts = desc.split(keyword);
+  return (
+    <>
+      {parts.map((part, index) => (
+        <React.Fragment key={index}>
+          {part}
+          {index < parts.length - 1 && (
+            <Link
+              to={url}
+              className="text-[#F3831C] font-semibold underline decoration-[#F3831C]/60 hover:decoration-[#F3831C] hover:text-[#D16E27] transition-colors"
+              title={keyword}
+            >
+              {keyword}
+            </Link>
+          )}
+        </React.Fragment>
+      ))}
+    </>
+  );
+};
 
 const ServiceCard = ({ service, i, progress, total }) => {
   const start = i / total;
@@ -138,7 +169,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                     service.textColor === "#ffffff" ? "#d1d5db" : "#64748b",
                 }}
               >
-                {service.description}
+                {renderDescriptionWithLink(service, true)}
               </p>
             </div>
 
@@ -256,8 +287,9 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                   </h3>
 
                   <p className="text-[#0F3652] text-lg mb-2 max-w-lg leading-relaxed text-justify">
-                    {ALL_SERVICES[activeCard]?.description ||
-                      ALL_SERVICES[0].description}
+                    {renderDescriptionWithLink(
+                      ALL_SERVICES[activeCard] || ALL_SERVICES[0]
+                    )}
                   </p>
                 </div>
                 <div className="mt-10">
