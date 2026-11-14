@@ -48,12 +48,12 @@ const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
               </div>
 
               <div>
-                <h3
+                <p
                   className="text-xl font-bold mb-1"
                   style={{ color: i % 2 === 0 ? "#1e293b" : "#ffffff" }}
                 >
                   {testimonial.student_name}
-                </h3>
+                </p>
                 <p
                   className="text-sm"
                   style={{ color: i % 2 === 0 ? "#64748b" : "#d1d5db" }}

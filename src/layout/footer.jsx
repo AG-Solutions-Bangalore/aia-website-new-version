@@ -13,10 +13,10 @@ export default function Footer() {
       <div className="max-w-340 w-full mx-auto px-4 py-16 overflow-hidden">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb-4 min-w-0">
           <div className="space-y-6 min-w-0">
-            <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
+            <p className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
               Quick Links
               <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
-            </h4>
+            </p>
             <ul className="space-y-3">
               {[
                 { name: "Home", href: "/" },
@@ -53,10 +53,10 @@ export default function Footer() {
 
           <div className="space-y-6 min-w-0">
             <div>
-              <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
+              <p className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
                 Courses
                 <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
-              </h4>
+              </p>
               <ul className="space-y-3">
                 {[
                   { name: "CFE Curriculum", href: "/cfe-curriculum" },
@@ -88,10 +88,10 @@ export default function Footer() {
             </div>
 
             <div>
-              <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
+              <p className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
                 Free Resources
                 <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
-              </h4>
+              </p>
               <ul className="space-y-3">
                 {[
                   { name: "CFE Free Resources", href: "/cfe-free-resources/" },
@@ -123,10 +123,10 @@ export default function Footer() {
           </div>
 
           <div className="space-y-6 sm:col-span-2 md:col-span-1 min-w-0">
-            <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
+            <p className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
               Registered Office
               <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
-            </h4>
+            </p>
             <div className="space-y-2">
               <p className="font-bold text-white text-lg">
                 ACADEMY OF INTERNAL AUDIT

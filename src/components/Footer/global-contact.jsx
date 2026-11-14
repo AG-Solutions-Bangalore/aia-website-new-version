@@ -146,10 +146,10 @@ export const ContactGrid = () => {
 
   return (
     <div className="grid grid-cols-1 gap-3">
-      <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
+      <p className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
         Global Contact
         <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
-      </h4>
+      </p>
       <div className="grid grid-cols-1 gap-2">
         {regions.map((region) => (
           <ContactCard key={region.country} {...region} />

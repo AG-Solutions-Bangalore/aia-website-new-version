@@ -24,6 +24,8 @@ const renderDescriptionWithLink = (service, isSmall = false) => {
           {index < parts.length - 1 && (
             <Link
               to={url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-[#F3831C] font-semibold underline decoration-[#F3831C]/60 hover:decoration-[#F3831C] hover:text-[#D16E27] transition-colors"
               title={keyword}
             >
@@ -146,6 +148,9 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
         <SectionHeading
           title="Global Certification Programs Offered by AIA"
           align="center"
+          as="span"
+          wrapperClass="block"
+          titleClass="text-2xl sm:text-3xl font-bold"
         />
 
         {ALL_SERVICES.map((service) => (
@@ -157,12 +162,12 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             }}
           >
             <div className="mb-4">
-              <h3
-                className="text-xl font-bold mb-2"
+              <span
+                className="text-xl font-bold mb-2 block"
                 style={{ color: service.smalllefttextColor }}
               >
                 {service.title}
-              </h3>
+              </span>
               <p
                 className="text-sm mb-4 text-justify"
                 style={{
@@ -175,7 +180,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             </div>
 
             <div className="mb-4">
-              <h4
+              <p
                 className="text-sm font-bold mb-3 text-justify"
                 style={{
                   color:
@@ -183,7 +188,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                 }}
               >
                 {service.description2}
-              </h4>
+              </p>
 
               {service.features && (
                 <div className="space-y-2">
@@ -210,6 +215,8 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             <div className="mt-6 flex flex-col sm:flex-row gap-2">
               <a
                 href={service.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="
                   group inline-flex items-center gap-2
                   h-10 px-4
@@ -278,14 +285,14 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             <div className="h-full flex flex-col justify-between">
               <div>
                 <div className="transition-opacity duration-300 mb-20">
-                  <h3
-                    className="text-xl lg:text-3xl font-bold mb-3 leading-tight "
+                  <span
+                    className="text-xl lg:text-3xl font-bold mb-3 leading-tight block"
                     style={{
                       color: ALL_SERVICES[activeCard]?.lefttextColor || "",
                     }}
                   >
                     {ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}
-                  </h3>
+                  </span>
 
                   <p className="text-[#0F3652] text-lg mb-2 max-w-lg leading-relaxed text-justify">
                     {renderDescriptionWithLink(
@@ -299,6 +306,8 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                       href={
                         ALL_SERVICES[activeCard]?.link || ALL_SERVICES[0].link
                       }
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="group inline-flex items-center gap-2 h-10 px-4 text-sm font-medium text-white "
                       aria-label={`Learn more about ${ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}`} title={`Learn more about ${ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}`}
                       style={{

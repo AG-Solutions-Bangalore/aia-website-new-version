@@ -84,10 +84,10 @@ const AccreditationBadges = () => {
 };
 
 const SectionLabel = ({ children }) => (
-  <h4 className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
+  <p className="text-[#fa8017] font-bold text-xl mb-6 relative inline-block">
     {children}
     <span className="absolute bottom-0 left-0 w-12 h-0.5 bg-[#fa8017] -mb-2"></span>
-  </h4>
+  </p>
 );
 
 export const PaymentAccreditation = () => (

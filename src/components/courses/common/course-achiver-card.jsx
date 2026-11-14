@@ -63,14 +63,14 @@ rotate(${isCenter ? 0 : position > 0 ? -2.5 : 2.5}deg)
           <div className="space-y-1">
             <div className="flex flex-row items-center justify-between">
               <div>
-                <h3
+                <p
                   className={cn(
                     "font-bold text-lg truncate",
                     isCenter ? "text-white" : "text-white",
                   )}
                 >
                   {testimonial.student_name}
-                </h3>
+                </p>
                 <p
                   className={cn(
                     "font-semibold text-sm",

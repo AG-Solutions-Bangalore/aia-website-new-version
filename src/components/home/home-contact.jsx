@@ -180,9 +180,9 @@ const HomeContact = () => {
             {/* ── Left column ── */}
             <div className="space-y-4">
               <div>
-                <h2 className="text-xs md:text-sm font-semibold text-[#B45309] uppercase tracking-wider block">
+                <p className="text-xs md:text-sm font-semibold text-[#B45309] uppercase tracking-wider block">
                   Add Global Certifications for a Brighter Career Path
-                </h2>
+                </p>
                 <div className="text-[#0F3652] text-xl md:text-3xl mt-2 font-medium">
                   <span className="text-2xl md:text-5xl font-bold text-[#0F3652] italic block mt-2">
                     Prepare. Certify. Succeed
