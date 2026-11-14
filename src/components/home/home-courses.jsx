@@ -24,6 +24,8 @@ const renderDescriptionWithLink = (service, isSmall = false) => {
           {index < parts.length - 1 && (
             <Link
               to={url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="text-[#F3831C] font-semibold underline decoration-[#F3831C]/60 hover:decoration-[#F3831C] hover:text-[#D16E27] transition-colors"
               title={keyword}
             >
@@ -213,6 +215,8 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
             <div className="mt-6 flex flex-col sm:flex-row gap-2">
               <a
                 href={service.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="
                   group inline-flex items-center gap-2
                   h-10 px-4
@@ -302,6 +306,8 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                       href={
                         ALL_SERVICES[activeCard]?.link || ALL_SERVICES[0].link
                       }
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="group inline-flex items-center gap-2 h-10 px-4 text-sm font-medium text-white "
                       aria-label={`Learn more about ${ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}`} title={`Learn more about ${ALL_SERVICES[activeCard]?.title || ALL_SERVICES[0].title}`}
                       style={{
