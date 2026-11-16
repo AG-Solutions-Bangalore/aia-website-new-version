@@ -6,6 +6,7 @@ import { ssrLazy } from "@/lib/ssrLazy";
 import HomeHero from "@/components/home/home-hero";
 import CiaAbout from "@/components/courses/cia-challenge/cia-about";
 import BannerLogos from "@/components/courses/common/banner-logos";
+import { CIA_REVIEW_SLUGS } from "@/api/testimonials";
 
 const CourseTopStudent = lazy(
   () => import("@/components/courses/common/course-top-student"),
@@ -115,7 +116,7 @@ const CIAChallenge = () => {
       </LazySection>
 
       <LazySection minHeight={450}>
-        <CourseReview slug="CIAC" title="300+ Professional Experiences Shared" />
+        <CourseReview slugs={CIA_REVIEW_SLUGS} title="300+ Professional Experiences Shared" />
       </LazySection>
 
       <LazySection minHeight={480}>
