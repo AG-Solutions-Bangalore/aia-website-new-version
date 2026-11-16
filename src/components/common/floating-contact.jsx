@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Mail, Phone } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { useEffect, useRef, useState } from "react";
+import { getWhatsAppUrl, whatsappContacts } from "@/config/whatsapp";
 
 const FloatingContactRight = () => {
   const [open, setOpen] = useState(false);
@@ -55,7 +56,7 @@ const FloatingContactRight = () => {
     {
       icon: <FaWhatsapp size={20} />,
       bg: "bg-[#25D366]",
-      link: "https://wa.me/919311320114?text=Hello,%20I%20am%20looking%20for%20Academy%20of%20Internal%20Audit",
+      link: `${getWhatsAppUrl(whatsappContacts.primary.phone)}?text=Hello,%20I%20am%20looking%20for%20Academy%20of%20Internal%20Audit`,
       label: "WhatsApp",
       glow: "shadow-[#25D366]/40",
     },

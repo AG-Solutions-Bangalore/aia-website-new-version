@@ -107,7 +107,7 @@ function devSitemapPlugin(): Plugin {
 
       for (const page of json.data || []) {
         if ((page.page_two_status || '').trim().toLowerCase() !== 'active') continue;
-        const url = (page.page_two_url || '').trim().replace(/^\/+/, '');
+        const url = (page.page_two_url || '').trim().replace(/^\/+/, '').replace(/\/+$/, '');
         if (!url) continue;
         urls.push({
           loc: `https://aia.in.net/${url}`,
@@ -118,7 +118,7 @@ function devSitemapPlugin(): Plugin {
 
       for (const blog of json.blog || []) {
         if ((blog.page_two_status || '').trim().toLowerCase() !== 'active') continue;
-        const url = (blog.page_two_url || '').trim().replace(/^\/+/, '');
+        const url = (blog.page_two_url || '').trim().replace(/^\/+/, '').replace(/\/+$/, '');
         if (!url) continue;
         urls.push({
           loc: `https://aia.in.net/blogs/${url}`,

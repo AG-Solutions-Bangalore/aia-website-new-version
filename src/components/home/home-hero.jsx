@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useRef } from "react";
 import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { BASE_URL } from "@/api/base-url";
 import { getBannerForSlug } from "@/config/bannerData";
-import { normalizeRoutePath } from "@/routes/route-path";
+import { normalizeInternalUrl } from "@/routes/route-path";
 import { getLinkTitle } from "@/utils/seoTitles";
 
 const HOME_BANNER_BASE =
@@ -480,11 +480,7 @@ export default function HomeHero({ slug, bottombar = false }) {
     0,
     Math.min(currentSlide - 2, announcements.length - mobileDotWindow)
   );
-  const normalizeRoute = (rawLink) => {
-    if (!rawLink) return undefined;
-    if (rawLink.startsWith("http")) return rawLink;
-    return normalizeRoutePath(rawLink);
-  };
+  const normalizeRoute = (rawLink) => normalizeInternalUrl(rawLink);
 
   const slideHref = normalizeRoute(activeSlide?.link);
   const isExternalSlide = Boolean(slideHref?.startsWith("http"));

@@ -363,13 +363,13 @@ const HomeCorporatePartner = () => {
               <p className="text-lg text-white my-4 text-justify">
                 {currentDescription}
               </p>
-              {location.pathname !== "/corporate-training/" && (
+              {location.pathname !== "/corporate-training" && (
                 <Button
                   className="mb-4 relative cursor-pointer overflow-hidden group px-4 py-2 text-xs text-white rounded-none bg-[#B45309] hover:bg-[#92400E] active:bg-[#78350F] transition-colors duration-300"
                   variant="ghost"
                   aria-label="Explore Siga"
                 >
-                  <Link to={"/corporate-training/"} title={"/corporate-training/"}>
+                  <Link to={"/corporate-training"} title={"/corporate-training"}>
                     <span className="relative z-10 text-white">Know More</span>
                   </Link>
                 </Button>

@@ -16,6 +16,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
 import OptimizedImage from "../common/optmized-image";
+import { normalizeHtmlInternalLinks } from "@/routes/route-path";
 
 const PassoutStoriesSlug = () => {
   const { slug } = useParams();
@@ -361,7 +362,7 @@ const PassoutStoriesSlug = () => {
                 <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
                   <div
                     className="ck-content text-sm sm:text-base text-[#0F3652] break-words"
-                    dangerouslySetInnerHTML={{ __html: student_story_details }}
+                    dangerouslySetInnerHTML={{ __html: normalizeHtmlInternalLinks(student_story_details) }}
                   />
                 </div>
               </div>

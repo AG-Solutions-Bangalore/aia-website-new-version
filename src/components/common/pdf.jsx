@@ -28,9 +28,6 @@ const STATIC_REVIEWS = [
   { id: 19, image: "/pdf/19.webp", alt: "Brochure image" },
   { id: 20, image: "/pdf/20.webp", alt: "Brochure image" },
   { id: 21, image: "/pdf/21.webp", alt: "Brochure image" },
-  { id: 22, image: "/pdf/22.webp", alt: "Brochure image" },
-  { id: 23, image: "/pdf/23.webp", alt: "Brochure image" },
-  { id: 24, image: "/pdf/24.webp", alt: "Brochure image" },
 ];
 
 const pdfImageUrl = (image) =>

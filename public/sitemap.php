@@ -59,7 +59,7 @@ if (!empty($data['data']) && is_array($data['data'])) {
         }
 
         $url = trim($page['page_two_url'] ?? '');
-        $url = ltrim($url, '/');
+        $url = trim($url, '/');
         if ($url === '') {
             continue;
         }
@@ -87,7 +87,7 @@ if (!empty($data['blog']) && is_array($data['blog'])) {
         }
 
         $url = trim($blog['page_two_url'] ?? '');
-        $url = ltrim($url, '/');
+        $url = trim($url, '/');
         if ($url === '') {
             continue;
         }
