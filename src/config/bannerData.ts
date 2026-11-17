@@ -126,6 +126,8 @@ export async function loadBannerData(): Promise<void> {
               imageUrl: `${baseImageUrl}${banner.banner_image}`,
               link: normalizeInternalUrl(banner.banner_link) ?? null,
               alt: banner.banner_image_alt || '',
+              width: 1883,
+              height: 858,
             };
 
             if (slug === 'home' && index === 0) {

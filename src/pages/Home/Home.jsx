@@ -35,7 +35,7 @@ const CamsRoadmapDialog = lazy(() =>
 
 const homeSectionProps = {
   prerender: false,
-  deferUntilIdle: true,
+  deferUntilIdle: false,
   idleDelay: 2400,
   idleTimeout: 1200,
   rootMargin: "120px",

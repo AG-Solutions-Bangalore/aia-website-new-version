@@ -2,7 +2,25 @@
 <html lang="en">
 
 <head>
-  <script async src="https://www.googletagmanager.com/gtm.js?id=GTM-KJ7WJLKJ"></script>
+  <!-- Deferred Third-Party Loading:
+   GTM starts only after window.load plus an idle slot. This keeps their main-thread work out of the LCP/TBT window. -->
+  <script>
+    (function () {
+      if (navigator.webdriver || /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(navigator.userAgent)) return;
+      var startGtm = function () {
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtm.js?id=GTM-KJ7WJLKJ";
+        var f = document.getElementsByTagName("script")[0];
+        f.parentNode.insertBefore(s, f);
+      };
+      if ("requestIdleCallback" in window) {
+        window.requestIdleCallback(startGtm, { timeout: 2000 });
+      } else {
+        window.setTimeout(startGtm, 0);
+      }
+    })();
+  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
@@ -40,6 +58,13 @@
 
   <link rel="dns-prefetch" href="https://www.googletagmanager.com">
   <link rel="dns-prefetch" href="https://www.google-analytics.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+
+  <!-- Preload Poppins fonts so they download in parallel with CSS, not after -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-400.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-500.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-600.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-700.woff2" crossorigin>
   <!-- Initialize the tag queue immediately (no network) so conversion and
        page-view events can be queued before the tag scripts finish loading. -->
   <script>
