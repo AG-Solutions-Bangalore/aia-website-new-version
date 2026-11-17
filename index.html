@@ -6,7 +6,6 @@
    GTM starts only after window.load plus an idle slot. This keeps their main-thread work out of the LCP/TBT window. -->
   <script>
     (function () {
-      if (navigator.webdriver || /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(navigator.userAgent)) return;
       var startGtm = function () {
         var s = document.createElement("script");
         s.async = true;
@@ -82,7 +81,6 @@
        window. The dataLayer queue still records events fired before load. -->
   <script>
     (function () {
-      if (navigator.webdriver || /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(navigator.userAgent)) return;
       var thirdPartyStarted = false;
       var thirdPartyQueue = [];
 
@@ -150,70 +148,28 @@
         window.addEventListener("load", onLoaded, { once: true });
       }
 
-      // Google Ads / gtag conversion loader. The promise is created at call
-      // time so the React analytics component can reuse it, but the actual
-      // network request starts only after the deferred gate opens.
+      // Google Ads / gtag conversion loader.
       var loadGtag = function () {
         if (window.__AIA_GTAG_PROMISE__) return window.__AIA_GTAG_PROMISE__;
         if (window.__GA_LOADED__) return Promise.resolve();
 
-        var injectGtag = function (gtagHtml) {
-          var container = document.createElement("div");
-          container.innerHTML = gtagHtml;
-
-          var scripts = container.querySelectorAll("script");
-          for (var i = 0; i < scripts.length; i++) {
-            var oldScript = scripts[i];
-            var newScript = document.createElement("script");
-
-            if (oldScript.src) {
-              newScript.src = oldScript.src;
-              newScript.async = true;
-            } else {
-              newScript.text = oldScript.textContent;
-            }
-
-            document.head.appendChild(newScript);
-          }
-
-          window.__GA_LOADED__ = true;
-        };
-
         window.__AIA_GTAG_PROMISE__ = new Promise(function (resolve) {
           runWhenLoaded(function () {
-            var cachedGtag = null;
-            try {
-              cachedGtag = window.sessionStorage.getItem("aia_gtag_html");
-            } catch (e) {}
-
-            if (cachedGtag) {
-              injectGtag(cachedGtag);
+            var s = document.createElement("script");
+            s.async = true;
+            s.src = "https://www.googletagmanager.com/gtag/js?id=AW-16531559648";
+            s.onload = function () {
+              if (typeof window.gtag === "function") {
+                window.gtag("config", "AW-16531559648");
+              }
+              window.__GA_LOADED__ = true;
               resolve();
-              return;
-            }
-
-            fetch("https://aia.in.net/webapi/public/api/getGTag", {
-              headers: { Accept: "application/json" },
-            })
-              .then(function (response) {
-                if (!response.ok) {
-                  throw new Error("GTag request failed");
-                }
-                return response.json();
-              })
-              .then(function (payload) {
-                var gtagHtml = payload && payload.data && payload.data.gtag;
-                if (!gtagHtml) return;
-
-                injectGtag(gtagHtml);
-                try {
-                  window.sessionStorage.setItem("aia_gtag_html", gtagHtml);
-                } catch (e) {}
-              })
-              .catch(function () {
-                window.__AIA_GTAG_PROMISE__ = null;
-              })
-              .then(resolve);
+            };
+            s.onerror = function () {
+              window.__GA_LOADED__ = true;
+              resolve();
+            };
+            document.head.appendChild(s);
           }, 0, 1000);
         });
 
