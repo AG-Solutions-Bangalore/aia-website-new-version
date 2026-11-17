@@ -282,7 +282,13 @@ const Navbar = () => {
   "
                     >
                       {item.title}
-                      <ChevronDown size={14} aria-hidden="true" />
+                      <ChevronDown
+                        size={14}
+                        aria-hidden="true"
+                        className={`transition-transform duration-300 group-hover:rotate-180 ${
+                          activeDropdown === index ? "rotate-180" : ""
+                        }`}
+                      />
                     </button>
                   ) : (
                     <Link
@@ -303,10 +309,10 @@ const Navbar = () => {
 
                   {item.submenu && (
                     <ul
-                      className={`absolute top-full left-0 mt-2 px-6 bg-white rounded-lg shadow-xl min-w-[220px] py-2 transition-all duration-300 ${
+                      className={`absolute top-full left-0 mt-2 px-6 bg-white rounded-lg shadow-xl min-w-[220px] py-2 transition-all duration-300 before:content-[''] before:absolute before:-top-3 before:left-0 before:w-full before:h-3 ${
                         activeDropdown === index
-                          ? "opacity-100 visible translate-y-0"
-                          : "opacity-0 invisible translate-y-2"
+                          ? "opacity-100 visible translate-y-0 pointer-events-auto"
+                          : "opacity-0 invisible translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:pointer-events-auto"
                       }`}
                     >
                       {item.submenu.map((subItem, subIndex) => (
