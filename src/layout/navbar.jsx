@@ -1,4 +1,5 @@
 import { ENROLL_URL, IMAGE_PATH } from "@/api/base-url";
+import { whatsappContacts, getWhatsAppUrl } from "@/config/whatsapp";
 import { ChevronDown, Mail, Menu, Phone, X } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -21,22 +22,22 @@ const SocialMark = ({ children }) => (
 );
 
 const routePrefetch = {
-  "/about-aia/": () => import("../pages/About/About"),
+  "/about-aia": () => import("../pages/About/About"),
   "/cfe-curriculum": () => import("../pages/Courses/CFECurriculam"),
   "/cia-curriculum": () => import("../pages/Courses/CIACurriculam"),
   "/cia-challenge-curriculum": () => import("../pages/Courses/CIAChallenge"),
   "/cisa": () => import("../pages/Courses/CISA"),
   "/cams": () => import("../pages/Courses/CAMS"),
-  "/cfe-free-resources/": () =>
+  "/cfe-free-resources": () =>
     import("../pages/free-resources/cfe-free-resources"),
-  "/cisa-free-resources/": () =>
+  "/cisa-free-resources": () =>
     import("../pages/free-resources/cisa-free-resources/cisa-free-resources"),
-  "/blogs/": () => import("../pages/Blog/Blog"),
-  "/alumni-network/": () => import("../pages/OurPassout/OurPassout"),
-  "/corporate-training/": () =>
+  "/blogs": () => import("../pages/Blog/Blog"),
+  "/alumni-network": () => import("../pages/OurPassout/OurPassout"),
+  "/corporate-training": () =>
     import("../pages/corporate-training/corporate-training"),
-  "/aia-times/": () => import("../pages/aia-times/aia-times"),
-  "/contact/": () => import("../pages/contact/contact"),
+  "/aia-times": () => import("../pages/aia-times/aia-times"),
+  "/contact": () => import("../pages/contact/contact"),
 };
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -72,7 +73,7 @@ const Navbar = () => {
         className="h-2.5 w-2.5 min-[340px]:h-3 min-[340px]:w-3 md:h-[18px] md:w-[18px]"
       />
     ),
-    href: "https://wa.me/+919311320114",
+    href: getWhatsAppUrl(whatsappContacts.primary.phone),
     ariaLabel: "WhatsApp",
   };
   const contactLinkClass =
@@ -97,7 +98,7 @@ const Navbar = () => {
     },
     {
       title: "About AIA",
-      link: "/about-aia/",
+      link: "/about-aia",
       submenu: null,
     },
     {
@@ -115,29 +116,29 @@ const Navbar = () => {
       title: "Free Resources",
       link: "#",
       submenu: [
-        { name: "CFE", link: "/cfe-free-resources/" },
-        { name: "CIA", link: "/cia-free-resources/" },
-        { name: "CAMS", link: "/cams-free-resources/" },
-        { name: "CISA", link: "/cisa-free-resources/" },
+        { name: "CFE", link: "/cfe-free-resources" },
+        { name: "CIA", link: "/cia-free-resources" },
+        { name: "CAMS", link: "/cams-free-resources" },
+        { name: "CISA", link: "/cisa-free-resources" },
       ],
     },
     {
       title: "Alumni Network",
-      link: "/alumni-network/",
+      link: "/alumni-network",
       submenu: null,
     },
     {
       title: "Corporate Training",
-      link: "/corporate-training/",
+      link: "/corporate-training",
       submenu: null,
     },
     {
       title: "Other",
       link: "#",
       submenu: [
-        { name: "Blog", link: "/blogs/" },
-        { name: "AIA Times", link: "/aia-times/" },
-        { name: "Contact Us", link: "/contact/" },
+        { name: "Blog", link: "/blogs" },
+        { name: "AIA Times", link: "/aia-times" },
+        { name: "Contact Us", link: "/contact" },
       ],
     },
   ];

@@ -2,6 +2,7 @@ import { IMAGE_PATH } from "@/api/base-url";
 import { Check, Copy } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { getWhatsAppUrl } from "@/config/whatsapp";
 
 const PhoneIcon = () => (
   <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 20 20">
@@ -93,7 +94,7 @@ const ContactCard = ({ country, contacts }) => {
 
               {wa && (
                 <a
-                  href={`https://wa.me/${wa}`}
+                  href={getWhatsAppUrl(wa)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="min-h-10 min-w-10 bg-[#25D366]/15 border border-[#25D366]/20 rounded-md flex items-center justify-center text-[#25D366] hover:bg-[#128C7E] hover:text-white transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#25D366]"

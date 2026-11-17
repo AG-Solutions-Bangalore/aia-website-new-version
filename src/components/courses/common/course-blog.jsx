@@ -70,7 +70,7 @@ const CourseBlog = ({ course, title }) => {
             </h2>
             <Button
               className="rounded-xl mt-6 px-5 text-base relative cursor-pointer overflow-hidden group"
-              onClick={() => window.open("/blogs/", "_blank")}
+              onClick={() => window.open("/blogs", "_blank")}
               variant="ghost"
               aria-label="Explore Siga"
             >

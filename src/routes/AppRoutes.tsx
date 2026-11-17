@@ -164,11 +164,6 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/" element={<PageSEO path="/"><Home /></PageSEO>} />
           <Route path="/about-aia" element={<PageSEO path="/about-aia"><AboutPage /></PageSEO>} />
           <Route path="/about-us" element={<Navigate to="/about-aia" replace />} />
-          <Route path="/about-aia/cia-curriculum" element={<Navigate to="/cia-curriculum" replace />} />
-          <Route path="/about-aia/cams" element={<Navigate to="/cams" replace />} />
-          <Route path="/about-aia/cfe-curriculum" element={<Navigate to="/cfe-curriculum" replace />} />
-          <Route path="/about-aia/cia-challenge-curriculum" element={<Navigate to="/cia-challenge-curriculum" replace />} />
-          <Route path="/about-aia/cisa" element={<Navigate to="/cisa" replace />} />
           <Route path="/cfe-curriculum" element={<PageSEO path="/cfe-curriculum"><CFECurriculam /></PageSEO>} />
           <Route path="/become-cfe-in-just-30-days" element={<Navigate to="/cfe-curriculum" replace />} />
           <Route path="/cia-curriculum" element={<PageSEO path="/cia-curriculum"><CIACurriculam /></PageSEO>} />
@@ -196,10 +191,6 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/corporate-training" element={<PageSEO path="/corporate-training"><CorporateTraining /></PageSEO>} />
           <Route path="/aia-times" element={<PageSEO path="/aia-times"><AiaTimes /></PageSEO>} />
           <Route path="/aia-times/flip-book" element={<PageSEO path="/aia-times/flip-book"><FlipbookSection /></PageSEO>} />
-          <Route path="/corporate-training/cia-curriculum" element={<Navigate to="/cia-curriculum" replace />} />
-          <Route path="/corporate-training/cams" element={<Navigate to="/cams" replace />} />
-          <Route path="/corporate-training/cfe-curriculum" element={<Navigate to="/cfe-curriculum" replace />} />
-          <Route path="/corporate-training/cisa" element={<Navigate to="/cisa" replace />} />
           <Route path="/policies" element={<PageSEO path="/policies"><Policies /></PageSEO>} />
           <Route path="/terms-and-conditions" element={<PageSEO path="/terms-and-conditions"><TermsAndConditions /></PageSEO>} />
           <Route path="*" element={<PageSEO><NotFound /></PageSEO>} />

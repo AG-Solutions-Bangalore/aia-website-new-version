@@ -22,6 +22,7 @@
  */
 
 import { BASE_URL } from '@/api/base-url';
+import { normalizeInternalUrl } from '@/seo/config/route-path';
 
 export interface BannerSlide {
   id: number;
@@ -123,7 +124,7 @@ export async function loadBannerData(): Promise<void> {
             const slide: BannerSlide = {
               id: index + 1,
               imageUrl: `${baseImageUrl}${banner.banner_image}`,
-              link: banner.banner_link ?? null,
+              link: normalizeInternalUrl(banner.banner_link) ?? null,
               alt: banner.banner_image_alt || '',
             };
 
@@ -143,7 +144,7 @@ export async function loadBannerData(): Promise<void> {
             id: index + 1,
             title: banner.banner_text ?? null,
             subtext: banner.banner_sub_text ?? null,
-            link: banner.banner_link ?? null,
+            link: normalizeInternalUrl(banner.banner_link) ?? null,
           }));
 
           if (slides.length > 0) {

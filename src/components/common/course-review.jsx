@@ -82,15 +82,17 @@ const ServiceCard = ({ testimonial, i, progress, total, imageUrl }) => {
   );
 };
 
-const CourseReview = ({ slug, title, limit = 5 }) => {
+const CourseReview = ({ slug, slugs, title, limit = 5 }) => {
   const containerRef = useRef(null);
   const [testimonials, setTestimonials] = useState([]);
   const [imageUrl, setImageUrl] = useState("");
   const [scrollFinished, setScrollFinished] = useState(false);
 
+  const courses = slugs || (slug ? [slug] : []);
+
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["course-testimonials", slug],
-    queryFn: () => fetchTestimonials(slug),
+    queryKey: ["course-testimonials", ...courses],
+    queryFn: () => fetchTestimonials(courses),
   });
 
   useEffect(() => {

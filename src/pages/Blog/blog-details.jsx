@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { ShareButtons } from "./share-button";
 import OptimizedImage from "@/components/common/optmized-image";
+import { normalizeHtmlInternalLinks } from "@/routes/route-path";
 
 /**
  * @file src/pages/Blog/blog-details.jsx
@@ -71,6 +72,9 @@ const BlogDetails = () => {
       return response.data;
     },
     enabled: !!id,
+    staleTime: 0,
+    refetchOnMount: true,
+    refetchOnWindowFocus: true,
   });
 
   const blog = blogResponse?.data || null;
@@ -262,12 +266,12 @@ const BlogDetails = () => {
   };
 
   const handleRelatedBlogClick = (slug) => {
-    navigate(`/blogs/${slug}/`);
+    navigate(`/blogs/${slug}`);
     window.scrollTo(0, 0);
   };
 
   const goBack = () => {
-    navigate("/blogs/");
+    navigate("/blogs");
   };
 
   if (loading) {
@@ -525,7 +529,7 @@ const BlogDetails = () => {
                         <div
                           className="ck-content"
                           dangerouslySetInnerHTML={{
-                            __html: demoteBodyHeadings(sub.blog_sub_description),
+                            __html: normalizeHtmlInternalLinks(demoteBodyHeadings(sub.blog_sub_description)),
                           }}
                         />
                       </div>

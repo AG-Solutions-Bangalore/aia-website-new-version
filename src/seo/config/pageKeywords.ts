@@ -16,6 +16,8 @@ export const pageKeywords = {
     "Best Training Institute for CAMS",
     "Global Certification Courses",
     "Internal Audit Training Center",
+    "internal auditor institute",
+    "internal audit institute",
   ],
   cfe: [
     "CFE Course",

@@ -462,7 +462,7 @@ const Blog = () => {
             />
             <div className="flex flex-wrap gap-4 justify-center">
               <button
-                onClick={() => navigate("/contact/")}
+                onClick={() => navigate("/contact")}
                 className=" cursor-pointer px-6 py-3 bg-[#F3831C] text-white rounded-lg font-medium hover:bg-[#F3831C]/90 transition-colors"
               >
                 Contact Now

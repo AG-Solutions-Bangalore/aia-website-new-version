@@ -7,6 +7,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import OptimizedImage from "../common/optmized-image";
 import SectionHeadingH1 from "../SectionHeading/SectionHeadingH1";
+import { normalizeExternalUrl } from "@/routes/route-path";
 
 export function TestimonialCardCourse({
   author,
@@ -83,7 +84,7 @@ const PassoutResult = () => {
       author: {
         avatar: `${certificateImageUrl}${certificate.student_certificate_image}`,
       },
-      href: certificate.student_linkedin_link,
+      href: normalizeExternalUrl(certificate.student_linkedin_link),
       alt: certificate.student_certificate_image_alt || "Certificate Image",
       target: "_blank",
     }));

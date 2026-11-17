@@ -7,6 +7,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { TestimonialsSectionCourse } from "../common/testimonials-with-marquee-course";
 import { TestimonialsSectionColor } from "@/components/home/testimonialsection-color";
 import { getImageTitle, getLinkTitle } from "@/utils/seoTitles";
+import { normalizeExternalUrl } from "@/routes/route-path";
 
 const CourseResult = ({ course, queryKey, title, description }) => {
   const {
@@ -69,7 +70,7 @@ const CourseResult = ({ course, queryKey, title, description }) => {
             "Certificate Image",
           title: imgTitle,
           linkTitle: linkedinTitle,
-          youtubeLink: certificate.student_linkedin_link || "",
+          youtubeLink: normalizeExternalUrl(certificate.student_linkedin_link) || "",
         };
       })
       .filter(Boolean);

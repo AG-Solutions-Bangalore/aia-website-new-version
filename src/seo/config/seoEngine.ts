@@ -51,6 +51,7 @@ import {
 } from "./schemaExamples";
 import { DEFAULT_AUTHOR, DEFAULT_PUBLISHER, SITE_NAME } from "./site";
 import { getMetaKeywords } from "./pageKeywords";
+import { courseSchemaData } from "./courseSchemaData";
 
 export interface MasterSeoStructure {
   title: string;
@@ -67,6 +68,12 @@ export interface MasterSeoStructure {
 
 /**
  * Canonical course entities reused across the homepage list and each course route.
+ *
+ * NOTE (course structured data fix): `offer` (price + priceCurrency) and
+ * `courseInstance` (courseMode + dates) values come from
+ * `src/seo/config/courseSchemaData.ts`. That file currently contains MOCK
+ * placeholders with TODO markers; replace them with verified business data
+ * before relying on the Course rich-result output.
  */
 const COURSE_SCHEMAS = {
   "/cfe-curriculum": {
@@ -74,30 +81,35 @@ const COURSE_SCHEMAS = {
     description:
       "CFE certification training by the Academy of Internal Audit: exam-focused study guidance and practice questions.",
     path: "/cfe-curriculum",
+    ...courseSchemaData["/cfe-curriculum"],
   },
   "/cia-curriculum": {
     name: "Certified Internal Auditor (CIA) Training",
     description:
       "Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.",
     path: "/cia-curriculum",
+    ...courseSchemaData["/cia-curriculum"],
   },
   "/cia-challenge-curriculum": {
     name: "CIA Challenge Exam Training",
     description:
       "Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.",
     path: "/cia-challenge-curriculum",
+    ...courseSchemaData["/cia-challenge-curriculum"],
   },
   "/cams": {
     name: "Certified Anti-Money Laundering Specialist (CAMS) Training",
     description:
       "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
     path: "/cams",
+    ...courseSchemaData["/cams"],
   },
   "/cisa": {
     name: "Certified Information Systems Auditor (CISA) Training",
     description:
       "Comprehensive CISA certification course prep by Academy of Internal Audit.",
     path: "/cisa",
+    ...courseSchemaData["/cisa"],
   },
 } as const;
 

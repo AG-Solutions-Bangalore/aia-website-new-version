@@ -243,24 +243,74 @@ export function createSoftwareAppSchema(): Thing {
 }
 
 /**
+ * Offer pricing block for a Course schema. Values must come from the CMS/API
+ * (real course price and currency). Do not invent prices to satisfy the validator.
+ */
+export interface CourseOffer {
+  price: string | number;
+  priceCurrency: string;
+  category?: string;
+  url?: string;
+  availability?: string;
+}
+
+/**
+ * Course instance block (mode + session/batch dates) for a Course schema.
+ * Values must come from the CMS/API where that data exists.
+ */
+export interface CourseInstance {
+  courseMode: string;
+  startDate?: string;
+  endDate?: string;
+}
+
+/**
  * Creates a Schema.org Course entity linked to the canonical Organization publisher.
  *
  * @param course - Course name, description, and canonical path
+ * @param course.offer - Optional valid Offer (price + priceCurrency) from the CMS/API
+ * @param course.courseInstance - Optional CourseInstance (mode + dates) from the CMS/API
  * @returns Type-safe Schema.org Course as `Thing`
  */
 export function createCourseSchema(course: {
   name: string;
   description: string;
   path: string;
+  offer?: CourseOffer;
+  courseInstance?: CourseInstance;
 }): Thing {
-  return {
+  const schema: Thing = {
     "@type": "Course",
     "@id": `${getCanonicalUrl(course.path)}#course`,
     name: course.name,
     description: course.description,
     provider: { "@id": `${SITE_ORIGIN}#organization` },
     url: getCanonicalUrl(course.path),
-  } as Thing;
+  };
+
+  if (course.offer) {
+    const offer: Record<string, unknown> = {
+      "@type": "Offer",
+      price: String(course.offer.price),
+      priceCurrency: course.offer.priceCurrency,
+    };
+    if (course.offer.category) offer.category = course.offer.category;
+    if (course.offer.url) offer.url = course.offer.url;
+    if (course.offer.availability) offer.availability = course.offer.availability;
+    (schema as unknown as Record<string, unknown>).offers = offer;
+  }
+
+  if (course.courseInstance) {
+    const instance: Record<string, unknown> = {
+      "@type": "CourseInstance",
+      courseMode: course.courseInstance.courseMode,
+    };
+    if (course.courseInstance.startDate) instance.startDate = course.courseInstance.startDate;
+    if (course.courseInstance.endDate) instance.endDate = course.courseInstance.endDate;
+    (schema as unknown as Record<string, unknown>).hasCourseInstance = instance;
+  }
+
+  return schema;
 }
 
 /**

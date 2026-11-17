@@ -16,6 +16,10 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import { Button } from "../ui/button";
 import OptimizedImage from "../common/optmized-image";
+import {
+  normalizeHtmlInternalLinks,
+  normalizeExternalUrl,
+} from "@/routes/route-path";
 
 const PassoutStoriesSlug = () => {
   const { slug } = useParams();
@@ -35,16 +39,6 @@ const PassoutStoriesSlug = () => {
     },
     enabled: !!slug,
   });
-
-  const story = storyData?.data;
-
-  const formatLinkedInUrl = (url) => {
-    if (!url) return "#";
-    if (url.startsWith("http://") || url.startsWith("https://")) {
-      return url;
-    }
-    return `https://${url}`;
-  };
 
   const joinImageUrl = (baseUrl, imageName) => {
     if (!baseUrl || !imageName) return "";
@@ -119,7 +113,7 @@ const PassoutStoriesSlug = () => {
     student_story_banner_image,
   );
 
-  const linkedinUrl = formatLinkedInUrl(student_linkedin_link);
+  const linkedinUrl = normalizeExternalUrl(student_linkedin_link) || "#";
 
   return (
     <div className="min-h-screen bg-white">
@@ -361,7 +355,7 @@ const PassoutStoriesSlug = () => {
                 <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
                   <div
                     className="ck-content text-sm sm:text-base text-[#0F3652] break-words"
-                    dangerouslySetInnerHTML={{ __html: student_story_details }}
+                    dangerouslySetInnerHTML={{ __html: normalizeHtmlInternalLinks(student_story_details) }}
                   />
                 </div>
               </div>
