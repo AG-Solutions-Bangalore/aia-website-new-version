@@ -14,14 +14,6 @@ const NotificationPopup = () => {
 
   /* ---------------- FETCH DATA & SHOW AFTER 2.5 SEC ---------------- */
   useEffect(() => {
-    if (
-      typeof navigator !== "undefined" &&
-      /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(
-        navigator.userAgent,
-      )
-    ) {
-      return;
-    }
     let cancelled = false;
 
     const timer = setTimeout(async () => {

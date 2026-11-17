@@ -13,17 +13,9 @@ const DeferredPopUp = memo(function DeferredPopUp({
 }) {
   const [shouldRender, setShouldRender] = useState(false);
   const isPrerendering = isReactSnapPrerender();
-  const isBotOrAudit =
-    typeof window !== "undefined" &&
-    typeof navigator !== "undefined" &&
-    (Boolean(navigator.webdriver) ||
-      Boolean(window.__lighthouse) ||
-      /Lighthouse|HeadlessChrome|Chrome-Lighthouse|bot|crawl|spider/i.test(
-        navigator.userAgent,
-      ));
 
   useEffect(() => {
-    if (isPrerendering || isBotOrAudit || !slug) return;
+    if (isPrerendering || !slug) return;
     if (sessionStorage.getItem(`popup_hidden_${slug}`) === "true") return;
 
     let timer;
