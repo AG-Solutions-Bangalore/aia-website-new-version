@@ -33,60 +33,80 @@ const HOME_FALLBACK_SLIDES = [
     imageUrl: `${HOME_BANNER_BASE}36.webp`,
     link: null,
     alt: "Become a Certified Information Systems Auditor",
+    width: 1883,
+    height: 858,
   },
   {
     id: 3,
     imageUrl: `${HOME_BANNER_BASE}11.webp`,
     link: "cams",
     alt: "cams-passout",
+    width: 1883,
+    height: 858,
   },
   {
     id: 4,
     imageUrl: `${HOME_BANNER_BASE}10.webp`,
     link: "cams",
     alt: "CAMS Certification",
+    width: 1883,
+    height: 858,
   },
   {
     id: 5,
     imageUrl: `${HOME_BANNER_BASE}3.webp`,
     link: "cfe-curriculum",
     alt: "CFE Banner",
+    width: 1883,
+    height: 858,
   },
   {
     id: 6,
     imageUrl: `${HOME_BANNER_BASE}6.webp`,
     link: "cfe-curriculum",
     alt: "CFE-Passouts",
+    width: 1883,
+    height: 858,
   },
   {
     id: 7,
     imageUrl: `${HOME_BANNER_BASE}5.webp`,
     link: "cia-challenge-curriculum",
     alt: "CIA-challenge-Passouts",
+    width: 1883,
+    height: 858,
   },
   {
     id: 8,
     imageUrl: `${HOME_BANNER_BASE}9.webp`,
     link: "cia-challenge-curriculum",
     alt: "CIA Challenge Curriculum",
+    width: 1883,
+    height: 858,
   },
   {
     id: 9,
     imageUrl: `${HOME_BANNER_BASE}4.webp`,
     link: "our-passouts",
     alt: "CIA-Passouts",
+    width: 1883,
+    height: 858,
   },
   {
     id: 10,
     imageUrl: `${HOME_BANNER_BASE}8.webp`,
     link: "cia-curriculum",
     alt: "CIA Curriculum",
+    width: 1883,
+    height: 858,
   },
   {
     id: 11,
     imageUrl: `${HOME_BANNER_BASE}7.webp`,
     link: "cfe-curriculum",
     alt: "CFE-Passout",
+    width: 1883,
+    height: 858,
   },
 ];
 
@@ -550,6 +570,7 @@ export default function HomeHero({ slug, bottombar = false }) {
                     decoding="async"
                     width={activeSlide.width || 1600}
                     height={activeSlide.height || 727}
+                    sizes={currentSlide === 0 ? undefined : "100vw"}
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.currentTarget.onerror = null;
