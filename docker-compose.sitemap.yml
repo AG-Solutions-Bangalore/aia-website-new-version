@@ -1,7 +1,0 @@
-services:
-  sitemap-test:
-    build:
-      context: .
-      dockerfile: Dockerfile.sitemap
-    ports:
-      - "8000:8000"
