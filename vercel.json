@@ -69,51 +69,6 @@
       "permanent": true
     },
     {
-      "source": "/about-aia/cia-curriculum",
-      "destination": "/cia-curriculum",
-      "permanent": true
-    },
-    {
-      "source": "/about-aia/cams",
-      "destination": "/cams",
-      "permanent": true
-    },
-    {
-      "source": "/about-aia/cfe-curriculum",
-      "destination": "/cfe-curriculum",
-      "permanent": true
-    },
-    {
-      "source": "/about-aia/cia-challenge-curriculum",
-      "destination": "/cia-challenge-curriculum",
-      "permanent": true
-    },
-    {
-      "source": "/about-aia/cisa",
-      "destination": "/cisa",
-      "permanent": true
-    },
-    {
-      "source": "/corporate-training/cia-curriculum",
-      "destination": "/cia-curriculum",
-      "permanent": true
-    },
-    {
-      "source": "/corporate-training/cams",
-      "destination": "/cams",
-      "permanent": true
-    },
-    {
-      "source": "/corporate-training/cfe-curriculum",
-      "destination": "/cfe-curriculum",
-      "permanent": true
-    },
-    {
-      "source": "/corporate-training/cisa",
-      "destination": "/cisa",
-      "permanent": true
-    },
-    {
       "source": "/what-is-money-laundering(/)?",
       "destination": "/blogs/what-is-money-laundering",
       "permanent": true
