@@ -173,7 +173,11 @@ for (const file of htmlFiles) {
       console.error(`❌ [${relPath}] FAIL: Missing @context or @graph!`);
       hasError = true;
     } else {
-      const types = json['@graph'].map((item: { '@type': string }) => item['@type']).join(', ');
+      const types = json['@graph']
+        .map((item: { '@type': string | string[] }) =>
+          Array.isArray(item['@type']) ? item['@type'].join('/') : item['@type'],
+        )
+        .join(', ');
       
       // ========================================================================
       // GOOGLE RICH RESULTS DATETIME & TIMEZONE QUALITY GATE:

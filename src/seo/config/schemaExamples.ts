@@ -28,7 +28,7 @@
  */
 
 import type { DynamicTestimonial } from "./dynamicData";
-import type { BlogPosting, Graph, Review, Thing } from "schema-dts";
+import type { Article, BlogPosting, Graph, Review, Thing } from "schema-dts";
 import {
   SITE_LOGO,
   SITE_NAME,
@@ -458,24 +458,65 @@ export function formatIsoDateWithTimezone(dateStr?: string): string {
  * @param blog - Dynamic blog detail object (from API or build-time pre-fetch cache)
  * @returns Type-safe Schema.org BlogPosting as `Thing`
  */
-export function createBlogPostingSchema(blog: {
-  blog_slug: string;
-  blog_heading: string;
-  blog_short_description?: string;
-  blog_meta_description?: string;
-  blog_created?: string;
-  blog_updated?: string;
-  blog_images?: string;
-  blog_course?: string;
-}): Thing {
+/**
+ * Configuration options for Schema.org Article / BlogPosting entity creation.
+ */
+export interface BlogSchemaOptions {
+  /**
+   * Target Schema.org type(s).
+   * Default: `["Article", "BlogPosting"]` (dual-type for full Google & tool compatibility).
+   */
+  schemaType?: "Article" | "BlogPosting" | ["Article", "BlogPosting"];
+  /**
+   * Specific author name if written by an individual expert (e.g. "Puneet Garg").
+   * Falls back to site organization if omitted.
+   */
+  authorName?: string;
+}
+
+/**
+ * Creates an Article / BlogPosting Schema.org entity linked to the Organization publisher.
+ * Valid for Google Article rich results, Google Discover, and Blog rich results.
+ *
+ * ============================================================================
+ * GOOGLE RICH RESULTS REQUIREMENTS FOR ARTICLE & BLOGPOSTING:
+ * ============================================================================
+ * 1. `headline`: Must accurately reflect article title (max 110 characters recommended).
+ * 2. `image`: Absolute URL to high-resolution article cover image (min 1200px width recommended).
+ * 3. `datePublished` & `dateModified`: Strict ISO-8601 formatted timestamps with timezone
+ *    (e.g., "2026-06-23T00:00:00+05:30"). Managed via `formatIsoDateWithTimezone()`.
+ * 4. `author` & `publisher`: Linked via `@id` to the site Organization entity (`#organization`)
+ *    or typed as Person if author name is provided.
+ * 5. `mainEntityOfPage`: Points to the canonical URL of the blog post (`#webpage`).
+ * 6. Dual-typing `["Article", "BlogPosting"]` satisfies both general article and blog post analyzers.
+ *
+ * @param blog - Dynamic blog detail object (from API or build-time pre-fetch cache)
+ * @param options - Optional overrides for schema type or author
+ * @returns Type-safe Schema.org Article / BlogPosting as `Thing`
+ */
+export function createArticleSchema(
+  blog: {
+    blog_slug: string;
+    blog_heading: string;
+    blog_short_description?: string;
+    blog_meta_description?: string;
+    blog_created?: string;
+    blog_updated?: string;
+    blog_images?: string;
+    blog_course?: string;
+  },
+  options: BlogSchemaOptions = {}
+): Thing {
   const canonicalUrl = getCanonicalUrl(`/blogs/${blog.blog_slug}`);
   const imageUrl = blog.blog_images
     ? `https://aia.in.net/webapi/public/assets/images/blog_images/${blog.blog_images}`
     : SITE_LOGO;
 
-  const schema: BlogPosting = {
-    "@type": "BlogPosting",
-    "@id": `${canonicalUrl}#blogposting`,
+  const schemaType = options.schemaType || ["Article", "BlogPosting"];
+
+  const schema = {
+    "@type": schemaType,
+    "@id": `${canonicalUrl}#article`,
     headline: blog.blog_heading,
     description:
       blog.blog_meta_description ||
@@ -486,12 +527,17 @@ export function createBlogPostingSchema(blog: {
     dateModified: formatIsoDateWithTimezone(
       blog.blog_updated || blog.blog_created,
     ),
-        mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
-    author: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_ORIGIN,
-    },
+    mainEntityOfPage: { "@id": `${canonicalUrl}#webpage` },
+    author: options.authorName
+      ? {
+          "@type": "Person",
+          name: options.authorName,
+        }
+      : {
+          "@type": "Organization",
+          name: SITE_NAME,
+          url: SITE_ORIGIN,
+        },
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
@@ -506,6 +552,23 @@ export function createBlogPostingSchema(blog: {
   };
 
   return schema as Thing;
+}
+
+/**
+ * Creates a BlogPosting Schema.org entity.
+ * Provided for backward compatibility; delegates directly to `createArticleSchema`.
+ */
+export function createBlogPostingSchema(blog: {
+  blog_slug: string;
+  blog_heading: string;
+  blog_short_description?: string;
+  blog_meta_description?: string;
+  blog_created?: string;
+  blog_updated?: string;
+  blog_images?: string;
+  blog_course?: string;
+}): Thing {
+  return createArticleSchema(blog, { schemaType: ["Article", "BlogPosting"] });
 }
 
 /**

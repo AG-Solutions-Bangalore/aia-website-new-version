@@ -21,7 +21,9 @@ export {
   createWebPageSchema,
   createBreadcrumbSchema,
   formatIsoDateWithTimezone,
+  createArticleSchema,
   createBlogPostingSchema,
+  type BlogSchemaOptions,
   createFaqSchema,
   createStudentReviewSchema,
 } from './schema';
