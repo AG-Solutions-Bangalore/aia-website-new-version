@@ -365,7 +365,7 @@ const HomeCorporatePartner = () => {
               </p>
               {location.pathname !== "/corporate-training" && (
                 <Button
-                  className="mb-4 relative cursor-pointer overflow-hidden group px-4 py-2 text-xs text-white rounded-none bg-[#B45309] hover:bg-[#92400E] active:bg-[#78350F] transition-colors duration-300"
+                  className="mb-4 relative cursor-pointer overflow-hidden group px-4 py-2 text-xs text-white rounded-none bg-[#F76B25] hover:bg-[#92400E] active:bg-[#78350F] transition-colors duration-300"
                   variant="ghost"
                   aria-label="Explore Siga"
                 >

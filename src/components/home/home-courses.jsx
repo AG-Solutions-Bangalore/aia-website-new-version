@@ -254,14 +254,14 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
               {(service.id === 1 || service.link?.includes("cfe-curriculum")) && (
                 <CfeRoadmapDialog
                   buttonlabel="Grab the free CFE Roadmap"
-                  buttonClassName="h-10 px-4 text-sm font-medium bg-[#B45309] text-white hover:bg-[#92400E] active:bg-[#78350F] transition-colors rounded-md w-full justify-center cursor-pointer"
+                  buttonClassName="h-10 px-4 text-sm font-medium bg-[#F76B25] text-white hover:bg-[#92400E] active:bg-[#78350F] transition-colors rounded-md w-full justify-center cursor-pointer"
                 />
               )}
 
               {(service.id === 4 || service.link === "/cams") && (
                 <CamsRoadmapDialog
                   buttonlabel="Grab the free CAMS Roadmap"
-                  buttonClassName="h-10 px-4 text-sm font-medium bg-[#B45309] text-white hover:bg-[#92400E] active:bg-[#78350F] transition-colors rounded-md w-full justify-center cursor-pointer"
+                  buttonClassName="h-10 px-4 text-sm font-medium bg-[#F76B25] text-white hover:bg-[#92400E] active:bg-[#78350F] transition-colors rounded-md w-full justify-center cursor-pointer"
                 />
               )}
             </div>
@@ -323,7 +323,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                       ALL_SERVICES[activeCard]?.link?.includes("cfe-curriculum")) && (
                       <CfeRoadmapDialog
                         buttonlabel="Grab the free CFE Roadmap"
-                        buttonClassName="h-10 px-4 text-sm font-medium bg-[#B45309] text-white hover:bg-[#92400E] active:bg-[#78350F] transition-colors rounded-none cursor-pointer inline-flex items-center"
+                        buttonClassName="h-10 px-4 text-sm font-medium bg-[#F76B25] text-white hover:bg-[#92400E] active:bg-[#78350F] transition-colors rounded-none cursor-pointer inline-flex items-center"
                       />
                     )}
 
@@ -331,7 +331,7 @@ const HomeCourses = ({ certificationCourses = defaultCertificationCourses }) => 
                       ALL_SERVICES[activeCard]?.link === "/cams") && (
                       <CamsRoadmapDialog
                         buttonlabel="Grab the free CAMS Roadmap"
-                        buttonClassName="h-10 px-4 text-sm font-medium bg-[#B45309] text-white hover:bg-[#92400E] active:bg-[#78350F] transition-colors rounded-none cursor-pointer inline-flex items-center"
+                        buttonClassName="h-10 px-4 text-sm font-medium bg-[#F76B25] text-white hover:bg-[#92400E] active:bg-[#78350F] transition-colors rounded-none cursor-pointer inline-flex items-center"
                       />
                     )}
                   </div>

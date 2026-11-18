@@ -43,7 +43,7 @@ const TextCaptcha = ({ onVerify, onRefresh, showVerifyButton = false, autoVerify
     }
     
     ctx.font = 'bold 20px Arial';
-    ctx.fillStyle = '#b45309';
+    ctx.fillStyle = '#F76B25';
     
     for (let i = 0; i < text.length; i++) {
       const x = 12 + i * 20;

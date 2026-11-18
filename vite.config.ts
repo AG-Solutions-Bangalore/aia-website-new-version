@@ -208,7 +208,7 @@ function deferEntryPlugin(): Plugin {
         if (!match) return html;
 
         const entry = JSON.stringify(match[1]);
-        const loader = `<script>(function(){var loaded=false;function load(){if(loaded)return;loaded=true;var s=document.createElement("script");s.type="module";s.src=${entry};document.body.appendChild(s);}["pointerdown","touchstart","keydown","scroll","mouseover"].forEach(function(e){window.addEventListener(e,load,{once:true,passive:true});});var start=function(){if("requestIdleCallback" in window){window.requestIdleCallback(load,{timeout:2000});}else{setTimeout(load,1200);}};if(document.readyState==="complete"){start();}else{window.addEventListener("load",start,{once:true});}})();</script>`;
+        const loader = `<script>(function(){var loaded=false;function load(){if(loaded)return;loaded=true;var s=document.createElement("script");s.type="module";s.src=${entry};document.body.appendChild(s);}["pointerdown","touchstart","keydown","scroll","mouseover"].forEach(function(e){window.addEventListener(e,load,{once:true,passive:true});});var start=function(){if("requestIdleCallback" in window){window.requestIdleCallback(load,{timeout:4500});}else{setTimeout(load,3000);}};if(document.readyState==="complete"){start();}else{window.addEventListener("load",start,{once:true});}})();</script>`;
 
         return html
           .replace(match[0], loader)

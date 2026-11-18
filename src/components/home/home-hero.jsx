@@ -644,7 +644,6 @@ export default function HomeHero({ slug, bottombar = false }) {
                   className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
                   text-[10.5px] font-bold uppercase tracking-widest
                                     min-h-11 text-white bg-[#F3831C] hover:bg-[#D16E27] active:bg-[#AE5B1D]
-
                   transition-colors duration-150 whitespace-nowrap self-start"
                 >
                   Know More.
