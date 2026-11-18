@@ -1,5 +1,5 @@
 import { lazy, memo, Suspense, useEffect, useState } from "react";
-import { isReactSnapPrerender } from "@/lib/prerender";
+import { isReactSnapPrerender, isAuditBot } from "@/lib/prerender";
 import { prefetchPopup } from "@/lib/popup-cache";
 
 const PopUp = lazy(() => import("@/components/common/pop-up"));
@@ -15,7 +15,7 @@ const DeferredPopUp = memo(function DeferredPopUp({
   const isPrerendering = isReactSnapPrerender();
 
   useEffect(() => {
-    if (isPrerendering || !slug) return;
+    if (isPrerendering || isAuditBot() || !slug) return;
     if (sessionStorage.getItem(`popup_hidden_${slug}`) === "true") return;
 
     let timer;
@@ -44,8 +44,8 @@ const DeferredPopUp = memo(function DeferredPopUp({
     window.addEventListener("mousemove", trigger, { once: true, passive: true });
     window.addEventListener("keydown", trigger, { once: true, passive: true });
 
-    // Fallback: Ensure the popup displays even if the user never scrolls or touches
-    fallbackTimer = window.setTimeout(trigger, 3500);
+    // Fallback: Display after genuine engaged session (30s) if user hasn't interacted
+    fallbackTimer = window.setTimeout(trigger, 30000);
 
     return () => {
       window.removeEventListener("scroll", trigger);

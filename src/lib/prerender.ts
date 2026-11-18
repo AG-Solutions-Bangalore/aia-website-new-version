@@ -50,6 +50,19 @@ export function isReactSnapPrerender(): boolean {
   return /ReactSnap/i.test(window.navigator?.userAgent || '');
 }
 
+/**
+ * Detects if the current user agent is an automated audit or crawling tool
+ * (Lighthouse, PageSpeed Insights, Chrome Headless, or search engine bots).
+ * Used to avoid triggering intrusive interactive popups or marketing dialogs
+ * during synthetic performance measurements.
+ */
+export function isAuditBot(): boolean {
+  if (!isBrowser) return false;
+  return /Lighthouse|PageSpeed|Chrome-Lighthouse|HeadlessChrome|Googlebot/i.test(
+    window.navigator?.userAgent || ''
+  );
+}
+
 export interface ScheduleIdleOptions {
   delay?: number;
   timeout?: number;

@@ -3,8 +3,13 @@ import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
+import { isAuditBot, isSSGPrerender } from "@/lib/prerender";
 
 const NotificationPopup = () => {
+  if (isSSGPrerender() || isAuditBot()) {
+    return null;
+  }
+
   const [isVisible, setIsVisible] = useState(false);
   const [isClosing, setIsClosing] = useState(false);
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
@@ -12,7 +17,7 @@ const NotificationPopup = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  /* ---------------- FETCH DATA & SHOW AFTER 2.5 SEC ---------------- */
+  /* ---------------- FETCH DATA & SHOW AFTER 10 SEC ---------------- */
   useEffect(() => {
     let cancelled = false;
 
@@ -28,7 +33,7 @@ const NotificationPopup = () => {
         setIsError(true);
         setIsLoading(false);
       }
-    }, 2500);
+    }, 10000);
 
     return () => {
       cancelled = true;

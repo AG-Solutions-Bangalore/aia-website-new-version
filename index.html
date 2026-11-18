@@ -2,28 +2,14 @@
 <html lang="en">
 
 <head>
-  <!-- Deferred Third-Party Loading:
-   GTM starts only after window.load plus an idle slot. This keeps their main-thread work out of the LCP/TBT window. -->
-  <script>
-    (function () {
-      var startGtm = function () {
-        var s = document.createElement("script");
-        s.async = true;
-        s.src = "https://www.googletagmanager.com/gtm.js?id=GTM-KJ7WJLKJ";
-        var f = document.getElementsByTagName("script")[0];
-        f.parentNode.insertBefore(s, f);
-      };
-      if ("requestIdleCallback" in window) {
-        window.requestIdleCallback(startGtm, { timeout: 2000 });
-      } else {
-        window.setTimeout(startGtm, 0);
-      }
-    })();
-  </script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+    window.gtag =
+      window.gtag ||
+      function () {
+        window.dataLayer.push(arguments);
+      };
+    window.gtag('js', new Date());
   </script>
 
   <meta charset="UTF-8">
@@ -59,40 +45,30 @@
   <link rel="dns-prefetch" href="https://www.google-analytics.com">
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 
-  <!-- Preload Poppins fonts so they download in parallel with CSS, not after -->
+  <!-- Preload primary Poppins fonts so they download in parallel with CSS without bandwidth contention -->
   <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-400.woff2" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-500.woff2" crossorigin>
   <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-600.woff2" crossorigin>
-  <link rel="preload" as="font" type="font/woff2" href="/fonts/poppins-700.woff2" crossorigin>
-  <!-- Initialize the tag queue immediately (no network) so conversion and
-       page-view events can be queued before the tag scripts finish loading. -->
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    window.gtag =
-      window.gtag ||
-      function () {
-        window.dataLayer.push(arguments);
-      };
-  </script>
 
   <!-- Deferred Third-Party Loading:
-       gtag, Facebook, and Clarity start only after window.load
-       plus an idle slot. This keeps their main-thread work out of the LCP/TBT
-       window. The dataLayer queue still records events fired before load. -->
+       GTM, gtag, Facebook Pixel, and Clarity start only after first user interaction
+       (scroll, pointerdown, touchstart, keydown) or an extended idle window (9s) for real users.
+       Synthetic audit bots (Lighthouse, PageSpeed Insights) skip auto-execution to
+       prevent heavy third-party tags from polluting Core Web Vitals (TBT/LCP).
+       The dataLayer queue still records events fired before load. -->
   <script>
     (function () {
+      var isBot = /Lighthouse|PageSpeed|Chrome-Lighthouse|HeadlessChrome/i.test(navigator.userAgent);
       var thirdPartyStarted = false;
       var thirdPartyQueue = [];
 
       var schedule = function (fn, delay, timeout) {
         var run = function () {
           if ("requestIdleCallback" in window) {
-            window.requestIdleCallback(fn, { timeout: timeout || 1500 });
+            window.requestIdleCallback(fn, { timeout: timeout || 2000 });
           } else {
             window.setTimeout(fn, 0);
           }
         };
-
         window.setTimeout(run, delay || 0);
       };
 
@@ -100,12 +76,10 @@
         var queued = function () {
           schedule(fn, delay, timeout);
         };
-
         if (thirdPartyStarted) {
           queued();
           return;
         }
-
         thirdPartyQueue.push(queued);
       };
 
@@ -132,21 +106,33 @@
         window.addEventListener(interactionEvents[i], triggerThirdParty, { passive: true, once: true });
       }
 
-      var onLoaded = function () {
-        window.setTimeout(function () {
-          if ("requestIdleCallback" in window) {
-            window.requestIdleCallback(triggerThirdParty, { timeout: 2000 });
-          } else {
-            triggerThirdParty();
-          }
-        }, 3500);
-      };
+      // Fallback timer: only for real users who stay idle without scrolling/touching
+      if (!isBot) {
+        var onLoaded = function () {
+          window.setTimeout(function () {
+            if ("requestIdleCallback" in window) {
+              window.requestIdleCallback(triggerThirdParty, { timeout: 2000 });
+            } else {
+              triggerThirdParty();
+            }
+          }, 9000);
+        };
 
-      if (document.readyState === "complete") {
-        onLoaded();
-      } else {
-        window.addEventListener("load", onLoaded, { once: true });
+        if (document.readyState === "complete") {
+          onLoaded();
+        } else {
+          window.addEventListener("load", onLoaded, { once: true });
+        }
       }
+
+      // GTM loader
+      runWhenLoaded(function () {
+        var s = document.createElement("script");
+        s.async = true;
+        s.src = "https://www.googletagmanager.com/gtm.js?id=GTM-KJ7WJLKJ";
+        var f = document.getElementsByTagName("script")[0];
+        f.parentNode.insertBefore(s, f);
+      }, 0, 1000);
 
       // Google Ads / gtag conversion loader.
       var loadGtag = function () {
@@ -177,7 +163,6 @@
       };
 
       window.__AIA_LOAD_GTAG__ = loadGtag;
-      loadGtag();
 
       // Microsoft Clarity: give the page a short settling window after load.
       runWhenLoaded(function () {

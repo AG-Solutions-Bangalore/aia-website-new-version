@@ -49,32 +49,40 @@ export default function App({ queryClient }: { queryClient?: QueryClient } = {})
   const location = useLocation();
   const isThankYouPage =
     location.pathname.replace(/\/+$/, '') === '/thank-you';
-  const [loadEarlyWidgets, setLoadEarlyWidgets] = useState<boolean>(false);
   const [loadDeferredWidgets, setLoadDeferredWidgets] = useState<boolean>(false);
 
   useEffect(() => {
-    const load = () => setLoadEarlyWidgets(true);
-    return scheduleIdle(load, { delay: 0, timeout: 500 });
-  }, []);
+    let triggered = false;
+    const trigger = () => {
+      if (triggered) return;
+      triggered = true;
+      setLoadDeferredWidgets(true);
+    };
 
-  useEffect(() => {
-    const load = () => setLoadDeferredWidgets(true);
-    return scheduleIdle(load, { delay: 12000, timeout: 2000 });
+    const events = ['scroll', 'pointerdown', 'touchstart', 'keydown'];
+    const onInteract = () => {
+      events.forEach((e) => window.removeEventListener(e, onInteract));
+      trigger();
+    };
+    events.forEach((e) => window.addEventListener(e, onInteract, { passive: true, once: true }));
+
+    const cancelIdle = scheduleIdle(trigger, { delay: 8000, timeout: 2000 });
+
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, onInteract));
+      cancelIdle();
+    };
   }, []);
 
   return (
     <div className="font-sans text-gray-800 min-h-screen flex flex-col relative">
       <ScrollToTop />
-      {loadEarlyWidgets && (
+      {loadDeferredWidgets && (
         <Suspense fallback={null}>
           <GoogleAnalytics />
           {!isThankYouPage && !location.pathname.startsWith('/blogs/') && (
             <NotificationPopup />
           )}
-        </Suspense>
-      )}
-      {loadDeferredWidgets && (
-        <Suspense fallback={null}>
           {!isThankYouPage && <FloatingContact />}
           <LazyToaster position="top-right" richColors />
         </Suspense>
