@@ -180,7 +180,7 @@ const HomeContact = () => {
             {/* ── Left column ── */}
             <div className="space-y-4">
               <div>
-                <p className="text-xs md:text-sm font-semibold text-[#B45309] uppercase tracking-wider block">
+                <p className="text-xs md:text-sm font-semibold text-[#F76B25] uppercase tracking-wider block">
                   Add Global Certifications for a Brighter Career Path
                 </p>
                 <div className="text-[#0F3652] text-xl md:text-3xl mt-2 font-medium">
@@ -403,7 +403,7 @@ const HomeContact = () => {
 
                   <div>
                     <Button
-                      className="px-4 py-2 text-xs bg-[#B45309] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300 cursor-pointer w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="px-4 py-2 text-xs bg-[#F76B25] text-white rounded-none hover:bg-[#0F3652] transition-colors duration-300 cursor-pointer w-full sm:w-auto disabled:opacity-50 disabled:cursor-not-allowed"
                       type="submit"
                       variant="ghost"
                       disabled={!captchaVerified || isSubmitting}

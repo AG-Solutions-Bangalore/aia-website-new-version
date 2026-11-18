@@ -168,10 +168,10 @@ export default function PdfJoinDialog({
     }
   };
 
-  const inputStyle = "focus:border-[#B45309]";
+  const inputStyle = "focus:border-[#F76B25]";
   const triggerButtonClassName =
     buttonClassName ||
-    "bg-[#B45309] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#92400E] transition-all cursor-pointer";
+    "bg-[#F76B25] rounded-3xl text-white px-10 py-2.5 font-semibold hover:bg-[#92400E] transition-all cursor-pointer";
   const showPhoneBeforeEmail = fieldOrder === "phoneFirst";
 
   const nameField = (
