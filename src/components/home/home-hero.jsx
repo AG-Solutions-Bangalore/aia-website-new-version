@@ -642,8 +642,8 @@ export default function HomeHero({ slug, bottombar = false }) {
                   aria-label={`Know more about: ${current.title}`}
                   title={getLinkTitle(currentHref || (slug === "about-aia" ? "" : "#"), { page: slug, defaultTitle: `Know more about: ${current.title}` })}
                   className="shrink-0 inline-flex items-center gap-1 px-3.5 py-1.5
-                  text-[10.5px] font-black uppercase tracking-widest
-                                    min-h-11 text-[#0F3652] bg-[#F3831C] hover:bg-[#F3831C]/90
+                  text-[10.5px] font-bold uppercase tracking-widest
+                                    min-h-11 text-white bg-[#F3831C] hover:bg-[#D16E27] active:bg-[#AE5B1D]
                   transition-colors duration-150 whitespace-nowrap self-start"
                 >
                   Know More.

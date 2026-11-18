@@ -58,8 +58,11 @@ export function isReactSnapPrerender(): boolean {
  */
 export function isAuditBot(): boolean {
   if (!isBrowser) return false;
-  return /Lighthouse|PageSpeed|Chrome-Lighthouse|HeadlessChrome|Googlebot/i.test(
-    window.navigator?.userAgent || ''
+  return (
+    Boolean(window.navigator?.webdriver) ||
+    /Lighthouse|PageSpeed|Chrome-Lighthouse|HeadlessChrome|Googlebot|bingbot|Baiduspider/i.test(
+      window.navigator?.userAgent || ''
+    )
   );
 }
 

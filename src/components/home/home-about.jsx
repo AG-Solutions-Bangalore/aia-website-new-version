@@ -25,12 +25,12 @@ Guided by industry experts with hands-on experience, our practical training ensu
                 course="AIA Profile"
                 buttonlabel="Download AIA Profile"
                 triggerClassName="w-auto"
-                buttonClassName="text-xs sm:text-sm font-bold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#F3831C] text-[#0F3652] rounded-none hover:bg-[#F3831C]/90 transition-colors duration-300"
+                buttonClassName="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2.5 bg-[#F3831C] text-white rounded-none hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors duration-300"
               />
             </Suspense>
             <Link
               to="/about-aia/" title="About AIA"
-              className="text-xs sm:text-sm font-bold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2 bg-[#F3831C] text-[#0F3652] rounded-none hover:bg-[#F3831C]/90 transition-colors duration-300"
+              className="text-xs sm:text-sm font-semibold cursor-pointer px-4 py-2.5 sm:px-5 sm:py-2 bg-[#F3831C] text-white rounded-none hover:bg-[#D16E27] active:bg-[#AE5B1D] transition-colors duration-300"
             >
               Know More
             </Link>

@@ -361,9 +361,9 @@ const Navbar = () => {
                   title="Enroll Now – AIA Certification Courses"
                   className="
     group relative overflow-hidden
-    bg-[#F3831C] text-[#0F3652]
+    bg-[#F3831C] text-[#f7f7f7]
     px-6 py-2.5 rounded-none
-    font-bold
+    font-semibold
     hover:bg-[#F3831C]/90
     transition-all
     block
@@ -499,7 +499,7 @@ const Navbar = () => {
                   <Link
                     to={ENROLL_URL}
                     title="Enroll Now – AIA Certification Courses"
-                    className="group relative overflow-hidden block w-full bg-[#F3831C] text-[#0F3652] text-center px-6 py-3 rounded-md font-bold hover:opacity-90 transition-all"
+                    className="group relative overflow-hidden block w-full bg-[#F3831C] text-[#fefefe] text-center px-6 py-3 rounded-md font-semibold hover:opacity-90 transition-all"
                   >
                     <span className="relative block overflow-hidden">
                       <span className="block transition-transform duration-300 group-hover:-translate-y-full">
