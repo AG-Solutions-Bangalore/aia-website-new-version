@@ -1,6 +1,5 @@
-import React, { lazy } from "react";
+import React, { lazy, Suspense } from "react";
 
-import DeferredPopUp from "@/components/common/deferred-popup";
 import LazySection from "@/components/common/lazy-section";
 import { ssrLazy } from "@/lib/ssrLazy";
 import HomeHero from "@/components/home/home-hero";
@@ -58,13 +57,21 @@ const CamsConnection = lazy(
 const HomeAlumniWork = lazy(
   () => import("@/components/home/home-alumini-work"),
 );
+const CourseEnquiryForm = lazy(
+  () => import("@/components/courses/common/course-enquiry-form"),
+);
+const CourseEnquiryPopup = lazy(
+  () => import("@/components/common/course-enquiry-popup"),
+);
 const CiaFaq = lazy(() => import("@/components/courses/cia-challenge/cia-faq"));
 
 const CIAChallenge = () => {
   return (
     <div>
       {/* Initial load */}
-      <DeferredPopUp slug="CIA-Challenge-Curriculum" />
+      <Suspense fallback={null}>
+        <CourseEnquiryPopup course="CIA Challenge" />
+      </Suspense>
       <HomeHero slug="cia-challenge-curriculum" />
       <BannerLogos />
       <CiaAbout />
@@ -179,6 +186,10 @@ const CIAChallenge = () => {
 
       <LazySection minHeight={300}>
         <HomeAlumniWork />
+      </LazySection>
+
+      <LazySection minHeight={450}>
+        <CourseEnquiryForm course="CIA Challenge" />
       </LazySection>
 
       <LazySection minHeight={350}>

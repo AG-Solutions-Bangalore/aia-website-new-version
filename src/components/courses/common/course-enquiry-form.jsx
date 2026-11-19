@@ -12,45 +12,35 @@ const COURSE_CONFIGS = {
     title: "Your CIA Journey Starts Here!",
     description:
       "Get expert guidance to become a Certified Internal Auditor. Connect with AIA to explore CIA course details, exam preparation, study materials and certification guidance.",
-    subheading: "Have Questions About CIA Certification?",
-    subtext:
-      "Fill out the enquiry form and our course advisor will help you understand the program and guide you through your CIA certification journey.",
+    consultationText: "Submit the form to book your free consultation with us!",
   },
   CFE: {
     courseCode: "CFE",
     title: "Your CFE Journey Starts Here!",
     description:
       "Get expert guidance to become a Certified Fraud Examiner. Connect with AIA to explore CFE course details, exam preparation, study materials and certification guidance.",
-    subheading: "Have Questions About CFE Certification?",
-    subtext:
-      "Fill out the enquiry form and our course advisor will help you understand the program and guide you through your CFE certification journey.",
+    consultationText: "Submit the form to book your free consultation with us!",
   },
   "CIA Challenge": {
     courseCode: "CIA Challenge",
     title: "Your CIA Challenge Journey Starts Here!",
     description:
       "Get expert guidance to become a Certified Internal Auditor. Connect with AIA to explore CIA Challenge course details, exam preparation, study materials and certification guidance.",
-    subheading: "Have Questions About CIA Certification?",
-    subtext:
-      "Fill out the enquiry form and our course advisor will help you understand the program and guide you through your CIA certification journey.",
+    consultationText: "Submit the form to book your free consultation with us!",
   },
   CISA: {
     courseCode: "CISA",
     title: "Your CISA Journey Starts Here!",
     description:
       "Get expert guidance to become a Certified Information Systems Auditor. Connect with AIA to explore CISA course details, exam preparation, study materials and certification guidance.",
-    subheading: "Have Questions About CISA Certification?",
-    subtext:
-      "Fill out the enquiry form and our course advisor will help you understand the program and guide you through your CISA certification journey.",
+    consultationText: "Submit the form to book your free consultation with us!",
   },
   CAMS: {
     courseCode: "CAMS",
     title: "Your CAMS Journey Starts Here!",
     description:
       "Get expert guidance to become a Certified Anti Money Laundering Specialist. Connect with AIA to explore CAMS course details, exam preparation, study materials and certification guidance.",
-    subheading: "Have Questions About CAMS Certification?",
-    subtext:
-      "Fill out the enquiry form and our course advisor will help you understand the program and guide you through your CAMS certification journey.",
+    consultationText: "Submit the form to book your free consultation with us!",
   },
 };
 
@@ -82,8 +72,7 @@ export default function CourseEnquiryForm({
   course = "CIA",
   title,
   description,
-  subheading,
-  subtext,
+  consultationText,
   className = "",
 }) {
   const navigate = useNavigate();
@@ -91,8 +80,10 @@ export default function CourseEnquiryForm({
   const activeConfig = getCourseConfig(course);
   const displayTitle = title || activeConfig.title;
   const displayDesc = description || activeConfig.description;
-  const displaySubheading = subheading || activeConfig.subheading;
-  const displaySubtext = subtext || activeConfig.subtext;
+  const displayConsultation =
+    consultationText ||
+    activeConfig.consultationText ||
+    "Submit the form to book your free consultation with us!";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -277,12 +268,8 @@ export default function CourseEnquiryForm({
                 {displayDesc}
               </p>
 
-              <h3 className="text-white font-semibold text-base sm:text-lg mb-2">
-                {displaySubheading}
-              </h3>
-
-              <p className="text-gray-300 text-sm sm:text-[15px] leading-relaxed font-normal">
-                {displaySubtext}
+              <p className="text-white font-bold text-base sm:text-lg leading-snug">
+                {displayConsultation}
               </p>
             </div>
 
