@@ -79,7 +79,17 @@ export default function SEOPageLayout({
       if (canonicals[index].parentElement) canonicals[index].remove();
     }
 
-    syncMeta('robots', seo.robots || (seo.noIndex ? 'noindex, nofollow' : 'index, follow'));
+    const isSearchQuery =
+      typeof window !== 'undefined' &&
+      (/(?:[?&])s=/i.test(window.location.search) ||
+        /search_term_string/i.test(window.location.search) ||
+        /search_term_string/i.test(window.location.pathname));
+
+    const robotsContent = isSearchQuery
+      ? 'noindex, nofollow'
+      : seo.robots || (seo.noIndex ? 'noindex, nofollow' : 'index, follow');
+
+    syncMeta('robots', robotsContent);
     syncMeta('description', seo.description || '');
     syncMeta('keywords', seo.keywords || '');
     const authorContent = seo.author || DEFAULT_AUTHOR;

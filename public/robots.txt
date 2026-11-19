@@ -1,12 +1,19 @@
 User-agent: *
 Allow: /
 
-# Private Endpoints
+# Private & API Endpoints
+Disallow: /webapi/
 Disallow: /admin
 Disallow: /dashboard
 Disallow: /login
 Disallow: /auth
 Disallow: /api
+
+# Internal Search Queries & Search Term Strings
+Disallow: /*?s=*
+Disallow: /*?*s=*
+Disallow: /*%7Bsearch_term_string%7D*
+Disallow: /*{search_term_string}*
 
 # Sitemap Reference
 Sitemap: https://aia.in.net/sitemap.xml

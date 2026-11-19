@@ -95,21 +95,13 @@ export const localBusinessSchema: Thing = {
   parentOrganization: { "@id": `${SITE_ORIGIN}#organization` },
 } as Thing;
 
-/** WebSite entity with SearchAction declaration */
+/** WebSite entity declaration */
 export const websiteSchema: Thing = {
   "@type": "WebSite",
   "@id": `${SITE_ORIGIN}#website`,
   url: SITE_ORIGIN,
   name: SITE_NAME,
   publisher: { "@id": `${SITE_ORIGIN}#organization` },
-  potentialAction: {
-    "@type": "SearchAction",
-    target: {
-      "@type": "EntryPoint",
-      urlTemplate: `${SITE_ORIGIN}/blogs?s={search_term_string}`,
-    },
-    "query-input": "required name=search_term_string",
-  },
 } as Thing;
 
 /**
