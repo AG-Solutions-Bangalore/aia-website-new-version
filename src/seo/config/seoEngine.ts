@@ -37,6 +37,7 @@ import {
   getDynamicTestimonialsByRoute,
 } from "./dynamicData";
 import {
+  createArticleSchema,
   createBlogPostingSchema,
   createBreadcrumbSchema,
   createCourseSchema,
@@ -557,7 +558,7 @@ export function buildDynamicBlogSeo(
       ],
       canonicalPath,
     ),
-    createBlogPostingSchema(b),
+    createArticleSchema(b),
   ];
 
   if (faq && faq.length > 0) {
@@ -884,7 +885,7 @@ function resolveRawSeoForRoute(url: string): RouteSeoEntry {
           ],
           path,
         ),
-        createBlogPostingSchema({
+        createArticleSchema({
           blog_slug: slug,
           blog_heading: blogTitle,
           blog_short_description: description,
