@@ -20,6 +20,25 @@ const ThankYou = () => {
       return;
     }
     setSource(resolvedSource);
+
+    // Google Ads conversion event for Submit lead form
+    if (typeof window !== 'undefined') {
+      window.dataLayer = window.dataLayer || [];
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'conversion', {
+          send_to: 'AW-16531559648/w7WqCOGE_7YdEOCp7so9',
+          value: 1.0,
+          currency: 'INR',
+        });
+      } else {
+        window.dataLayer.push({
+          event: 'conversion',
+          send_to: 'AW-16531559648/w7WqCOGE_7YdEOCp7so9',
+          value: 1.0,
+          currency: 'INR',
+        });
+      }
+    }
   }, [location.state, navigate]);
 
   const leaveThankYouPage = useCallback(

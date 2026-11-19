@@ -439,6 +439,21 @@ export async function prerender(data: PrerenderData): Promise<PrerenderReturn> {
   }
 
   /**
+   * 7c. Google Ads Lead Form Submit conversion snippet for Thank You page.
+   */
+  if (cleanPath === "/thank-you") {
+    elements.add({
+      type: "script",
+      props: { id: "google-ads-thankyou-conversion", "data-rh": "true" },
+      children: `gtag('event', 'conversion', {
+  'send_to': 'AW-16531559648/w7WqCOGE_7YdEOCp7so9',
+  'value': 1.0,
+  'currency': 'INR'
+});`,
+    });
+  }
+
+  /**
    * 8. Discover child links and inject into crawler queue.
    *
    * WHY YOU SEE `[from /]` IN THE BUILD LOG:
