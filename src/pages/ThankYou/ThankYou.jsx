@@ -16,9 +16,6 @@ const ThankYou = () => {
     const resolvedSource = resolveThankYouSource(location.state?.from);
     setSource(resolvedSource || '/');
 
-    // Only fire the conversion for real form submissions, not direct visits.
-    if (!resolvedSource) return;
-
     // Google Ads conversion event for Submit lead form
     if (typeof window !== 'undefined') {
       window.dataLayer = window.dataLayer || [];
@@ -37,7 +34,7 @@ const ThankYou = () => {
         });
       }
     }
-  }, [location.state, navigate]);
+  }, [location.state]);
 
   const leaveThankYouPage = useCallback(
     (target) => {
