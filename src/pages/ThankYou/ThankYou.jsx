@@ -2,9 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Phone } from 'lucide-react';
 import {
-  THANK_YOU_COUNTDOWN_SECONDS,
   clearThankYouSource,
-  formatCountdown,
   resolveThankYouSource,
 } from '@/lib/thankYou';
 
@@ -12,7 +10,6 @@ const ThankYou = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [source, setSource] = useState(null);
-  const [secondsLeft, setSecondsLeft] = useState(THANK_YOU_COUNTDOWN_SECONDS);
   const isLeavingRef = useRef(false);
 
   useEffect(() => {
@@ -25,40 +22,15 @@ const ThankYou = () => {
     setSource(resolvedSource);
   }, [location.state, navigate]);
 
-  useEffect(() => {
-    if (!source) return;
-
-    const deadline = Date.now() + THANK_YOU_COUNTDOWN_SECONDS * 1000;
-    const updateCountdown = () => {
-      const remaining = Math.max(
-        0,
-        Math.ceil((deadline - Date.now()) / 1000),
-      );
-      setSecondsLeft(remaining);
-    };
-
-    updateCountdown();
-    const timerId = window.setInterval(updateCountdown, 250);
-    return () => window.clearInterval(timerId);
-  }, [source]);
-
   const leaveThankYouPage = useCallback(
     (target) => {
       if (isLeavingRef.current) return;
       isLeavingRef.current = true;
       clearThankYouSource();
-      navigate(target, { replace: true });
+      navigate(target || '/', { replace: true });
     },
     [navigate],
   );
-
-  useEffect(() => {
-    if (!source || secondsLeft > 0) return;
-    const redirectTimer = window.setTimeout(() => {
-      leaveThankYouPage(source);
-    }, 250);
-    return () => window.clearTimeout(redirectTimer);
-  }, [leaveThankYouPage, secondsLeft, source]);
 
   if (!source) {
     return (
@@ -155,12 +127,6 @@ const ThankYou = () => {
         >
           Return to Previous Page
         </button>
-
-        <p className="mt-5 text-sm text-[#373839] sm:text-base">
-          You will be automatically redirected to your previous page in{' '}
-          <span className="tabular-nums">{formatCountdown(secondsLeft)}</span>{' '}
-          minutes.
-        </p>
       </div>
     </section>
   );

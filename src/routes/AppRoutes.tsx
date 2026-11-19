@@ -82,6 +82,9 @@ const FlipbookSection = lazy(
   () => import('@/components/aia-times/flipbook-section'),
 );
 const FilterPage = lazy(() => import('@/pages/Filter/FilterPage'));
+const TestCourseEnquiry = lazy(
+  () => import('@/pages/Test/TestCourseEnquiry'),
+);
 
 /**
  * Route wrapper component binding the current route path to `getSeoForRoute(currentPath)`
@@ -193,6 +196,7 @@ export default function AppRoutes({ queryClient: initialQueryClient }: AppRoutes
           <Route path="/aia-times/flip-book" element={<PageSEO path="/aia-times/flip-book"><FlipbookSection /></PageSEO>} />
           <Route path="/policies" element={<PageSEO path="/policies"><Policies /></PageSEO>} />
           <Route path="/terms-and-conditions" element={<PageSEO path="/terms-and-conditions"><TermsAndConditions /></PageSEO>} />
+          <Route path="/test-enquiry-form" element={<PageSEO path="/test-enquiry-form"><TestCourseEnquiry /></PageSEO>} />
           <Route path="*" element={<PageSEO><NotFound /></PageSEO>} />
 
           {Object.entries(blogRedirects).map(([oldPath, newPath]) => (
