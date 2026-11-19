@@ -1,6 +1,5 @@
-import React, { lazy } from "react";
+import React, { lazy, Suspense } from "react";
 
-import DeferredPopUp from "@/components/common/deferred-popup";
 import LazySection from "@/components/common/lazy-section";
 import { ssrLazy } from "@/lib/ssrLazy";
 import HomeHero from "@/components/home/home-hero";
@@ -52,13 +51,21 @@ const CamsConnection = lazy(
 const HomeAlumniWork = lazy(
   () => import("@/components/home/home-alumini-work"),
 );
+const CourseEnquiryForm = lazy(
+  () => import("@/components/courses/common/course-enquiry-form"),
+);
+const CourseEnquiryPopup = lazy(
+  () => import("@/components/common/course-enquiry-popup"),
+);
 const CamsFaq = lazy(() => import("@/components/courses/cams/cams-faq"));
 
 const CAMS = () => {
   return (
     <div>
       {/* Initial Render */}
-      <DeferredPopUp slug="CAMS" />
+      <Suspense fallback={null}>
+        <CourseEnquiryPopup course="CAMS" />
+      </Suspense>
       <HomeHero slug="cams" />
       <CamsAbout />
 
@@ -178,6 +185,10 @@ const CAMS = () => {
 
       <LazySection minHeight={300}>
         <HomeAlumniWork />
+      </LazySection>
+
+      <LazySection minHeight={450}>
+        <CourseEnquiryForm course="CAMS" />
       </LazySection>
 
       <LazySection minHeight={350}>
