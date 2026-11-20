@@ -329,6 +329,9 @@ export default function AppRoutes({
             }
           />
           <Route path="/filter" element={<Navigate to="/fillter" replace />} />
+          <Route path="/about-us" element={<Navigate to="/about-aia" replace />} />
+          <Route path="/contact-us" element={<Navigate to="/contact" replace />} />
+          <Route path="/corporate-training/cams" element={<Navigate to="/cams" replace />} />
           <Route
             path="/our-passouts/*"
             element={<Navigate to="/alumni-network" replace />}

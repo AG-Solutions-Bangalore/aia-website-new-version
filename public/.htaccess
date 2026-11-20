@@ -39,6 +39,12 @@ RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\.aia\.in\.net$ [NC]
 RewriteRule ^ https://aia.in.net%{REQUEST_URI} [R=301,L]
 
+# 2a. Legacy & Historical Route 301 Redirects (Prevent Google from indexing old URLs with Homepage fallback)
+RewriteRule ^about-us/?$ /about-aia [R=301,L,NC]
+RewriteRule ^contact-us/?$ /contact [R=301,L,NC]
+RewriteRule ^corporate-training/cams/?$ /cams [R=301,L,NC]
+RewriteRule ^(our-passouts|passed-out)(/.*)?$ /alumni-network [R=301,L,NC]
+
 # 2b. Fully Dynamic API Sitemap: Pure data direct from /webapi/public/api/getSitemap
 ; RewriteRule ^sitemap\.xml$ sitemap.php [L]
 
