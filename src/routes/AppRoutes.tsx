@@ -328,15 +328,6 @@ export default function AppRoutes({
               </PageSEO>
             }
           />
-          <Route path="/filter" element={<Navigate to="/fillter" replace />} />
-          <Route
-            path="/our-passouts/*"
-            element={<Navigate to="/alumni-network" replace />}
-          />
-          <Route
-            path="/passed-out/*"
-            element={<Navigate to="/alumni-network" replace />}
-          />
           <Route
             path="/enroll-now"
             element={

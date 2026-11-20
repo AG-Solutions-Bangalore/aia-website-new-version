@@ -218,6 +218,32 @@ function deferEntryPlugin(): Plugin {
   };
 }
 
+function thankYouConversionPlugin(): Plugin {
+  return {
+    name: "thank-you-conversion-plugin",
+    apply: "build",
+    closeBundle: {
+      sequential: true,
+      order: "post",
+      handler() {
+        const thankYouHtmlPath = path.resolve(__dirname, "dist/thank-you/index.html");
+        if (!fs.existsSync(thankYouHtmlPath)) return;
+        let html = fs.readFileSync(thankYouHtmlPath, "utf-8");
+        const conversionSnippet = `\n  <!-- Event snippet for Submit lead form-Thankyou conversion page -->\n  <script>\n    gtag('event', 'conversion', {\n        'send_to': 'AW-16531559648/w7WqCOGE_7YdEOCp7so9',\n        'value': 1.0,\n        'currency': 'INR'\n    });\n  </script>`;
+        if (!html.includes("AW-16531559648/w7WqCOGE_7YdEOCp7so9")) {
+          const googleTagEndRegex = /(window\.addEventListener\(events\[i\],\s*startAnalytics[^;]*\);[\s\S]*?<\/script>)/i;
+          if (googleTagEndRegex.test(html)) {
+            html = html.replace(googleTagEndRegex, `$1\n${conversionSnippet}`);
+          } else {
+            html = html.replace("</head>", `${conversionSnippet}\n</head>`);
+          }
+          fs.writeFileSync(thankYouHtmlPath, html, "utf-8");
+        }
+      },
+    },
+  };
+}
+
 export default defineConfig({
   root: process.cwd(),
 
@@ -225,6 +251,7 @@ export default defineConfig({
   plugins: [
     devSitemapPlugin(),
     deferEntryPlugin(),
+    thankYouConversionPlugin(),
     tailwindcss(),
     react(),
     vitePrerenderPlugin({

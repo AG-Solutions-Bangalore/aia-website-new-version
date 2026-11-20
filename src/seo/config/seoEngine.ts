@@ -456,7 +456,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       "thank you AIA, Academy of Internal Audit, CFE, CIA, CAMS, CISA certification enquiries",
     canonicalPath: "/thank-you",
     noIndex: true,
-    robots: "noindex, follow",
+    robots: "noindex, nofollow",
     schemas: [
       organizationSchema,
       createWebPageSchema(
