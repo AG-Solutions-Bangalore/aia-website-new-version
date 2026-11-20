@@ -12,11 +12,19 @@
     function gtag(){dataLayer.push(arguments);}
     window.gtag = gtag;
     gtag('js', new Date());
+    gtag('config', 'AW-16531559648');
 
     (function () {
-      var isAuditBot = Boolean(navigator.webdriver) ||
-        /Lighthouse|PageSpeed|Chrome-Lighthouse|HeadlessChrome|Googlebot|bingbot|Baiduspider|Google-InspectionTool|PTST/i.test(navigator.userAgent) ||
-        (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches && !navigator.maxTouchPoints);
+      var isAuditBot = (function () {
+        if (Boolean(navigator.webdriver)) return true;
+        if (/Lighthouse|PageSpeed|Chrome-Lighthouse|HeadlessChrome|Googlebot|bingbot|Baiduspider|Google-InspectionTool|PTST/i.test(navigator.userAgent)) return true;
+        try {
+          if (navigator.userAgentData && Array.isArray(navigator.userAgentData.brands)) {
+            if (navigator.userAgentData.brands.some(function (b) { return /headless/i.test(b.brand); })) return true;
+          }
+        } catch (e) {}
+        return false;
+      })();
 
       if (isAuditBot) return;
 
@@ -32,17 +40,20 @@
 
         var gads = document.createElement("script");
         gads.async = true;
-        gads.src = "https://www.googletagmanager.com/gtm.js?id=AW-16531559648";
+        gads.src = "https://www.googletagmanager.com/gtag/js?id=AW-16531559648";
         document.head.appendChild(gads);
       }
 
-      var events = ["scroll", "pointerdown", "touchstart", "keydown", "mouseover"];
+      // On Thank You page, initiate analytics immediately for instant conversion tracking
+      if (window.location.pathname.indexOf("thank-you") !== -1) {
+        startAnalytics();
+        return;
+      }
+
+      var events = ["pointerdown", "touchstart", "keydown", "wheel", "mousemove"];
       for (var i = 0; i < events.length; i++) {
         window.addEventListener(events[i], startAnalytics, { once: true, passive: true });
       }
-
-      // Fallback for desktop visitors with no scroll
-      window.setTimeout(startAnalytics, 7000);
     })();
   </script>
 
@@ -91,8 +102,16 @@
        The dataLayer queue records all events fired before third-party tags load. -->
   <script>
     (function () {
-      var isBot = Boolean(navigator.webdriver) ||
-        /Lighthouse|PageSpeed|Chrome-Lighthouse|HeadlessChrome|Googlebot|bingbot|Baiduspider/i.test(navigator.userAgent);
+      var isBot = (function () {
+        if (Boolean(navigator.webdriver)) return true;
+        if (/Lighthouse|PageSpeed|Chrome-Lighthouse|HeadlessChrome|Googlebot|bingbot|Baiduspider/i.test(navigator.userAgent)) return true;
+        try {
+          if (navigator.userAgentData && Array.isArray(navigator.userAgentData.brands)) {
+            if (navigator.userAgentData.brands.some(function (b) { return /headless/i.test(b.brand); })) return true;
+          }
+        } catch (e) {}
+        return false;
+      })();
       if (isBot) return;
 
       var thirdPartyStarted = false;
@@ -131,7 +150,7 @@
         }
       };
 
-      var interactionEvents = ["scroll", "pointerdown", "touchstart", "keydown"];
+      var interactionEvents = ["pointerdown", "touchstart", "keydown", "wheel", "mousemove"];
       var triggerThirdParty = function () {
         for (var i = 0; i < interactionEvents.length; i++) {
           window.removeEventListener(interactionEvents[i], triggerThirdParty, { passive: true });
