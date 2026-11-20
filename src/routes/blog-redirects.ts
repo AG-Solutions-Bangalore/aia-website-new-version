@@ -24,6 +24,17 @@
  */
 
 const blogRedirects: Record<string, string> = {
+  // Legacy Core Site Pages
+  "/about-us": "/about-aia",
+  "/contact-us": "/contact",
+  "/corporate-training/cams": "/cams",
+  "/filter": "/fillter",
+  "/our-passouts": "/alumni-network",
+  "/our-passouts/*": "/alumni-network",
+  "/passed-out": "/alumni-network",
+  "/passed-out/*": "/alumni-network",
+
+  // Legacy Blog URLs
   "/what-is-money-laundering": "/blogs/what-is-money-laundering",
   "/academy-of-internal-audit-national-recognition":
     "/blogs/academy-of-internal-audit-national-recognition",
