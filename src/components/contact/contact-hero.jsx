@@ -187,7 +187,7 @@ const ContactHero = () => {
                 <span className="text-[#F48F32] font-semibold">Let&apos;s talk</span>
               </p>
 
-              <div className="absolute top-[20%] left-[68%] hidden lg:block">
+              <div className="absolute top-[12%] left-[70%] hidden lg:block">
                 <img
                   src={`${IMAGE_PATH}/arrow.webp`}
                   alt="arrow" title="arrow"
