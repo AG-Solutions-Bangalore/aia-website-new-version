@@ -205,6 +205,8 @@ const Navbar = () => {
           {renderContactLink(links[0], "email")}
           <a
             href={whatsappLink.href}
+            target="_blank"
+            rel="noopener noreferrer"
             className="relative hidden min-h-6 items-center text-[#F3831C] min-[380px]:flex md:min-h-10"
             aria-label={whatsappLink.ariaLabel}
             title="Contact Academy of Internal Audit on WhatsApp"
