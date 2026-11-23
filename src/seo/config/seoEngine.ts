@@ -242,8 +242,7 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     title: "Guide For Professional Courses like CIA, CFE, CIAC, CAMS - AIA",
     description:
       "Read Latest Blogs on professional courses like CIA, CFE, CAMS and CIA Challenge | Information that you need to know to grow your skills and career as well.",
-    keywords:
-      "AIA blog, CIA tips, CFE guides, CAMS certification news, internal audit articles",
+    keywords: getMetaKeywords("blogs"),
     canonicalPath: "/blogs",
     schemas: [
       organizationSchema,
