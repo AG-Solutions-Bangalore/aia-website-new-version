@@ -249,12 +249,23 @@ if (fs.existsSync(publicDir)) {
 const robotsTxt = `User-agent: *
 Allow: /
 
-# Private Endpoints
+# Public Assets & Images
+Allow: /webapi/public/assets/images/
+Allow: /webapi/public/assets/
+
+# Private & API Endpoints
+Disallow: /webapi/
 Disallow: /admin
 Disallow: /dashboard
 Disallow: /login
 Disallow: /auth
 Disallow: /api
+
+# Internal Search Queries & Search Term Strings
+Disallow: /*?s=*
+Disallow: /*?*s=*
+Disallow: /*%7Bsearch_term_string%7D*
+Disallow: /*{search_term_string}*
 
 # Sitemap Reference
 Sitemap: ${SITE_ORIGIN}/sitemap.xml

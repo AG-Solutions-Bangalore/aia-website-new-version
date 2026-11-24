@@ -21,6 +21,11 @@ import {
   normalizeExternalUrl,
 } from "@/routes/route-path";
 
+const normalizeStoryHeadings = (html) =>
+  String(html || "")
+    .replace(/<h3(\s|>)/gi, "<h2$1")
+    .replace(/<\/h3>/gi, "</h2>");
+
 const PassoutStoriesSlug = () => {
   const { slug } = useParams();
 
@@ -176,9 +181,9 @@ const PassoutStoriesSlug = () => {
                 <div className="rounded-xl sm:rounded-2xl bg-[#0F3652]/5 p-3 sm:p-4 lg:sticky lg:top-24">
                   <div>
                     <div>
-                      <h3 className="text-sm sm:text-base font-medium text-[#0F3652]">
+                      <p className="text-sm sm:text-base font-medium text-[#0F3652]">
                         About the Professional
-                      </h3>
+                      </p>
                       <div className="mt-2"></div>
                       <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3">
                         {companyImageUrl && (
@@ -216,9 +221,9 @@ const PassoutStoriesSlug = () => {
 
                     <div className="space-y-2 sm:space-y-3 mt-3 sm:mt-4">
                       <div>
-                        <h3 className="text-sm sm:text-base font-medium text-[#0F3652]">
+                        <p className="text-sm sm:text-base font-medium text-[#0F3652]">
                           Company
-                        </h3>
+                        </p>
                         <div className="mt-1 sm:mt-2"></div>
                         <p className="text-xs sm:text-sm text-[#0F3652] break-words">
                           {company?.student_company_name || "Not specified"}
@@ -226,9 +231,9 @@ const PassoutStoriesSlug = () => {
                       </div>
 
                       <div>
-                        <h3 className="text-sm sm:text-base font-medium text-[#0F3652]">
+                        <p className="text-sm sm:text-base font-medium text-[#0F3652]">
                           Course
-                        </h3>
+                        </p>
                         <div className="mt-1 sm:mt-2"></div>
                         <p className="text-xs sm:text-sm text-[#0F3652] break-words">
                           {student_course || "Not specified"}
@@ -236,9 +241,9 @@ const PassoutStoriesSlug = () => {
                       </div>
 
                       <div>
-                        <h3 className="text-sm sm:text-base font-medium text-[#0F3652]">
+                        <p className="text-sm sm:text-base font-medium text-[#0F3652]">
                           Designation
-                        </h3>
+                        </p>
                         <div className="mt-1 sm:mt-2"></div>
                         <p className="text-xs sm:text-sm text-[#0F3652] break-words">
                           {student_designation || "Not specified"}
@@ -246,9 +251,9 @@ const PassoutStoriesSlug = () => {
                       </div>
 
                       <div>
-                        <h3 className="text-sm sm:text-base font-medium text-[#0F3652]">
+                        <p className="text-sm sm:text-base font-medium text-[#0F3652]">
                           Location
-                        </h3>
+                        </p>
                         <div className="mt-1 sm:mt-2"></div>
                         <p className="text-xs sm:text-sm text-[#0F3652] break-words">
                           {country?.country_name || "Not specified"}
@@ -260,14 +265,14 @@ const PassoutStoriesSlug = () => {
                       </div>
 
                       <div>
-                        <h3 className="text-sm sm:text-base font-medium text-[#0F3652]">
+                        <p className="text-sm sm:text-base font-medium text-[#0F3652]">
                           LinkedIn
-                        </h3>
+                        </p>
                         <div className="mt-1 sm:mt-2"></div>
                         <a
                           href={linkedinUrl} title={linkedinUrl}
                           target="_blank"
-                          rel="noopener noreferrer"
+                          rel="noopener noreferrer nofollow"
                           className="inline-block"
                         >
                           <p className="text-xs sm:text-sm text-[#0F3652] underline break-words">
@@ -305,9 +310,9 @@ const PassoutStoriesSlug = () => {
                 </h1>
 
                 <div className="mb-8 sm:mb-10 lg:mb-12">
-                  <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#0F3652] mb-4 sm:mb-5 lg:mb-6">
+                  <p className="text-lg sm:text-xl md:text-2xl font-bold text-[#0F3652] mb-4 sm:mb-5 lg:mb-6">
                     Our Impact
-                  </h2>
+                  </p>
 
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                     {[
@@ -355,7 +360,11 @@ const PassoutStoriesSlug = () => {
                 <div className="prose prose-sm sm:prose-base lg:prose-lg max-w-none">
                   <div
                     className="ck-content text-sm sm:text-base text-[#0F3652] break-words"
-                    dangerouslySetInnerHTML={{ __html: normalizeHtmlInternalLinks(student_story_details) }}
+                    dangerouslySetInnerHTML={{
+                      __html: normalizeHtmlInternalLinks(
+                        normalizeStoryHeadings(student_story_details),
+                      ),
+                    }}
                   />
                 </div>
               </div>

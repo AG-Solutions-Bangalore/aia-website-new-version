@@ -80,35 +80,35 @@ const COURSE_SCHEMAS = {
   "/cfe-curriculum": {
     name: "Certified Fraud Examiner (CFE) Training",
     description:
-      "CFE certification training by the Academy of Internal Audit: exam-focused study guidance and practice questions.",
+      "Get Certification in Certified Fraud Examiner Course with AIA Institute to become a skilled Certified Fraud Investigator and unlock fraud prevention mystery.",
     path: "/cfe-curriculum",
     ...courseSchemaData["/cfe-curriculum"],
   },
   "/cia-curriculum": {
     name: "Certified Internal Auditor (CIA) Training",
     description:
-      "Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.",
+      "Elevate your auditing career with AIA Institute which help you to ace your Certified Internal Auditor Course (CIA) and get your Internal Audit Certification.",
     path: "/cia-curriculum",
     ...courseSchemaData["/cia-curriculum"],
   },
   "/cia-challenge-curriculum": {
     name: "CIA Challenge Exam Training",
     description:
-      "Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.",
+      "Short on time? AIA's CIA Challenge Prep helps busy auditors fast-track their certification with flexible notes, expert-recorded lectures, and 1:1 live support. Enroll today!",
     path: "/cia-challenge-curriculum",
     ...courseSchemaData["/cia-challenge-curriculum"],
   },
   "/cams": {
     name: "Certified Anti-Money Laundering Specialist (CAMS) Training",
     description:
-      "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
+      "Prepare to excel in CAMS Certification Exam with AIA's CAMS Study Guide and CAMS Practice Questions provided for Certified Anti Money Laundering Specialist.",
     path: "/cams",
     ...courseSchemaData["/cams"],
   },
   "/cisa": {
     name: "Certified Information Systems Auditor (CISA) Training",
     description:
-      "Comprehensive CISA certification course prep by Academy of Internal Audit.",
+      "Prepare to excel in CISA Certification Exam with AIA's CISA Prep Course. Get access to official ISACA study resource kits, recorded video lectures, and doubt sessions.",
     path: "/cisa",
     ...courseSchemaData["/cisa"],
   },
@@ -141,9 +141,9 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     ],
   },
   "/about-aia": {
-    title: "About - Academy of Internal Audit",
+    title: "About Academy of Internal Audit (AIA) | Our Expertise",
     description:
-      "Academy of Internal Audit is a well-known Training Institute for Professional Courses Training, skilled faculty, and comprehensive guidance services.",
+      "Learn about Academy of Internal Audit, our professional certification training, experienced faculty and learning support for audit, fraud and compliance",
     keywords:
       "About AIA, Academy of Internal Audit history, AIA success rate, professional training institute",
     canonicalPath: "/about-aia",
@@ -153,13 +153,13 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         "/about-aia",
-        "About - Academy of Internal Audit",
-        "Academy of Internal Audit is a well-known Training Institute for Professional Courses Training, skilled faculty, and comprehensive guidance services.",
+        "About Academy of Internal Audit (AIA) | Our Expertise",
+        "Learn about Academy of Internal Audit, our professional certification training, experienced faculty and learning support for audit, fraud and compliance",
       ),
     ],
   },
   "/cfe-curriculum": {
-    title: "Certified Fraud Examiner Course | CFE Certification Course",
+    title: "Certified Fraud Examiner (CFE) Course & Training | AIA",
     description:
       "Get Certification in Certified Fraud Examiner Course with AIA Institute to become a skilled Certified Fraud Investigator and unlock fraud prevention mystery.",
     keywords: getMetaKeywords("cfe"),
@@ -168,96 +168,95 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         "/cfe-curriculum",
-        "Certified Fraud Examiner Course | CFE Certification Course",
+        "Certified Fraud Examiner (CFE) Course & Training | AIA",
         "Get Certification in Certified Fraud Examiner Course with AIA Institute to become a skilled Certified Fraud Investigator and unlock fraud prevention mystery.",
       ),
       createCourseSchema(COURSE_SCHEMAS["/cfe-curriculum"]),
     ],
   },
   "/cia-curriculum": {
-    title: "Earn Certified Internal Auditor (CIA) Certification with AIA",
+    title: "Certified Internal Auditor (CIA) Course & Training | AIA",
     description:
-      "Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.",
+      "Elevate your auditing career with AIA Institute which help you to ace your Certified Internal Auditor Course (CIA) and get your Internal Audit Certification.",
     keywords: getMetaKeywords("cia"),
     canonicalPath: "/cia-curriculum",
     schemas: [
       organizationSchema,
       createWebPageSchema(
         "/cia-curriculum",
-        "Earn Certified Internal Auditor (CIA) Certification with AIA",
-        "Become a Certified Internal Auditor with the AIA’s CIA Prep course, which helps you ace the CIA Certification Exam and advance your career in Internal Audit.",
+        "Certified Internal Auditor (CIA) Course & Training | AIA",
+        "Elevate your auditing career with AIA Institute which help you to ace your Certified Internal Auditor Course (CIA) and get your Internal Audit Certification.",
       ),
       createCourseSchema(COURSE_SCHEMAS["/cia-curriculum"]),
     ],
   },
   "/cia-challenge-curriculum": {
-    title: "Clear (CIA) Certified Internal Auditor Challenge Exam with AIA",
+    title: "CIA Challenge Exam Prep Course & Study Support | AIA",
     description:
-      "Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.",
+      "Short on time? AIA's CIA Challenge Prep helps busy auditors fast-track their certification with flexible notes, expert-recorded lectures, and 1:1 live support. Enroll today!",
     keywords: getMetaKeywords("ciaChallenge"),
     canonicalPath: "/cia-challenge-curriculum",
     schemas: [
       organizationSchema,
       createWebPageSchema(
         "/cia-challenge-curriculum",
-        "Clear (CIA) Certified Internal Auditor Challenge Exam with AIA",
-        "Clear the CIA Challenge Exam with the AIA’s CIA Challenge Prep course, which helps you earn the Certified Internal Auditor credential & advance your career.",
+        "CIA Challenge Exam Prep Course & Study Support | AIA",
+        "Short on time? AIA's CIA Challenge Prep helps busy auditors fast-track their certification with flexible notes, expert-recorded lectures, and 1:1 live support. Enroll today!",
       ),
       createCourseSchema(COURSE_SCHEMAS["/cia-challenge-curriculum"]),
     ],
   },
   "/cams": {
-    title: "Clear Certified Anti-Money Laundering Specialist Exam with AIA",
+    title: "CAMS Course: Certified Anti-Money Laundering Specialist",
     description:
-      "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
+      "Prepare to excel in CAMS Certification Exam with AIA's CAMS Study Guide and CAMS Practice Questions provided for Certified Anti Money Laundering Specialist.",
     keywords: getMetaKeywords("cams"),
     canonicalPath: "/cams",
     schemas: [
       organizationSchema,
       createWebPageSchema(
         "/cams",
-        "Clear Certified Anti-Money Laundering Specialist Exam with AIA",
-        "Become CAMS Certified in 45 days with AIA's CAMS Prep Program, which helps you ace the Certified Anti-Money Laundering Specialist (CAMS) Exam with confidence.",
+        "CAMS Course: Certified Anti-Money Laundering Specialist",
+        "Prepare to excel in CAMS Certification Exam with AIA's CAMS Study Guide and CAMS Practice Questions provided for Certified Anti Money Laundering Specialist.",
       ),
       createCourseSchema(COURSE_SCHEMAS["/cams"]),
     ],
   },
   "/cisa": {
-    title: "Clear Certified Information Systems Auditor (CISA) Exam with AIA",
+    title: "CISA Certification Course & Exam Training | AIA",
     description:
-      "Prepare for CISA exam with AIA. Get access to official ISACA CISA prep kit and expert-led resources to clear the CISA Exam on your first attempt confidently.",
+      "Prepare to excel in CISA Certification Exam with AIA's CISA Prep Course. Get access to official ISACA study resource kits, recorded video lectures, and doubt sessions.",
     keywords: getMetaKeywords("cisa"),
     canonicalPath: "/cisa",
     schemas: [
       organizationSchema,
       createWebPageSchema(
         "/cisa",
-        "Clear Certified Information Systems Auditor (CISA) Exam with AIA",
-        "Prepare for CISA exam with AIA. Get access to official ISACA CISA prep kit and expert-led resources to clear the CISA Exam on your first attempt confidently.",
+        "CISA Certification Course & Exam Training | AIA",
+        "Prepare to excel in CISA Certification Exam with AIA's CISA Prep Course. Get access to official ISACA study resource kits, recorded video lectures, and doubt sessions.",
       ),
       createCourseSchema(COURSE_SCHEMAS["/cisa"]),
     ],
   },
   "/blogs": {
-    title: "Guide For Professional Courses like CIA, CFE, CIAC, CAMS - AIA",
+    title: "Audit Certification Blogs: CIA, CFE, CAMS & CISA | AIA",
     description:
-      "Read Latest Blogs on professional courses like CIA, CFE, CAMS and CIA Challenge | Information that you need to know to grow your skills and career as well.",
-    keywords:
-      "AIA blog, CIA tips, CFE guides, CAMS certification news, internal audit articles",
+      "Read expert insights and practical guides on CIA, CFE, CAMS, CISA, internal audit, fraud examination and anti-money laundering certifications.",
+    keywords: getMetaKeywords("blogs"),
     canonicalPath: "/blogs",
     schemas: [
       organizationSchema,
       createWebPageSchema(
         "/blogs",
-        "Guide For Professional Courses like CIA, CFE, CIAC, CAMS - AIA",
-        "Read Latest Blogs on professional courses like CIA, CFE, CAMS and CIA Challenge | Information that you need to know to grow your skills and career as well.",
+        "Audit Certification Blogs: CIA, CFE, CAMS & CISA | AIA",
+        "Read expert insights and practical guides on CIA, CFE, CAMS, CISA, internal audit, fraud examination and anti-money laundering certifications.",
       ),
     ],
   },
   "/alumni-network": {
-    title: "AIA Alumni Network - Academy of Internal Audit",
+    title: "AIA Alumni Network | CIA, CFE & CAMS Success Stories",
     description:
-      "Academy of Internal Audit celebrates 99.6% + pass rate - featuring recent CFE, CIA, CAMS alumni from 40+ countries around the globe sharing their success stories.",
+      "Discover AIA alumni stories and professional milestones from CIA, CFE and CAMS learners across countries. Explore the network and their certification journeys.",
     keywords:
       "AIA alumni, student success stories, CIA pass outs, CFE results, CAMS success",
     canonicalPath: "/alumni-network",
@@ -265,8 +264,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         "/alumni-network",
-        "AIA Alumni Network - Academy of Internal Audit",
-        "Academy of Internal Audit celebrates 99.6% + pass rate - featuring recent CFE, CIA, CAMS alumni from 40+ countries around the globe sharing their success stories.",
+        "AIA Alumni Network | CIA, CFE & CAMS Success Stories",
+        "Discover AIA alumni stories and professional milestones from CIA, CFE and CAMS learners across countries. Explore the network and their certification journeys.",
       ),
     ],
   },
@@ -303,9 +302,9 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     ],
   },
   "/aia-times": {
-    title: "AIA Times - Magazines, News, and PR Highlights | AIA",
+    title: "AIA Times | News, Magazines & Media Updates",
     description:
-      "Explore AIA Times for the latest Magazines, news, media coverage, PR mentions, expert insights, and key updates from the Academy of Internal Audit.",
+      "Explore AIA Times for magazines, news, media coverage, press mentions, expert insights and updates from the Academy of Internal Audit.",
     keywords:
       "AIA Times, AIA magazine, Academy of Internal Audit news, fraud examination insights, audit magazine",
     canonicalPath: "/aia-times",
@@ -313,8 +312,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         "/aia-times",
-        "AIA Times - Magazines, News, and PR Highlights | AIA",
-        "Explore AIA Times for the latest Magazines, news, media coverage, PR mentions, expert insights, and key updates from the Academy of Internal Audit.",
+        "AIA Times | News, Magazines & Media Updates",
+        "Explore AIA Times for magazines, news, media coverage, press mentions, expert insights and updates from the Academy of Internal Audit.",
       ),
     ],
   },
@@ -335,9 +334,9 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     ],
   },
   "/cfe-free-resources": {
-    title: "Certified Fraud Examiner Free Resources - AIA",
+    title: "Free CFE Study Material, Practice Questions & Resources",
     description:
-      "Access CFE Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.",
+      "Access free CFE study material, practice questions, flashcards and video resources to support your Certified Fraud Examiner exam preparation.",
     keywords:
       "free CFE resources, CFE practice questions, CFE flashcards, CFE study material",
     canonicalPath: "/cfe-free-resources",
@@ -345,15 +344,15 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         "/cfe-free-resources",
-        "Certified Fraud Examiner Free Resources - AIA",
-        "Access CFE Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.",
+        "Free CFE Study Material, Practice Questions & Resources",
+        "Access free CFE study material, practice questions, flashcards and video resources to support your Certified Fraud Examiner exam preparation.",
       ),
     ],
   },
   "/cia-free-resources": {
-    title: "Certified Internal Audit Free Resources - AIA",
+    title: "Free CIA Study Material, Practice Questions & Resources",
     description:
-      "Access CIA Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.",
+      "Explore free CIA study material, practice questions, flashcards and video resources to support your Certified Internal Auditor exam preparation.",
     keywords:
       "free CIA resources, CIA practice questions, CIA study guide, internal audit free prep",
     canonicalPath: "/cia-free-resources",
@@ -361,15 +360,15 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         "/cia-free-resources",
-        "Certified Internal Audit Free Resources - AIA",
-        "Access CIA Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.",
+        "Free CIA Study Material, Practice Questions & Resources",
+        "Explore free CIA study material, practice questions, flashcards and video resources to support your Certified Internal Auditor exam preparation.",
       ),
     ],
   },
   "/cams-free-resources": {
-    title: "Certified Anti Money Laundering Specialist Free Resources - AIA",
+    title: "Free CAMS Study Material, Practice Questions & Resources",
     description:
-      "Access CAMS Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.",
+      "Access free CAMS study material, practice questions and learning resources to build your understanding of anti-money laundering and CAMS exam topics.",
     keywords:
       "free CAMS resources, CAMS practice questions, CAMS study material",
     canonicalPath: "/cams-free-resources",
@@ -377,15 +376,15 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         "/cams-free-resources",
-        "Certified Anti Money Laundering Specialist Free Resources - AIA",
-        "Access CAMS Free resources at the Academy of Internal: practice questions, flashcards, and video lectures to boost your exam preparation.",
+        "Free CAMS Study Material, Practice Questions & Resources",
+        "Access free CAMS study material, practice questions and learning resources to build your understanding of anti-money laundering and CAMS exam topics.",
       ),
     ],
   },
   "/cisa-free-resources": {
-    title: "Certified Information Systems Auditor Free Resources - AIA",
+    title: "Free CISA Study Material, Practice Questions & Resources",
     description:
-      "Start your CISA preparation with free expert resources: domain-wise practice questions, flashcards, distractors, and insightful videos from the Academy of Internal Audit.",
+      "Explore free CISA study material, domain-wise practice questions, flashcards and videos to support your Certified Information Systems Auditor exam preparation.",
     keywords:
       "free CISA resources, CISA practice questions, CISA flashcards, CISA study material, ISACA CISA prep",
     canonicalPath: "/cisa-free-resources",
@@ -393,15 +392,15 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         "/cisa-free-resources",
-        "Certified Information Systems Auditor Free Resources - AIA",
-        "Start your CISA preparation with free expert resources: domain-wise practice questions, flashcards, distractors, and insightful videos from the Academy of Internal Audit.",
+        "Free CISA Study Material, Practice Questions & Resources",
+        "Explore free CISA study material, domain-wise practice questions, flashcards and videos to support your Certified Information Systems Auditor exam preparation.",
       ),
     ],
   },
   "/corporate-training": {
-    title: "Corporate Training Programs of Academy of Internal Audit",
+    title: "Corporate Internal Audit Training & Risk Management | AIA",
     description:
-      "Upskill your team with AIA's corporate training in Internal Audit, Fraud Detection & Risk Management. Customized programs for organizations.",
+      "Build team capabilities with corporate training in internal audit, fraud detection and risk management. Explore tailored learning programs for organisations.",
     keywords:
       "corporate audit training, risk management training, fraud detection for organizations",
     canonicalPath: "/corporate-training",
@@ -410,15 +409,15 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       localBusinessSchema,
       createWebPageSchema(
         "/corporate-training",
-        "Corporate Training Programs of Academy of Internal Audit",
-        "Upskill your team with AIA's corporate training in Internal Audit, Fraud Detection & Risk Management. Customized programs for organizations.",
+        "Corporate Internal Audit Training & Risk Management | AIA",
+        "Build team capabilities with corporate training in internal audit, fraud detection and risk management. Explore tailored learning programs for organisations.",
       ),
     ],
   },
   "/enroll-now": {
-    title: "Enroll Now | Academy of Internal Audit",
+    title: "Enroll in CIA, CFE, CAMS & CISA Courses | AIA",
     description:
-      "Enroll with Academy of Internal Audit for CIA, CFE, CAMS, and other global certification training programs led by expert faculty.",
+      "Enrol in AIA’s CIA, CFE, CAMS and CISA certification training programs. Connect with the team for course details and enrolment assistance.",
     keywords:
       "enroll AIA, CIA enrollment, CFE enrollment, CAMS enrollment, audit certification admission",
     canonicalPath: "/enroll-now",
@@ -426,15 +425,15 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       organizationSchema,
       createWebPageSchema(
         "/enroll-now",
-        "Enroll Now | Academy of Internal Audit",
-        "Enroll with Academy of Internal Audit for CIA, CFE, CAMS, and other global certification training programs led by expert faculty.",
+        "Enroll in CIA, CFE, CAMS & CISA Courses | AIA",
+        "Enrol in AIA’s CIA, CFE, CAMS and CISA certification training programs. Connect with the team for course details and enrolment assistance.",
       ),
     ],
   },
   "/contact": {
-    title: "Contact Us | Academy of Internal Audit",
+    title: "Contact Academy of Internal Audit (AIA) | Get in Touch",
     description:
-      "Reach out to Academy of Internal Audit for dedicated support in your journey to obtain professional course certifications. We will be happy to help you.",
+      "Contact Academy of Internal Audit for information about CIA, CFE, CAMS and CISA courses, enrolment, training support and certification preparation.",
     keywords:
       "contact AIA, Academy of Internal Audit phone, AIA email, audit training support",
     canonicalPath: "/contact",
@@ -443,8 +442,8 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
       localBusinessSchema,
       createWebPageSchema(
         "/contact",
-        "Contact Us | Academy of Internal Audit",
-        "Reach out to Academy of Internal Audit for dedicated support in your journey to obtain professional course certifications. We will be happy to help you.",
+        "Contact Academy of Internal Audit (AIA) | Get in Touch",
+        "Contact Academy of Internal Audit for information about CIA, CFE, CAMS and CISA courses, enrolment, training support and certification preparation.",
       ),
     ],
   },
@@ -467,32 +466,32 @@ export const ROUTE_SEO: Record<string, RouteSeoEntry> = {
     ],
   },
   "/policies": {
-    title: "Policies | Academy of Internal Audit (AIA)",
+    title: "AIA Policies | Privacy, Refund & Course Policies",
     description:
-      "Read AIA policies including privacy policy, refund policy, and terms related to courses, payments, and student services.",
+      "Review Academy of Internal Audit policies, including privacy, refunds, payments, course access and student service guidelines.",
     keywords: "AIA policies, privacy policy, refund policy",
     canonicalPath: "/policies",
     schemas: [
       organizationSchema,
       createWebPageSchema(
         "/policies",
-        "Policies | Academy of Internal Audit (AIA)",
-        "Read AIA policies including privacy policy, refund policy, and terms related to courses, payments, and student services.",
+        "AIA Policies | Privacy, Refund & Course Policies",
+        "Review Academy of Internal Audit policies, including privacy, refunds, payments, course access and student service guidelines.",
       ),
     ],
   },
   "/terms-and-conditions": {
-    title: "Terms and Conditions | AIA Courses & Services",
+    title: "Terms & Conditions | Academy of Internal Audit",
     description:
-      "Review the terms and conditions for enrolling in AIA courses, including usage policies, payments, access rights, and guidelines.",
+      "Read the terms and conditions governing AIA courses and services, including enrolment, payments, course access and applicable user responsibilities.",
     keywords: "AIA terms and conditions, course usage policy",
     canonicalPath: "/terms-and-conditions",
     schemas: [
       organizationSchema,
       createWebPageSchema(
         "/terms-and-conditions",
-        "Terms and Conditions | AIA Courses & Services",
-        "Review the terms and conditions for enrolling in AIA courses, including usage policies, payments, access rights, and guidelines.",
+        "Terms & Conditions | Academy of Internal Audit",
+        "Read the terms and conditions governing AIA courses and services, including enrolment, payments, course access and applicable user responsibilities.",
       ),
     ],
   },

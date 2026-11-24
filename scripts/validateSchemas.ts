@@ -192,6 +192,13 @@ for (const file of htmlFiles) {
       // without timezone offset, this CI loop will catch it and block deployment.
       // ========================================================================
       for (const item of json['@graph']) {
+        if (item['@type'] === 'Course' && item.hasCourseInstance) {
+          const instance = item.hasCourseInstance;
+          if (!instance.courseSchedule && !instance.courseWorkload) {
+            console.error(`❌ [${relPath}] FAIL: Course schema "${item.name}" has CourseInstance missing required courseSchedule or courseWorkload!`);
+            hasError = true;
+          }
+        }
         if (item.datePublished) {
           const hasTz = item.datePublished.includes('T') && (item.datePublished.includes('+') || item.datePublished.endsWith('Z'));
           if (!hasTz || isNaN(new Date(item.datePublished).getTime())) {

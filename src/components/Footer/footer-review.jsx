@@ -57,9 +57,9 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
         {footer ? (
           <div className="flex flex-col justify-start">
             <div className="mb-8">
-              <h2 className="text-3xl  font-bold text-[#0c2340]">
+              <p className="text-3xl font-bold text-[#0c2340]">
                 Top Ratings Across Platforms{" "}
-              </h2>
+              </p>
             </div>
 
             <div className="grid grid-cols-2 gap-3 md:gap-4 max-w-2xl w-full">
@@ -73,7 +73,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
                     key={index}
                     href={item.link || undefined}
                     target={item.link ? "_blank" : undefined}
-                    rel={item.link ? "noopener noreferrer" : undefined}
+                    rel={item.link ? "noopener noreferrer nofollow" : undefined}
                     aria-label={`View AIA reviews on ${item.name}`}
                     title={item.title}
                     className={`flex items-center ${item.bgColor} 
@@ -123,7 +123,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
                       key={index}
                       href={item.link || undefined}
                       target={item.link ? "_blank" : undefined}
-                      rel={item.link ? "noopener noreferrer" : undefined}
+                      rel={item.link ? "noopener noreferrer nofollow" : undefined}
                       aria-label={`View AIA reviews on ${item.name}`}
                       title={item.title}
                       className={`flex items-center ${item.bgColor} 
@@ -156,12 +156,12 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
 
             <div className="hidden lg:flex flex-row items-center justify-between gap-8 px-8">
               <div className="text-left">
-                <h2 className="text-4xl font-bold text-white leading-tight">
+                <p className="text-4xl font-bold text-white leading-tight">
                   Top Ratings <br />
                   <span className="text-3xl font-bold text-white mt-2 block">
                     Across Platforms
                   </span>
-                </h2>
+                </p>
               </div>
 
               {/* <div className="flex flex-wrap justify-end gap-3 md:gap-4"> */}
@@ -174,7 +174,7 @@ const FooterReviews = ({ footer = true, title = "white" }) => {
                       key={index}
                       href={item.link || undefined}
                       target={item.link ? "_blank" : undefined}
-                      rel={item.link ? "noopener noreferrer" : undefined}
+                      rel={item.link ? "noopener noreferrer nofollow" : undefined}
                       aria-label={`View AIA reviews on ${item.name}`}
                       title={item.title}
                       className={`flex items-center ${item.bgColor} 

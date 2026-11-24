@@ -101,7 +101,7 @@ const CourseBlog = ({ course, title }) => {
                     <motion.div
                       key={blog.id}
                       onClick={() =>
-                        window.open(`/blogs/${blog.blog_slug}/`, "_blank")
+                        window.open(`/blogs/${blog.blog_slug}`, "_blank")
                       }
                       className="group w-64 shrink-0 cursor-pointer"
                       whileHover={{ y: -5 }}
@@ -161,7 +161,7 @@ const CourseBlog = ({ course, title }) => {
                             size="sm"
                             className="mt-3 w-full cursor-pointer bg-[#F76B25] text-white hover:bg-[#92400E]"
                             onClick={() =>
-                              window.open(`/blogs/${blog.blog_slug}/`, "_blank")
+                              window.open(`/blogs/${blog.blog_slug}`, "_blank")
                             }
                           >
                             Read More

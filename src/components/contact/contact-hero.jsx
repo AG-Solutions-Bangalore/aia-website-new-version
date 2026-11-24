@@ -187,7 +187,7 @@ const ContactHero = () => {
                 <span className="text-[#F48F32] font-semibold">Let&apos;s talk</span>
               </p>
 
-              <div className="absolute top-[20%] left-[68%] hidden lg:block">
+              <div className="absolute top-[12%] left-[70%] hidden lg:block">
                 <img
                   src={`${IMAGE_PATH}/arrow.webp`}
                   alt="arrow" title="arrow"
@@ -207,15 +207,15 @@ const ContactHero = () => {
           <div className="order-2 lg:col-span-2 bg-white border-2 border-[#0F3652] shadow-lg rounded-md">
             <div className="p-8">
               <div className="text-center mb-2">
-                <h3 className="text-3xl font-bold text-black mb-2">
+                <p className="text-3xl font-bold text-black mb-2">
                   Book your free consultation today
-                </h3>
-                <h6
+                </p>
+                <p
                   className="text-black italic font-semibold"
                   style={{ fontFamily: "cursive" }}
                 >
                   Take the first step toward professional excellence with AIA.
-                </h6>
+                </p>
               </div>
 
               <div className="space-y-1">

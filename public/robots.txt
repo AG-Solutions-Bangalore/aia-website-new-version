@@ -1,6 +1,10 @@
 User-agent: *
 Allow: /
 
+# Public Assets & Images
+Allow: /webapi/public/assets/images/
+Allow: /webapi/public/assets/
+
 # Private & API Endpoints
 Disallow: /webapi/
 Disallow: /admin

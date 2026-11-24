@@ -41,7 +41,7 @@ export default function ConversationsSection() {
                 <a
                   href={item.href} title={item.href}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className="mt-1 inline-flex text-xs font-medium italic text-[#F3831C] underline-offset-2 transition-colors hover:text-[#d96f10] hover:underline"
                 >
                   Watch Now
@@ -55,7 +55,7 @@ export default function ConversationsSection() {
           <a
             href="https://www.youtube.com/@academyofia" title="https://www.youtube.com/@academyofia"
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             className="inline-flex min-h-10 items-center justify-center bg-[#F3831C] px-7 py-2 text-sm font-bold text-white transition-colors hover:bg-[#d96f10]"
           >
             Visit Our YouTube Channel

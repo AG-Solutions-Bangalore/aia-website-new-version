@@ -84,6 +84,17 @@ export const pageKeywords = {
     "CISA Exam Syllabus",
     "CISA Exam Preparation",
   ],
+  blogs: [
+    "CIA Certification Articles",
+    "CFE Certification Articles",
+    "CISA Certification Blogs",
+    "CAMS Certification Articles",
+    "Internal Audit Blogs",
+    "Fraud Examination Blogs",
+    "Financial Compliance Blogs",
+    "Certification Exam Preparation Tips",
+    "Accounting and Auditing Blogs",
+  ],
 } as const;
 
 export type KeywordPage = keyof typeof pageKeywords;

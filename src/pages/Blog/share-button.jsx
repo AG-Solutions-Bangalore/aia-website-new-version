@@ -46,7 +46,7 @@ export function ShareButtons() {
   };
   return (
     <div className="space-y-4">
-      <h3 className="text-xl font-medium text-[#0F3652]">Share this blog</h3>
+      <p className="text-xl font-medium text-[#0F3652]">Share this blog</p>
 
       <div className="flex gap-3">
         {/* Copy */}

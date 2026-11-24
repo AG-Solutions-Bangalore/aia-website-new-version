@@ -102,7 +102,7 @@ const AboutTrainerSection = ({
                     title="Puneet Garg – CEO Insights Leadership Profile"
                     target="_blank"
                     className="font-bold text-[#F3831C]"
-                    rel="noreferrer"
+                    rel="noopener noreferrer nofollow"
                   >
                     CEO Insights India
                   </a>{" "}

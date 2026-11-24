@@ -101,8 +101,6 @@ const HomeBlog = () => {
                     <Link
                       key={blog.id}
                       to={`/blogs/${blog.blog_slug}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="group w-64 shrink-0 cursor-pointer transition-transform duration-200 lg:hover:-translate-y-1"
                     >
                       <div className="overflow-hidden rounded-lg border border-[#F3831C]/20 bg-white shadow-sm">

@@ -62,7 +62,7 @@ const AccreditationBadges = () => {
             key={alt}
             href={href}
             target="_blank"
-            rel="noopener noreferrer"
+            rel="noopener noreferrer nofollow"
             className="group min-w-0 transition-transform"
             title={title || alt}
             aria-label={alt}

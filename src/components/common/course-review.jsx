@@ -174,7 +174,7 @@ const CourseReview = ({ slug, slugs, title, limit = 5 }) => {
               <Link
                 to="https://g.co/kgs/npmpnK1" title="https://g.co/kgs/npmpnK1"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer nofollow"
                 className="
         bg-[#F3831C] text-white
         px-6 py-2.5 rounded-none

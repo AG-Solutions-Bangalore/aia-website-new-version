@@ -254,6 +254,15 @@ export interface CourseInstance {
   courseMode: string;
   startDate?: string;
   endDate?: string;
+  courseWorkload?: string;
+  courseSchedule?:
+    | {
+        "@type"?: string;
+        repeatFrequency?: string;
+        repeatCount?: number;
+        duration?: string;
+      }
+    | string;
 }
 
 /**
@@ -299,6 +308,8 @@ export function createCourseSchema(course: {
     };
     if (course.courseInstance.startDate) instance.startDate = course.courseInstance.startDate;
     if (course.courseInstance.endDate) instance.endDate = course.courseInstance.endDate;
+    if (course.courseInstance.courseWorkload) instance.courseWorkload = course.courseInstance.courseWorkload;
+    if (course.courseInstance.courseSchedule) instance.courseSchedule = course.courseInstance.courseSchedule;
     (schema as unknown as Record<string, unknown>).hasCourseInstance = instance;
   }
 
