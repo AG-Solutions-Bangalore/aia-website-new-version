@@ -87,6 +87,12 @@ RewriteRule . /index.html [L]
     # 4. Prevent MIME-Type Sniffing
     Header always set X-Content-Type-Options "nosniff"
 
+    # 5. Feature & Permissions Policy (Restricts device features from unauthorized cross-origin frames)
+    Header always set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+
+    # 6. Legacy XSS Filter Protection
+    Header always set X-XSS-Protection "1; mode=block"
+
     # Hashed Vite bundles are content-addressed, so they can be cached for a year.
     # sw.js / workbox-*.js are excluded here and handled by the revalidate block below.
     <FilesMatch "^(?!sw\.js(\.gz)?$)(?!workbox-).*\.(js|mjs|css|woff2|woff|ttf|otf|eot)(\.gz)?$">
