@@ -28,6 +28,13 @@ export const courseSchemaData: Record<string, CourseSchemaData> = {
       courseMode: "online",
       startDate: "2026-12-01",
       endDate: "2027-02-28",
+      courseWorkload: "PT60H",
+      courseSchedule: {
+        "@type": "Schedule",
+        repeatFrequency: "Weekly",
+        repeatCount: 12,
+        duration: "PT2H",
+      },
     },
   },
 
@@ -43,6 +50,13 @@ export const courseSchemaData: Record<string, CourseSchemaData> = {
       courseMode: "online",
       startDate: "2026-12-01",
       endDate: "2027-02-28",
+      courseWorkload: "PT80H",
+      courseSchedule: {
+        "@type": "Schedule",
+        repeatFrequency: "Weekly",
+        repeatCount: 16,
+        duration: "PT2H",
+      },
     },
   },
 
@@ -58,6 +72,13 @@ export const courseSchemaData: Record<string, CourseSchemaData> = {
       courseMode: "online",
       startDate: "2026-12-01",
       endDate: "2027-02-28",
+      courseWorkload: "PT40H",
+      courseSchedule: {
+        "@type": "Schedule",
+        repeatFrequency: "Weekly",
+        repeatCount: 8,
+        duration: "PT2H",
+      },
     },
   },
 
@@ -73,6 +94,13 @@ export const courseSchemaData: Record<string, CourseSchemaData> = {
       courseMode: "online",
       startDate: "2026-12-01",
       endDate: "2027-02-28",
+      courseWorkload: "PT50H",
+      courseSchedule: {
+        "@type": "Schedule",
+        repeatFrequency: "Weekly",
+        repeatCount: 10,
+        duration: "PT2H",
+      },
     },
   },
 
@@ -88,6 +116,13 @@ export const courseSchemaData: Record<string, CourseSchemaData> = {
       courseMode: "online",
       startDate: "2026-12-01",
       endDate: "2027-02-28",
+      courseWorkload: "PT60H",
+      courseSchedule: {
+        "@type": "Schedule",
+        repeatFrequency: "Weekly",
+        repeatCount: 12,
+        duration: "PT2H",
+      },
     },
   },
 };
