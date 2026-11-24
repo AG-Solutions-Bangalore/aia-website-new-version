@@ -162,7 +162,7 @@ const FloatingContactRight = () => {
                   <motion.a
                     href={item.link}
                     target="_blank"
-                    rel="noopener noreferrer"
+                    rel="noopener noreferrer nofollow"
                     whileHover={{ scale: 1.1, y: -3 }}
                     whileTap={{ scale: 0.95 }}
                     className={`

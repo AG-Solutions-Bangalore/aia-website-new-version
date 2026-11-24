@@ -287,7 +287,7 @@ export default function MobileCorporateWhyAia() {
           </span>
         </div>
 
-        <h2
+        <div
           className="font-black leading-tight mb-3"
           style={{
             fontSize: "28px",
@@ -307,7 +307,7 @@ export default function MobileCorporateWhyAia() {
           >
             Corporate Training
           </span>
-        </h2>
+        </div>
 
         <p
           className="text-sm leading-relaxed"

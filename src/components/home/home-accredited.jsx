@@ -98,7 +98,7 @@ export const Partners = ({ grayscale = false, className = "" }) => {
               <a
                 href={item.link}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer nofollow"
                 aria-label={item.alt} title={item.alt}
               >
                 <img
@@ -139,7 +139,7 @@ export const Partners = ({ grayscale = false, className = "" }) => {
               <a
                 href={item.link}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer nofollow"
                 aria-label={item.alt} title={item.alt}
                 className="flex w-full items-center justify-center"
               >

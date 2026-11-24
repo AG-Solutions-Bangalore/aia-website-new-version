@@ -253,7 +253,7 @@ const CorporateTrainer = () => {
                   href="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html" title="https://www.ceoinsightsindia.com/leader/puneet-garg-equipping-audit-compliance-professionals-to-lead-with-integrity-impact-cid-9846.html"
                   target="_blank"
                   className="font-bold text-[#F3831C]"
-                  rel="noreferrer"
+                  rel="noopener noreferrer nofollow"
                 >
                   {" "}
                   CEO Insights India

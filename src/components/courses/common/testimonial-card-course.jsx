@@ -20,7 +20,7 @@ export function TestimonialCardCourse({
         ? {
             href,
             target: target || "_blank",
-            rel: "noopener noreferrer",
+            rel: "noopener noreferrer nofollow",
             tabIndex,
             title: linkTitle || title || alt || "Academy of Internal Audit",
           }

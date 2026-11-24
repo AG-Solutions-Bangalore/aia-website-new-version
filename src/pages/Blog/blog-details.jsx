@@ -55,6 +55,49 @@ const demoteBodyHeadings = (html) =>
       return match.replace(/<a\b/i, '<a rel="noopener noreferrer"');
     });
 
+const normalizeHeadingText = (value) =>
+  String(value || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/&nbsp;/gi, " ")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")
+    .trim();
+
+// Some API responses contain the same article subsection more than once, or
+// include a composite subsection whose HTML repeats several other sections.
+// Keep the first copy and omit the composite duplicate from the page outline.
+const getUniqueBlogSections = (sections = []) => {
+  const seen = new Set();
+  const sectionHeadings = new Set(
+    sections.map((section) => normalizeHeadingText(section.blog_sub_heading)),
+  );
+
+  return sections.filter((section) => {
+    const key = `${String(section.blog_sub_heading || "").trim()}\u0000${String(
+      section.blog_sub_description || "",
+    ).trim()}`;
+
+    if (seen.has(key)) return false;
+    seen.add(key);
+
+    const repeatedNestedHeadings = new Set(
+      [...String(section.blog_sub_description || "").matchAll(
+        /<h[1-6][^>]*>([\s\S]*?)<\/h[1-6]>/gi,
+      )]
+        .map((match) => normalizeHeadingText(match[1]))
+        .filter(
+          (heading) =>
+            heading &&
+            heading !== normalizeHeadingText(section.blog_sub_heading) &&
+            sectionHeadings.has(heading),
+        ),
+    );
+
+    if (repeatedNestedHeadings.size >= 2) return false;
+    return true;
+  });
+};
+
 const BlogDetails = () => {
   const { id } = useParams();
   const isScrollingProgrammatically = useRef(false);
@@ -80,7 +123,11 @@ const BlogDetails = () => {
   const blog = blogResponse?.data || null;
   const relatedBlogs = blogResponse?.related_blogs || [];
   const students = blogResponse?.student || [];
-  const faq = blogResponse?.faq || [];
+  const faq = useMemo(() => blogResponse?.faq || [], [blogResponse?.faq]);
+  const blogSections = useMemo(
+    () => getUniqueBlogSections(blog?.web_blog_subs || []),
+    [blog?.web_blog_subs],
+  );
   const imageBaseUrl =
     blogResponse?.image_url?.find((item) => item.image_for === "Blog")?.image_url || "";
   const studentImageBaseUrl =
@@ -410,18 +457,18 @@ const BlogDetails = () => {
         </header>
 
         <div className="flex flex-col lg:flex-row gap-8">
-          {blog.web_blog_subs?.length > 0 && (
+          {blogSections.length > 0 && (
             <aside className="lg:w-1/4">
               <div className="sticky top-28">
                 <nav
                   className="bg-[#0F3652]/5 rounded-md p-4 border border-[#0F3652]/20 overflow-y-auto"
                   style={{ maxHeight: "calc(100vh - 25rem)" }}
                 >
-                  <h3 className="font-semibold text-[#0F3652] mb-1 pb-1 border-b">
+                  <p className="font-semibold text-[#0F3652] mb-1 pb-1 border-b">
                     Table of Contents
-                  </h3>
+                  </p>
                   <ul className="space-y-1">
-                    {blog.web_blog_subs.map((sub, index) => (
+                    {blogSections.map((sub, index) => (
                       <li key={sub.id}>
                         <button
                           onClick={(e) => scrollToSection(index, e)}
@@ -439,9 +486,9 @@ const BlogDetails = () => {
 
                 <div className="max-w-md mx-auto p-1 space-y-4 hidden lg:block">
                   <div className="space-y-2">
-                    <h2 className="text-xl font-medium text-[#0F3652]">
+                    <p className="text-xl font-medium text-[#0F3652]">
                       Subscribe to Newsletter
-                    </h2>
+                    </p>
 
                     <form onSubmit={handleSubscribe} className="space-y-3">
                       <input
@@ -485,16 +532,16 @@ const BlogDetails = () => {
 
           <main
             className={`
-            ${blog.web_blog_subs?.length > 0 ? "lg:w-3/4" : "w-full"} 
-            ${blog.web_blog_subs?.length > 0 && relatedBlogs.length > 0
+            ${blogSections.length > 0 ? "lg:w-3/4" : "w-full"} 
+            ${blogSections.length > 0 && relatedBlogs.length > 0
                 ? "lg:w-2/4"
                 : ""
               }
           `}
           >
-            {blog.web_blog_subs?.length > 0 ? (
+            {blogSections.length > 0 ? (
               <div className="space-y-12">
-                {blog.web_blog_subs.map((sub, index) => {
+                {blogSections.map((sub, index) => {
                   const allowedTags = ["h2", "h3", "h4", "h5", "h6", "p"];
 
                   const tag = sub.blog_sub_heading_tag?.toLowerCase();
@@ -853,9 +900,9 @@ const BlogDetails = () => {
           )}
           <div className="p-4 space-y-6 lg:hidden">
             <div className="bg-white rounded-2xl border border-[#0F3652]/10 p-6 shadow-sm">
-              <h2 className="text-xl md:text-2xl font-semibold text-[#0F3652] mb-4">
+              <p className="text-xl md:text-2xl font-semibold text-[#0F3652] mb-4">
                 Subscribe to Newsletter
-              </h2>
+              </p>
 
               <form onSubmit={handleSubscribe} className="space-y-4">
                 <div className="flex flex-col md:flex-row gap-3">

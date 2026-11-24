@@ -1,4 +1,5 @@
 import { BASE_URL, IMAGE_PATH } from "@/api/base-url";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { ArrowDown, ArrowUp } from "lucide-react";
@@ -241,10 +242,9 @@ const PassoutSuccess = () => {
                             )}
                           </div>
 
-                          <a
-                            href={`/passout-stories/${story.slug}`} title={`/passout-stories/${story.slug}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <Link
+                            to={`/passout-stories/${story.slug}`}
+                            title={`/passout-stories/${story.slug}`}
                             className=" text-white ]/90  font-semibold py-2 px-4 rounded-full inline-flex items-center gap-2 transition-colors text-sm ml-auto"
                             style={{ backgroundColor: courseColor }}
                           >
@@ -263,7 +263,7 @@ const PassoutSuccess = () => {
                                 strokeLinejoin="round"
                               />
                             </svg>
-                          </a>
+                          </Link>
                         </div>
                       </div>
                     </article>

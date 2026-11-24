@@ -87,7 +87,7 @@ const HOME_FALLBACK_SLIDES = [
   {
     id: 9,
     imageUrl: `${HOME_BANNER_BASE}4.webp`,
-    link: "our-passouts",
+    link: "alumni-network",
     alt: "CIA-Passouts",
     width: 1883,
     height: 858,

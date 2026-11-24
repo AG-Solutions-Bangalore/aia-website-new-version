@@ -41,6 +41,7 @@ import {
 import Layout from "@/layout/Layout";
 import { SEOPageLayout, getSeoForRoute } from "@/seo";
 import { COURSE_ROUTES } from "@/seo";
+import { normalizeRoutePath } from "./route-path";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import blogRedirects from "./blog-redirects";
 
@@ -123,16 +124,6 @@ function PageSEO({
   );
 }
 
-function stripTrailingSlash(pathname: string): string {
-  if (pathname === "/") return pathname;
-  return pathname.replace(/\/+$/, "");
-}
-
-/**
- * Enforces client-side URL consistency:
- * All URLs across the site are kept WITHOUT a trailing slash (e.g. /about-aia or /blogs).
- * Any request with a trailing slash is redirected (replace) to without trailing slash.
- */
 function TrailingSlashEnforcer() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -413,7 +404,7 @@ export default function AppRoutes({
             <Route
               key={oldPath}
               path={oldPath}
-              element={<Navigate to={stripTrailingSlash(newPath)} replace />}
+              element={<Navigate to={normalizeRoutePath(newPath)} replace />}
             />
           ))}
         </Routes>

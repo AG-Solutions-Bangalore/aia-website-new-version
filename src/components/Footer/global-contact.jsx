@@ -69,7 +69,7 @@ const ContactCard = ({ country, contacts }) => {
                 <a
                   href={`https://zalo.me/${tel.replace('+', '')}`}
                   target="_blank"
-                  rel="noopener noreferrer"
+                  rel="noopener noreferrer nofollow"
                   className="min-h-10 min-w-10 bg-[#0068FF]/15 border border-[#0068FF]/30 rounded-md flex items-center justify-center text-[#0068FF] hover:bg-[#0068FF] transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0068FF]"
                   aria-label={`Zalo ${number}`} title={`Zalo ${number}`}
                 >

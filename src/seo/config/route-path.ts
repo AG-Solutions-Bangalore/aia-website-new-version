@@ -66,12 +66,22 @@ export function normalizeInternalUrl(rawUrl?: string | null): string | undefined
   if (JUNK_HREF_PATTERN.test(value)) return "#";
   if (value.startsWith("#")) return value;
 
+  // Handle absolute or protocol-relative AIA URLs (e.g. https://www.aia.in.net/..., http://aia.in.net/...)
+  const aiaUrlMatch = value.match(/^(?:https?:)?\/\/(?:www\.)?aia\.in\.net(\/.*)?$/i);
+  if (aiaUrlMatch) {
+    const internalPath = aiaUrlMatch[1] || "/";
+    return normalizeInternalUrl(internalPath);
+  }
+
+  // Handle protocol-less hostnames like aia.in.net/... or www.aia.in.net/...
   const siteHostMatch = value.match(/^(?:www\.)?aia\.in\.net(?=[/?#]|$)/i);
-  if (siteHostMatch) return normalizeInternalUrl(value.slice(siteHostMatch[0].length) || "/");
+  if (siteHostMatch) {
+    const internalPath = value.slice(siteHostMatch[0].length) || "/";
+    return normalizeInternalUrl(internalPath);
+  }
 
   const hasProtocol = PROTOCOL_PATTERN.test(value);
-  const isSiteAbsolute = value === SITE_ORIGIN || value.startsWith(`${SITE_ORIGIN}/`);
-  if (hasProtocol && !isSiteAbsolute) return value;
+  if (hasProtocol) return value;
 
   const externalUrl = normalizeExternalUrl(value);
   if (externalUrl !== value) return externalUrl;
@@ -85,17 +95,54 @@ export function normalizeInternalUrl(rawUrl?: string | null): string | undefined
   }
 }
 
+const TRUSTED_AUTHORITIES = new Set([
+  "theiia.org",
+  "www.theiia.org",
+  "acfe.com",
+  "www.acfe.com",
+  "isaca.org",
+  "www.isaca.org",
+]);
+
 /**
- * Rewrites internal links inside CMS-provided HTML to canonical, non-trailing-slash URLs.
- * External links are left untouched.
+ * Rewrites links inside CMS-provided HTML:
+ * 1. Internal links -> rewritten to canonical internal routes per strict trailing slash policy.
+ * 2. External links -> keeps trusted credential bodies (IIA, ACFE, ISACA) followed; adds
+ *    rel="noopener noreferrer nofollow" to all promotional, partner, and social external links
+ *    per technical SEO audit requirements.
  */
 export function normalizeHtmlInternalLinks(html?: string | null): string {
   if (!html) return html ?? "";
   return html.replace(
-    /(href=["'])([^"']+)(["'])/gi,
-    (match, prefix: string, url: string, suffix: string) => {
+    /<a\b([^>]*?)href=(["'])([^"']+)\2([^>]*)>/gi,
+    (match, beforeHref, quote, url, afterHref) => {
       const normalized = normalizeInternalUrl(url);
-      return normalized ? `${prefix}${normalized}${suffix}` : match;
+      if (normalized && normalized !== url && (normalized.startsWith("/") || normalized.startsWith("#"))) {
+        return `<a${beforeHref}href=${quote}${normalized}${quote}${afterHref}>`;
+      }
+
+      try {
+        const testUrl = /^[a-zA-Z][a-zA-Z\d+.-]*:/.test(url) ? url : `https://${url}`;
+        const parsed = new URL(testUrl);
+        const host = parsed.hostname.toLowerCase();
+        if (host === 'aia.in.net' || host === 'www.aia.in.net') {
+          const internalPath = `${normalizeRoutePath(parsed.pathname)}${parsed.search}${parsed.hash}`;
+          return `<a${beforeHref}href=${quote}${internalPath}${quote}${afterHref}>`;
+        }
+        if (!TRUSTED_AUTHORITIES.has(host)) {
+          let combined = `${beforeHref} ${afterHref}`;
+          if (/rel=["']/i.test(combined)) {
+            combined = combined.replace(/rel=(["'])(.*?)\1/gi, 'rel="noopener noreferrer nofollow"');
+            return `<a href=${quote}${url}${quote} ${combined.trim()}>`;
+          } else {
+            return `<a href=${quote}${url}${quote} rel="noopener noreferrer nofollow"${beforeHref}${afterHref}>`;
+          }
+        }
+      } catch {
+        // relative or invalid URL
+      }
+
+      return match;
     },
   );
 }

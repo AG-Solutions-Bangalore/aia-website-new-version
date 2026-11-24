@@ -164,7 +164,7 @@ const AboutReview = () => {
                               href={item.link}
                               title={getLinkTitle(item.link, { defaultTitle: "Academy of Internal Audit Student Review" })}
                               target="_blank"
-                              rel="noopener noreferrer"
+                              rel="noopener noreferrer nofollow"
                               className="ml-2 text-[#F3831C] font-medium text-sm hover:underline cursor-pointer"
                             >
                               Read more

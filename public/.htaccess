@@ -27,45 +27,36 @@ Options -Indexes -MultiViews
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
-# 1. Block invalid /undefined/ crawl paths immediately (HTTP 404)
-RewriteRule (^|/)undefined(/|$) - [R=404,L]
-
-# 1b. Never serve sitemap.xml with a trailing slash (GSC "Couldn't fetch")
-RewriteRule ^sitemap\.xml/$ /sitemap.xml [R=301,L,NC]
-
-# 2. Canonical Host & Protocol (HTTPS + Non-WWW) for production
+# 1. Canonical HTTPS & Non-WWW (Single 301 Redirect)
 RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
 RewriteCond %{HTTPS} !=on [OR]
 RewriteCond %{HTTP_HOST} ^www\.aia\.in\.net$ [NC]
 RewriteRule ^ https://aia.in.net%{REQUEST_URI} [R=301,L]
 
-# 2a. Legacy & Historical Route 301 Redirects (Prevent Google from indexing old URLs with Homepage fallback)
+# 2. Universal Trailing Slash Stripping (Strict NO Trailing Slash Policy)
+# Strips trailing slash from any URL (except root '/' and backend API calls)
+RewriteCond %{REQUEST_URI} !^/webapi/ [NC]
+RewriteCond %{REQUEST_URI} !^/api/ [NC]
+RewriteCond %{REQUEST_URI} ^/(.+)/+$
+RewriteRule ^(.+)/+$ /$1 [R=301,L]
+
+# 3. Legacy 301 Redirects to Canonical Non-Slash URLs
 RewriteRule ^about-us/?$ /about-aia [R=301,L,NC]
 RewriteRule ^contact-us/?$ /contact [R=301,L,NC]
 RewriteRule ^corporate-training/cams/?$ /cams [R=301,L,NC]
 RewriteRule ^(our-passouts|passed-out)(/.*)?$ /alumni-network [R=301,L,NC]
 
-# 2b. Fully Dynamic API Sitemap: Pure data direct from /webapi/public/api/getSitemap
-; RewriteRule ^sitemap\.xml$ sitemap.php [L]
-
-# 2c. Serve precompressed gzip assets when the browser supports gzip.
-# The .gz files are generated at build time, so Apache avoids recompressing them.
+# 4. Serve Pre-compressed Gzip Assets (when supported)
 RewriteCond %{HTTP:Accept-Encoding} gzip
 RewriteCond %{REQUEST_URI} !\.gz$ [NC]
 RewriteCond %{REQUEST_FILENAME}\.gz -s
 RewriteRule ^(.+)$ $1.gz [L]
 
-# 2. Enforce NO trailing slash across all URLs (301 redirect trailing slash to non-trailing slash)
-RewriteCond %{REQUEST_URI} !^/webapi/ [NC]
-RewriteCond %{REQUEST_URI} ^/(.+)/$
-RewriteRule ^(.+)/$ /$1 [R=301,L]
-
-# 5. Serve SSG pre-rendered static HTML if folder/index.html exists
+# 5. Serve SSG Pre-rendered Static HTML or SPA Fallback
 RewriteCond %{DOCUMENT_ROOT}/$1/index.html -f [OR]
 RewriteCond %{REQUEST_FILENAME}/index.html -f
 RewriteRule ^(.+?)/?$ /$1/index.html [L]
 
-# 6. Fallback for unrendered SPA routes
 RewriteCond %{REQUEST_URI} !^/webapi/ [NC]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

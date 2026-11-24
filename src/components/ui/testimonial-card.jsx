@@ -16,7 +16,7 @@ export function TestimonialCard({
       {...(href ? { 
         href, 
         target: target || "_blank",
-        rel: "noopener noreferrer" 
+        rel: "noopener noreferrer nofollow" 
       } : {})}
       className={cn(
         "flex flex-col  rounded-lg border-2 border-black relative group",
