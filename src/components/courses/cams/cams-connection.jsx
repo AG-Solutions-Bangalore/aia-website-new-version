@@ -1,5 +1,6 @@
 import { IMAGE_PATH } from "@/api/base-url";
 import SectionHeading from "@/components/SectionHeading/SectionHeading";
+import { getLinkTitle } from "@/utils/seoTitles";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -83,7 +84,7 @@ const CamsConnection = ({
   buttonColors = [],
 }) => {
   return (
-    <div className="py-12 md:py-16 my-4 md:my-8">
+    <section className="py-12 md:py-16 my-4 md:my-8">
       {images.length > 0 && (
         <>
           <div className="px-4">
@@ -110,8 +111,9 @@ const CamsConnection = ({
 
               // If course metadata is available, render hybrid card with real crawlable HTML text & links
               if (course) {
+                const linkTitle = getLinkTitle(targetLink) || `Learn more about ${course.title}`;
                 return (
-                  <div
+                  <article
                     key={index}
                     className={`
                       relative overflow-hidden rounded-xl group flex flex-col w-full max-w-[340px] shadow-sm hover:shadow-md transition-all duration-300
@@ -121,31 +123,34 @@ const CamsConnection = ({
                     {/* Clean background design image */}
                     <img
                       src={course.bgImage}
-                      alt={`${course.title} course banner`}
+                      alt={`${course.title} ${course.subtitle} certification card`}
                       className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-[1.01] pointer-events-none select-none"
                       loading="lazy"
+                      decoding="async"
                     />
 
                     {/* Real HTML Content Layer inside White Card boundaries */}
-                    <div className="absolute top-[21.5%] left-[7.5%] w-[68%] h-[53%] flex flex-col justify-start overflow-hidden pointer-events-auto">
+                    <div className="absolute top-[20.5%] left-[7.5%] w-[68%] h-[54.5%] flex flex-col justify-start overflow-hidden pointer-events-auto">
                       {/* Course Name Title with Internal Link */}
                       <h3 className="text-center font-bold text-[13px] sm:text-[15px] lg:text-[13px] xl:text-[15px] text-gray-900 tracking-tight leading-tight">
                         <Link
                           to={targetLink}
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="hover:text-primary transition-colors"
-                          title={`Learn more about ${course.title}`}
+                          title={linkTitle}
                         >
                           {course.title}
                         </Link>
                       </h3>
 
                       {/* Subtitle */}
-                      <p className="text-center text-[9px] sm:text-[10px] lg:text-[8.5px] xl:text-[10px] text-gray-600 font-medium mt-0.5 leading-tight">
+                      <p className="text-center text-[8.5px] sm:text-[9.5px] lg:text-[8.5px] xl:text-[9.5px] text-gray-600 font-medium mt-0.5 leading-tight">
                         {course.subtitle}
                       </p>
 
                       {/* Styled Divider with Ring matching course accent color */}
-                      <div className="flex items-center w-full my-1 sm:my-1.5 flex-shrink-0">
+                      <div className="flex items-center w-full my-1 flex-shrink-0" aria-hidden="true">
                         <span
                           className="w-2 h-2 rounded-full border-2 flex-shrink-0"
                           style={{
@@ -162,12 +167,12 @@ const CamsConnection = ({
                       </div>
 
                       {/* Lead Prompt Hook in Bold Italic */}
-                      <p className="text-[9.5px] sm:text-[11px] lg:text-[9.5px] xl:text-[11px] font-semibold italic text-gray-900 leading-snug">
+                      <p className="text-[9px] sm:text-[10.5px] lg:text-[9px] xl:text-[10px] font-semibold italic text-gray-900 leading-tight">
                         {course.lead}
                       </p>
 
                       {/* Full Descriptive Content */}
-                      <p className="text-[8.5px] sm:text-[9.5px] lg:text-[8.5px] xl:text-[9.5px] text-gray-600 leading-[1.3] mt-1 line-clamp-5">
+                      <p className="text-[8px] sm:text-[9px] lg:text-[8px] xl:text-[9px] text-gray-600 leading-[1.25] mt-0.5">
                         {course.description}
                       </p>
                     </div>
@@ -176,6 +181,10 @@ const CamsConnection = ({
                     <div className="absolute bottom-[9%] left-[7.5%]">
                       <Link
                         to={targetLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={linkTitle}
+                        aria-label={`Know more about ${course.title} ${course.subtitle}`}
                         style={{
                           backgroundColor:
                             item.buttonColor || buttonColors[index] || course.themeColor,
@@ -185,13 +194,13 @@ const CamsConnection = ({
                         {buttonText}
                       </Link>
                     </div>
-                  </div>
+                  </article>
                 );
               }
 
               // Fallback for generic images without predefined course metadata
               return (
-                <div
+                <article
                   key={index}
                   className={`
                     relative overflow-hidden rounded-xl group flex flex-col w-full max-w-[340px]
@@ -204,10 +213,14 @@ const CamsConnection = ({
                     title={`Course Card ${index + 1}`}
                     className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
+                    decoding="async"
                   />
 
                   <Link
                     to={targetLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={getLinkTitle(targetLink)}
                     style={{
                       backgroundColor:
                         item.buttonColor || buttonColors[index] || "#fee1c6",
@@ -216,13 +229,13 @@ const CamsConnection = ({
                   >
                     {buttonText}
                   </Link>
-                </div>
+                </article>
               );
             })}
           </div>
         </>
       )}
-    </div>
+    </section>
   );
 };
 
