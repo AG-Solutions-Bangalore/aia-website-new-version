@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ENROLL_URL } from "@/api/base-url";
 import { PaymentAccreditation } from "@/components/Footer/footer-accredationbadges";
 import FooterReviews from "@/components/Footer/footer-review";
 import { ContactGrid } from "@/components/Footer/global-contact";
@@ -25,7 +26,7 @@ export default function Footer() {
                 { name: "AIA Times", href: "/aia-times" },
                 { name: "Alumni Network", href: "/alumni-network" },
                 { name: "Corporate Training", href: "/corporate-training" },
-                { name: "Enroll Now", href: "/enroll-now" },
+                { name: "Enroll Now", href: ENROLL_URL },
                 { name: "Contact Us", href: "/contact" },
                 { name: "Policies", href: "/policies" },
                 {
