@@ -20,4 +20,4 @@ Disallow: /*%7Bsearch_term_string%7D*
 Disallow: /*{search_term_string}*
 
 # Sitemap Reference
-Sitemap: https://aia.in.net/sitemap.xml
+Sitemap: https://aia.in.net/sitemap_index.xml
