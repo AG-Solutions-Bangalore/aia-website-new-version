@@ -542,7 +542,7 @@ const BlogDetails = () => {
             {blogSections.length > 0 ? (
               <div className="space-y-12">
                 {blogSections.map((sub, index) => {
-                  const allowedTags = ["h2", "h3", "h4", "h5", "h6", "p"];
+                  const allowedTags = ["h1", "h2", "h3", "h4", "h5", "h6", "p"];
 
                   const tag = sub.blog_sub_heading_tag?.toLowerCase();
                   const HeadingTag = allowedTags.includes(tag) ? tag : "h2";
