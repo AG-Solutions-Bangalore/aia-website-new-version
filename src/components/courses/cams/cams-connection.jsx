@@ -1,6 +1,13 @@
 import { IMAGE_PATH } from "@/api/base-url";
 import SectionHeading from "@/components/SectionHeading/SectionHeading";
 import { getLinkTitle } from "@/utils/seoTitles";
+import {
+  BadgeDollarSign,
+  ClipboardCheck,
+  FileCheck2,
+  SearchCheck,
+  ShieldCheck,
+} from "lucide-react";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -15,7 +22,10 @@ const COURSE_DETAILS = {
     link: "/cfe-curriculum",
     bgImage: "/images/course-choice-cards/bg_hiw_cfe.webp",
     themeColor: "#a8e6f3",
+    badgeBg: "#8cd9eb",
+    badgePos: "left-[80.6%] top-[49.8%] w-[17.2%]",
     accentColor: "#0284c7",
+    Icon: SearchCheck,
   },
   cia: {
     title: "CIA",
@@ -26,7 +36,10 @@ const COURSE_DETAILS = {
     link: "/cia-curriculum",
     bgImage: "/images/course-choice-cards/bg_hiw_cia.webp",
     themeColor: "#fee1c6",
+    badgeBg: "#f5cba5",
+    badgePos: "left-[80.6%] top-[49.8%] w-[17.2%]",
     accentColor: "#ea580c",
+    Icon: ClipboardCheck,
   },
   ciac: {
     title: "CIA Challenge",
@@ -37,7 +50,10 @@ const COURSE_DETAILS = {
     link: "/cia-challenge-curriculum",
     bgImage: "/images/course-choice-cards/bg_hiw_ciac.webp",
     themeColor: "#e2ffdc",
+    badgeBg: "#c5f5bc",
+    badgePos: "left-[80.6%] top-[47.1%] w-[17.4%]",
     accentColor: "#16a34a",
+    Icon: FileCheck2,
   },
   cams: {
     title: "CAMS",
@@ -48,18 +64,24 @@ const COURSE_DETAILS = {
     link: "/cams",
     bgImage: "/images/course-choice-cards/bg_hiw_cams.webp",
     themeColor: "#ffe38f",
+    badgeBg: "#f7d265",
+    badgePos: "left-[80.6%] top-[49.8%] w-[17.2%]",
     accentColor: "#ca8a04",
+    Icon: BadgeDollarSign,
   },
   cisa: {
     title: "CISA",
-    subtitle: "Certified Information Systems Auditor",
+    subtitle: "(Certified Information Systems Auditor)",
     lead: "Looking to advance your career in IT audit or risk?",
     description:
       "CISA is a globally recognized credential that validates your expertise in information systems auditing, IT controls, governance, risk, and security, helping you strengthen your professional credibility and advance in technology-focused roles.",
     link: "/cisa",
     bgImage: "/images/course-choice-cards/bg_hiw_cisa.webp",
     themeColor: "#e2d5f8",
+    badgeBg: "#cbb8f0",
+    badgePos: "left-[80.6%] top-[49.8%] w-[17.2%]",
     accentColor: "#9333ea",
+    Icon: ShieldCheck,
   },
 };
 
@@ -100,7 +122,7 @@ const CamsConnection = ({
           <div
             className={`mt-8 md:mt-12 grid grid-cols-1 sm:grid-cols-2 ${
               images.length === 4 ? "lg:grid-cols-4" : "lg:grid-cols-3"
-            } gap-6 md:gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 justify-items-center`}
+            } gap-4 md:gap-6 max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 justify-items-center`}
           >
             {images.map((item, index) => {
               const isLast = index === images.length - 1;
@@ -109,18 +131,19 @@ const CamsConnection = ({
               const course = courseKey ? COURSE_DETAILS[courseKey] : null;
               const targetLink = (item.link || (course ? course.link : "#")).replace(/\/+$/, "");
 
-              // If course metadata is available, render hybrid card with real crawlable HTML text & links
+              // If course metadata is available, render original card design with crawlable HTML text, links & crisp SVG icon
               if (course) {
                 const linkTitle = getLinkTitle(targetLink) || `Learn more about ${course.title}`;
+                const CourseIcon = course.Icon;
                 return (
                   <article
                     key={index}
                     className={`
-                      relative overflow-hidden rounded-xl group flex flex-col w-full max-w-[340px] shadow-sm hover:shadow-md transition-all duration-300
-                      ${isLast && isOdd ? "md:col-span-2 lg:col-span-1" : ""}
+                      relative overflow-hidden rounded-2xl group flex flex-col w-full max-w-[380px] lg:max-w-none shadow-[0_4px_20px_rgba(15,54,82,0.07)] hover:shadow-[0_10px_28px_rgba(15,54,82,0.12)] transition-all duration-300
+                      ${isLast && isOdd ? "sm:col-span-2 lg:col-span-1" : ""}
                     `}
                   >
-                    {/* Clean background design image */}
+                    {/* Original clean background design image */}
                     <img
                       src={course.bgImage}
                       alt={`${course.title} ${course.subtitle} certification card`}
@@ -129,10 +152,22 @@ const CamsConnection = ({
                       decoding="async"
                     />
 
+                    {/* Crisp vector icon badge aligned to each card's exact baked-in circle coordinates */}
+                    <div
+                      className={`absolute ${course.badgePos} -translate-y-1/2 aspect-square rounded-full border-[4px] border-white shadow-sm flex items-center justify-center pointer-events-none transition-transform duration-500 group-hover:scale-105`}
+                      style={{ backgroundColor: course.badgeBg }}
+                      aria-hidden="true"
+                    >
+                      <CourseIcon
+                        className="w-[52%] h-[52%] text-white"
+                        strokeWidth={2}
+                      />
+                    </div>
+
                     {/* Real HTML Content Layer inside White Card boundaries */}
-                    <div className="absolute top-[20.5%] left-[7.5%] w-[68%] h-[54.5%] flex flex-col justify-start overflow-hidden pointer-events-auto">
-                      {/* Course Name Title with Internal Link */}
-                      <h3 className="text-center font-bold text-[13px] sm:text-[15px] lg:text-[13px] xl:text-[15px] text-gray-900 tracking-tight leading-tight">
+                    <div className="absolute top-[22%] left-[7.5%] w-[69.5%] h-[52.5%] flex flex-col justify-start overflow-hidden pointer-events-auto">
+                      {/* Course Name Title with Internal Link (padded away from top-left dog-ear fold) */}
+                      <h3 className="text-center pl-4 pr-1 font-bold text-[15px] sm:text-[17px] lg:text-[14px] xl:text-[16px] 2xl:text-[18px] text-[#0F3652] tracking-tight leading-tight">
                         <Link
                           to={targetLink}
                           target="_blank"
@@ -145,34 +180,29 @@ const CamsConnection = ({
                       </h3>
 
                       {/* Subtitle */}
-                      <p className="text-center text-[8.5px] sm:text-[9.5px] lg:text-[8.5px] xl:text-[9.5px] text-gray-600 font-medium mt-0.5 leading-tight">
+                      <p className="text-center pl-4 pr-1 text-[9.5px] sm:text-[10.5px] lg:text-[8.5px] xl:text-[9.5px] 2xl:text-[10.5px] text-gray-600 font-medium mt-0.5 leading-tight">
                         {course.subtitle}
                       </p>
 
                       {/* Styled Divider with Ring matching course accent color */}
-                      <div className="flex items-center w-full my-1 flex-shrink-0" aria-hidden="true">
+                      <div className="flex items-center w-full my-1.5 lg:my-1 xl:my-1.5 shrink-0" aria-hidden="true">
                         <span
-                          className="w-2 h-2 rounded-full border-2 flex-shrink-0"
-                          style={{
-                            borderColor: course.accentColor || course.themeColor,
-                            backgroundColor: "#ffffff",
-                          }}
+                          className="w-2 h-2 rounded-full border-2 shrink-0 bg-white"
+                          style={{ borderColor: course.accentColor || course.themeColor }}
                         />
                         <div
                           className="h-[1.5px] flex-1 rounded-full"
-                          style={{
-                            backgroundColor: course.accentColor || course.themeColor,
-                          }}
+                          style={{ backgroundColor: course.accentColor || course.themeColor }}
                         />
                       </div>
 
                       {/* Lead Prompt Hook in Bold Italic */}
-                      <p className="text-[9px] sm:text-[10.5px] lg:text-[9px] xl:text-[10px] font-semibold italic text-gray-900 leading-tight">
+                      <p className="text-[10px] sm:text-[11.5px] lg:text-[9.5px] xl:text-[10.5px] 2xl:text-[11.5px] font-semibold italic text-gray-900 leading-[1.28]">
                         {course.lead}
                       </p>
 
-                      {/* Full Descriptive Content */}
-                      <p className="text-[8px] sm:text-[9px] lg:text-[8px] xl:text-[9px] text-gray-600 leading-[1.25] mt-0.5">
+                      {/* Full Descriptive Content — sized cleanly so all lines fit without truncation */}
+                      <p className="text-[9px] sm:text-[10px] lg:text-[8.5px] xl:text-[9.5px] 2xl:text-[10.5px] text-gray-600 leading-[1.3] mt-1">
                         {course.description}
                       </p>
                     </div>
@@ -189,7 +219,7 @@ const CamsConnection = ({
                           backgroundColor:
                             item.buttonColor || buttonColors[index] || course.themeColor,
                         }}
-                        className="inline-flex items-center justify-center px-3 py-1 sm:px-4 sm:py-1.5 text-[10px] sm:text-xs font-semibold rounded-full shadow-sm text-gray-900 transition-all duration-300 hover:shadow-md hover:opacity-90 whitespace-nowrap cursor-pointer group-hover:scale-105"
+                        className="inline-flex items-center justify-center px-3.5 py-1.5 sm:px-4 sm:py-1.5 text-[11px] sm:text-xs font-semibold rounded-full shadow-sm text-gray-900 transition-all duration-300 hover:shadow-md hover:opacity-90 whitespace-nowrap cursor-pointer group-hover:scale-105"
                       >
                         {buttonText}
                       </Link>
