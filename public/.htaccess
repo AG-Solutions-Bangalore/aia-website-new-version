@@ -27,6 +27,9 @@ Options -Indexes -MultiViews
 <IfModule mod_rewrite.c>
 RewriteEngine On
 
+# 0. Canonical Sitemap Alias
+RewriteRule ^sitemap\.xml/?$ https://aia.in.net/sitemap_index.xml [R=301,L,NC]
+
 # 1. Canonical HTTPS & Non-WWW (Single 301 Redirect)
 RewriteCond %{HTTP_HOST} !^(localhost|127\.0\.0\.1)(:\d+)?$ [NC]
 RewriteCond %{HTTPS} !=on [OR]
